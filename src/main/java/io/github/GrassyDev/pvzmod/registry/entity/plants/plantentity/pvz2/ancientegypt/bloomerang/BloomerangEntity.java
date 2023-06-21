@@ -137,10 +137,12 @@ public class BloomerangEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 5, false, true, false);
 		}
-		this.targetZombies(this.getPos(), 5, false, true, false);
 	}
 
 	public void tickMovement() {

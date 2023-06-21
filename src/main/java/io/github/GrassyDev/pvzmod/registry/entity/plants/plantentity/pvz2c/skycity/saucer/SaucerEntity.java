@@ -242,8 +242,10 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 				this.discard();
 			}
 		}
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 		if (--tickDamage <= 0){
 			this.zombieList.clear();

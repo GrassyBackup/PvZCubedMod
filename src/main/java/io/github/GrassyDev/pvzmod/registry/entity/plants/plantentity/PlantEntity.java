@@ -44,6 +44,8 @@ public abstract class PlantEntity extends GolemEntity {
 
 	protected boolean dryLand;
 
+	protected int tickDelay;
+
 	@Override
 	public boolean canBeLeashedBy(PlayerEntity player) {
 		return false;
@@ -696,6 +698,9 @@ public abstract class PlantEntity extends GolemEntity {
 	protected int heatTicks = 40;
 
 	public void tick() {
+		if (tickDelay <= -1){
+			tickDelay = 5;
+		}
 		if (this.getFireImmune()){
 			this.setFireTicks(0);
 		}

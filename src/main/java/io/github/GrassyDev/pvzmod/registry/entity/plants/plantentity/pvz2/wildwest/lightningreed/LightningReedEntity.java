@@ -277,10 +277,12 @@ public class LightningReedEntity extends PlantEntity implements IAnimatable, Ran
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 7, true, true, false);
 		}
-		this.targetZombies(this.getPos(), 7, true, true, false);
 		BlockPos blockPos = this.getBlockPos();
 		if (--amphibiousRaycastDelay >= 0) {
 			amphibiousRaycastDelay = 60;

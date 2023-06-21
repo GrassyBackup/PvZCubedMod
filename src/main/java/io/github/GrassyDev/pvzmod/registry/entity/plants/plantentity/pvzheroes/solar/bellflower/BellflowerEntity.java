@@ -46,8 +46,6 @@ import java.util.Objects;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
-
 public class BellflowerEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
     private String controllerName = "bellcontroller";
@@ -145,10 +143,12 @@ public class BellflowerEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 5, false, false, true);
 		}
-		this.targetZombies(this.getPos(), 5, false, false, true);
 	}
 
 	public void tickMovement() {

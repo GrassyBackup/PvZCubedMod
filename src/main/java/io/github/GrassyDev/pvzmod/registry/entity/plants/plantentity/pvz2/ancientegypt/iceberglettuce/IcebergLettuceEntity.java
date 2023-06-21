@@ -382,8 +382,10 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 		if (target instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying()){
 			this.setTarget(null);
 		}
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 		if (this.isAlive()) {
 			if (this.getIgnited()) {

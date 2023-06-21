@@ -52,8 +52,6 @@ import java.util.Optional;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
-
 public class FumeshroomEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -210,8 +208,10 @@ public class FumeshroomEntity extends PlantEntity implements IAnimatable, Ranged
 			this.targetZombies(this.getPos(), 5, false, false, true);
 		}
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 	}
 

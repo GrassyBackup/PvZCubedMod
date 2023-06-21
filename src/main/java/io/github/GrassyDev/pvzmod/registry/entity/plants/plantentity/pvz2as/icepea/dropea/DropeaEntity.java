@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.icepea.dropea;
 
+import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
@@ -18,6 +19,8 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -34,6 +37,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.EnumSet;
+
+import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 public class DropeaEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
@@ -132,10 +137,12 @@ public class DropeaEntity extends PlantEntity implements IAnimatable, RangedAtta
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 7, false, false, false);
 		}
-		this.targetZombies(this.getPos(), 7, false, false, false);
 		LivingEntity target = this.getTarget();
 	}
 
@@ -146,8 +153,22 @@ public class DropeaEntity extends PlantEntity implements IAnimatable, RangedAtta
 		}
 	}
 
-
 	/** /~*~//~*INTERACTION*~//~*~/ **/
+
+	public ActionResult interactMob(PlayerEntity player, Hand hand) {
+		ItemStack itemStack = player.getStackInHand(hand);
+		if (itemStack.isOf(ModItems.GARDENINGGLOVE)) {
+			dropItem(ModItems.DROPEA_SEED_PACKET);
+			if (!player.getAbilities().creativeMode) {
+				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
+					itemStack.decrement(1);
+				}
+			}
+			this.discard();
+			return ActionResult.SUCCESS;
+		}
+		return super.interactMob(player, hand);
+	}
 
 	@Nullable
 	@Override

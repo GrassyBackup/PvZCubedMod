@@ -168,8 +168,10 @@ public class TorchwoodEntity extends PlantEntity implements IAnimatable {
 	public void tick() {
 		super.tick();
 		targetZombies(this.getPos(), 4, true, false, true);
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 		if (!this.isWet()){
 			if (--tickDamage <= 0){

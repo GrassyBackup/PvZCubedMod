@@ -589,8 +589,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			}
 		}
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 		--cooldown;
 		if (getWaveInProgress()){

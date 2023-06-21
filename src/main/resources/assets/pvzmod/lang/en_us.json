@@ -77,9 +77,9 @@
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.buttonshroomSP": "Button-shroom Weight",
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.buttonshroomSPmin": "Button-shroom Group Min",
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.buttonshroomSPmax": "Button-shroom Group Max",
-  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.solarwindsSP": "Solar Winds Weight",
-  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.solarwindsSPmin": "Solar Winds Group Min",
-  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.solarwindsSPmax": "Solar Winds Group Max",
+  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.solarwindSP": "Solar Winds Weight",
+  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.solarwindSPmin": "Solar Winds Group Min",
+  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.solarwindSPmax": "Solar Winds Group Max",
 
   "text.config.pvz3-config.section.plants": "Plant Settings",
 
@@ -108,6 +108,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dandelionweedS": "Dandelion Weed Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.doomshroomS": "Doom-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dropeaS": "Dropea Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.electropeaS": "Electro Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.empeachS": "E.M.Peach Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.firepeaS": "Fire Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.fumeshroomS": "Fume-shroom Seed",
@@ -189,7 +190,7 @@
   "text.config.pvz3-config.option.nestedProjDMG.coconutSDMG": "Coconut Splash Damage",
   "text.config.pvz3-config.option.nestedProjDMG.dropDMGv2": "Drop Damage",
   "text.config.pvz3-config.option.nestedProjDMG.dropSDMG": "Drop Splash Damage",
-  "text.config.pvz3-config.option.nestedProjDMG.electricPeaDMGv2": "Electric Pea Damage",
+  "text.config.pvz3-config.option.nestedProjDMG.electricPeaDMG": "Electric Pea Damage",
   "text.config.pvz3-config.option.nestedProjDMG.firepiercepeaDMG": "Flaming Piercing Pea Damage",
   "text.config.pvz3-config.option.nestedProjDMG.firepiercepeaSDMG": "Flaming Piercing Pea Splash Damage",
   "text.config.pvz3-config.option.nestedProjDMG.flamingPeaDMGv2": "Flaming Pea Damage",
@@ -222,6 +223,7 @@
   "text.config.pvz3-config.option.nestedGeneralZombie.zombieBlockJump": "Zombie Block Gap Jump",
 
   "text.config.pvz3-config.category.nestedZombieHealth": "Zombie Health Settings (Restart)",
+  "text.config.pvz3-config.option.nestedZombieHealth.zombieGraveH": "Zombie Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.basicGraveH": "Basic Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.nightGraveH": "Night Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.poolGraveH": "Pool Gravestone Health",

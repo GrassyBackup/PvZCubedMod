@@ -179,8 +179,10 @@ public class SpikeweedEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 		if (zombieList.isEmpty()){
 			this.attacking = false;

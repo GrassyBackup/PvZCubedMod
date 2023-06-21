@@ -202,10 +202,12 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 10, true, true, true);
 		}
-		this.targetZombies(this.getPos(), 10, true, true, true);
 		LivingEntity target = this.getTarget();
 		if (target != null){
 			if (target.getHealth() <= 0) {

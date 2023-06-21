@@ -46,8 +46,6 @@ import java.util.Optional;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
-
 public class AcidshroomEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -168,8 +166,10 @@ public class AcidshroomEntity extends PlantEntity implements IAnimatable, Ranged
 		}
 		super.tick();
 		BlockPos blockPos = this.getBlockPos();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 
 		if (this.isInsideWaterOrBubbleColumn()){

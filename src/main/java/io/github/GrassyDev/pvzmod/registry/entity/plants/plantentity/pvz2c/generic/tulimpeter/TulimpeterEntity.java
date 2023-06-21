@@ -254,10 +254,12 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 7, false, false, true);
 		}
-		this.targetZombies(this.getPos(), 7, false, false, true);
 	}
 
 	public void tickMovement() {

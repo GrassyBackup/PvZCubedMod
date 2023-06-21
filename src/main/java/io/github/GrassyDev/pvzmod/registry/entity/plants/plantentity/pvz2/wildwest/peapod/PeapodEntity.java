@@ -251,9 +251,11 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 
 	public void tick() {
 		super.tick();
-		this.targetZombies(this.getPos(), 7, false, this.getCount().equals(PeapodCountVariants.FIVE), false);
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 7, false, this.getCount().equals(PeapodCountVariants.FIVE), false);
 		}
 	}
 

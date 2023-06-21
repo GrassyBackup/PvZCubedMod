@@ -220,10 +220,12 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 3, false, true, true);
 		}
-		this.targetZombies(this.getPos(), 3, false, true, true);
 	}
 
 	public void tickMovement() {

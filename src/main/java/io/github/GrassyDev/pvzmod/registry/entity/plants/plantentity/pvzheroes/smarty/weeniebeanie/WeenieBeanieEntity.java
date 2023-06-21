@@ -7,7 +7,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -255,10 +254,12 @@ public class WeenieBeanieEntity extends PlantEntity implements IAnimatable, Rang
 		if (--this.chomperAudioDelay == 0) {
 			this.playSound(PvZSounds.PEASHOOTEVENT, 1.0F, 1.0F);
 		}
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 2, false, false, true);
 		}
-		this.targetZombies(this.getPos(), 2, false, false, true);
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {
 			this.discard();
 		}

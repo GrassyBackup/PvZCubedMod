@@ -314,10 +314,12 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 		if (--this.chomperAudioDelay == 0){
 			this.playSound(PvZSounds.CHOMPERBITEVENT, 1.0F, 1.0F);
 		}
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 2, false, true, true);
 		}
-		this.targetZombies(this.getPos(), 2, false, true, true);
 	}
 
 	public void tickMovement() {

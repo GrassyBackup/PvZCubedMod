@@ -328,8 +328,10 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 			this.targetZombies(this.getPos(), 3, false, false, true);
 		}
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 	}
 

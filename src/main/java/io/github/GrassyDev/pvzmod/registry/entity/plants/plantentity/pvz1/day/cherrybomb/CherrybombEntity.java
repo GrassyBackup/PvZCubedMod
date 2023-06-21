@@ -346,10 +346,12 @@ public class CherrybombEntity extends PlantEntity implements IAnimatable {
 		if (this.getTarget() != null){
 			this.getLookControl().lookAt(this.getTarget(), 90.0F, 90.0F);
 		}
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 3, true, true, true);
 		}
-		this.targetZombies(this.getPos(), 3, true, true, true);
 		if (this.isAlive()) {
 			if (this.getIgnited()) {
 				this.setFuseSpeed(1);

@@ -208,8 +208,10 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 		if (--this.chomperAudioDelay == 0){
 			this.playSound(PvZSounds.PEASHOOTEVENT, 1.0F, 1.0F);
 		}
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 		BlockPos blockPos = this.getBlockPos();
 		if (--amphibiousRaycastDelay >= 0) {

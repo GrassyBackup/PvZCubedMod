@@ -332,8 +332,10 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 	public void tick() {
 		super.tick();
 		this.targetZombies(this.getPos(), 5, true, true, true);
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 		if (this.isAlive()) {
 			if (this.getIgnited()) {

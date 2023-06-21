@@ -214,8 +214,10 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 			}
 		}
 		BlockPos blockPos = this.getBlockPos();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 
 		if (this.isInsideWaterOrBubbleColumn()){

@@ -227,10 +227,12 @@ public class NavyBeanEntity extends PlantEntity implements IAnimatable, RangedAt
 		if (--this.chomperAudioDelay == 0) {
 			this.playSound(PvZSounds.PEASHOOTEVENT, 1.0F, 1.0F);
 		}
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 2, false, false, !checkForZombiesMelee().isEmpty());
 		}
-		this.targetZombies(this.getPos(), 2, false, false, !checkForZombiesMelee().isEmpty());
 		BlockPos blockPos = this.getBlockPos();
 		if (--amphibiousRaycastDelay >= 0) {
 			amphibiousRaycastDelay = 60;

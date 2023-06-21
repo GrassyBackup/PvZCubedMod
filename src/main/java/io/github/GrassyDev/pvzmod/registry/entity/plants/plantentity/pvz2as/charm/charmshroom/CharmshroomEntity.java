@@ -43,8 +43,6 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
-
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 import static io.github.GrassyDev.pvzmod.PvZCubed.ZOMBIE_SIZE;
 
 public class CharmshroomEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
@@ -214,8 +212,10 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 			this.targetZombies(this.getPos(), 5, true, true, true);
 		}
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 	}
 

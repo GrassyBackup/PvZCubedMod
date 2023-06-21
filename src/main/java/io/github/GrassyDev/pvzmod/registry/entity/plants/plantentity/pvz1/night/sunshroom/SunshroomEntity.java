@@ -175,8 +175,10 @@ public class SunshroomEntity extends PlantEntity implements IAnimatable {
 			}
 		}
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
 		}
 
 		if (this.isAlive()) {

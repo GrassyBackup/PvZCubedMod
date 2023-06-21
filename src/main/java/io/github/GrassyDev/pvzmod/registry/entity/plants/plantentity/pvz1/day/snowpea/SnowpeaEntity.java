@@ -191,10 +191,12 @@ public class SnowpeaEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	public void tick() {
 		super.tick();
-		if (!this.isAiDisabled() && this.isAlive()) {
-			setPosition(this.getX(), this.getY(), this.getZ());
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+			this.targetZombies(this.getPos(), 7, false, false, false);
 		}
-		this.targetZombies(this.getPos(), 7, false, false, false);
 	}
 
 	public void tickMovement() {
