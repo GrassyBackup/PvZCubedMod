@@ -23,6 +23,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.re
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.snowpea.SnowpeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.sunflower.SunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.wallnutentity.WallnutEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.fog.magnetshroom.MagnetshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.fog.seashroom.SeashroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.doomshroom.DoomshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.fumeshroom.FumeshroomEntity;
@@ -89,6 +90,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.s
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.smarty.weeniebeanie.WeenieBeanieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.solar.bellflower.BellflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.solar.sunflowerseed.SunflowerSeedEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.acidfume.AcidFumeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.acidspore.AcidSporeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.armorbubble.ArmorBubbleEntity;
@@ -346,6 +348,12 @@ public class PvZEntity implements ModInitializer {
 					Registry.ENTITY_TYPE),
 			new Identifier(ModID, "seashroom"),
 			QuiltEntityTypeBuilder.<SeashroomEntity>create(SpawnGroup.CREATURE, SeashroomEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.8f)).build()
+	);
+
+	public static final EntityType <MagnetshroomEntity> MAGNETSHROOM = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "magnetshroom"),
+			QuiltEntityTypeBuilder.<MagnetshroomEntity>create(SpawnGroup.CREATURE, MagnetshroomEntity::new).setDimensions(EntityDimensions.fixed(1f, 1.55f)).build()
 	);
 
 	public static final EntityType<CabbagepultEntity> CABBAGEPULT = Registry.register(
@@ -1124,6 +1132,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<PlantHelmetEntity>create(SpawnGroup.MONSTER, PlantHelmetEntity::new).setDimensions(EntityDimensions.fixed(0.8f, 1.95f)).build()
 	);
 
+	public static final EntityType<MetalHelmetProjEntity> METALHELMETPROJ = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "metalhelmetproj"),
+			QuiltEntityTypeBuilder.<MetalHelmetProjEntity>create(SpawnGroup.MONSTER, MetalHelmetProjEntity::new).setDimensions(EntityDimensions.fixed(0.5f, 0.5f)).build()
+	);
+
     public static final EntityType<FlagzombieEntity> FLAGZOMBIE = Registry.register(
             Registry.ENTITY_TYPE,
             new Identifier(ModID, "flagzombie"),
@@ -1610,7 +1624,7 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUNSHROOM, SunshroomEntity.createSunshroomAttributes().build());
 
-		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FUMESHROOM, FumeshroomEntity.createFumeshroomAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MAGNETSHROOM, MagnetshroomEntity.createMagnetshroomAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BREEZESHROOM, BreezeshroomEntity.createBreezeshroomAttributes().build());
 

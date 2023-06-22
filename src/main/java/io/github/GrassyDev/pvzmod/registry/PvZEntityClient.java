@@ -23,6 +23,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.re
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.snowpea.SnowpeaEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.sunflower.SunflowerEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.wallnutentity.WallnutEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.fog.magnetshroom.MagnetshroomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.fog.seashroom.SeashroomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.doomshroom.DoomshroomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.fumeshroom.FumeshroomEntityRenderer;
@@ -89,6 +90,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.s
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.smarty.weeniebeanie.WeenieBeanieEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.solar.bellflower.BellflowerEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.solar.sunflowerseed.SunflowerSeedEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.acidfume.AcidFumeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.acidspore.AcidSporeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.armorbubble.ArmorBubbleEntityRenderer;
@@ -230,6 +232,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.TALLNUT, TallnutEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.SEASHROOM, SeashroomEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.MAGNETSHROOM, MagnetshroomEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.CABBAGEPULT, CabbagepultEntityRenderer::new);
 
@@ -456,6 +460,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.TRASHCANHYPNO, BrowncoatEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.TRASHCANBIN, MetalObstacleEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.METALHELMETPROJ, MetalHelmetProjEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.DANCINGZOMBIE, DancingZombieEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.DANCINGZOMBIEHYPNO, DancingZombieEntityRenderer::new);

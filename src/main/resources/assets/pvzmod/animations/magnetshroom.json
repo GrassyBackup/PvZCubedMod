@@ -83,7 +83,7 @@
 						},
 						"1.5": {
 							"vector": [7.5, 0, 0],
-							"easing": "easeInBack"
+							"easing": "easeOutBack"
 						}
 					},
 					"scale": {
@@ -92,7 +92,7 @@
 						},
 						"1.5": {
 							"vector": [1, 1, 1],
-							"easing": "easeInBack"
+							"easing": "easeOutBack"
 						}
 					}
 				},
@@ -107,7 +107,7 @@
 						},
 						"1.5": {
 							"vector": [-10, 0, 0],
-							"easing": "easeInBack"
+							"easing": "easeOutBack"
 						}
 					},
 					"scale": {
@@ -119,7 +119,7 @@
 						},
 						"1.5": {
 							"vector": [1, 1.1, 1],
-							"easing": "easeInBack"
+							"easing": "easeOutBack"
 						}
 					}
 				}

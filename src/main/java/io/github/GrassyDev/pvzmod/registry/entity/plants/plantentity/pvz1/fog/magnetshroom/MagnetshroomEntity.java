@@ -1,0 +1,463 @@
+package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.fog.magnetshroom;
+
+import io.github.GrassyDev.pvzmod.PvZCubed;
+import io.github.GrassyDev.pvzmod.registry.ModItems;
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
+import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.FumeshroomVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelmetVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallichelmet.MetalHelmetEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield.MetalShieldEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.RangedAttackMob;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.*;
+import net.minecraft.world.biome.BiomeKeys;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Optional;
+
+import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
+
+public class MagnetshroomEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
+
+	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
+
+	private String controllerName = "fumecontroller";
+
+	private int attractTicks;
+	public boolean magnetized;
+
+	public MagnetshroomEntity(EntityType<? extends MagnetshroomEntity> entityType, World world) {
+		super(entityType, world);
+		this.ignoreCameraFrustum = true;
+		this.targetHelmet = true;
+		this.magnetshroom = true;
+	}
+
+	protected void initDataTracker() {
+		super.initDataTracker();
+		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+	}
+
+	@Override
+	public void writeCustomDataToNbt(NbtCompound tag) {
+		super.writeCustomDataToNbt(tag);
+		tag.putInt("Variant", this.getTypeVariant());
+	}
+
+	public void readCustomDataFromNbt(NbtCompound tag) {
+		super.readCustomDataFromNbt(tag);
+		this.dataTracker.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
+	}
+
+	static {
+	}
+
+	@Environment(EnvType.CLIENT)
+	public void handleStatus(byte status) {
+		if (status != 2 && status != 60){
+			super.handleStatus(status);
+		}
+		if (status == 111){
+			this.attractTicks = 30;
+		}
+		if (status == 110){
+			this.attractTicks = 0;
+		}
+	}
+
+
+	/** /~*~//~*VARIANTS*~//~*~/ **/
+
+	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
+			DataTracker.registerData(MagnetshroomEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+								 SpawnReason spawnReason, @Nullable EntityData entityData,
+								 @Nullable NbtCompound entityNbt) {
+		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+	}
+
+	private int getTypeVariant() {
+		return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
+	}
+
+	public FumeshroomVariants getVariant() {
+		return FumeshroomVariants.byId(this.getTypeVariant() & 255);
+	}
+
+	public void setVariant(FumeshroomVariants variant) {
+		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+	}
+
+
+	/** /~*~//~*GECKOLIB ANIMATION*~//~*~/ **/
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		AnimationController controller = new AnimationController(this, controllerName, 0, this::predicate);
+
+		data.addAnimationController(controller);
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
+	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+		if (this.attractTicks > 0) {
+			event.getController().setAnimation(new AnimationBuilder().playOnce("magnetshroom.pull"));
+		}
+		else if (this.magnetized) {
+			event.getController().setAnimation(new AnimationBuilder().loop("magnetshroom.idle2"));
+		}
+		else if (this.getIsAsleep()) {
+			event.getController().setAnimation(new AnimationBuilder().loop("magnetshroom.asleep"));
+		} else {
+			event.getController().setAnimation(new AnimationBuilder().loop("magnetshroom.idle"));
+		}
+		return PlayState.CONTINUE;
+	}
+
+
+	/** /~*~//~*AI*~//~*~/ **/
+
+	protected void initGoals() {
+		this.goalSelector.add(1, new MagnetshroomEntity.FireBeamGoal(this));
+	}
+
+
+	@Override
+	public void attack(LivingEntity target, float pullProgress) {
+
+	}
+
+
+	/** /~*~//~*POSITION*~//~*~/ **/
+
+	public void setPosition(double x, double y, double z) {
+		BlockPos blockPos = this.getBlockPos();
+		if (this.hasVehicle()) {
+			super.setPosition(x, y, z);
+		} else {
+			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
+		}
+
+		if (this.age > 1) {
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.FUMESHROOM_SEED_PACKET);
+				}
+				this.discard();
+			}
+
+		}
+	}
+
+
+	/** /~*~//~*TICKING*~//~*~/ **/
+
+	public void tick() {
+		--this.attractTicks;
+		for (Entity entity : this.getPassengerList()) {
+			if (entity instanceof ZombiePropEntity){
+				entity.discard();
+			}
+		}
+		if (!this.world.isClient) {
+			if ((this.world.getAmbientDarkness() >= 2 ||
+					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+				this.setIsAsleep(IsAsleep.FALSE);
+			} else if (this.world.getAmbientDarkness() < 2 &&
+					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+				this.setIsAsleep(IsAsleep.TRUE);
+			}
+		}
+		if (this.getIsAsleep()){
+			this.setTarget(null);
+		}
+		else {
+			this.targetZombies(this.getPos(), 5, false, false, true);
+		}
+		super.tick();
+		if (tickDelay <= 1) {
+			if (!this.isAiDisabled() && this.isAlive()) {
+				setPosition(this.getX(), this.getY(), this.getZ());
+			}
+		}
+		List<Entity> helmets = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, 0, 0));
+		List<Entity> helmets2 = new ArrayList<>();
+		for (Entity entity : helmets){
+			if (entity instanceof MetalHelmetProjEntity metalHelmetProjEntity){
+				if (metalHelmetProjEntity.getOwner() == this){
+					helmets2.add(entity);
+				}
+			}
+		}
+		this.magnetized = !helmets2.isEmpty();
+		System.out.println(magnetized);
+	}
+
+	public void tickMovement() {
+		super.tickMovement();
+		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+			this.discard();
+		}
+	}
+
+
+	/** /~*~//~*INTERACTION*~//~*~/ **/
+
+	public ActionResult interactMob(PlayerEntity player, Hand hand) {
+		ItemStack itemStack = player.getStackInHand(hand);
+		if (itemStack.isOf(ModItems.GARDENINGGLOVE)) {
+			dropItem(ModItems.FUMESHROOM_SEED_PACKET);
+			if (!player.getAbilities().creativeMode) {
+				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
+					itemStack.decrement(1);
+				}
+			}
+			this.discard();
+			return ActionResult.SUCCESS;
+		}
+		return super.interactMob(player, hand);
+	}
+
+	@Nullable
+	@Override
+	public ItemStack getPickBlockStack() {
+		return ModItems.FUMESHROOM_SEED_PACKET.getDefaultStack();
+	}
+
+
+	/** /~*~//~*ATTRIBUTES*~//~*~/ **/
+
+	public static DefaultAttributeContainer.Builder createMagnetshroomAttributes() {
+		return MobEntity.createMobAttributes()
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, 28.0D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
+				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 6D);
+	}
+
+	protected boolean canClimb() {
+		return false;
+	}
+
+	public boolean collides() {
+		return true;
+	}
+
+	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+		return 0.5F;
+	}
+
+	@Nullable
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return PvZSounds.SILENCEVENET;
+	}
+
+	@Nullable
+	protected SoundEvent getDeathSound() {
+		return PvZSounds.PLANTPLANTEDEVENT;
+	}
+
+	public boolean hurtByWater() {
+		return false;
+	}
+
+	public boolean isPushable() {
+		return false;
+	}
+
+	protected void pushAway(Entity entity) {
+	}
+
+	public boolean startRiding(Entity entity, boolean force) {
+		return super.startRiding(entity, force);
+	}
+
+	@Override
+	public double getMountedHeightOffset() {
+		return 1.25f;
+	}
+
+	public void stopRiding() {
+		super.stopRiding();
+		this.prevBodyYaw = 0.0F;
+		this.bodyYaw = 0.0F;
+	}
+
+
+	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
+
+	public boolean handleAttack(Entity attacker) {
+		if (attacker instanceof PlayerEntity) {
+			PlayerEntity playerEntity = (PlayerEntity) attacker;
+			return this.damage(DamageSource.player(playerEntity), 9999.0F);
+		} else {
+			return false;
+		}
+	}
+
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+		if (fallDistance > 0F) {
+			this.playSound(PvZSounds.PLANTPLANTEDEVENT, 0.4F, 1.0F);
+			this.discard();
+		}
+		this.playBlockFallSound();
+		return true;
+	}
+
+
+	/** /~*~//~*GOALS*~//~*~/ **/
+
+	public void magnetize(){
+		LivingEntity livingEntity = this.getTarget();
+		MetalHelmetVariants helmetProj = MetalHelmetVariants.BUCKET;
+		ZombiePropEntity setGear = null;
+		if (livingEntity != null){
+			EntityType<?> entityType = null;
+			for (Entity entity : livingEntity.getPassengerList()){
+				entityType = entity.getType();
+				if (entityType.equals(PvZEntity.BUCKETGEAR)){
+					if (livingEntity.getType().equals(PvZEntity.PEASANTBUCKET)){
+						helmetProj = MetalHelmetVariants.PEASANTBUCKET;
+					}
+					else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)){
+						helmetProj = MetalHelmetVariants.MUMMYBUCKET;
+					}
+					else {
+						helmetProj = MetalHelmetVariants.BUCKET;
+					}
+				}
+				else if (entityType.equals(PvZEntity.SCREENDOORSHIELD)){
+					helmetProj = MetalHelmetVariants.SCREENDOOR;
+				}
+				else if (entityType.equals(PvZEntity.FOOTBALLGEAR)){
+					helmetProj = MetalHelmetVariants.FOOTBALL;
+				}
+				else if (entityType.equals(PvZEntity.BERSERKERGEAR)){
+					helmetProj = MetalHelmetVariants.BERSERKER;
+				}
+				else if (entityType.equals(PvZEntity.DEFENSIVEENDGEAR)){
+					helmetProj = MetalHelmetVariants.DEFENSIVEEND;
+				}
+				else if (entityType.equals(PvZEntity.TRASHCANBIN)){
+					helmetProj = MetalHelmetVariants.TRASHCAN;
+				}
+				else if (entityType.equals(PvZEntity.BLASTRONAUTGEAR)){
+					helmetProj = MetalHelmetVariants.BERSERKER;
+				}
+				else if (entityType.equals(PvZEntity.KNIGHTGEAR)){
+					helmetProj = MetalHelmetVariants.KNIGHT;
+				}
+				if (entity instanceof MetalShieldEntity metalShieldEntity || entity instanceof MetalHelmetEntity metalHelmetEntity){
+					setGear = (ZombiePropEntity) entity;
+					break;
+				}
+			}
+		}
+		if (setGear != null) {
+			MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
+			if (setGear.getHealth() <= setGear.getMaxHealth() / 2){
+				helmetProjEntity.damaged = true;
+			}
+			setGear.startRiding(this, true);
+			helmetProjEntity.setOwner(this);
+			helmetProjEntity.refreshPositionAndAngles(this.getX(), this.getY() + 1.5, this.getZ(), 0, 0);
+			helmetProjEntity.startRiding(this);
+			helmetProjEntity.setVariant(helmetProj);
+			((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
+		}
+	}
+
+	static class FireBeamGoal extends Goal {
+		private final MagnetshroomEntity plantEntity;
+		private int beamTicks;
+		private int animationTicks;
+
+		public FireBeamGoal(MagnetshroomEntity plantEntity) {
+			this.plantEntity = plantEntity;
+			this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
+		}
+
+		public boolean canStart() {
+			LivingEntity livingEntity = this.plantEntity.getTarget();
+			return livingEntity != null && livingEntity.isAlive() && livingEntity.hasPassengers() && !plantEntity.magnetized;
+		}
+
+		public boolean shouldContinue() {
+			LivingEntity livingEntity = this.plantEntity.getTarget();
+			return super.shouldContinue() && !this.plantEntity.getIsAsleep() && (livingEntity != null && livingEntity.hasPassengers()) && !plantEntity.magnetized;
+		}
+
+		public void start() {
+			this.beamTicks = -8;
+			this.animationTicks = -15;
+			this.plantEntity.getNavigation().stop();
+			this.plantEntity.getLookControl().lookAt(this.plantEntity.getTarget(), 90.0F, 90.0F);
+			this.plantEntity.velocityDirty = true;
+		}
+
+		public void stop() {
+		}
+
+		public void tick() {
+			LivingEntity livingEntity = this.plantEntity.getTarget();
+			this.plantEntity.getNavigation().stop();
+			this.plantEntity.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
+			if ((!this.plantEntity.canSee(livingEntity) && this.animationTicks >= 0) || this.plantEntity.getIsAsleep() ||
+					(livingEntity != null && !livingEntity.hasPassengers())){
+				this.plantEntity.setTarget((LivingEntity) null);
+			} else {
+				this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
+				++this.beamTicks;
+				++this.animationTicks;
+				if (this.animationTicks == -14){
+					this.plantEntity.magnetize();
+				}
+				super.tick();
+			}
+		}
+	}
+}
