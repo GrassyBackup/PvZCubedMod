@@ -89,6 +89,11 @@
       "pvzmod:snowpea_shoot"
     ]
   },
+  "magnet.attract": {
+    "sounds": [
+      "pvzmod:magnet_attract"
+    ]
+  },
   "boomerang.ambient": {
     "sounds": [
       "pvzmod:boomerang_ambient"

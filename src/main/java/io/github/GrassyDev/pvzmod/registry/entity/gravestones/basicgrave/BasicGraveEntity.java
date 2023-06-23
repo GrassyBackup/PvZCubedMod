@@ -25,7 +25,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -51,8 +50,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Objects;
-
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
@@ -435,6 +432,36 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 				}
 			}
+			if (isUnlock() || isUnlockSpecial()) {
+				if (probability5 <= 0.15 / halfModifier) { // 30% x1 Buckethead
+					for (int u = 0; u < 1; ++u) {
+						if (!BasicGraveEntity.this.is1x1()) {
+							zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
+							zombiePos = BasicGraveEntity.this.random.range(-1, 1);
+						}
+						BlockPos blockPos = BasicGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(BasicGraveEntity.this.world);
+						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						bucketheadEntity.initialize(serverWorld, BasicGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.setOwner(BasicGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+					}
+				}
+				if (probability2 <= 0.15 / halfModifier) { // 15% x1 Buckethead
+					for (int u = 0; u < 1; ++u) {
+						if (!BasicGraveEntity.this.is1x1()) {
+							zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
+							zombiePos = BasicGraveEntity.this.random.range(-1, 1);
+						}
+						BlockPos blockPos = BasicGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(BasicGraveEntity.this.world);
+						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						bucketheadEntity.initialize(serverWorld, BasicGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.setOwner(BasicGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+					}
+				}
+			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
 					if (probability11 <= 0.15 / halfModifier) { // 15% x2 Conehead
@@ -614,7 +641,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability8 <= 0.4 / halfModifier) { // 50% x1 Trash Can Zombie
+					if (probability8 <= 0.4 / halfModifier) { // 40% x1 Trash Can Zombie
 						for (int g = 0; g < 1; ++g) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -651,8 +678,8 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.709 + difficultymodifier || isUnlock()) {
-					if (probability9 <= 0.4 / halfModifier) { // 40% x3 Trash Can Zombie
-						for (int g = 0; g < Math.round(3 / halfModifier); ++g) {
+					if (probability9 <= 0.3 / halfModifier) { // 30% x1 Trash Can Zombie
+						for (int g = 0; g < 1; ++g) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
 								zombiePos = BasicGraveEntity.this.random.range(-1, 1);

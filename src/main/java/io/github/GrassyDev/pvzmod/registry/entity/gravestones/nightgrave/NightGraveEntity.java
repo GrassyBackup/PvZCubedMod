@@ -28,7 +28,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -52,8 +51,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Objects;
-
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
@@ -392,6 +389,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 			}
 			double probability = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability11 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability12 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability13 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability2 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability10 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability3 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
@@ -451,6 +450,36 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 				}
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
+				if (isUnlock() || isUnlockSpecial()) {
+					if (probability12 <= 0.15 / halfModifier) { // 30% x1 Buckethead
+						for (int u = 0; u < 1; ++u) {
+							if (!NightGraveEntity.this.is1x1()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
+								zombiePos = NightGraveEntity.this.random.range(-1, 1);
+							}
+							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(NightGraveEntity.this.world);
+							bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							bucketheadEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							bucketheadEntity.setOwner(NightGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+						}
+					}
+					if (probability13 <= 0.15 / halfModifier) { // 15% x1 Buckethead
+						for (int u = 0; u < 1; ++u) {
+							if (!NightGraveEntity.this.is1x1()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
+								zombiePos = NightGraveEntity.this.random.range(-1, 1);
+							}
+							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(NightGraveEntity.this.world);
+							bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							bucketheadEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							bucketheadEntity.setOwner(NightGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+						}
+					}
+				}
 				if (probability11 <= 0.15 / halfModifier) { // 15% x1 Conehead
 					for (int h = 0; h < 2 / halfModifier; ++h) {
 						if (!NightGraveEntity.this.is1x1()) {

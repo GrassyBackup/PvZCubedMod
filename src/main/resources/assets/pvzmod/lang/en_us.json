@@ -140,6 +140,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.retrogatlingS": "Retro Gatling Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.scaredyshroomS": "Scaredy-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.seashroomS": "Sea-shroom Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.magnetshroomS": "Magnet-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.shamrockS": "Shamrock Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smackadamiaSv2": "Smackadamia Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smallnutS": "Small-nut Seed",
@@ -468,6 +469,11 @@
   "item.pvzmod.seashroom_seed_packet.flavour2": " disadvantaged Plants in his spare time.",
   "item.pvzmod.acidspore": "Acid Spore",
 
+  "entity.pvzmod.magnetshroom": "Magnet-shroom",
+  "item.pvzmod.magnetshroom_seed_packet": "⏳ Magnet-shroom Seed Packet",
+  "item.pvzmod.magnetshroom_seed_packet.flavour": "Doesn't have a problem attracting girlfriends.",
+  "item.pvzmod.magnetshroom_seed_packet.flavour2": "But does have a problem keeping them.",
+
   "entity.pvzmod.cabbagepult": "Cabbage-pult",
   "item.pvzmod.cabbagepult_seed_packet": "\uD83C\uDFF9 Cabbage-pult Seed Packet",
   "item.pvzmod.cabbagepult_seed_packet.flavour": "\"Coleslaw from above!\"",
@@ -615,6 +621,11 @@
   "item.pvzmod.magicshroom_seed_packet": "⭐ Magic-shroom Seed Packet",
   "item.pvzmod.magicshroom_seed_packet.flavour": "\"Abra, Kadabra, Gengar!\"",
   "item.pvzmod.cardproj": "Card",
+
+  "entity.pvzmod.magnetoshroom": "Magneto-shroom",
+  "item.pvzmod.magnetoshroom_seed_packet": "⏳ Magneto-shroom Seed Packet",
+  "item.pvzmod.magnetoshroom_seed_packet.flavour": "Wanted to be a hero, but lived long enough",
+  "item.pvzmod.magnetoshroom_seed_packet.flavour2": "to cosplay as the villain.",
 
   "entity.pvzmod.loquat": "Loquat",
   "item.pvzmod.loquat_seed_packet": "⛨ Loquat Seed Packet",

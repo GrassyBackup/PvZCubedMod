@@ -47,6 +47,7 @@ public class ModItems {
 		SEED_PACKET_LIST.add(ModItems.TORCHWOOD_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.TALLNUT_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SEASHROOM_SEED_PACKET);
+		SEED_PACKET_LIST.add(ModItems.MAGNETSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.CABBAGEPULT_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.GATLINGPEA_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.RETROGATLING_SEED_PACKET);
@@ -82,6 +83,7 @@ public class ModItems {
 		SEED_PACKET_LIST.add(ModItems.DROPEA_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.BEAUTYSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.CHARMSHROOM_SEED_PACKET);
+		SEED_PACKET_LIST.add(ModItems.MAGNETOSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SMALLNUT_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SMACKADAMIA_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.BUTTONSHROOM_SEED_PACKET);
@@ -186,6 +188,7 @@ public class ModItems {
 	public static final Item TORCHWOOD_SEED_PACKET = new TorchwoodSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.RARE));
 	public static final Item TALLNUT_SEED_PACKET = new TallnutSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item SEASHROOM_SEED_PACKET = new SeashroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.COMMON));
+	public static final Item MAGNETSHROOM_SEED_PACKET = new MagnetshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item CABBAGEPULT_SEED_PACKET = new CabbagepultSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.COMMON));
 	public static final Item GATLINGPEA_SEED_PACKET = new GatlingpeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
 	public static final Item RETROGATLING_SEED_PACKET = new RetroGatlingSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
@@ -222,6 +225,7 @@ public class ModItems {
 	public static final Item DROPEA_SEED_PACKET = new DropeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item BEAUTYSHROOM_SEED_PACKET = new BeautyshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item CHARMSHROOM_SEED_PACKET = new CharmshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.RARE));
+	public static final Item MAGNETOSHROOM_SEED_PACKET = new MagnetoShroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.RARE));
 	public static final Item SMALLNUT_SEED_PACKET = new SmallnutSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item SMACKADAMIA_SEED_PACKET = new SmackadamiaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item BUTTONSHROOM_SEED_PACKET = new ButtonshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
@@ -447,6 +451,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"torchwood_seed_packet"), TORCHWOOD_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"tallnut_seed_packet"), TALLNUT_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"seashroom_seed_packet"), SEASHROOM_SEED_PACKET);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"magnetshroom_seed_packet"), MAGNETSHROOM_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"cabbagepult_seed_packet"), CABBAGEPULT_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"gatlingpea_seed_packet"), GATLINGPEA_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"retrogatling_seed_packet"), RETROGATLING_SEED_PACKET);
@@ -482,6 +487,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dropea_seed_packet"), DROPEA_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"beautyshroom_seed_packet"), BEAUTYSHROOM_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"charmshroom_seed_packet"), CHARMSHROOM_SEED_PACKET);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"magnetoshroom_seed_packet"), MAGNETOSHROOM_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"smallnut_seed_packet"), SMALLNUT_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"smackadamia_seed_packet"), SMACKADAMIA_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"buttonshroom_seed_packet"), BUTTONSHROOM_SEED_PACKET);

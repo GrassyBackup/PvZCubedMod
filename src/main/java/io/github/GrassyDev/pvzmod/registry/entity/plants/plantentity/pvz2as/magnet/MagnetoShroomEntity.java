@@ -1,4 +1,4 @@
-package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.fog.magnetshroom;
+package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.magnet;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
@@ -24,6 +24,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
@@ -45,7 +46,7 @@ import java.util.Optional;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class MagnetshroomEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
+public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -53,12 +54,17 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	private int attractTicks;
 	public boolean magnetized;
+	public boolean canShoot;
+	public boolean isFiring;
+	private int untarget;
 
-	public MagnetshroomEntity(EntityType<? extends MagnetshroomEntity> entityType, World world) {
+	public MagnetoShroomEntity(EntityType<? extends MagnetoShroomEntity> entityType, World world) {
 		super(entityType, world);
 		this.ignoreCameraFrustum = true;
 		this.targetHelmet = true;
-		this.magnetshroom = true;
+		this.magnetoshroom = true;
+		this.magnetOffsetY = 0.75f;
+		this.magnetOffsetX = 0.4f;
 	}
 
 	static {
@@ -74,6 +80,11 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 		}
 		if (status == 110){
 			this.attractTicks = 0;
+		}
+		if (status == 113) {
+			this.isFiring = true;
+		} else if (status == 112) {
+			this.isFiring = false;
 		}
 		if (status == 109){
 			this.magnetized = true;
@@ -99,7 +110,10 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 	}
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if (this.attractTicks > 0) {
+		if (this.isFiring){
+			event.getController().setAnimation(new AnimationBuilder().playOnce("magnetshroom.shoot"));
+		}
+		else if (this.attractTicks > 0) {
 			event.getController().setAnimation(new AnimationBuilder().playOnce("magnetshroom.pull"));
 		}
 		else if (this.magnetized) {
@@ -118,7 +132,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	protected void initGoals() {
 		this.goalSelector.add(1, new LookAtEntityGoal(this, GeneralPvZombieEntity.class, 13F));
-		this.goalSelector.add(1, new MagnetshroomEntity.FireBeamGoal(this));
+		this.goalSelector.add(1, new MagnetoShroomEntity.FireBeamGoal(this));
 	}
 
 
@@ -156,6 +170,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tick() {
 		--this.attractTicks;
+		++this.untarget;
 		if (!this.world.isClient) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
@@ -171,7 +186,21 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 			this.setTarget(null);
 		}
 		else {
-			this.targetZombies(this.getPos(), 5, true, true, true);
+			if (this.untarget >= 0) {
+				if (this.magnetized) {
+					this.magnetoshroom = false;
+					this.targetHelmet = false;
+					this.targetZombies(this.getPos(), 5, false, false, false);
+				} else {
+					this.magnetoshroom = true;
+					this.targetHelmet = true;
+					this.targetZombies(this.getPos(), 5, true, true, true);
+				}
+			}
+			else {
+				this.world.sendEntityStatus(this, (byte) 112);
+				this.setTarget(null);
+			}
 		}
 		super.tick();
 		if (tickDelay <= 1) {
@@ -185,32 +214,23 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 			if (entity instanceof MetalHelmetProjEntity metalHelmetProjEntity){
 				if (metalHelmetProjEntity.getOwner() == this){
 					helmets2.add(entity);
-					metalHelmetProjEntity.magnetized = true;
+					metalHelmetProjEntity.magnetized = !this.canShoot;
+					metalHelmetProjEntity.keepSize = true;
+					if (metalHelmetProjEntity.age >= 100){
+						this.canShoot = true;
+					}
 				}
 			}
 		}
 		if (helmets2.isEmpty()){
 			this.magnetized = false;
+			this.canShoot = false;
 			this.world.sendEntityStatus(this, (byte) 108);
 		}
 		else {
 			this.magnetized = true;
 			this.world.sendEntityStatus(this, (byte) 109);
 		}
-	}
-
-	@Override
-	public void onDeath(DamageSource source) {
-		List<Entity> helmets = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, 0, 0));
-		for (Entity entity : helmets){
-			if (entity instanceof MetalHelmetProjEntity metalHelmetProjEntity){
-				if (metalHelmetProjEntity.getOwner() == this){
-					metalHelmetProjEntity.magnetized = false;
-					metalHelmetProjEntity.discard();
-				}
-			}
-		}
-		super.onDeath(source);
 	}
 
 	@Override
@@ -261,12 +281,12 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	/** /~*~//~*ATTRIBUTES*~//~*~/ **/
 
-	public static DefaultAttributeContainer.Builder createMagnetshroomAttributes() {
+	public static DefaultAttributeContainer.Builder createMagnetoshroomAttributes() {
 		return MobEntity.createMobAttributes()
-				.add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, 32.0D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 10D);
+				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 15D);
 	}
 
 	protected boolean canClimb() {
@@ -342,23 +362,23 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 	/** /~*~//~*GOALS*~//~*~/ **/
 
 	static class FireBeamGoal extends Goal {
-		private final MagnetshroomEntity plantEntity;
+		private final MagnetoShroomEntity plantEntity;
 		private int beamTicks;
 		private int animationTicks;
 
-		public FireBeamGoal(MagnetshroomEntity plantEntity) {
+
+		public FireBeamGoal(MagnetoShroomEntity plantEntity) {
 			this.plantEntity = plantEntity;
 			this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
 		}
 
 		public boolean canStart() {
 			LivingEntity livingEntity = this.plantEntity.getTarget();
-			return livingEntity != null && livingEntity.isAlive() && livingEntity.hasPassengers() && !plantEntity.magnetized;
+			return livingEntity != null && livingEntity.isAlive();
 		}
 
 		public boolean shouldContinue() {
-			LivingEntity livingEntity = this.plantEntity.getTarget();
-			return super.shouldContinue() && !this.plantEntity.getIsAsleep() && (livingEntity != null && livingEntity.hasPassengers()) && !plantEntity.magnetized;
+			return super.shouldContinue() && !this.plantEntity.getIsAsleep();
 		}
 
 		public void start() {
@@ -376,15 +396,59 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 			LivingEntity livingEntity = this.plantEntity.getTarget();
 			this.plantEntity.getNavigation().stop();
 			this.plantEntity.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
-			if ((!this.plantEntity.canSee(livingEntity) && this.animationTicks >= 0) || this.plantEntity.getIsAsleep() ||
-					(livingEntity != null && !livingEntity.hasPassengers())){
+			if ((!this.plantEntity.canSee(livingEntity) && this.animationTicks >= 0) || this.plantEntity.getIsAsleep()){
 				this.plantEntity.setTarget((LivingEntity) null);
 			} else {
-				this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
+				if (this.plantEntity.magnetized && this.plantEntity.canShoot && this.plantEntity.untarget >= 0){
+					this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 113);
+				}
+				else if (!this.plantEntity.magnetized) {
+					this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
+				}
 				++this.beamTicks;
 				++this.animationTicks;
-				if (this.animationTicks == -14){
-					this.plantEntity.magnetize();
+				if (this.plantEntity.magnetized && this.plantEntity.canShoot){
+					if (this.beamTicks >= 0 && this.animationTicks <= -7) {
+						if (!this.plantEntity.isInsideWaterOrBubbleColumn()) {
+							List<Entity> helmets = this.plantEntity.world.getNonSpectatingEntities(Entity.class, this.plantEntity.getBoundingBox().stretch(0, 0, 0));
+							MetalHelmetProjEntity helmetProj = null;
+							for (Entity entity : helmets){
+								if (entity instanceof MetalHelmetProjEntity metalHelmetProjEntity){
+									if (metalHelmetProjEntity.getOwner() == this.plantEntity){
+										helmetProj = metalHelmetProjEntity;
+									}
+								}
+							}
+							if (helmetProj != null) {
+								double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
+								Vec3d targetPos = livingEntity.getPos();
+								Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+								double d = this.plantEntity.squaredDistanceTo(predictedPos);
+								float df = (float) d;
+								double e = predictedPos.getX() - this.plantEntity.getX();
+								double f = (livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.plantEntity.getY() + 0.3595 : livingEntity.getY() - this.plantEntity.getY();
+								double g = predictedPos.getZ() - this.plantEntity.getZ();
+								float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
+								helmetProj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.66F, 0F);
+								helmetProj.setOwner(this.plantEntity);
+								if (livingEntity.isAlive()) {
+									this.beamTicks = -7;
+									this.plantEntity.playSound(PvZSounds.MAGNETATTRACTEVENT, 0.2F, 1);
+									this.plantEntity.untarget = -10;
+								}
+							}
+						}
+					}
+					else if (this.animationTicks >= 0)
+					{
+						this.beamTicks = -7;
+						this.animationTicks = -16;
+					}
+				}
+				else if (!this.plantEntity.magnetized) {
+					if (this.animationTicks == -14) {
+						this.plantEntity.magnetize();
+					}
 				}
 				super.tick();
 			}

@@ -1,6 +1,7 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.gargantuar.modernday.GargantuarEntity;
 import net.minecraft.entity.Entity;
@@ -20,11 +21,10 @@ import net.minecraft.world.World;
 
 import java.util.Objects;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
-
 public abstract class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 
-	/** For Hypnotized Zombies **/
+	public boolean isHeavy = false;
+
 	protected ZombiePropEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		this.noClip = true;
@@ -58,6 +58,10 @@ public abstract class ZombiePropEntity extends GeneralPvZombieEntity implements 
 	}
 
 	public void tick() {
+		if (this instanceof ZombieObstacleEntity ||
+				this.getType().equals(PvZEntity.DEFENSIVEENDGEAR)){
+			isHeavy = true;
+		}
 		if (this.getVehicle() != null){
 			this.setYaw(this.getVehicle().getYaw());
 			this.setHeadYaw(this.getVehicle().getHeadYaw());

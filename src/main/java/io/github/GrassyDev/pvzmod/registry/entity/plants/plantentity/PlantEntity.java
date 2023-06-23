@@ -2,11 +2,16 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
+import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelmetVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.snorkel.SnorkelEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallichelmet.MetalHelmetEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield.MetalShieldEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -21,6 +26,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -187,6 +193,7 @@ public abstract class PlantEntity extends GolemEntity {
 	public boolean targetIce;
 	public boolean targetHelmet;
 	public boolean magnetshroom;
+	public boolean magnetoshroom;
 	public boolean targetNoHelmet;
 	public boolean targetChilled;
 	public boolean illuminate;
@@ -206,6 +213,8 @@ public abstract class PlantEntity extends GolemEntity {
 		boolean hasHelmet = false;
 		boolean hasShield = false;
 		boolean prevHelmet = false;
+		boolean hasMetalGear = false;
+		boolean tooHeavy = true;
 		LivingEntity targeted = null;
 		LivingEntity prioritizedTarget = null;
 		if (!this.world.isClient()) {
@@ -243,8 +252,17 @@ public abstract class PlantEntity extends GolemEntity {
 									for (Entity zombiePropEntity : hostileEntity.getPassengerList()) {
 										hasHelmet = zombiePropEntity instanceof ZombiePropEntity && !(zombiePropEntity instanceof ZombieShieldEntity);
 										hasShield = zombiePropEntity instanceof ZombieShieldEntity;
+										if (zombiePropEntity instanceof MetalHelmetEntity || zombiePropEntity instanceof MetalShieldEntity){
+											hasMetalGear = true;
+										}
+										if (zombiePropEntity instanceof ZombiePropEntity zombiePropEntity1 && !zombiePropEntity1.isHeavy){
+											tooHeavy = false;
+										}
 									}
-									if ((magnetshroom && !hasHelmet) && (magnetshroom && !hasShield)) {
+									if (magnetshroom && (!hasMetalGear || tooHeavy)) {
+
+									}
+									else if (!(magnetshroom && (!hasMetalGear || tooHeavy)) && magnetoshroom && !hasMetalGear) {
 
 									} else {
 										if (zombieStrength < currentStrength && this.targetStrength) {
@@ -748,6 +766,65 @@ public abstract class PlantEntity extends GolemEntity {
 			super.dropLoot(source, causedByPlayer);
 		}
 	}
+
+	public void magnetize(){
+		LivingEntity livingEntity = this.getTarget();
+		MetalHelmetVariants helmetProj = MetalHelmetVariants.BUCKET;
+		ZombiePropEntity setGear = null;
+		if (livingEntity != null){
+			EntityType<?> entityType = null;
+			for (Entity entity : livingEntity.getPassengerList()){
+				if (entity instanceof ZombiePropEntity zombiePropEntity) {
+					entityType = entity.getType();
+					if (entityType.equals(PvZEntity.BUCKETGEAR)) {
+						if (livingEntity.getType().equals(PvZEntity.PEASANTBUCKET)) {
+							helmetProj = MetalHelmetVariants.PEASANTBUCKET;
+						} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
+							helmetProj = MetalHelmetVariants.MUMMYBUCKET;
+						} else {
+							helmetProj = MetalHelmetVariants.BUCKET;
+						}
+					} else if (entityType.equals(PvZEntity.SCREENDOORSHIELD)) {
+						helmetProj = MetalHelmetVariants.SCREENDOOR;
+					} else if (entityType.equals(PvZEntity.FOOTBALLGEAR)) {
+						helmetProj = MetalHelmetVariants.FOOTBALL;
+					} else if (entityType.equals(PvZEntity.BERSERKERGEAR)) {
+						helmetProj = MetalHelmetVariants.BERSERKER;
+					} else if (entityType.equals(PvZEntity.DEFENSIVEENDGEAR)) {
+						helmetProj = MetalHelmetVariants.DEFENSIVEEND;
+					} else if (entityType.equals(PvZEntity.TRASHCANBIN)) {
+						helmetProj = MetalHelmetVariants.TRASHCAN;
+					} else if (entityType.equals(PvZEntity.BLASTRONAUTGEAR)) {
+						helmetProj = MetalHelmetVariants.BERSERKER;
+					} else if (entityType.equals(PvZEntity.KNIGHTGEAR)) {
+						helmetProj = MetalHelmetVariants.KNIGHT;
+					} else if (entityType.equals(PvZEntity.MEDALLIONGEAR)) {
+						helmetProj = MetalHelmetVariants.MEDALLION;
+					}
+					if (entity instanceof MetalShieldEntity metalShieldEntity || entity instanceof MetalHelmetEntity metalHelmetEntity) {
+						setGear = (ZombiePropEntity) entity;
+						break;
+					}
+				}
+			}
+		}
+		if (setGear != null) {
+			playSound(PvZSounds.MAGNETATTRACTEVENT);
+			MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
+			helmetProjEntity.setOwner(this);
+			helmetProjEntity.setMaxAge(150);
+			Vec3d vec3d = new Vec3d((double) magnetOffsetX, 0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+			helmetProjEntity.refreshPositionAndAngles(this.getX() + vec3d.getX(), this.getY() + vec3d.getY() + magnetOffsetY, this.getZ() + vec3d.getZ(), 0, 0);
+			helmetProjEntity.setVariant(helmetProj);
+			helmetProjEntity.setDamage(setGear.getHealth());
+			helmetProjEntity.setMaxHealth(setGear.getMaxHealth());
+			setGear.discard();
+			((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
+		}
+	}
+
+	protected float magnetOffsetY = 1.5f;
+	protected float magnetOffsetX = 0f;
 
 	public HitResult amphibiousRaycast(double maxDistance) {
 		Vec3d vec3d1 = this.getPos();

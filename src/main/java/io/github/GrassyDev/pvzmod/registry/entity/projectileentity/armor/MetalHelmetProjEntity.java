@@ -1,6 +1,5 @@
 package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor;
 
-import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
@@ -27,12 +26,7 @@ import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -49,7 +43,6 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import java.util.Iterator;
 import java.util.UUID;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 import static io.github.GrassyDev.pvzmod.PvZCubed.ZOMBIE_SIZE;
 
 public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnimatable {
@@ -60,28 +53,35 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 	public boolean canHitFlying;
 
 	public boolean magnetized;
+	public boolean keepSize;
 
 	public boolean damaged;
 
-	public int maxAge = 60;
+	public int reverseAge;
 
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
-		this.dataTracker.startTracking(DAMAGE, 0);
+		this.dataTracker.startTracking(DAMAGE, 0f);
+		this.dataTracker.startTracking(MAXHEALTH, 0f);
+		this.dataTracker.startTracking(MAX_AGE, 60);
 	}
 
 	@Override
 	public void writeCustomDataToNbt(NbtCompound tag) {
 		super.writeCustomDataToNbt(tag);
 		tag.putInt("Variant", this.getTypeVariant());
-		tag.putInt("Damage", this.getDamage());
+		tag.putFloat("Damage", this.getDamage());
+		tag.putFloat("MaxHealth", this.getMaxHealth());
+		tag.putInt("MaxAge", this.getMaxAge());
 	}
 
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
-		this.dataTracker.set(DAMAGE, tag.getInt("Damage"));
+		this.dataTracker.set(DAMAGE, tag.getFloat("Damage"));
+		this.dataTracker.set(MAXHEALTH, tag.getFloat("MaxHealth"));
+		this.dataTracker.set(MAX_AGE, tag.getInt("MaxAge"));
 	}
 
 	/** /~*~//~*VARIANTS*~//~*~/ **/
@@ -101,15 +101,37 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
 	}
 
-	private static final TrackedData<Integer> DAMAGE =
+	private static final TrackedData<Integer> MAX_AGE =
 			DataTracker.registerData(MetalHelmetProjEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
-	private int getDamage() {
+	public int getMaxAge() {
+		return this.dataTracker.get(MAX_AGE);
+	}
+
+	public void setMaxAge(Integer integer) {
+		this.dataTracker.set(MAX_AGE, integer);
+	}
+
+	private static final TrackedData<Float> DAMAGE =
+			DataTracker.registerData(MetalHelmetProjEntity.class, TrackedDataHandlerRegistry.FLOAT);
+
+	private float getDamage() {
 		return this.dataTracker.get(DAMAGE);
 	}
 
-	public void setDamage(Integer integer) {
-		this.dataTracker.set(DAMAGE, integer);
+	public void setDamage(Float health) {
+		this.dataTracker.set(DAMAGE, health);
+	}
+
+	private static final TrackedData<Float> MAXHEALTH =
+			DataTracker.registerData(MetalHelmetProjEntity.class, TrackedDataHandlerRegistry.FLOAT);
+
+	private float getMaxHealth() {
+		return this.dataTracker.get(MAXHEALTH);
+	}
+
+	public void setMaxHealth(Float health) {
+		this.dataTracker.set(MAXHEALTH, health);
 	}
 
 	@Override
@@ -149,6 +171,13 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
     }
 
     public void tick() {
+		this.damaged = getDamage() <= getMaxHealth() / 2;
+		if (this.age <= 1){
+			reverseAge = this.getMaxAge();
+		}
+		else {
+			--reverseAge;
+		}
         super.tick();
 		HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
 		boolean bl = false;
@@ -177,7 +206,7 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= maxAge) {
+        if (!this.world.isClient && this.age >= this.getMaxAge()) {
             this.world.sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
@@ -211,23 +240,15 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 					}
 				}
 
-				if (!world.isClient && entity instanceof Monster monster &&
+				if (!world.isClient && entity instanceof Monster monster && entity.isAlive() &&
 						!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 						!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 						!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 						(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) || this.canHitFlying) &&
 						(!(ZOMBIE_SIZE.get(entity.getType()).orElse("medium").equals("small") && this.canHitFlying)) &&
 						(!(zombiePropEntity2 instanceof ZombieRiderEntity && this.canHitFlying))) {
-					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
-					SoundEvent sound;
-					sound = switch (zombieMaterial) {
-						case "metallic" -> PvZSounds.BUCKETHITEVENT;
-						case "plastic" -> PvZSounds.CONEHITEVENT;
-						case "stone" -> PvZSounds.STONEHITEVENT;
-						default -> PvZSounds.PEAHITEVENT;
-					};
-					entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-					float damage = PVZCONFIG.nestedProjDMG.peaDMG();
+					entity.playSound(PvZSounds.BUCKETHITEVENT, 0.2F, (float) (0.5F + Math.random()));
+					float damage = this.getDamage();
 					if (damage > ((LivingEntity) entity).getHealth() &&
 							!(entity instanceof ZombieShieldEntity) &&
 							entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
@@ -286,25 +307,12 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 		}
 	}**/
 
-    @Environment(EnvType.CLIENT)
-    private ParticleEffect getParticleParameters() {
-        ItemStack itemStack = this.getItem();
-        return (ParticleEffect)(itemStack.isEmpty() ? ParticleTypes.ITEM_SLIME : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack));
-    }
-
 
     @Environment(EnvType.CLIENT)
     public void handleStatus(byte status) {
 		if (status != 2 && status != 60){
 			super.handleStatus(status);
 		}
-        if (status == 3) {
-            ParticleEffect particleEffect = this.getParticleParameters();
-
-            for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
-            }
-        }
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {

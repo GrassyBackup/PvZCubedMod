@@ -64,6 +64,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.wildwe
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.charm.beautyshroom.BeautyshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.charm.charmshroom.CharmshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.icepea.dropea.DropeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.magnet.MagnetoShroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.magicshroom.MagichatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.magicshroom.MagicshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.narcissus.NarcissusEntity;
@@ -354,6 +355,12 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "magnetshroom"),
 			QuiltEntityTypeBuilder.<MagnetshroomEntity>create(SpawnGroup.CREATURE, MagnetshroomEntity::new).setDimensions(EntityDimensions.fixed(1f, 1.55f)).build()
+	);
+
+	public static final EntityType <MagnetoShroomEntity> MAGNETOSHROOM = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "magnetoshroom"),
+			QuiltEntityTypeBuilder.<MagnetoShroomEntity>create(SpawnGroup.CREATURE, MagnetoShroomEntity::new).setDimensions(EntityDimensions.fixed(1f, 1.55f)).build()
 	);
 
 	public static final EntityType<CabbagepultEntity> CABBAGEPULT = Registry.register(
@@ -1625,6 +1632,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUNSHROOM, SunshroomEntity.createSunshroomAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MAGNETSHROOM, MagnetshroomEntity.createMagnetshroomAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MAGNETOSHROOM, MagnetoShroomEntity.createMagnetoshroomAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BREEZESHROOM, BreezeshroomEntity.createBreezeshroomAttributes().build());
 
