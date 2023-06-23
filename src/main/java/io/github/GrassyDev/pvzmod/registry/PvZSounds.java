@@ -41,6 +41,9 @@ public class PvZSounds {
 	public static final Identifier FUMESHROOMSHOOT = new Identifier("pvzmod:fumeshroom.shoot");
 	public static SoundEvent FUMESHROOMSHOOTEVENT = new SoundEvent(FUMESHROOMSHOOT);
 
+	public static final Identifier MAGNETATTRACT = new Identifier("pvzmod:magnet.attract");
+	public static SoundEvent MAGNETATTRACTEVENT = new SoundEvent(MAGNETATTRACT);
+
 	public static final Identifier BLOOMERANGSHOOT = new Identifier("pvzmod:bloomerang.shoot");
 	public static SoundEvent BLOOMERANGSHOOTEVENT = new SoundEvent(BLOOMERANGSHOOT);
 
@@ -158,6 +161,7 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SNOWPEAHIT, SNOWPEAHITEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.MUSHROOMSHOOT, MUSHROOMSHOOTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.FUMESHROOMSHOOT, FUMESHROOMSHOOTEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.MAGNETATTRACT, MAGNETATTRACTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.BLOOMERANGSHOOT, BLOOMERANGSHOOTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.LIGHTNINGSHOOT, LIGHTNINGSHOOTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.BOOMERANGAMBIENT, BOOMERANGAMBIENTEVENT);

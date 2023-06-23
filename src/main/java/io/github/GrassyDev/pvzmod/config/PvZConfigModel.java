@@ -262,6 +262,10 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float seashroomS = 10.0f;
 		@RestartRequired
+		public float magnetshroomS = 15.0f;
+		@RestartRequired
+		public float magnetoshroomS = 10.0f;
+		@RestartRequired
 		public float shamrockS = 5.0f;
 		@RestartRequired
 		public float smackadamiaSv2 = 30.0f;

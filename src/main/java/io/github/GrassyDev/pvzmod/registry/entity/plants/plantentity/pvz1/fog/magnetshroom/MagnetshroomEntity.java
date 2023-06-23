@@ -213,20 +213,6 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 		super.onDeath(source);
 	}
 
-	@Override
-	public void onDeath(DamageSource source) {
-		List<Entity> helmets = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, 0, 0));
-		for (Entity entity : helmets){
-			if (entity instanceof MetalHelmetProjEntity metalHelmetProjEntity){
-				if (metalHelmetProjEntity.getOwner() == this){
-					metalHelmetProjEntity.magnetized = false;
-					metalHelmetProjEntity.discard();
-				}
-			}
-		}
-		super.onDeath(source);
-	}
-
 	public void tickMovement() {
 		super.tickMovement();
 		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
