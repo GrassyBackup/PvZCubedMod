@@ -10,7 +10,8 @@
         "$(#bd951a)15$/month",
         "$(br)$(#bd951a)You can choose a Plant and a Zombie for the next update!",
         "$(br)$(#bd951a)Gives you access to early access builds of the mod before they go public!",
-        "$(br)$()$(#ff0000)NovaChopy (Missile Toe, Imp-Throwing Imp)"
+        "$(br)$()$(#ff0000)NovaChopy (Missile Toe, Imp-Throwing Imp)",
+        "$(br)$()$(#ff0000)Smuggy (Bananasaurus Rex, Zom-Blob)"
       ]
     }
   ]

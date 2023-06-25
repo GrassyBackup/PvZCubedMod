@@ -228,8 +228,67 @@ public abstract class PlantEntity extends GolemEntity {
 						}
 					}
 					if (!(hostileEntity instanceof ZombiePropEntity && !(hostileEntity instanceof ZombieObstacleEntity))) {
+						if (hasHelmet) {
+							prevHelmet = true;
+							hasHelmet = false;
+						}
+						if (hasShield) {
+							prevHelmet = true;
+							hasShield = false;
+						}
+						for (Entity zombiePropEntity : hostileEntity.getPassengerList()) {
+							if (zombiePropEntity instanceof ZombiePropEntity && !(zombiePropEntity instanceof ZombieShieldEntity)) {
+								hasHelmet = true;
+							}
+							if (zombiePropEntity instanceof ZombieShieldEntity) {
+								hasShield = true;
+							}
+							if (zombiePropEntity instanceof MetalHelmetEntity || zombiePropEntity instanceof MetalShieldEntity) {
+								hasMetalGear = true;
+							}
+							if (zombiePropEntity instanceof ZombiePropEntity zombiePropEntity1 && !zombiePropEntity1.isHeavy) {
+								tooHeavy = false;
+							}
+						}
 						if (this.noBiggie && (ZOMBIE_SIZE.get(hostileEntity.getType()).orElse("medium").equals("big") || ZOMBIE_SIZE.get(hostileEntity.getType()).orElse("medium").equals("gargantuar"))) {
 
+						} else if (magnetshroom) {
+							for (Entity zombiePropEntity : hostileEntity.getPassengerList()) {
+								if ((zombiePropEntity instanceof MetalHelmetEntity || zombiePropEntity instanceof MetalShieldEntity) &&
+										zombiePropEntity instanceof ZombiePropEntity zombiePropEntity1 && !zombiePropEntity1.isHeavy) {
+									if (hostileEntity.squaredDistanceTo(pos) <= Math.pow(this.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE), 2) &&
+											(hostileEntity.getY() < (this.getY() + yDiff) && hostileEntity.getY() > (this.getY() - yDiff)) && hostileEntity.isAlive()) {
+										if (hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
+												!(generalPvZombieEntity.getHypno())) {
+											int currentStrength = ZOMBIE_STRENGTH.get(generalPvZombieEntity.getType()).orElse(0);
+											if (zombieStrength < currentStrength) {
+												zombieStrength = currentStrength;
+												prevZombiePosition = hostileEntity.getPos();
+												targeted = hostileEntity;
+												prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+											}
+										}
+									}
+								}
+							}
+						} else if (magnetoshroom) {
+							for (Entity zombiePropEntity : hostileEntity.getPassengerList()) {
+								if ((zombiePropEntity instanceof MetalHelmetEntity || zombiePropEntity instanceof MetalShieldEntity)) {
+									if (hostileEntity.squaredDistanceTo(pos) <= Math.pow(this.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE), 2) &&
+											(hostileEntity.getY() < (this.getY() + yDiff) && hostileEntity.getY() > (this.getY() - yDiff)) && hostileEntity.isAlive()) {
+										if (hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
+												!(generalPvZombieEntity.getHypno())) {
+											int currentStrength = ZOMBIE_STRENGTH.get(generalPvZombieEntity.getType()).orElse(0);
+											if (zombieStrength < currentStrength) {
+												zombieStrength = currentStrength;
+												prevZombiePosition = hostileEntity.getPos();
+												targeted = hostileEntity;
+												prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+											}
+										}
+									}
+								}
+							}
 						} else if (hostileEntity.squaredDistanceTo(pos) <= Math.pow(this.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE), 2) &&
 								(hostileEntity.getY() < (this.getY() + yDiff) && hostileEntity.getY() > (this.getY() - yDiff)) && hostileEntity.isAlive()) {
 							if (hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
@@ -241,31 +300,78 @@ public abstract class PlantEntity extends GolemEntity {
 										!((generalPvZombieEntity instanceof ZombieObstacleEntity && !(generalPvZombieEntity instanceof ZombieRiderEntity zombieRiderEntity && !(zombieRiderEntity.hasVehicle()))) && targetNotObstacle)) {
 									isIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
 									isPoisoned = hostileEntity.hasStatusEffect(PvZCubed.PVZPOISON);
-									if (hasHelmet) {
-										prevHelmet = true;
-										hasHelmet = false;
-									}
-									if (hasShield) {
-										prevHelmet = true;
-										hasShield = false;
-									}
-									for (Entity zombiePropEntity : hostileEntity.getPassengerList()) {
-										hasHelmet = zombiePropEntity instanceof ZombiePropEntity && !(zombiePropEntity instanceof ZombieShieldEntity);
-										hasShield = zombiePropEntity instanceof ZombieShieldEntity;
-										if (zombiePropEntity instanceof MetalHelmetEntity || zombiePropEntity instanceof MetalShieldEntity){
-											hasMetalGear = true;
+									if (zombieStrength < currentStrength && this.targetStrength) {
+										if (canHitFlying && generalPvZombieEntity.isFlying()) {
+											zombieStrength = currentStrength;
+											prevZombiePosition = hostileEntity.getPos();
+											targeted = hostileEntity;
+											prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+										} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												zombieStrength = currentStrength;
+												prevZombiePosition = hostileEntity.getPos();
+												targeted = hostileEntity;
+												prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity) {
+												zombieStrength = currentStrength;
+												prevZombiePosition = hostileEntity.getPos();
+												targeted = hostileEntity;
+												prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													zombieStrength = currentStrength;
+													prevZombiePosition = hostileEntity.getPos();
+													targeted = hostileEntity;
+													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													zombieStrength = currentStrength;
+													prevZombiePosition = hostileEntity.getPos();
+													targeted = hostileEntity;
+													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													zombieStrength = currentStrength;
+													prevZombiePosition = hostileEntity.getPos();
+													targeted = hostileEntity;
+													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+												}
+											}
+										} else if (canHitFlying) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												zombieStrength = currentStrength;
+												prevZombiePosition = hostileEntity.getPos();
+												targeted = hostileEntity;
+												prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity) {
+												zombieStrength = currentStrength;
+												prevZombiePosition = hostileEntity.getPos();
+												targeted = hostileEntity;
+												prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													zombieStrength = currentStrength;
+													prevZombiePosition = hostileEntity.getPos();
+													targeted = hostileEntity;
+													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													zombieStrength = currentStrength;
+													prevZombiePosition = hostileEntity.getPos();
+													targeted = hostileEntity;
+													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													zombieStrength = currentStrength;
+													prevZombiePosition = hostileEntity.getPos();
+													targeted = hostileEntity;
+													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+												}
+											}
 										}
-										if (zombiePropEntity instanceof ZombiePropEntity zombiePropEntity1 && !zombiePropEntity1.isHeavy){
-											tooHeavy = false;
-										}
-									}
-									if (magnetshroom && (!hasMetalGear || tooHeavy)) {
-
-									}
-									else if (!(magnetshroom && (!hasMetalGear || tooHeavy)) && magnetoshroom && !hasMetalGear) {
-
-									} else {
-										if (zombieStrength < currentStrength && this.targetStrength) {
+									} else if ((zombieStrength == currentStrength || !this.targetStrength) &&
+											this.squaredDistanceTo(prevZombiePosition) > this.squaredDistanceTo(hostileEntity.getPos())) {
+										if (!(targetChilled && prevIced && !isIced)) {
 											if (canHitFlying && generalPvZombieEntity.isFlying()) {
 												zombieStrength = currentStrength;
 												prevZombiePosition = hostileEntity.getPos();
@@ -277,7 +383,7 @@ public abstract class PlantEntity extends GolemEntity {
 													prevZombiePosition = hostileEntity.getPos();
 													targeted = hostileEntity;
 													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity) {
+												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
 													zombieStrength = currentStrength;
 													prevZombiePosition = hostileEntity.getPos();
 													targeted = hostileEntity;
@@ -308,7 +414,7 @@ public abstract class PlantEntity extends GolemEntity {
 													prevZombiePosition = hostileEntity.getPos();
 													targeted = hostileEntity;
 													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity) {
+												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
 													zombieStrength = currentStrength;
 													prevZombiePosition = hostileEntity.getPos();
 													targeted = hostileEntity;
@@ -331,378 +437,306 @@ public abstract class PlantEntity extends GolemEntity {
 														prevZombiePosition = hostileEntity.getPos();
 														targeted = hostileEntity;
 														prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-													}
-												}
-											}
-										} else if ((zombieStrength == currentStrength || !this.targetStrength) &&
-												this.squaredDistanceTo(prevZombiePosition) > this.squaredDistanceTo(hostileEntity.getPos())) {
-											if (!(targetChilled && prevIced && !isIced)) {
-												if (canHitFlying && generalPvZombieEntity.isFlying()) {
-													zombieStrength = currentStrength;
-													prevZombiePosition = hostileEntity.getPos();
-													targeted = hostileEntity;
-													prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-												} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-													if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-														zombieStrength = currentStrength;
-														prevZombiePosition = hostileEntity.getPos();
-														targeted = hostileEntity;
-														prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-													} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-														zombieStrength = currentStrength;
-														prevZombiePosition = hostileEntity.getPos();
-														targeted = hostileEntity;
-														prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-													} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-															!(generalPvZombieEntity instanceof SnorkelEntity)) {
-														if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-																generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-															zombieStrength = currentStrength;
-															prevZombiePosition = hostileEntity.getPos();
-															targeted = hostileEntity;
-															prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-														} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-															zombieStrength = currentStrength;
-															prevZombiePosition = hostileEntity.getPos();
-															targeted = hostileEntity;
-															prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-														} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-															zombieStrength = currentStrength;
-															prevZombiePosition = hostileEntity.getPos();
-															targeted = hostileEntity;
-															prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-														}
-													}
-												} else if (canHitFlying) {
-													if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-														zombieStrength = currentStrength;
-														prevZombiePosition = hostileEntity.getPos();
-														targeted = hostileEntity;
-														prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-													} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-														zombieStrength = currentStrength;
-														prevZombiePosition = hostileEntity.getPos();
-														targeted = hostileEntity;
-														prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-													} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-															!(generalPvZombieEntity instanceof SnorkelEntity)) {
-														if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-																generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-															zombieStrength = currentStrength;
-															prevZombiePosition = hostileEntity.getPos();
-															targeted = hostileEntity;
-															prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-														} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-															zombieStrength = currentStrength;
-															prevZombiePosition = hostileEntity.getPos();
-															targeted = hostileEntity;
-															prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-														} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-															zombieStrength = currentStrength;
-															prevZombiePosition = hostileEntity.getPos();
-															targeted = hostileEntity;
-															prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
-														}
-													}
-												}
-											}
-										}
-										if (prioritizedTarget != null && lobbedTarget && this.squaredDistanceTo(prioritizedTarget) > this.squaredDistanceTo(hostileEntity.getPos())) {
-											if (lobbedTarget && hasShield) {
-												if (canHitFlying && generalPvZombieEntity.isFlying()) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-													if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-															!(generalPvZombieEntity instanceof SnorkelEntity)) {
-														if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-																generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-															prioritizedTarget = hostileEntity;
-														} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														}
-													}
-												} else if (canHitFlying) {
-													if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-															!(generalPvZombieEntity instanceof SnorkelEntity)) {
-														if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-																generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-															prioritizedTarget = hostileEntity;
-														} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														}
-													}
-												}
-											}
-										} else if (lobbedTarget && hasShield) {
-											if (canHitFlying && generalPvZombieEntity.isFlying()) {
-												prioritizedTarget = hostileEntity;
-											} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											} else if (canHitFlying) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											}
-										}
-										if (prioritizedTarget != null && targetIce && this.squaredDistanceTo(prioritizedTarget) > this.squaredDistanceTo(hostileEntity.getPos())) {
-											if (targetIce && !isIced) {
-												if (canHitFlying && generalPvZombieEntity.isFlying()) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-													if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-															!(generalPvZombieEntity instanceof SnorkelEntity)) {
-														if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-																generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-															prioritizedTarget = hostileEntity;
-														} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														}
-													}
-												} else if (canHitFlying) {
-													if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-															!(generalPvZombieEntity instanceof SnorkelEntity)) {
-														if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-																generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-															prioritizedTarget = hostileEntity;
-														} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														}
-													}
-												}
-											}
-										} else if (targetIce && !isIced) {
-											if (canHitFlying && generalPvZombieEntity.isFlying()) {
-												prioritizedTarget = hostileEntity;
-											} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											} else if (canHitFlying) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											}
-										}
-										if (targetPoison && !isPoisoned) {
-											if (canHitFlying && generalPvZombieEntity.isFlying()) {
-												prioritizedTarget = hostileEntity;
-											} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											} else if (canHitFlying) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											}
-										}
-										if (targetNoHelmet && hasHelmet && prioritizedTarget == hostileEntity) {
-											prioritizedTarget = null;
-										}
-										if (targetNoHelmet && !hasHelmet && prioritizedStrength < currentStrength) {
-											if (canHitFlying && generalPvZombieEntity.isFlying()) {
-												prioritizedStrength = currentStrength;
-												prioritizedTarget = hostileEntity;
-											} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedStrength = currentStrength;
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedStrength = currentStrength;
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											} else if (canHitFlying) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedStrength = currentStrength;
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedStrength = currentStrength;
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											}
-										}
-										if (targetHelmet && hasHelmet && prioritizedTarget == hostileEntity) {
-											prioritizedTarget = null;
-										}
-										if (targetHelmet && hasHelmet && prioritizedStrength < currentStrength) {
-											if (canHitFlying && generalPvZombieEntity.isFlying()) {
-												prioritizedStrength = currentStrength;
-												prioritizedTarget = hostileEntity;
-											} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedStrength = currentStrength;
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedStrength = currentStrength;
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											} else if (canHitFlying) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedStrength = currentStrength;
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedStrength = currentStrength;
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedStrength = currentStrength;
-														prioritizedTarget = hostileEntity;
 													}
 												}
 											}
 										}
 									}
-									if (targeted == null && prioritizedTarget == null && !(hostileEntity instanceof GeneralPvZombieEntity)) {
-										targeted = hostileEntity;
+									if (prioritizedTarget != null && lobbedTarget && this.squaredDistanceTo(prioritizedTarget) > this.squaredDistanceTo(hostileEntity.getPos())) {
+										if (lobbedTarget && hasShield) {
+											if (canHitFlying && generalPvZombieEntity.isFlying()) {
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
+												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+														!(generalPvZombieEntity instanceof SnorkelEntity)) {
+													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+														prioritizedTarget = hostileEntity;
+													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+														prioritizedTarget = hostileEntity;
+													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+														prioritizedTarget = hostileEntity;
+													}
+												}
+											} else if (canHitFlying) {
+												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+														!(generalPvZombieEntity instanceof SnorkelEntity)) {
+													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+														prioritizedTarget = hostileEntity;
+													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+														prioritizedTarget = hostileEntity;
+													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+														prioritizedTarget = hostileEntity;
+													}
+												}
+											}
+										}
+									} else if (lobbedTarget && hasShield) {
+										if (canHitFlying && generalPvZombieEntity.isFlying()) {
+											prioritizedTarget = hostileEntity;
+										} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										} else if (canHitFlying) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										}
 									}
-								} else if (!(hostileEntity instanceof GeneralPvZombieEntity) && targeted == null && !this.naturalSpawn) {
+									if (prioritizedTarget != null && targetIce && this.squaredDistanceTo(prioritizedTarget) > this.squaredDistanceTo(hostileEntity.getPos())) {
+										if (targetIce && !isIced) {
+											if (canHitFlying && generalPvZombieEntity.isFlying()) {
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
+												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+														!(generalPvZombieEntity instanceof SnorkelEntity)) {
+													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+														prioritizedTarget = hostileEntity;
+													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+														prioritizedTarget = hostileEntity;
+													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+														prioritizedTarget = hostileEntity;
+													}
+												}
+											} else if (canHitFlying) {
+												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+														!(generalPvZombieEntity instanceof SnorkelEntity)) {
+													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+														prioritizedTarget = hostileEntity;
+													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+														prioritizedTarget = hostileEntity;
+													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+														prioritizedTarget = hostileEntity;
+													}
+												}
+											}
+										}
+									} else if (targetIce && !isIced) {
+										if (canHitFlying && generalPvZombieEntity.isFlying()) {
+											prioritizedTarget = hostileEntity;
+										} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										} else if (canHitFlying) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										}
+									}
+									if (targetPoison && !isPoisoned) {
+										if (canHitFlying && generalPvZombieEntity.isFlying()) {
+											prioritizedTarget = hostileEntity;
+										} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										} else if (canHitFlying) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										}
+									}
+									if (targetNoHelmet && hasHelmet && prioritizedTarget == hostileEntity) {
+										prioritizedTarget = null;
+									}
+									if (targetNoHelmet && !hasHelmet && prioritizedStrength < currentStrength) {
+										if (canHitFlying && generalPvZombieEntity.isFlying()) {
+											prioritizedStrength = currentStrength;
+											prioritizedTarget = hostileEntity;
+										} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedStrength = currentStrength;
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedStrength = currentStrength;
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										} else if (canHitFlying) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedStrength = currentStrength;
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedStrength = currentStrength;
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										}
+									}
+									if (targetHelmet && hasHelmet && prioritizedTarget == hostileEntity) {
+										prioritizedTarget = null;
+									}
+									if (targetHelmet && hasHelmet && prioritizedStrength < currentStrength) {
+										if (canHitFlying && generalPvZombieEntity.isFlying()) {
+											prioritizedStrength = currentStrength;
+											prioritizedTarget = hostileEntity;
+										} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedStrength = currentStrength;
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedStrength = currentStrength;
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										} else if (canHitFlying) {
+											if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
+												prioritizedStrength = currentStrength;
+												prioritizedTarget = hostileEntity;
+											} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
+												prioritizedStrength = currentStrength;
+												prioritizedTarget = hostileEntity;
+											} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
+													!(generalPvZombieEntity instanceof SnorkelEntity)) {
+												if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
+														generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
+													prioritizedStrength = currentStrength;
+													prioritizedTarget = hostileEntity;
+												}
+											}
+										}
+									}
+								}
+								if (targeted == null && prioritizedTarget == null && !(hostileEntity instanceof GeneralPvZombieEntity)) {
 									targeted = hostileEntity;
 								}
+							} else if (!(hostileEntity instanceof GeneralPvZombieEntity) && targeted == null && !this.naturalSpawn) {
+								targeted = hostileEntity;
 							}
 						}
 					}
@@ -769,41 +803,130 @@ public abstract class PlantEntity extends GolemEntity {
 
 	public void magnetize(){
 		LivingEntity livingEntity = this.getTarget();
+		LivingEntity livingEntity2 = null;
+		LivingEntity livingEntity3 = null;
 		MetalHelmetVariants helmetProj = MetalHelmetVariants.BUCKET;
+		MetalHelmetVariants helmetProj2 = MetalHelmetVariants.BUCKET;
+		MetalHelmetVariants helmetProj3 = MetalHelmetVariants.BUCKET;
 		ZombiePropEntity setGear = null;
+		ZombiePropEntity setGear2 = null;
+		ZombiePropEntity setGear3 = null;
+
 		if (livingEntity != null){
+			List<LivingEntity> magnetList = this.world.getNonSpectatingEntities(LivingEntity.class, livingEntity.getBoundingBox().expand(2));
 			EntityType<?> entityType = null;
+			EntityType<?> entityType2 = null;
+			EntityType<?> entityType3 = null;
 			for (Entity entity : livingEntity.getPassengerList()){
 				if (entity instanceof ZombiePropEntity zombiePropEntity) {
-					entityType = entity.getType();
-					if (entityType.equals(PvZEntity.BUCKETGEAR)) {
-						if (livingEntity.getType().equals(PvZEntity.PEASANTBUCKET)) {
-							helmetProj = MetalHelmetVariants.PEASANTBUCKET;
-						} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
-							helmetProj = MetalHelmetVariants.MUMMYBUCKET;
-						} else {
-							helmetProj = MetalHelmetVariants.BUCKET;
-						}
-					} else if (entityType.equals(PvZEntity.SCREENDOORSHIELD)) {
-						helmetProj = MetalHelmetVariants.SCREENDOOR;
-					} else if (entityType.equals(PvZEntity.FOOTBALLGEAR)) {
-						helmetProj = MetalHelmetVariants.FOOTBALL;
-					} else if (entityType.equals(PvZEntity.BERSERKERGEAR)) {
-						helmetProj = MetalHelmetVariants.BERSERKER;
-					} else if (entityType.equals(PvZEntity.DEFENSIVEENDGEAR)) {
-						helmetProj = MetalHelmetVariants.DEFENSIVEEND;
-					} else if (entityType.equals(PvZEntity.TRASHCANBIN)) {
-						helmetProj = MetalHelmetVariants.TRASHCAN;
-					} else if (entityType.equals(PvZEntity.BLASTRONAUTGEAR)) {
-						helmetProj = MetalHelmetVariants.BERSERKER;
-					} else if (entityType.equals(PvZEntity.KNIGHTGEAR)) {
-						helmetProj = MetalHelmetVariants.KNIGHT;
-					} else if (entityType.equals(PvZEntity.MEDALLIONGEAR)) {
-						helmetProj = MetalHelmetVariants.MEDALLION;
-					}
 					if (entity instanceof MetalShieldEntity metalShieldEntity || entity instanceof MetalHelmetEntity metalHelmetEntity) {
 						setGear = (ZombiePropEntity) entity;
 						break;
+					}
+				}
+			}
+			if (magnetoshroom) {
+				for (Entity entity : magnetList) {
+					if (entity instanceof ZombiePropEntity zombiePropEntity && entity.squaredDistanceTo(livingEntity) <= 4 && entity != setGear) {
+						if (entity instanceof MetalShieldEntity metalShieldEntity || entity instanceof MetalHelmetEntity metalHelmetEntity) {
+							if (setGear2 == null) {
+								setGear2 = (ZombiePropEntity) entity;
+								livingEntity2 = (LivingEntity) entity.getVehicle();
+							} else if (setGear3 == null) {
+								setGear3 = (ZombiePropEntity) entity;
+								livingEntity3 = (LivingEntity) entity.getVehicle();
+							}
+						}
+					}
+				}
+			}
+			if (setGear != null) {
+				entityType = setGear.getType();
+				if (entityType.equals(PvZEntity.BUCKETGEAR)) {
+					if (livingEntity.getType().equals(PvZEntity.PEASANTBUCKET)) {
+						helmetProj = MetalHelmetVariants.PEASANTBUCKET;
+					} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
+						helmetProj = MetalHelmetVariants.MUMMYBUCKET;
+					} else {
+						helmetProj = MetalHelmetVariants.BUCKET;
+					}
+				} else if (entityType.equals(PvZEntity.SCREENDOORSHIELD)) {
+					helmetProj = MetalHelmetVariants.SCREENDOOR;
+				} else if (entityType.equals(PvZEntity.FOOTBALLGEAR)) {
+					helmetProj = MetalHelmetVariants.FOOTBALL;
+				} else if (entityType.equals(PvZEntity.BERSERKERGEAR)) {
+					helmetProj = MetalHelmetVariants.BERSERKER;
+				} else if (entityType.equals(PvZEntity.DEFENSIVEENDGEAR)) {
+					helmetProj = MetalHelmetVariants.DEFENSIVEEND;
+				} else if (entityType.equals(PvZEntity.TRASHCANBIN)) {
+					helmetProj = MetalHelmetVariants.TRASHCAN;
+				} else if (entityType.equals(PvZEntity.BLASTRONAUTGEAR)) {
+					helmetProj = MetalHelmetVariants.BERSERKER;
+				} else if (entityType.equals(PvZEntity.KNIGHTGEAR)) {
+					helmetProj = MetalHelmetVariants.KNIGHT;
+				} else if (entityType.equals(PvZEntity.MEDALLIONGEAR)) {
+					helmetProj = MetalHelmetVariants.MEDALLION;
+				}
+				if (magnetoshroom) {
+					if (setGear2 != null) {
+						entityType2 = setGear2.getType();
+						if (entityType2.equals(PvZEntity.BUCKETGEAR)) {
+							if (livingEntity2 != null) {
+								if (livingEntity2.getType().equals(PvZEntity.PEASANTBUCKET)) {
+									helmetProj2 = MetalHelmetVariants.PEASANTBUCKET;
+								} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
+									helmetProj2 = MetalHelmetVariants.MUMMYBUCKET;
+								} else {
+									helmetProj2 = MetalHelmetVariants.BUCKET;
+								}
+							}
+						} else if (entityType2.equals(PvZEntity.SCREENDOORSHIELD)) {
+							helmetProj2 = MetalHelmetVariants.SCREENDOOR;
+						} else if (entityType2.equals(PvZEntity.FOOTBALLGEAR)) {
+							helmetProj2 = MetalHelmetVariants.FOOTBALL;
+						} else if (entityType2.equals(PvZEntity.BERSERKERGEAR)) {
+							helmetProj2 = MetalHelmetVariants.BERSERKER;
+						} else if (entityType2.equals(PvZEntity.DEFENSIVEENDGEAR)) {
+							helmetProj2 = MetalHelmetVariants.DEFENSIVEEND;
+						} else if (entityType2.equals(PvZEntity.TRASHCANBIN)) {
+							helmetProj2 = MetalHelmetVariants.TRASHCAN;
+						} else if (entityType2.equals(PvZEntity.BLASTRONAUTGEAR)) {
+							helmetProj2 = MetalHelmetVariants.BERSERKER;
+						} else if (entityType2.equals(PvZEntity.KNIGHTGEAR)) {
+							helmetProj2 = MetalHelmetVariants.KNIGHT;
+						} else if (entityType2.equals(PvZEntity.MEDALLIONGEAR)) {
+							helmetProj2 = MetalHelmetVariants.MEDALLION;
+						}
+					}
+					if (setGear3 != null) {
+						entityType3 = setGear3.getType();
+						if (entityType3.equals(PvZEntity.BUCKETGEAR)) {
+							if (livingEntity3 != null) {
+								if (livingEntity3.getType().equals(PvZEntity.PEASANTBUCKET)) {
+									helmetProj3 = MetalHelmetVariants.PEASANTBUCKET;
+								} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
+									helmetProj3 = MetalHelmetVariants.MUMMYBUCKET;
+								} else {
+									helmetProj3 = MetalHelmetVariants.BUCKET;
+								}
+							}
+						} else if (entityType3.equals(PvZEntity.SCREENDOORSHIELD)) {
+							helmetProj3 = MetalHelmetVariants.SCREENDOOR;
+						} else if (entityType3.equals(PvZEntity.FOOTBALLGEAR)) {
+							helmetProj3 = MetalHelmetVariants.FOOTBALL;
+						} else if (entityType3.equals(PvZEntity.BERSERKERGEAR)) {
+							helmetProj3 = MetalHelmetVariants.BERSERKER;
+						} else if (entityType3.equals(PvZEntity.DEFENSIVEENDGEAR)) {
+							helmetProj3 = MetalHelmetVariants.DEFENSIVEEND;
+						} else if (entityType3.equals(PvZEntity.TRASHCANBIN)) {
+							helmetProj3 = MetalHelmetVariants.TRASHCAN;
+						} else if (entityType3.equals(PvZEntity.BLASTRONAUTGEAR)) {
+							helmetProj3 = MetalHelmetVariants.BERSERKER;
+						} else if (entityType3.equals(PvZEntity.KNIGHTGEAR)) {
+							helmetProj3 = MetalHelmetVariants.KNIGHT;
+						} else if (entityType3.equals(PvZEntity.MEDALLIONGEAR)) {
+							helmetProj3 = MetalHelmetVariants.MEDALLION;
+						}
 					}
 				}
 			}
@@ -820,6 +943,32 @@ public abstract class PlantEntity extends GolemEntity {
 			helmetProjEntity.setMaxHealth(setGear.getMaxHealth());
 			setGear.discard();
 			((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
+		}
+		if (magnetoshroom) {
+			if (setGear2 != null) {
+				MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
+				helmetProjEntity.setOwner(this);
+				helmetProjEntity.setMaxAge(150);
+				Vec3d vec3d = new Vec3d((double) magnetOffsetX, 0, 0.5).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+				helmetProjEntity.refreshPositionAndAngles(this.getX() + vec3d.getX(), this.getY() + vec3d.getY() + magnetOffsetY, this.getZ() + vec3d.getZ(), 0, 0);
+				helmetProjEntity.setVariant(helmetProj2);
+				helmetProjEntity.setDamage(setGear2.getHealth());
+				helmetProjEntity.setMaxHealth(setGear2.getMaxHealth());
+				setGear2.discard();
+				((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
+			}
+			if (setGear3 != null) {
+				MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
+				helmetProjEntity.setOwner(this);
+				helmetProjEntity.setMaxAge(150);
+				Vec3d vec3d = new Vec3d((double) magnetOffsetX, 0, -0.5).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+				helmetProjEntity.refreshPositionAndAngles(this.getX() + vec3d.getX(), this.getY() + vec3d.getY() + magnetOffsetY, this.getZ() + vec3d.getZ(), 0, 0);
+				helmetProjEntity.setVariant(helmetProj3);
+				helmetProjEntity.setDamage(setGear3.getHealth());
+				helmetProjEntity.setMaxHealth(setGear3.getMaxHealth());
+				setGear3.discard();
+				((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
+			}
 		}
 	}
 

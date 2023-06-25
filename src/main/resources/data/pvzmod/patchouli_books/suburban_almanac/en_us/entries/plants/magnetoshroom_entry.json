@@ -3,16 +3,16 @@
   "icon": "pvzmod:magnetoshroom_seed_packet",
   "category": "pvzmod:plant_category",
   "advancement": "pvzmod:make_magnetshroom",
-  "sortnum": 25,
+  "sortnum": 107,
   "pages": [
     {
       "type": "text",
       "text": [
-        "$(#bd951a)Health: $()$(#ff0000)32",
-        "$(br)$(#bd951a)Range: $()$(#ff0000)15 Blocks",
-        "$(br)$(#bd951a)Ability Recharge: $()$(#ff0000)5s (Throw), 7.5s (Total)",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)10s",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)Nocturnal. Steals metal objects from Zombies, except obstacles, then throws them, causing damage based on the object's health (64 dmg if it doesn't have hp values).",
+        "$(#bd951a)Health: $()$(#ff0000)32 ",
+        "$(#bd951a)Range: $()$(#ff0000)15 Blocks ",
+        "$(#bd951a)Ability Recharge: $()$(#ff0000)5s (Throw), 7.5s (Total) ",
+        "$(#bd951a)Seed Recharge: $()$(#ff0000)10s ",
+        "$(#bd951a)Special: $()$(#ff0000)Nocturnal. Steals one non-obstacle metal object from a Zombie, and up to two 2 blocks near it, then throws them, causing damage based on the object's health (64 dmg w/o health) + half of that dmg as 1.5 block splash.",
         "$(br)$(#bd951a)I would insert a marvel reference here, if I knew anything about it."
       ]
     },

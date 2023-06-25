@@ -157,7 +157,7 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
 				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.MAGNETSHROOM_SEED_PACKET);
+					this.dropItem(ModItems.MAGNETOSHROOM_SEED_PACKET);
 				}
 				this.discard();
 			}
@@ -260,7 +260,7 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		ItemStack itemStack = player.getStackInHand(hand);
 		if (itemStack.isOf(ModItems.GARDENINGGLOVE)) {
-			dropItem(ModItems.MAGNETSHROOM_SEED_PACKET);
+			dropItem(ModItems.MAGNETOSHROOM_SEED_PACKET);
 			if (!player.getAbilities().creativeMode) {
 				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
 					itemStack.decrement(1);
@@ -275,7 +275,7 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.MAGNETSHROOM_SEED_PACKET.getDefaultStack();
+		return ModItems.MAGNETOSHROOM_SEED_PACKET.getDefaultStack();
 	}
 
 
@@ -412,10 +412,20 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 						if (!this.plantEntity.isInsideWaterOrBubbleColumn()) {
 							List<Entity> helmets = this.plantEntity.world.getNonSpectatingEntities(Entity.class, this.plantEntity.getBoundingBox().stretch(0, 0, 0));
 							MetalHelmetProjEntity helmetProj = null;
+							MetalHelmetProjEntity helmetProj2 = null;
+							MetalHelmetProjEntity helmetProj3 = null;
 							for (Entity entity : helmets){
 								if (entity instanceof MetalHelmetProjEntity metalHelmetProjEntity){
 									if (metalHelmetProjEntity.getOwner() == this.plantEntity){
-										helmetProj = metalHelmetProjEntity;
+										if (helmetProj == null) {
+											helmetProj = metalHelmetProjEntity;
+										}
+										else if (helmetProj2 == null) {
+											helmetProj2 = metalHelmetProjEntity;
+										}
+										else if (helmetProj3 == null) {
+											helmetProj3 = metalHelmetProjEntity;
+										}
 									}
 								}
 							}
@@ -431,6 +441,47 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 								float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
 								helmetProj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.66F, 0F);
 								helmetProj.setOwner(this.plantEntity);
+								helmetProj.setMaxAge(helmetProj.age + 58);
+								if (livingEntity.isAlive()) {
+									this.beamTicks = -7;
+									this.plantEntity.playSound(PvZSounds.MAGNETATTRACTEVENT, 0.2F, 1);
+									this.plantEntity.untarget = -10;
+								}
+							}
+							if (helmetProj2 != null) {
+								Vec3d vec3d4 = new Vec3d((double) 10, 0.0, 1.5).rotateY(-this.plantEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+								double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
+								Vec3d targetPos = livingEntity.getPos();
+								Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+								double d = this.plantEntity.squaredDistanceTo(predictedPos);
+								float df = (float) d;
+								double e = predictedPos.getX() - this.plantEntity.getX();
+								double f = (livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.plantEntity.getY() + 0.3595 : livingEntity.getY() - this.plantEntity.getY();
+								double g = predictedPos.getZ() - this.plantEntity.getZ();
+								float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
+								helmetProj2.setVelocity(e * (double) h + vec3d4.x, f * (double) h, g * (double) h + vec3d4.z, 0.66F, 0F);
+								helmetProj2.setOwner(this.plantEntity);
+								helmetProj2.setMaxAge(helmetProj2.age + 58);
+								if (livingEntity.isAlive()) {
+									this.beamTicks = -7;
+									this.plantEntity.playSound(PvZSounds.MAGNETATTRACTEVENT, 0.2F, 1);
+									this.plantEntity.untarget = -10;
+								}
+							}
+							if (helmetProj3 != null) {
+								Vec3d vec3d4 = new Vec3d((double) 10, 0.0, -1.5).rotateY(-this.plantEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+								double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
+								Vec3d targetPos = livingEntity.getPos();
+								Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+								double d = this.plantEntity.squaredDistanceTo(predictedPos);
+								float df = (float) d;
+								double e = predictedPos.getX() - this.plantEntity.getX();
+								double f = (livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.plantEntity.getY() + 0.3595 : livingEntity.getY() - this.plantEntity.getY();
+								double g = predictedPos.getZ() - this.plantEntity.getZ();
+								float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
+								helmetProj3.setVelocity(e * (double) h + vec3d4.x, f * (double) h, g * (double) h + vec3d4.z, 0.66F, 0F);
+								helmetProj3.setOwner(this.plantEntity);
+								helmetProj3.setMaxAge(helmetProj3.age + 58);
 								if (livingEntity.isAlive()) {
 									this.beamTicks = -7;
 									this.plantEntity.playSound(PvZSounds.MAGNETATTRACTEVENT, 0.2F, 1);
