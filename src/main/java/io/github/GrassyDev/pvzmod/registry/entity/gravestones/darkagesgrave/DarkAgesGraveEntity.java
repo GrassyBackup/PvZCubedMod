@@ -26,7 +26,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -50,8 +49,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Objects;
-
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
@@ -134,6 +131,12 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 		double difficulty = 0;
 		if (this.getVariant().equals(GraveDifficulty.NONE)){
 			difficulty = localDifficulty.getLocalDifficulty();
+				if (difficulty >= 2.1){
+					difficulty = 2.1;
+					if (world.getDifficulty().equals(Difficulty.HARD)){
+						difficulty = difficulty + difficultymodifier;
+					}
+				}
 		}
 		else if (this.getVariant().equals(GraveDifficulty.EASY)){
 			difficulty = 1.0;
@@ -363,6 +366,12 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 			double difficulty = 0;
 			if (this.darkAgesGraveEntity.getVariant().equals(GraveDifficulty.NONE)){
 				difficulty = localDifficulty.getLocalDifficulty();
+				if (difficulty >= 2.1){
+					difficulty = 2.1;
+					if (world.getDifficulty().equals(Difficulty.HARD)){
+						difficulty = difficulty + difficultymodifier;
+					}
+				}
 			}
 			else if (this.darkAgesGraveEntity.getVariant().equals(GraveDifficulty.EASY)){
 				difficulty = 1.0;
@@ -419,7 +428,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
                 browncoatEntity.setOwner(DarkAgesGraveEntity.this);
                 serverWorld.spawnEntityAndPassengers(browncoatEntity);
             }
-            if (probability <= 0.35 / halfModifier) { // 35% x1 Conehead
+            if (probability <= 0.35 / halfModifier * survChance) { // 35% x1 Conehead
                 for (int h = 0; h < 1; ++h) {
 					if (!DarkAgesGraveEntity.this.is1x1()) {
 						zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -433,7 +442,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
                     serverWorld.spawnEntityAndPassengers(coneheadEntity);
                 }
             }
-			if (probability3 <= 0.10 / halfModifier) { // 10% x1 Buckethead Peasant
+			if (probability3 <= 0.10 / halfModifier * survChance) { // 10% x1 Buckethead Peasant
 				for (int c = 0; c < 1; ++c) {
 					if (!DarkAgesGraveEntity.this.is1x1()) {
 						zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -456,7 +465,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability5 <= 0.15 / halfModifier) { // 15% x1 Flag Zombie
+					if (probability5 <= 0.15 / halfModifier * survChance) { // 15% x1 Flag Zombie
 						for (int f = 0; f < 1; ++f) {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -493,7 +502,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 						}
 					}
 				}
-				if (probability11 <= 0.15 / halfModifier) { // 15% x1 Conehead
+				if (probability11 <= 0.15 / halfModifier * survChance) { // 15% x1 Conehead
 					for (int h = 0; h < 2 / halfModifier; ++h) {
 						if (!DarkAgesGraveEntity.this.is1x1()) {
 							zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -508,7 +517,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (isUnlock() || isUnlockSpecial()) {
-					if (probability7 <= 0.2 / halfModifier) { // 20% x2 Pumpkin Zombie
+					if (probability7 <= 0.2 / halfModifier * survChance) { // 20% x2 Pumpkin Zombie
 						for (int h = 0; h < 2; ++h) {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -524,7 +533,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.649 + difficultymodifier || isUnlock()) {
-					if (probability8 <= 0.15 / halfModifier) { // 15% x1 Pumpkin Zombie
+					if (probability8 <= 0.15 / halfModifier * survChance) { // 15% x1 Pumpkin Zombie
 						for (int h = 0; h < 1 / halfModifier; ++h) {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -540,7 +549,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.579 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability2 <= 0.2 / halfModifier) { // 20% x1 Peasant Knight
+					if (probability2 <= 0.2 / halfModifier * survChance) { // 20% x1 Peasant Knight
 						for (int c = 0; c < 1; ++c) {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -563,7 +572,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
-					if (probability10 <= 0.3 / halfModifier) { // 30% x1 Imp Dragons
+					if (probability10 <= 0.3 / halfModifier * survChance) { // 30% x1 Imp Dragons
 						for (int h = 0; h < 1; ++h) {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -579,7 +588,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (isUnlock() || isUnlockSpecial()) {
-					if (probability4 <= 0.3 / halfModifier) { // 30% x2 Imp Dragons
+					if (probability4 <= 0.3 / halfModifier * survChance) { // 30% x2 Imp Dragons
 						for (int i = 0; i < Math.round(3 / halfModifier); ++i) {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -595,7 +604,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.629 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability6 <= 0.2 / halfModifier) { // 20% x1 Announcer Imp
+					if (probability6 <= 0.2 / halfModifier * survChance) { // 20% x1 Announcer Imp
 						for (int f = 0; f < 1; ++f) {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -611,7 +620,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (isUnlock() || (isUnlockSpecial() && difficulty >= 1.789 + difficultymodifier)) {
-					if (probability9 <= 0.2 / halfModifier) { // 20% x2 Announcer Imp
+					if (probability9 <= 0.2 / halfModifier * survChance) { // 20% x2 Announcer Imp
 						for (int f = 0; f < 2; ++f) {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);

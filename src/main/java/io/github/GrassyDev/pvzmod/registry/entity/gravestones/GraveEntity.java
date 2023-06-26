@@ -47,6 +47,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 
 	protected float difficultymodifier = 0;
 	protected float halfModifier = 1;
+	protected float survChance = 1;
 
 	protected int spellTicks;
 
@@ -449,11 +450,23 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 		if (this.getWorld().getDifficulty().equals(Difficulty.HARD) && this.getVariant().equals(GraveDifficulty.NONE)){
 			difficultymodifier = 0.75f;
 		}
+		if (this.getWorld().getDifficulty().equals(Difficulty.HARD) && !this.getVariant().equals(GraveDifficulty.NONE)){
+			difficultymodifier = 0f;
+		}
+		if (!this.getWorld().getDifficulty().equals(Difficulty.HARD)){
+			difficultymodifier = 0f;
+		}
 		if (this.isHalf()){
 			halfModifier = 2;
 		}
 		List<GravebusterEntity> list = world.getNonSpectatingEntities(GravebusterEntity.class, entityBox.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
 		this.beingEaten = !list.isEmpty();
+		if (!this.isChallengeGrave()){
+			survChance = 0.75f;
+		}
+		else {
+			survChance = 1f;
+		}
 	}
 
 	public boolean canWalkOnFluid(FluidState state) {

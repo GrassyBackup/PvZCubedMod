@@ -133,6 +133,12 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 		double difficulty = 0;
 		if (this.getVariant().equals(GraveDifficulty.NONE)){
 			difficulty = localDifficulty.getLocalDifficulty();
+				if (difficulty >= 2.1){
+					difficulty = 2.1;
+					if (world.getDifficulty().equals(Difficulty.HARD)){
+						difficulty = difficulty + difficultymodifier;
+					}
+				}
 		}
 		else if (this.getVariant().equals(GraveDifficulty.EASY)){
 			difficulty = 1.0;
@@ -362,6 +368,12 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 			double difficulty = 0;
 			if (this.nightGraveEntity.getVariant().equals(GraveDifficulty.NONE)){
 				difficulty = localDifficulty.getLocalDifficulty();
+				if (difficulty >= 2.1){
+					difficulty = 2.1;
+					if (world.getDifficulty().equals(Difficulty.HARD)){
+						difficulty = difficulty + difficultymodifier;
+					}
+				}
 			}
 			else if (this.nightGraveEntity.getVariant().equals(GraveDifficulty.EASY)){
 				difficulty = 1.0;
@@ -420,7 +432,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
                 browncoatEntity.setOwner(NightGraveEntity.this);
                 serverWorld.spawnEntityAndPassengers(browncoatEntity);
             }
-            if (probability <= 0.35 / halfModifier) { // 35% x1 Conehead
+            if (probability <= 0.35 / halfModifier * survChance) { // 35% x1 Conehead
                 for (int h = 0; h < 1; ++h) {
 					if (!NightGraveEntity.this.is1x1()) {
 						zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -451,7 +463,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
 				if (isUnlock() || isUnlockSpecial()) {
-					if (probability12 <= 0.15 / halfModifier) { // 30% x1 Buckethead
+					if (probability12 <= 0.15 / halfModifier * survChance) { // 30% x1 Buckethead
 						for (int u = 0; u < 1; ++u) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -465,7 +477,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 						}
 					}
-					if (probability13 <= 0.15 / halfModifier) { // 15% x1 Buckethead
+					if (probability13 <= 0.15 / halfModifier * survChance) { // 15% x1 Buckethead
 						for (int u = 0; u < 1; ++u) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -480,7 +492,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 						}
 					}
 				}
-				if (probability11 <= 0.15 / halfModifier) { // 15% x1 Conehead
+				if (probability11 <= 0.15 / halfModifier * survChance) { // 15% x1 Conehead
 					for (int h = 0; h < 2 / halfModifier; ++h) {
 						if (!NightGraveEntity.this.is1x1()) {
 							zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -495,7 +507,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability5 <= 0.15 / halfModifier) { // 15% x1 Flag Zombie
+					if (probability5 <= 0.15 / halfModifier * survChance) { // 15% x1 Flag Zombie
 						for (int f = 0; f < 1; ++f) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -540,7 +552,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 						}
 					}
 				}
-				if (probability3 <= 0.10 / halfModifier) { // 10% x1 Screendoor
+				if (probability3 <= 0.10 / halfModifier * survChance) { // 10% x1 Screendoor
 					for (int c = 0; c < 1; ++c) {
 						if (!NightGraveEntity.this.is1x1()) {
 							zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -562,7 +574,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability9 <= 0.2 / halfModifier) { // 20% x2 Super-Fan Imp
+					if (probability9 <= 0.2 / halfModifier * survChance) { // 20% x2 Super-Fan Imp
 						for (int j = 0; j < 2 / halfModifier; ++j) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -578,7 +590,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.539 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability4 <= 0.25 / halfModifier) { // 25% x1 Football
+					if (probability4 <= 0.25 / halfModifier * survChance) { // 25% x1 Football
 						for (int u = 0; u < 1; ++u) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -615,7 +627,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.539 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability6 <= 0.2 / halfModifier) { // 20% x1 Dancing Zombie
+					if (probability6 <= 0.2 / halfModifier * survChance) { // 20% x1 Dancing Zombie
 						for (int f = 0; f < 1; ++f) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -631,7 +643,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
-					if (probability7 <= 0.25 / halfModifier) { // 25% x1 Berserker
+					if (probability7 <= 0.25 / halfModifier * survChance) { // 25% x1 Berserker
 						for (int p = 0; p < 1; ++p) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -668,7 +680,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
-					if (probability10 <= 0.3 / halfModifier) { // 30% x1 Sunday Edition and x1 Newspaper
+					if (probability10 <= 0.3 / halfModifier * survChance) { // 30% x1 Sunday Edition and x1 Newspaper
 						for (int l = 0; l < 1; ++l) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -692,7 +704,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.809 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability8 <= 0.3 / halfModifier) { // 30% x2 New Years Imp
+					if (probability8 <= 0.3 / halfModifier * survChance) { // 30% x2 New Years Imp
 						for (int j = 0; j < 2 / halfModifier; ++j) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
@@ -708,7 +720,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.909 + difficultymodifier || isUnlock()) {
-					if (probability7 <= 0.2 / halfModifier) { // 20% x1 Defensive End
+					if (probability7 <= 0.2 / halfModifier * survChance) { // 20% x1 Defensive End
 						for (int k = 0; k < 1; ++k) {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);

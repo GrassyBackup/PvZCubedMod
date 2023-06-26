@@ -131,6 +131,12 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 		double difficulty = 0;
 		if (this.getVariant().equals(GraveDifficulty.NONE)){
 			difficulty = localDifficulty.getLocalDifficulty();
+				if (difficulty >= 2.1){
+					difficulty = 2.1;
+					if (world.getDifficulty().equals(Difficulty.HARD)){
+						difficulty = difficulty + difficultymodifier;
+					}
+				}
 		}
 		else if (this.getVariant().equals(GraveDifficulty.EASY)){
 			difficulty = 1.0;
@@ -345,6 +351,12 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 			double difficulty = 0;
 			if (this.basicGraveEntity.getVariant().equals(GraveDifficulty.NONE)){
 				difficulty = localDifficulty.getLocalDifficulty();
+				if (difficulty >= 2.1){
+					difficulty = 2.1;
+					if (world.getDifficulty().equals(Difficulty.HARD)){
+						difficulty = difficulty + difficultymodifier;
+					}
+				}
 			}
 			else if (this.basicGraveEntity.getVariant().equals(GraveDifficulty.EASY)){
 				difficulty = 1.0;
@@ -404,7 +416,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
                 browncoatEntity.setOwner(BasicGraveEntity.this);
                 serverWorld.spawnEntityAndPassengers(browncoatEntity);
             }
-            if (probability <= 0.25 / halfModifier) { // 25% x1 Conehead
+            if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
                 for(int c = 0; c < 1; ++c) {
 					if (!BasicGraveEntity.this.is1x1()) {
 						zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -418,7 +430,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
                     serverWorld.spawnEntityAndPassengers(coneheadEntity);
                 }
             }
-			if (probability2 <= 0.10 / halfModifier) { // 10% x1 Buckethead
+			if (probability2 <= 0.10 / halfModifier * survChance) { // 10% x1 Buckethead
 				for(int u = 0; u < 1; ++u) {
 					if (!BasicGraveEntity.this.is1x1()) {
 						zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -433,7 +445,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 				}
 			}
 			if (isUnlock() || isUnlockSpecial()) {
-				if (probability5 <= 0.15 / halfModifier) { // 30% x1 Buckethead
+				if (probability5 <= 0.15 / halfModifier * survChance) { // 30% x1 Buckethead
 					for (int u = 0; u < 1; ++u) {
 						if (!BasicGraveEntity.this.is1x1()) {
 							zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -447,7 +459,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 				}
-				if (probability2 <= 0.15 / halfModifier) { // 15% x1 Buckethead
+				if (probability2 <= 0.15 / halfModifier * survChance) { // 15% x1 Buckethead
 					for (int u = 0; u < 1; ++u) {
 						if (!BasicGraveEntity.this.is1x1()) {
 							zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -464,7 +476,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
-					if (probability11 <= 0.15 / halfModifier) { // 15% x2 Conehead
+					if (probability11 <= 0.15 / halfModifier * survChance) { // 15% x2 Conehead
 						for (int c = 0; c < 2 / halfModifier; ++c) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -480,7 +492,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.539 + difficultymodifier || isUnlock()) {
-					if (probability21 <= 0.10 / halfModifier) { // 10% x2 Buckethead
+					if (probability21 <= 0.10 / halfModifier * survChance) { // 10% x2 Buckethead
 						for (int u = 0; u < 2 / halfModifier; ++u) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -495,7 +507,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 						}
 					}
 				}
-				if (probability3 <= 0.20 / halfModifier) { // 20% x1 Pole Vaulting Zombie
+				if (probability3 <= 0.20 / halfModifier * survChance) { // 20% x1 Pole Vaulting Zombie
 					for (int p = 0; p < 1; ++p) {
 						if (!BasicGraveEntity.this.is1x1()) {
 							zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -510,7 +522,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.549 + difficultymodifier || isUnlock()) {
-					if (probability13 <= 0.10 / halfModifier) { // 10% x2 Pole Vaulting Zombie
+					if (probability13 <= 0.10 / halfModifier * survChance) { // 10% x2 Pole Vaulting Zombie
 						for (int p = 0; p < 2; ++p) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -526,7 +538,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.569 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability12 <= 0.20 / halfModifier) { // 20% x3 Pole Vaulting Zombie
+					if (probability12 <= 0.20 / halfModifier * survChance) { // 20% x3 Pole Vaulting Zombie
 						for (int p = 0; p < 3; ++p) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -542,7 +554,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability4 <= 0.15 / halfModifier) { // 15% x1 Flag Zombie
+					if (probability4 <= 0.15 / halfModifier * survChance) { // 15% x1 Flag Zombie
 						for (int f = 0; f < 1; ++f) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -588,7 +600,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
-					if (probability6 <= 0.25 / halfModifier) { // 25% x2 Bully Zombie
+					if (probability6 <= 0.25 / halfModifier * survChance) { // 25% x2 Bully Zombie
 						for (int g = 0; g < 2 / halfModifier; ++g) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -604,7 +616,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability7 <= 0.2 / halfModifier) { // 20% x2 Bully Zombie
+					if (probability7 <= 0.2 / halfModifier * survChance) { // 20% x2 Bully Zombie
 						for (int h = 0; h < 2 / halfModifier; ++h) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -641,7 +653,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability8 <= 0.4 / halfModifier) { // 40% x1 Trash Can Zombie
+					if (probability8 <= 0.4 / halfModifier * survChance) { // 40% x1 Trash Can Zombie
 						for (int g = 0; g < 1; ++g) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -678,7 +690,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.709 + difficultymodifier || isUnlock()) {
-					if (probability9 <= 0.3 / halfModifier) { // 30% x1 Trash Can Zombie
+					if (probability9 <= 0.3 / halfModifier * survChance) { // 30% x1 Trash Can Zombie
 						for (int g = 0; g < 1; ++g) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
@@ -694,7 +706,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock()) {
-					if (probability10 <= 0.4 / halfModifier) { // 40% x1 Brickhead Zombie
+					if (probability10 <= 0.4 / halfModifier * survChance) { // 40% x1 Brickhead Zombie
 						if (difficulty >= 1.709) {
 							if (!BasicGraveEntity.this.is1x1()) {
 								zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);

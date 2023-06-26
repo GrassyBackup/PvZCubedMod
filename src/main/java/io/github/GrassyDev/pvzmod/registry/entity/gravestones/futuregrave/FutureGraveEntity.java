@@ -132,6 +132,12 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 		double difficulty = 0;
 		if (this.getVariant().equals(GraveDifficulty.NONE)){
 			difficulty = localDifficulty.getLocalDifficulty();
+				if (difficulty >= 2.1){
+					difficulty = 2.1;
+					if (world.getDifficulty().equals(Difficulty.HARD)){
+						difficulty = difficulty + difficultymodifier;
+					}
+				}
 		}
 		else if (this.getVariant().equals(GraveDifficulty.EASY)){
 			difficulty = 1.0;
@@ -355,6 +361,12 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 			double difficulty = 0;
 			if (this.futureGraveEntity.getVariant().equals(GraveDifficulty.NONE)){
 				difficulty = localDifficulty.getLocalDifficulty();
+				if (difficulty >= 2.1){
+					difficulty = 2.1;
+					if (world.getDifficulty().equals(Difficulty.HARD)){
+						difficulty = difficulty + difficultymodifier;
+					}
+				}
 			}
 			else if (this.futureGraveEntity.getVariant().equals(GraveDifficulty.EASY)){
 				difficulty = 1.0;
@@ -409,7 +421,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
                 browncoatEntity.setOwner(FutureGraveEntity.this);
                 serverWorld.spawnEntityAndPassengers(browncoatEntity);
             }
-            if (probability <= 0.35 / halfModifier) { // 35% x1 Conehead
+            if (probability <= 0.35 / halfModifier * survChance) { // 35% x1 Conehead
                 for(int c = 0; c < 1; ++c) {
 					if (!FutureGraveEntity.this.is1x1()) {
 						zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -423,7 +435,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
                     serverWorld.spawnEntityAndPassengers(coneheadEntity);
                 }
             }
-            if (probability2 <= 0.20 / halfModifier) { // 20% x1 Buckethead
+            if (probability2 <= 0.20 / halfModifier * survChance) { // 20% x1 Buckethead
                 for(int h = 0; h < 1; ++h) {
 					if (!FutureGraveEntity.this.is1x1()) {
 						zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -438,7 +450,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
                 }
             }
 			if (isUnlock() || isUnlockSpecial()) {
-				if (probability6 <= 0.15 / halfModifier) { // 30% x1 Buckethead
+				if (probability6 <= 0.15 / halfModifier * survChance) { // 30% x1 Buckethead
 					for (int u = 0; u < 1; ++u) {
 						if (!FutureGraveEntity.this.is1x1()) {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -452,7 +464,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 				}
-				if (probability2 <= 0.15 / halfModifier) { // 15% x1 Buckethead
+				if (probability2 <= 0.15 / halfModifier * survChance) { // 15% x1 Buckethead
 					for (int u = 0; u < 1; ++u) {
 						if (!FutureGraveEntity.this.is1x1()) {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -468,7 +480,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 				}
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
-				if (probability11 <= 0.25 / halfModifier) { // 25% x1 Conehead
+				if (probability11 <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
 					for (int d = 0; d < 1; ++d) {
 						if (!FutureGraveEntity.this.is1x1()) {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -482,7 +494,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						serverWorld.spawnEntityAndPassengers(coneheadEntity);
 					}
 				}
-				if (probability21 <= 0.15 / halfModifier) { // 15% x1 Buckethead
+				if (probability21 <= 0.15 / halfModifier * survChance) { // 15% x1 Buckethead
 					for (int u = 0; u < 1; ++u) {
 						if (!FutureGraveEntity.this.is1x1()) {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -496,7 +508,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 				}
-				if (probability3 <= 0.4 / halfModifier) { // 40% x1 Jetpack Zombie
+				if (probability3 <= 0.4 / halfModifier * survChance) { // 40% x1 Jetpack Zombie
 					for (int p = 0; p < 1 / halfModifier; ++p) {
 						if (!FutureGraveEntity.this.is1x1()) {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -525,7 +537,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability5 <= 0.15 / halfModifier) { // 15% x2 Flag Zombie
+					if (probability5 <= 0.15 / halfModifier * survChance) { // 15% x2 Flag Zombie
 						for (int f = 0; f < 2 / halfModifier; ++f) {
 							if (!FutureGraveEntity.this.is1x1()) {
 								zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -571,7 +583,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (difficulty >= 1.659 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-					if (probability4 <= 0.50 / halfModifier) { // 50% x1 Robo-Cone Zombie
+					if (probability4 <= 0.50 / halfModifier * survChance) { // 50% x1 Robo-Cone Zombie
 						for (int p = 0; p < 1; ++p) {
 							if (!FutureGraveEntity.this.is1x1()) {
 								zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -587,7 +599,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if ((difficulty >= 1.689 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
-					if (probability4 <= 0.40 / halfModifier) { // 50% x1 Blastronaut Zombie
+					if (probability4 <= 0.40 / halfModifier * survChance) { // 50% x1 Blastronaut Zombie
 						for (int p = 0; p < 1; ++p) {
 							if (!FutureGraveEntity.this.is1x1()) {
 								zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);

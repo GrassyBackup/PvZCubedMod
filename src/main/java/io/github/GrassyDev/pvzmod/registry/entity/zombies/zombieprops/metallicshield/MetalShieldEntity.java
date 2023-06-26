@@ -1,7 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield;
 
 import io.github.GrassyDev.pvzmod.registry.ModItems;
-import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
@@ -101,65 +100,6 @@ public class MetalShieldEntity extends ZombieShieldEntity implements IAnimatable
 	protected SoundEvent getStepSound() {
 		return PvZSounds.SILENCEVENET;
 	}
-
-	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
-
-	/**public boolean damage(DamageSource source, float amount) {
-        if (!super.damage(source, amount)) {
-            return false;
-        } else if (!(this.world instanceof ServerWorld)) {
-            return false;
-        } else {
-            ServerWorld serverWorld = (ServerWorld)this.world;
-            LivingEntity livingEntity = this.getTarget();
-            if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
-                livingEntity = (LivingEntity)source.getAttacker();
-            }
-
-            if (this.getRecentDamageSource() == PvZCubed.HYPNO_DAMAGE) {
-                this.playSound(PvZSounds.HYPNOTIZINGEVENT, 1.5F, 1.0F);
-                HypnoScreendoorEntity hypnotizedZombie = (HypnoScreendoorEntity)PvZEntity.HYPNOSCREENDOOR.create(world);
-				hypnotizedZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				hypnotizedZombie.initialize(serverWorld, world.getLocalDifficulty(hypnotizedZombie.getBlockPos()), SpawnReason.CONVERSION, (EntityData)null, (NbtCompound) null);
-				hypnotizedZombie.setAiDisabled(this.isAiDisabled());
-				hypnotizedZombie.setHealth(this.getHealth());
-                if (this.hasCustomName()) {
-					hypnotizedZombie.setCustomName(this.getCustomName());
-					hypnotizedZombie.setCustomNameVisible(this.isCustomNameVisible());
-                }
-
-				hypnotizedZombie.setPersistent();
-
-				hypnotizedZombie.setHeadYaw(this.getHeadYaw());
-                serverWorld.spawnEntityAndPassengers(hypnotizedZombie);
-                this.remove(RemovalReason.DISCARDED);
-            }
-            return true;
-        }
-    }
-
-	public boolean onKilledOther(ServerWorld serverWorld, LivingEntity livingEntity) {
-		super.onKilledOther(serverWorld, livingEntity);
-		boolean bl = super.onKilledOther(serverWorld, livingEntity);
-		if ((serverWorld.getDifficulty() == Difficulty.NORMAL || serverWorld.getDifficulty() == Difficulty.HARD) && livingEntity instanceof VillagerEntity) {
-			if (serverWorld.getDifficulty() != Difficulty.HARD && this.random.nextBoolean()) {
-				return bl;
-			}
-
-			VillagerEntity villagerEntity = (VillagerEntity) livingEntity;
-			ZombieVillagerEntity zombieVillagerEntity = (ZombieVillagerEntity) villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, false);
-			zombieVillagerEntity.initialize(serverWorld, serverWorld.getLocalDifficulty(zombieVillagerEntity.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, true), (NbtCompound) null);
-			zombieVillagerEntity.setVillagerData(villagerEntity.getVillagerData());
-			zombieVillagerEntity.setGossipData((NbtElement) villagerEntity.getGossip().serialize(NbtOps.INSTANCE).getValue());
-			zombieVillagerEntity.setOfferData(villagerEntity.getOffers().toNbt());
-			zombieVillagerEntity.setXp(villagerEntity.getExperience());
-			if (!this.isSilent()) {
-				serverWorld.syncWorldEvent((PlayerEntity) null, 1026, this.getBlockPos(), 0);
-			}
-		}
-
-		return bl;
-	}**/
 
 	@Nullable
 	@Override
