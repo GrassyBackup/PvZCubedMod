@@ -414,6 +414,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 					zombiePos = FutureGraveEntity.this.random.range(-1, 1);
 				}
+				if (FutureGraveEntity.this.isChallengeGrave()) {
+					zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+					zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+				}
                 BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
                 BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(FutureGraveEntity.this.world);
                 browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -426,6 +430,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					if (!FutureGraveEntity.this.is1x1()) {
 						zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 						zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+					}
+					if (FutureGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+						zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 					}
                     BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(FutureGraveEntity.this.world);
@@ -440,6 +448,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					if (!FutureGraveEntity.this.is1x1()) {
 						zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 						zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+					}
+					if (FutureGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+						zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 					}
                     BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
                     BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(FutureGraveEntity.this.world);
@@ -456,6 +468,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 							zombiePos = FutureGraveEntity.this.random.range(-1, 1);
 						}
+						if (FutureGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(FutureGraveEntity.this.world);
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -469,6 +485,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						if (!FutureGraveEntity.this.is1x1()) {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 							zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+						}
+						if (FutureGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(FutureGraveEntity.this.world);
@@ -486,6 +506,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 							zombiePos = FutureGraveEntity.this.random.range(-1, 1);
 						}
+						if (FutureGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(FutureGraveEntity.this.world);
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -499,6 +523,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						if (!FutureGraveEntity.this.is1x1()) {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 							zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+						}
+						if (FutureGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(FutureGraveEntity.this.world);
@@ -514,6 +542,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 							zombiePos = FutureGraveEntity.this.random.range(-1, 1);
 						}
+						if (FutureGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						JetpackEntity jetpackEntity = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.world);
 						jetpackEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -527,6 +559,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						if (!FutureGraveEntity.this.is1x1()) {
 							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 							zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+						}
+						if (FutureGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						JetpackEntity jetpackEntity = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.world);
@@ -542,6 +578,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							if (!FutureGraveEntity.this.is1x1()) {
 								zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 								zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+							}
+							if (FutureGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 							}
 							double random = Math.random();
 							EntityType<?> flagType;
@@ -589,6 +629,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 								zombiePos = FutureGraveEntity.this.random.range(-1, 1);
 							}
+							if (FutureGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							RoboConeEntity roboConeEntity = (RoboConeEntity) PvZEntity.ROBOCONE.create(FutureGraveEntity.this.world);
 							roboConeEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -604,6 +648,10 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							if (!FutureGraveEntity.this.is1x1()) {
 								zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 								zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+							}
+							if (FutureGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							JetpackEntity blastronautEntity = (JetpackEntity) PvZEntity.BLASTRONAUT.create(FutureGraveEntity.this.world);

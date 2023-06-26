@@ -935,11 +935,11 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 							graveEntity2.refreshPositionAndAngles(getPos2, 0.0F, 0.0F);
 							graveEntity2.initialize(serverWorld, this.world.getLocalDifficulty(getPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							if (this.getTierCount() >= 3){
-								graveEntity2.setVariant(GraveDifficulty.HARD);
+								graveEntity2.setVariant(GraveDifficulty.MEDHARD);
 								graveEntity2.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
 							}
 							else {
-								graveEntity2.setVariant(GraveDifficulty.MED);
+								graveEntity2.setVariant(GraveDifficulty.EASYMED);
 								graveEntity2.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
 							}
 							graveEntity2.setChallenge(GraveEntity.Challenge.TRUE);
@@ -1787,15 +1787,19 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
-								if (!spawnableSpots.contains(blockPos74)){
-									spawnableSpots.add(blockPos74);
+								if (x <= -24 || x >= 24) {
+									if (!spawnableSpots.contains(blockPos74)) {
+										spawnableSpots.add(blockPos74);
+									}
 								}
 							}
 						} else {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
-								if (!spawnableSpots.contains(blockPos74)){
-									spawnableSpots.add(blockPos74);
+								if (x <= -24 || x >= 24) {
+									if (!spawnableSpots.contains(blockPos74)) {
+										spawnableSpots.add(blockPos74);
+									}
 								}
 							}
 						}
@@ -1803,15 +1807,19 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
-								if (!spawnableSpots.contains(blockPos74)){
-									spawnableSpots.add(blockPos74);
+								if (x <= -24 || x >= 24) {
+									if (!spawnableSpots.contains(blockPos74)) {
+										spawnableSpots.add(blockPos74);
+									}
 								}
 							}
 						} else {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
-								if (!spawnableSpots.contains(blockPos74)){
-									spawnableSpots.add(blockPos74);
+								if (x <= -24 || x >= 24) {
+									if (!spawnableSpots.contains(blockPos74)) {
+										spawnableSpots.add(blockPos74);
+									}
 								}
 							}
 						}
@@ -1822,15 +1830,19 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
-								if (!spawnableSpots.contains(blockPos74)){
-									spawnableSpots.add(blockPos74);
+								if (z <= -24 || z >= 24) {
+									if (!spawnableSpots.contains(blockPos74)) {
+										spawnableSpots.add(blockPos74);
+									}
 								}
 							}
 						} else {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
-								if (!spawnableSpots.contains(blockPos74)){
-									spawnableSpots.add(blockPos74);
+								if (z <= -24 || z >= 24) {
+									if (!spawnableSpots.contains(blockPos74)) {
+										spawnableSpots.add(blockPos74);
+									}
 								}
 							}
 						}
@@ -1838,15 +1850,19 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
-								if (!spawnableSpots.contains(blockPos74)){
-									spawnableSpots.add(blockPos74);
+								if (z <= -24 || z >= 24) {
+									if (!spawnableSpots.contains(blockPos74)) {
+										spawnableSpots.add(blockPos74);
+									}
 								}
 							}
 						} else {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
-								if (!spawnableSpots.contains(blockPos74)){
-									spawnableSpots.add(blockPos74);
+								if (z <= -24 || z >= 24) {
+									if (!spawnableSpots.contains(blockPos74)) {
+										spawnableSpots.add(blockPos74);
+									}
 								}
 							}
 						}

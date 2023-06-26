@@ -421,6 +421,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 					zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
 				}
+				if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+					zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+					zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
+				}
                 BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
                 BrowncoatEntity browncoatEntity = (BrowncoatEntity) PvZEntity.PEASANT.create(DarkAgesGraveEntity.this.world);
                 browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -433,6 +437,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					if (!DarkAgesGraveEntity.this.is1x1()) {
 						zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 						zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+					}
+					if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+						zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
 					}
                     BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.PEASANTCONE.create(DarkAgesGraveEntity.this.world);
@@ -447,6 +455,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					if (!DarkAgesGraveEntity.this.is1x1()) {
 						zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 						zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+					}
+					if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+						zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					BrowncoatEntity peasantBucket = (BrowncoatEntity) PvZEntity.PEASANTBUCKET.create(DarkAgesGraveEntity.this.world);
@@ -470,6 +482,14 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 								zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
+							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
 							}
 							double random = Math.random();
 							BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
@@ -508,6 +528,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 							zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
 						}
+					if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+						zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
+					}
 						BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.PEASANTCONE.create(DarkAgesGraveEntity.this.world);
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -522,6 +546,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 								zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							PumpkinZombieEntity pumpkinZombieEntity = (PumpkinZombieEntity) PvZEntity.PUMPKINZOMBIE.create(DarkAgesGraveEntity.this.world);
@@ -539,6 +567,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 								zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
 							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							PumpkinZombieEntity pumpkinZombieEntity = (PumpkinZombieEntity) PvZEntity.PUMPKINZOMBIE.create(DarkAgesGraveEntity.this.world);
 							pumpkinZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -554,6 +586,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 								zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							BrowncoatEntity peasantKnight = (BrowncoatEntity) PvZEntity.PEASANTKNIGHT.create(DarkAgesGraveEntity.this.world);
@@ -578,6 +614,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 								zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
 							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							ImpEntity impEntity = (ImpEntity) PvZEntity.IMPDRAGON.create(DarkAgesGraveEntity.this.world);
 							impEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -593,6 +633,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 								zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							ImpEntity impEntity = (ImpEntity) PvZEntity.IMPDRAGON.create(DarkAgesGraveEntity.this.world);
@@ -610,6 +654,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 								zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
 							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							AnnouncerImpEntity announcerImpEntity = (AnnouncerImpEntity) PvZEntity.ANNOUNCERIMP.create(DarkAgesGraveEntity.this.world);
 							announcerImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -625,6 +673,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							if (!DarkAgesGraveEntity.this.is1x1()) {
 								zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 								zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+							}
+							if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+								zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							AnnouncerImpEntity announcerImpEntity = (AnnouncerImpEntity) PvZEntity.ANNOUNCERIMP.create(DarkAgesGraveEntity.this.world);

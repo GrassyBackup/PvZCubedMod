@@ -726,10 +726,11 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 		if (this.isOnFire() || this.hasStatusEffect(WARM)){
 			this.setStealthTag(Stealth.FALSE);
 		}
+		/**
 		if (canJump && !this.world.isClient() && !this.isFlying() && !this.isInsideWaterOrBubbleColumn() && --jumpDelay <= 0 && this.age > 40) {
 			jumpOverGap();
 			jumpDelay = 20;
-		}
+		}**/
 		if (!(this instanceof ZombiePropEntity)) {
 			this.canJump = this.onGround;
 			if (!this.canJump && !this.isFlying() && !this.isInsideWaterOrBubbleColumn()) {

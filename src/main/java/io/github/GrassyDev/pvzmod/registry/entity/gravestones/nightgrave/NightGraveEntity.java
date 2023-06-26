@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.gravestones.futuregrave.FutureGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.browncoat.modernday.BrowncoatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.dancingzombie.DancingZombieEntity;
@@ -425,6 +426,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 					zombiePos = NightGraveEntity.this.random.range(-1, 1);
 				}
+				if (NightGraveEntity.this.isChallengeGrave()) {
+					zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+					zombiePos = NightGraveEntity.this.random.range(-3, 3);
+				}
                 BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
                 BrowncoatEntity browncoatEntity = (BrowncoatEntity) PvZEntity.BROWNCOAT.create(NightGraveEntity.this.world);
                 browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -437,6 +442,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					if (!NightGraveEntity.this.is1x1()) {
 						zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 						zombiePos = NightGraveEntity.this.random.range(-1, 1);
+					}
+					if (NightGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+						zombiePos = NightGraveEntity.this.random.range(-3, 3);
 					}
                     BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(NightGraveEntity.this.world);
@@ -451,6 +460,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					if (!NightGraveEntity.this.is1x1()) {
 						zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 						zombiePos = NightGraveEntity.this.random.range(-1, 1);
+					}
+					if (NightGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+						zombiePos = NightGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					NewspaperEntity newspaperEntity = (NewspaperEntity) PvZEntity.NEWSPAPER.create(NightGraveEntity.this.world);
@@ -469,6 +482,14 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
 							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
+							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(NightGraveEntity.this.world);
 							bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -482,6 +503,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
+							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(NightGraveEntity.this.world);
@@ -498,6 +523,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 							zombiePos = NightGraveEntity.this.random.range(-1, 1);
 						}
+						if (NightGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+							zombiePos = NightGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(NightGraveEntity.this.world);
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -512,6 +541,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
+							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
 							}
 							double random = Math.random();
 							EntityType<?> flagType;
@@ -558,6 +591,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 							zombiePos = NightGraveEntity.this.random.range(-1, 1);
 						}
+						if (NightGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+							zombiePos = NightGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity screendoorEntity = (BrowncoatEntity) PvZEntity.SCREENDOOR.create(NightGraveEntity.this.world);
 						screendoorEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -580,6 +617,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
 							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							SuperFanImpEntity superFanImpEntity = (SuperFanImpEntity) PvZEntity.SUPERFANIMP.create(NightGraveEntity.this.world);
 							superFanImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -595,6 +636,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
+							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							FootballEntity footballEntity = (FootballEntity) PvZEntity.FOOTBALL.create(NightGraveEntity.this.world);
@@ -633,6 +678,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
 							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							DancingZombieEntity dancingZombieEntity = (DancingZombieEntity) PvZEntity.DANCINGZOMBIE.create(NightGraveEntity.this.world);
 							dancingZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -648,6 +697,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
+							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							FootballEntity berserkerEntity = (FootballEntity) PvZEntity.BERSERKER.create(NightGraveEntity.this.world);
@@ -686,6 +739,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
 							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							NewspaperEntity newspaperEntity = (NewspaperEntity) PvZEntity.NEWSPAPER.create(NightGraveEntity.this.world);
 							newspaperEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -710,6 +767,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
 							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							SuperFanImpEntity superFanImpEntity = (SuperFanImpEntity) PvZEntity.NEWYEARIMP.create(NightGraveEntity.this.world);
 							superFanImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -725,6 +786,10 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							if (!NightGraveEntity.this.is1x1()) {
 								zombiePosZ = NightGraveEntity.this.random.range(-1, 1);
 								zombiePos = NightGraveEntity.this.random.range(-1, 1);
+							}
+							if (NightGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = NightGraveEntity.this.random.range(-3, 3);
+								zombiePos = NightGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = NightGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							GargantuarEntity defensiveEndEntity = (GargantuarEntity) PvZEntity.DEFENSIVEEND.create(NightGraveEntity.this.world);

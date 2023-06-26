@@ -415,6 +415,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 					zombiePos = PoolGraveEntity.this.random.range(-1, 1);
 				}
+				if (PoolGraveEntity.this.isChallengeGrave()) {
+					zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+					zombiePos = PoolGraveEntity.this.random.range(-3, 3);
+				}
                 BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
                 BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(PoolGraveEntity.this.world);
                 browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -428,6 +432,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 						if (!PoolGraveEntity.this.is1x1()) {
 							zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 							zombiePos = PoolGraveEntity.this.random.range(-1, 1);
+						}
+						if (PoolGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+							zombiePos = PoolGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(PoolGraveEntity.this.world);
@@ -445,6 +453,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 							zombiePos = PoolGraveEntity.this.random.range(-1, 1);
 						}
+						if (PoolGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+							zombiePos = PoolGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(PoolGraveEntity.this.world);
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -459,6 +471,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 							if (!PoolGraveEntity.this.is1x1()) {
 								zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 								zombiePos = PoolGraveEntity.this.random.range(-1, 1);
+							}
+							if (PoolGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+								zombiePos = PoolGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(PoolGraveEntity.this.world);
@@ -475,6 +491,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 							zombiePos = PoolGraveEntity.this.random.range(-1, 1);
 						}
+						if (PoolGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+							zombiePos = PoolGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						SnorkelEntity snorkelEntity = (SnorkelEntity) PvZEntity.SNORKEL.create(PoolGraveEntity.this.world);
 						snorkelEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -489,6 +509,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 							if (!PoolGraveEntity.this.is1x1()) {
 								zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 								zombiePos = PoolGraveEntity.this.random.range(-1, 1);
+							}
+							if (PoolGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+								zombiePos = PoolGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							SnorkelEntity snorkelEntity = (SnorkelEntity) PvZEntity.SNORKEL.create(PoolGraveEntity.this.world);
@@ -506,6 +530,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 								zombiePos = PoolGraveEntity.this.random.range(-1, 1);
 							}
+							if (PoolGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+								zombiePos = PoolGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							DolphinRiderEntity dolphinRiderEntity = (DolphinRiderEntity) PvZEntity.DOLPHINRIDER.create(PoolGraveEntity.this.world);
 							dolphinRiderEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -522,6 +550,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 								zombiePos = PoolGraveEntity.this.random.range(-1, 1);
 							}
+							if (PoolGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+								zombiePos = PoolGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							DolphinRiderEntity dolphinRiderEntity = (DolphinRiderEntity) PvZEntity.DOLPHINRIDER.create(PoolGraveEntity.this.world);
 							dolphinRiderEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -537,6 +569,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 							if (!PoolGraveEntity.this.is1x1()) {
 								zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 								zombiePos = PoolGraveEntity.this.random.range(-1, 1);
+							}
+							if (PoolGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+								zombiePos = PoolGraveEntity.this.random.range(-3, 3);
 							}
 							double random = Math.random();
 							EntityType<?> flagType;
@@ -591,6 +627,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 								zombiePos = PoolGraveEntity.this.random.range(-1, 1);
 							}
+							if (PoolGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+								zombiePos = PoolGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							MetalVehicleEntity zomboni = (MetalVehicleEntity) PvZEntity.ZOMBONIVEHICLE.create(PoolGraveEntity.this.world);
 							zomboni.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -604,6 +644,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 							if (!PoolGraveEntity.this.is1x1()) {
 								zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 								zombiePos = PoolGraveEntity.this.random.range(-1, 1);
+							}
+							if (PoolGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+								zombiePos = PoolGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							MetalVehicleEntity zomboni = (MetalVehicleEntity) PvZEntity.ZOMBONIVEHICLE.create(PoolGraveEntity.this.world);
@@ -620,6 +664,10 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 							if (!PoolGraveEntity.this.is1x1()) {
 								zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
 								zombiePos = PoolGraveEntity.this.random.range(-1, 1);
+							}
+							if (PoolGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+								zombiePos = PoolGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							MetalVehicleEntity bobsled = (MetalVehicleEntity) PvZEntity.BOBSLEDVEHICLE.create(PoolGraveEntity.this.world);

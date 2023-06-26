@@ -431,6 +431,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 						zombiePos = RoofGraveEntity.this.random.range(-1, 1);
 					}
+					if (RoofGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+						zombiePos = RoofGraveEntity.this.random.range(-3, 3);
+					}
 					BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -444,6 +448,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 					if (!RoofGraveEntity.this.is1x1()) {
 						zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 						zombiePos = RoofGraveEntity.this.random.range(-1, 1);
+					}
+					if (RoofGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+						zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
@@ -460,6 +468,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 							zombiePos = RoofGraveEntity.this.random.range(-1, 1);
 						}
+						if (RoofGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+							zombiePos = RoofGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.world);
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -473,6 +485,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 						if (!RoofGraveEntity.this.is1x1()) {
 							zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 							zombiePos = RoofGraveEntity.this.random.range(-1, 1);
+						}
+						if (RoofGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+							zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.world);
@@ -488,6 +504,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 							zombiePos = RoofGraveEntity.this.random.range(-1, 1);
 						}
+						if (RoofGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+							zombiePos = RoofGraveEntity.this.random.range(-3, 3);
+						}
 						BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 						ImpEntity impEntity = (ImpEntity) PvZEntity.IMP.create(RoofGraveEntity.this.world);
 						impEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -502,6 +522,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							if (!RoofGraveEntity.this.is1x1()) {
 								zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 								zombiePos = RoofGraveEntity.this.random.range(-1, 1);
+							}
+							if (RoofGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							ImpEntity impEntity = (ImpEntity) PvZEntity.IMP.create(RoofGraveEntity.this.world);
@@ -519,6 +543,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 								zombiePos = RoofGraveEntity.this.random.range(-1, 1);
 							}
+							if (RoofGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							BasketballCarrierEntity basketballCarrierEntity = (BasketballCarrierEntity) PvZEntity.BASKETBALLCARRIER.create(RoofGraveEntity.this.world);
 							basketballCarrierEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -534,6 +562,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							if (!RoofGraveEntity.this.is1x1()) {
 								zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 								zombiePos = RoofGraveEntity.this.random.range(-1, 1);
+							}
+							if (RoofGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							double random = Math.random();
 							EntityType<?> flagType;
@@ -595,6 +627,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 								zombiePos = RoofGraveEntity.this.random.range(-1, 1);
 							}
+							if (RoofGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							BasketballCarrierEntity basketballCarrierEntity = (BasketballCarrierEntity) PvZEntity.BASKETBALLCARRIER.create(RoofGraveEntity.this.world);
 							basketballCarrierEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -614,6 +650,10 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							if (!RoofGraveEntity.this.is1x1()) {
 								zombiePosZ = RoofGraveEntity.this.random.range(-1, 1);
 								zombiePos = RoofGraveEntity.this.random.range(-1, 1);
+							}
+							if (RoofGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = RoofGraveEntity.this.random.range(-3, 3);
+								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							GargantuarEntity gargantuarEntity = (GargantuarEntity) PvZEntity.GARGANTUAR.create(RoofGraveEntity.this.world);

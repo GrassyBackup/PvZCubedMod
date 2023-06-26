@@ -52,6 +52,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 	protected int spellTicks;
 
 	public boolean beingEaten = false;
+	protected float graveWeight;
 
 	public boolean decorative;
 
@@ -99,6 +100,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
 		this.dataTracker.startTracking(SPELL, (byte)0);
 	}
+
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(CHALLENGE_TAG, tag.getBoolean("isChallenge"));
@@ -461,7 +463,13 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 		}
 		List<GravebusterEntity> list = world.getNonSpectatingEntities(GravebusterEntity.class, entityBox.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
 		this.beingEaten = !list.isEmpty();
-		if (!this.isChallengeGrave()){
+		if (!this.isChallengeGrave() &&
+				!this.isHalf() &&
+				this.getVariant().equals(GraveDifficulty.NONE) &&
+				!this.isInfinite() &&
+				!this.is1x1() &&
+				!this.isUnlock() &&
+				!this.isUnlockSpecial()){
 			survChance = 0.75f;
 		}
 		else {

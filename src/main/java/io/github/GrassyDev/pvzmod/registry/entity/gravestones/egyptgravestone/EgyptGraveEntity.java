@@ -415,6 +415,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 					zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 				}
+				if (EgyptGraveEntity.this.isChallengeGrave()) {
+					zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+					zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+				}
                 BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
                 MummyEntity mummyEntity = (MummyEntity)PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
                 mummyEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -427,6 +431,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 					if (!EgyptGraveEntity.this.is1x1()) {
 						zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 						zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+					}
+					if (EgyptGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+						zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 					}
                     BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
@@ -441,6 +449,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 					if (!EgyptGraveEntity.this.is1x1()) {
 						zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 						zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+					}
+					if (EgyptGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+						zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 					MummyEntity bucketheadEntity = (MummyEntity) PvZEntity.MUMMYBUCKET.create(EgyptGraveEntity.this.world);
@@ -458,6 +470,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -473,6 +489,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 							if (!EgyptGraveEntity.this.is1x1()) {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							MummyEntity bucketheadEntity = (MummyEntity) PvZEntity.MUMMYBUCKET.create(EgyptGraveEntity.this.world);
@@ -490,6 +510,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							ExplorerEntity explorerEntity = (ExplorerEntity) PvZEntity.EXPLORER.create(EgyptGraveEntity.this.world);
 							explorerEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -505,6 +529,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 							if (!EgyptGraveEntity.this.is1x1()) {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							FlagMummyEntity flagzombieEntity = (FlagMummyEntity) PvZEntity.FLAGMUMMY.create(EgyptGraveEntity.this.world);
@@ -543,6 +571,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							ExplorerEntity explorerEntity = (ExplorerEntity) PvZEntity.EXPLORER.create(EgyptGraveEntity.this.world);
 							explorerEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -558,6 +590,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 							if (!EgyptGraveEntity.this.is1x1()) {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							PharaohEntity pharaohEntity = (PharaohEntity) PvZEntity.UNDYINGPHARAOH.create(EgyptGraveEntity.this.world);
@@ -596,6 +632,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							PharaohEntity pharaohEntity = (PharaohEntity) PvZEntity.UNDYINGPHARAOH.create(EgyptGraveEntity.this.world);
 							pharaohEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -633,6 +673,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							ExplorerEntity torchlight = (ExplorerEntity) PvZEntity.TORCHLIGHT.create(EgyptGraveEntity.this.world);
 							torchlight.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -663,6 +707,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							ExplorerEntity torchlight = (ExplorerEntity) PvZEntity.TORCHLIGHT.create(EgyptGraveEntity.this.world);
 							torchlight.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -674,6 +722,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 							if (!EgyptGraveEntity.this.is1x1()) {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos2 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
@@ -705,6 +757,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							MummyEntity pyramidHead = (MummyEntity) PvZEntity.PYRAMIDHEAD.create(EgyptGraveEntity.this.world);
 							pyramidHead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
@@ -730,6 +786,10 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 							if (!EgyptGraveEntity.this.is1x1()) {
 								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
 							MummyEntity pyramidHead = (MummyEntity) PvZEntity.PYRAMIDHEAD.create(EgyptGraveEntity.this.world);
