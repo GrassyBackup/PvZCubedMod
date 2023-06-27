@@ -16,7 +16,7 @@
       "type": "text",
       "text": [
         "$(br2)Chill",
-        "$(br2)Chill slows down Zombies, giving plants more time to finish them off.",
+        "$(br2)Chill slows down Zombies for a total of 4 seconds, then they are immune to Chill for 4 seconds.",
         "$(br2)Damage done by zombies is halved.",
         "$(br2)Moves based on animation like Gargantuar's smash are slowed down by half.",
         "$(br2)Machines can't be Chilled."

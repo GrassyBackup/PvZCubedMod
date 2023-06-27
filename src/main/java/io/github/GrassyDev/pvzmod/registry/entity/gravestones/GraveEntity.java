@@ -470,7 +470,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 				!this.is1x1() &&
 				!this.isUnlock() &&
 				!this.isUnlockSpecial()){
-			survChance = 0.75f;
+			survChance = 0.66f;
 		}
 		else {
 			survChance = 1f;

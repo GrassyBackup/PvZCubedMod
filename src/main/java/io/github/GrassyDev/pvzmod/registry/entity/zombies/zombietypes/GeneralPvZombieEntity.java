@@ -722,7 +722,6 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 
 	public void tick() {
 		if (!this.world.isClient) {
-			System.out.println(chillTicks);
 			if (this.hasStatusEffect(ICE)) {
 				++chillTicks;
 			} else {
