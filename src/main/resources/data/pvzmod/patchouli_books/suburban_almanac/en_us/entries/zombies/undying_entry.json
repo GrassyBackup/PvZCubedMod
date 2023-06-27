@@ -11,7 +11,7 @@
         "$(#bd951a)Damage: $()$(#ff0000)12 ",
         "$(#bd951a)Speed: $()$(#ff0000)Hungry, Stiff (Sarcophagus)",
         "$(br)$(#bd951a)Zombie Spawn Rate: $()$(#ff0000)3s (Initial), 8s ",
-        "$(#bd951a)Special: $()$(#ff0000)Covered by Sarcophagus. Stays in place and enters Summoning mode when he has a Sarcophagus and there's a Plant in front of him (3.5 Blocks). Spawns Pharaoh Zombies in Summoning mode.",
+        "$(#bd951a)Special: $()$(#ff0000)Covered by Sarcophagus. Stays in place and enters Summoning mode when he has a Sarcophagus and there's a Plant in front of him (5.5 Blocks). Spawns Pharaoh Zombies in Summoning mode.",
         "$(br)$(#bd951a)If the Plants think they're going to beat the Undying Pharaoh, they're in de-Nile."
       ]
     },
@@ -33,14 +33,14 @@
         "pvzmod:plants/gatlingpea_entry",
         "pvzmod:plants/peapod_entry",
         "pvzmod:plants/lightningreed_entry",
-        "pvzmod:plants/fumeshroom_entry",
         "pvzmod:plants/jalapeno_entry",
         "pvzmod:plants/iceshroom_entry",
         "pvzmod:plants/chillypepper_entry",
         "pvzmod:plants/cherrybomb_entry",
         "pvzmod:plants/iceberglettuce_entry",
         "pvzmod:plants/spikeweed_entry",
-        "pvzmod:plants/breezeshroom_entry"
+        "pvzmod:plants/firepea_entry",
+        "pvzmod:plants/bloomerang_entry"
       ]
     },
     {
@@ -48,13 +48,11 @@
       "title": "Recommended Plants",
       "entries": [
         "pvzmod:plants/jumpingbean_entry",
-        "pvzmod:plants/firepea_entry",
         "pvzmod:plants/tulimpeter_entry",
         "pvzmod:plants/admiralnavybean_entry",
         "pvzmod:plants/dropea_entry",
         "pvzmod:plants/narcissus_entry",
         "pvzmod:plants/smackadamia_entry",
-        "pvzmod:plants/bloomerang_entry"
       ]
     },
     {

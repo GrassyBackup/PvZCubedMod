@@ -70,6 +70,7 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
 		this.targetStrength = true;
+		this.isBurst = true;
     }
 
 	static {

@@ -64,6 +64,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 		this.attackTicksLeft = 0;
         this.ignoreCameraFrustum = true;
 		this.targetStrength = true;
+		this.isBurst = true;
     }
 
 	protected void initDataTracker() {

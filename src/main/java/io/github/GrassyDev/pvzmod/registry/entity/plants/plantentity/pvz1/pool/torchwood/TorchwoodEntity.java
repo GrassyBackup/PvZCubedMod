@@ -52,6 +52,7 @@ public class TorchwoodEntity extends PlantEntity implements IAnimatable {
 		this.setFireImmune(FireImmune.TRUE);
         this.ignoreCameraFrustum = true;
 		this.illuminate = true;
+		this.isBurst = true;
     }
 
 	static {

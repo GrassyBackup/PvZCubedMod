@@ -44,6 +44,7 @@ public class HypnoshroomEntity extends PlantEntity implements IAnimatable, Range
     public HypnoshroomEntity(EntityType<? extends HypnoshroomEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
+		this.isBurst = true;
 
     }
 

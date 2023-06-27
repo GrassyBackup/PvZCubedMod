@@ -73,6 +73,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 		this.potatoPreparingTime = 1200;
 		potatoAnimationTime = 10;
 		playSoundRise = true;
+		this.isBurst = true;
     }
 
 	protected void initDataTracker() {

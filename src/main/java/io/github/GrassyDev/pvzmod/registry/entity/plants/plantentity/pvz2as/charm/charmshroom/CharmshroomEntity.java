@@ -60,6 +60,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
         this.ignoreCameraFrustum = true;
 		this.targetStrength = true;
 		this.targetNotCovered = true;
+		this.isBurst = true;
     }
 
 	protected void initDataTracker() {

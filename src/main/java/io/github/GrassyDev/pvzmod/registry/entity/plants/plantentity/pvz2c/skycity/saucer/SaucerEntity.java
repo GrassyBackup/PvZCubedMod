@@ -68,6 +68,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 
 		this.setNoGravity(true);
 		this.illuminate = true;
+		this.isBurst = true;
 	}
 
 	public SaucerEntity(World world, double x, double y, double z) {

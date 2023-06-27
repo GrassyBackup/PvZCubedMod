@@ -53,6 +53,7 @@ public class CoconutCannonEntity extends PlantEntity implements IAnimatable, Ran
         super(entityType, world);
         this.ignoreCameraFrustum = true;
 		this.targetStrength = true;
+		this.isBurst = true;
     }
 
 	static {

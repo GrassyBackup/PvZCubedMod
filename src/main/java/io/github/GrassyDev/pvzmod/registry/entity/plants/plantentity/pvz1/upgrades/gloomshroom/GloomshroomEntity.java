@@ -69,6 +69,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 	public GloomshroomEntity(EntityType<? extends GloomshroomEntity> entityType, World world) {
 		super(entityType, world);
 		this.ignoreCameraFrustum = true;
+		this.isBurst = true;
 	}
 
 	protected void initDataTracker() {

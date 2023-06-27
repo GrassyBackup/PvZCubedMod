@@ -156,7 +156,11 @@ public class AdmiralNavyBeanEntity extends PlantEntity implements IAnimatable, R
 	@Override
 	public void attack(LivingEntity target, float pullProgress) {
 		if (target.squaredDistanceTo(this) <= 25) {
+			this.isBurst = true;
 			this.smack(target);
+		}
+		else {
+			this.isBurst = false;
 		}
 	}
 

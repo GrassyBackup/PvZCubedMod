@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.gears.StoneHelmetVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityData;
@@ -196,7 +194,7 @@ public class StoneHelmetEntity extends ZombiePropEntity implements IAnimatable {
 			itemStack = ModItems.UNDYINGEGG.getDefaultStack();
 		}
 		else{
-			itemStack = ModItems.PHARAOHEGG.getDefaultStack();
+			itemStack = ModItems.BRICKHEADEGG.getDefaultStack();
 		}
 		return itemStack;
 	}

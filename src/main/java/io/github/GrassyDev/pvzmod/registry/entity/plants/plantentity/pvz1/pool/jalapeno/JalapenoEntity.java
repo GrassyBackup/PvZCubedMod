@@ -66,6 +66,7 @@ public class JalapenoEntity extends PlantEntity implements IAnimatable {
 		this.setFireImmune(FireImmune.TRUE);
 		this.ignoreCameraFrustum = true;
 		this.targetStrength = true;
+		this.isBurst = true;
 	}
 
 	protected void initDataTracker() {

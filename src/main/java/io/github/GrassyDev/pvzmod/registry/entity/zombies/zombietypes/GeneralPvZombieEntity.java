@@ -717,8 +717,27 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 
 	private int unstuckDelay;
 	private int jumpDelay;
+	private int chillTicks;
+	private int chillCDTicks;
 
 	public void tick() {
+		if (!this.world.isClient) {
+			System.out.println(chillTicks);
+			if (this.hasStatusEffect(ICE)) {
+				++chillTicks;
+			} else {
+				if (--chillTicks <= 0){
+					chillTicks = 0;
+				}
+			}
+			if (chillTicks >= 80) {
+				this.removeStatusEffect(ICE);
+				this.chillCDTicks = 80;
+			}
+			if (--chillCDTicks > 0) {
+				this.removeStatusEffect(ICE);
+			}
+		}
 		if (this.getOwner() instanceof GraveEntity graveEntity && graveEntity.isChallengeGrave()){
 			this.setChallengeZombie(Challenge.TRUE);
 		}
@@ -919,6 +938,10 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 			this.world.sendEntityStatus(this, (byte) 80);
 		}
 		--fireSplashTicks;
+		if (--damageCooldown <= 0){
+			damageTaken = 0;
+			damageCooldown = 30;
+		}
 	}
 
 	protected void jumpOverGap(){
@@ -945,6 +968,30 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 			this.setVelocity(vec3d2.x, 0.5, vec3d2.z);
 			this.canJump = false;
 		}
+	}
+
+	public float damageTaken;
+	private int damageCooldown;
+	public boolean canTakeDmg;
+
+	@Override
+	protected void applyDamage(DamageSource source, float amount) {
+		/**damageTaken += amount;
+		canTakeDmg = true;
+		if (damageTaken <= 50) {
+			super.applyDamage(source, amount);
+		}
+		else if (amount >= 50){
+			super.applyDamage(source, amount);
+		}
+		else if (source.getAttacker() instanceof PlantEntity plantEntity && plantEntity.isBurst){
+			super.applyDamage(source, amount);
+		}
+		else {
+			canTakeDmg = false;
+			super.applyDamage(source, 0);
+		}**/
+		super.applyDamage(source, amount);
 	}
 
 	@Override

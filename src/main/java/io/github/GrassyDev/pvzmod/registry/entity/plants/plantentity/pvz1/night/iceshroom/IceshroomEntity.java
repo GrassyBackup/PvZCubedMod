@@ -62,6 +62,7 @@ public class IceshroomEntity extends PlantEntity implements IAnimatable {
 	public IceshroomEntity(EntityType<? extends IceshroomEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
+		this.isBurst = true;
     }
 
 	protected void initDataTracker() {

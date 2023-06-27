@@ -65,6 +65,7 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
     public PerfoomshroomEntity(EntityType<? extends PerfoomshroomEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
+		this.isBurst = true;
     }
 
 	protected void initDataTracker() {

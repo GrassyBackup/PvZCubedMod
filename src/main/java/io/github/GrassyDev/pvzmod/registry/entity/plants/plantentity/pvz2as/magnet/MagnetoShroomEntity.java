@@ -65,6 +65,7 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 		this.magnetoshroom = true;
 		this.magnetOffsetY = 0.75f;
 		this.magnetOffsetX = 0.4f;
+		this.isBurst = true;
 	}
 
 	static {

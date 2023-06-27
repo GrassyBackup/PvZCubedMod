@@ -407,11 +407,13 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 		if (!this.world.isClient()) {
 			if (this.getTypeCount() < 13) {
 				if ((this.getVariant().equals(PharaohVariants.UNDYING) || this.getVariant().equals(PharaohVariants.UNDYINGHYPNO)) && sarcophagusEntity != null) {
-					if ((this.CollidesWithPlant(3.5f, 0f) != null || this.CollidesWithPlant(2.5f, 0f) != null || this.CollidesWithPlant(1.5f, 0f) != null || this.CollidesWithPlant(0.5f, 0f) != null)
-							&& !this.hasStatusEffect(PvZCubed.BOUNCED)) {
-						this.setSummoning(IsSummoning.TRUE);
-					} else {
-						this.setSummoning(IsSummoning.FALSE);
+					for (int x = 0; x <= 5; ++x){
+						if ((this.CollidesWithPlant(x + 0.5f, 0f) != null)
+								&& !this.hasStatusEffect(PvZCubed.BOUNCED)) {
+							this.setSummoning(IsSummoning.TRUE);
+						} else {
+							this.setSummoning(IsSummoning.FALSE);
+						}
 					}
 				} else {
 					this.setSummoning(IsSummoning.FALSE);

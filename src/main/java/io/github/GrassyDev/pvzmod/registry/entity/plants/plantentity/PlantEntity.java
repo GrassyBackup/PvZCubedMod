@@ -48,6 +48,8 @@ public abstract class PlantEntity extends GolemEntity {
 
 	public boolean naturalSpawn;
 
+	public boolean isBurst;
+
 	protected boolean dryLand;
 
 	protected int tickDelay;

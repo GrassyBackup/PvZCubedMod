@@ -59,6 +59,7 @@ public class GravebusterEntity extends PlantEntity implements IAnimatable {
 
         this.notready = true;
         this.attackTicksLeft = 80;
+		this.isBurst = true;
     }
 
 	static {

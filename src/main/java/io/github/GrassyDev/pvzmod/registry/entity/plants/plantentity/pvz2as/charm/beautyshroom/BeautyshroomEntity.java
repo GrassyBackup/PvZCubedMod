@@ -64,6 +64,7 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
     public BeautyshroomEntity(EntityType<? extends BeautyshroomEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
+		this.isBurst = true;
     }
 
 	protected void initDataTracker() {

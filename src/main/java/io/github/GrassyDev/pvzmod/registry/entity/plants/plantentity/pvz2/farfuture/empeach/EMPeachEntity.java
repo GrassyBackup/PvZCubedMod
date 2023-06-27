@@ -62,6 +62,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
         super(entityType, world);
 		this.setFireImmune(FireImmune.TRUE);
         this.ignoreCameraFrustum = true;
+		this.isBurst = true;
     }
 
 	protected void initDataTracker() {

@@ -155,6 +155,11 @@ public class NavyBeanEntity extends PlantEntity implements IAnimatable, RangedAt
 	public void attack(LivingEntity target, float pullProgress) {
 		if (target.squaredDistanceTo(this) <= 25) {
 			this.smack(target);
+			this.isBurst = true;
+		}
+		else {
+
+			this.isBurst = false;
 		}
 	}
 

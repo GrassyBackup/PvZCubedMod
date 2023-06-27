@@ -68,6 +68,7 @@ public class SunflowerSeedEntity extends PlantEntity implements IAnimatable, Ran
     public SunflowerSeedEntity(EntityType<? extends SunflowerSeedEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
+		this.isBurst = true;
 
     }
 

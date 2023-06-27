@@ -69,6 +69,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		amphibiousRaycastDelay = 1;
 		this.setNoGravity(true);
 		this.noBiggie = true;
+		this.isBurst = true;
     }
 
 	public TangleKelpEntity(World world, double x, double y, double z) {
