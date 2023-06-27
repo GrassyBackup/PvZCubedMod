@@ -165,17 +165,17 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 		if (this.spawnCounter == 1 && world.getTime() < 24000) {
 			this.kill();
 		}
-		else if (this.spawnCounter == 2 && difficulty <= 1.509 + difficultymodifier){
+		else if (this.spawnCounter == 2 && difficulty <= 1.599 + difficultymodifier){
 			if (!this.isInfinite()) {
 				this.kill();
 			}
 		}
-		else if (this.spawnCounter == 3 && difficulty <= 1.709 + difficultymodifier){
+		else if (this.spawnCounter == 3 && difficulty <= 1.809 + difficultymodifier){
 			if (!this.isInfinite()) {
 				this.kill();
 			}
 		}
-		else if (this.spawnCounter == 4 && difficulty <= 1.909 + difficultymodifier){
+		else if (this.spawnCounter == 4 && difficulty <= 2.009 + difficultymodifier){
 			if (!this.isInfinite()) {
 				this.kill();
 			}
