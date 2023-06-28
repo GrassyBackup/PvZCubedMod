@@ -465,7 +465,7 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 				}
 			}
 			if (graveWeight <= 3) {
-				if (probability2 <= 0.10 / halfModifier * survChance) { // 10% x1 Buckethead
+				if (probability2 <= 0.10 / halfModifier * survChance) { // 10% x2 Buckethead
 					for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 						if (!EgyptGraveEntity.this.is1x1()) {
 							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
@@ -482,7 +482,7 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 						mummyEntity.setOwner(EgyptGraveEntity.this);
 						serverWorld.spawnEntityAndPassengers(mummyEntity);
 					}
-					for (int u = 0; u < 1; ++u) {
+					for (int u = 0; u < 2; ++u) {
 						if (!EgyptGraveEntity.this.is1x1()) {
 							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 							zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
@@ -497,8 +497,8 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(EgyptGraveEntity.this);
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
-						graveWeight += 1;
 					}
+					graveWeight += 1;
 				}
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {

@@ -463,41 +463,41 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 				}
 			}
 			if (graveWeight <= 4) {
-            if (probability2 <= 0.20 / halfModifier * survChance) { // 20% x1 Buckethead
-				for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
-					if (!FutureGraveEntity.this.is1x1()) {
-						zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
-						zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+				if (probability2 <= 0.20 / halfModifier * survChance) { // 20% x2 Buckethead
+					for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
+						if (!FutureGraveEntity.this.is1x1()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
+							zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+						}
+						if (FutureGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+						}
+						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						BrowncoatEntity browncoatEntity = (BrowncoatEntity) PvZEntity.BROWNCOAT.create(FutureGraveEntity.this.world);
+						browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						browncoatEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						browncoatEntity.setOwner(FutureGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(browncoatEntity);
 					}
-					if (FutureGraveEntity.this.isChallengeGrave()) {
-						zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
-						zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+					for (int h = 0; h < 2; ++h) {
+						if (!FutureGraveEntity.this.is1x1()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
+							zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+						}
+						if (FutureGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+						}
+						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(FutureGraveEntity.this.world);
+						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						bucketheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.setOwner(FutureGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
-					BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(FutureGraveEntity.this.world);
-					browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					browncoatEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
-					browncoatEntity.setOwner(FutureGraveEntity.this);
-					serverWorld.spawnEntityAndPassengers(browncoatEntity);
-				}
-                for(int h = 0; h < 1; ++h) {
-					if (!FutureGraveEntity.this.is1x1()) {
-						zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
-						zombiePos = FutureGraveEntity.this.random.range(-1, 1);
-					}
-					if (FutureGraveEntity.this.isChallengeGrave()) {
-						zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
-						zombiePos = FutureGraveEntity.this.random.range(-3, 3);
-					}
-                    BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-                    BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(FutureGraveEntity.this.world);
-                    bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                    bucketheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
-                    bucketheadEntity.setOwner(FutureGraveEntity.this);
-                    serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					graveWeight += 1;
-                }
-            }
+				}
 			}
 			if (graveWeight <= 4) {
 				if (serverWorld.toServerWorld().getTime() > 24000) {
@@ -554,7 +554,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (graveWeight <= 4) {
-					if (probability21 <= 0.15 / halfModifier * survChance) { // 15% x1 Buckethead
+					if (probability21 <= 0.15 / halfModifier * survChance) { // 15% x2 Buckethead
 						for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 							if (!FutureGraveEntity.this.is1x1()) {
 								zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
@@ -571,7 +571,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							browncoatEntity.setOwner(FutureGraveEntity.this);
 							serverWorld.spawnEntityAndPassengers(browncoatEntity);
 						}
-						for (int u = 0; u < 1; ++u) {
+						for (int u = 0; u < 2; ++u) {
 							if (!FutureGraveEntity.this.is1x1()) {
 								zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
 								zombiePos = FutureGraveEntity.this.random.range(-1, 1);
@@ -586,8 +586,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							bucketheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							bucketheadEntity.setOwner(FutureGraveEntity.this);
 							serverWorld.spawnEntityAndPassengers(bucketheadEntity);
-							graveWeight += 1;
 						}
+						graveWeight += 1;
 					}
 				}
 				if (graveWeight <= 4) {

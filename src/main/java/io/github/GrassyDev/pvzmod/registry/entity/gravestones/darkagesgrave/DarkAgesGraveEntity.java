@@ -471,7 +471,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 				}
 			}
 			if (graveWeight <= 3.5) {
-				if (probability3 <= 0.10 / halfModifier * survChance) { // 10% x1 Buckethead Peasant
+				if (probability3 <= 0.10 / halfModifier * survChance) { // 10% x2 Buckethead Peasant
 					for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 						if (!DarkAgesGraveEntity.this.is1x1()) {
 							zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -488,7 +488,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 						browncoatEntity.setOwner(DarkAgesGraveEntity.this);
 						serverWorld.spawnEntityAndPassengers(browncoatEntity);
 					}
-					for (int c = 0; c < 1; ++c) {
+					for (int c = 0; c < 2; ++c) {
 						if (!DarkAgesGraveEntity.this.is1x1()) {
 							zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 							zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -503,8 +503,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 						peasantBucket.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						peasantBucket.setOwner(DarkAgesGraveEntity.this);
 						serverWorld.spawnEntityAndPassengers(peasantBucket);
-						graveWeight += 1;
 					}
+					graveWeight += 1;
 				}
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {

@@ -863,7 +863,7 @@ public abstract class PlantEntity extends GolemEntity {
 				} else if (entityType.equals(PvZEntity.TRASHCANBIN)) {
 					helmetProj = MetalHelmetVariants.TRASHCAN;
 				} else if (entityType.equals(PvZEntity.BLASTRONAUTGEAR)) {
-					helmetProj = MetalHelmetVariants.BERSERKER;
+					helmetProj = MetalHelmetVariants.BLASTRONAUT ;
 				} else if (entityType.equals(PvZEntity.KNIGHTGEAR)) {
 					helmetProj = MetalHelmetVariants.KNIGHT;
 				} else if (entityType.equals(PvZEntity.MEDALLIONGEAR)) {
@@ -937,7 +937,12 @@ public abstract class PlantEntity extends GolemEntity {
 			playSound(PvZSounds.MAGNETATTRACTEVENT);
 			MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
 			helmetProjEntity.setOwner(this);
-			helmetProjEntity.setMaxAge(150);
+			if (this.getType().equals(PvZEntity.MAGNETOSHROOM)) {
+				helmetProjEntity.setMaxAge(150);
+			}
+			else {
+				helmetProjEntity.setMaxAge(200);
+			}
 			Vec3d vec3d = new Vec3d((double) magnetOffsetX, 0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 			helmetProjEntity.refreshPositionAndAngles(this.getX() + vec3d.getX(), this.getY() + vec3d.getY() + magnetOffsetY, this.getZ() + vec3d.getZ(), 0, 0);
 			helmetProjEntity.setVariant(helmetProj);
@@ -950,7 +955,12 @@ public abstract class PlantEntity extends GolemEntity {
 			if (setGear2 != null) {
 				MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
 				helmetProjEntity.setOwner(this);
-				helmetProjEntity.setMaxAge(150);
+				if (this.getType().equals(PvZEntity.MAGNETOSHROOM)) {
+					helmetProjEntity.setMaxAge(150);
+				}
+				else {
+					helmetProjEntity.setMaxAge(200);
+				}
 				Vec3d vec3d = new Vec3d((double) magnetOffsetX, 0, 0.5).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				helmetProjEntity.refreshPositionAndAngles(this.getX() + vec3d.getX(), this.getY() + vec3d.getY() + magnetOffsetY, this.getZ() + vec3d.getZ(), 0, 0);
 				helmetProjEntity.setVariant(helmetProj2);
@@ -962,7 +972,12 @@ public abstract class PlantEntity extends GolemEntity {
 			if (setGear3 != null) {
 				MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
 				helmetProjEntity.setOwner(this);
-				helmetProjEntity.setMaxAge(150);
+				if (this.getType().equals(PvZEntity.MAGNETOSHROOM)) {
+					helmetProjEntity.setMaxAge(150);
+				}
+				else {
+					helmetProjEntity.setMaxAge(200);
+				}
 				Vec3d vec3d = new Vec3d((double) magnetOffsetX, 0, -0.5).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				helmetProjEntity.refreshPositionAndAngles(this.getX() + vec3d.getX(), this.getY() + vec3d.getY() + magnetOffsetY, this.getZ() + vec3d.getZ(), 0, 0);
 				helmetProjEntity.setVariant(helmetProj3);
