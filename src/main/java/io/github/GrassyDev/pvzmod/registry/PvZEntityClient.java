@@ -57,6 +57,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.farfut
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.frostbitecaves.pepperpult.PepperpultEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.electropea.ElectropeaEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.flamingpea.FlamingpeaEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.coconutcannon.CoconutCannonEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.springbean.SpringbeanEntityRenderer;
@@ -114,6 +115,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.iceber
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.icespike.ShootingIceSpikeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.icespike.ShootingPowerIceSpikeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.jingle.JingleEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.missiletoeproj.MissileToeProjEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pea.ShootingPeaEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pepper.ShootingPepperEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.piercingpea.FirePiercePeaEntityRenderer;
@@ -289,6 +291,8 @@ public class PvZEntityClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(PvZEntity.GOLDLEAF, GoldLeafEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.MISSILETOE, MissileToeEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.ELECTROPEA, ElectropeaEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.MAGICSHROOM, MagicshroomEntityRenderer::new);
@@ -381,6 +385,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.CABBAGE, ShootingCabbageEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.ICEBERG, ShootingIcebergEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.MISSILETOEPROJ, MissileToeProjEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.BOOMERANGPROJ, ShootingBoomerangEntityRenderer::new);
 

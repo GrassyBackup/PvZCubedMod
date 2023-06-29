@@ -38,13 +38,14 @@
         "pvzmod:plants/squash_entry",
         "pvzmod:plants/tallnut_entry",
         "pvzmod:plants/spikerock_entry",
-        "pvzmod:plants/icebergpult_entry"
+        "pvzmod:plants/magnetshroom_entry"
       ]
     },
     {
       "type": "relations",
       "title": "Recommended Plants",
       "entries": [
+        "pvzmod:plants/icebergpult_entry",
         "pvzmod:plants/magicshroom_entry",
         "pvzmod:plants/springbean_entry",
         "pvzmod:plants/narcissus_entry",

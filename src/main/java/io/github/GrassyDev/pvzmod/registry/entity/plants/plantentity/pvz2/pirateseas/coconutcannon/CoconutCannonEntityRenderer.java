@@ -11,7 +11,7 @@ public class CoconutCannonEntityRenderer extends GeoEntityRenderer<CoconutCannon
 
     public CoconutCannonEntityRenderer(EntityRendererFactory.Context ctx) {
 		super(ctx, new CoconutCannonEntityModel());
-        this.shadowRadius = 0.7F; //change 0.7 to the desired shadow size.
+        this.shadowRadius = 1.2F; //change 0.7 to the desired shadow size.
     }
 
 	protected int getBlockLight(CoconutCannonEntity plantEntity, BlockPos blockPos) {

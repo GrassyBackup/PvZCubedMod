@@ -37,15 +37,17 @@
         "pvzmod:plants/snowqueenpea_entry",
         "pvzmod:plants/firepea_entry",
         "pvzmod:plants/squash_entry",
-        "pvzmod:plants/narcissus_entry",
         "pvzmod:plants/coconutcannon_entry",
-        "pvzmod:plants/tulimpeter_entry"
+        "pvzmod:plants/tulimpeter_entry",
+        "pvzmod:plants/missiletoe_entry"
       ]
     },
     {
       "type": "relations",
       "title": "Recommended Plants",
       "entries": [
+        "pvzmod:plants/narcissus_entry",
+        "pvzmod:plants/magnetoshroom_entry",
         "pvzmod:plants/charmshroom_entry",
         "pvzmod:plants/perfoomshroom_entry",
         "pvzmod:plants/jumpingbean_entry"

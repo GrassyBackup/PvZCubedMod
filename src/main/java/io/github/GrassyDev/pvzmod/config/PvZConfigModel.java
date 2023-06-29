@@ -234,6 +234,12 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float magicshroomS = 15f;
 		@RestartRequired
+		public float magnetshroomS = 15.0f;
+		@RestartRequired
+		public float magnetoshroomS = 10.0f;
+		@RestartRequired
+		public float missileToeS = 25.0f;
+		@RestartRequired
 		public float narcissusS = 7.5f;
 		@RestartRequired
 		public float navybeanS = 5.0f;
@@ -261,10 +267,6 @@ public class PvZConfigModel {
 		public float scaredyshroomS = 5.0f;
 		@RestartRequired
 		public float seashroomS = 10.0f;
-		@RestartRequired
-		public float magnetshroomS = 15.0f;
-		@RestartRequired
-		public float magnetoshroomS = 10.0f;
 		@RestartRequired
 		public float shamrockS = 5.0f;
 		@RestartRequired
@@ -354,6 +356,10 @@ public class PvZConfigModel {
 		public float iceSpikeDMG = 2f;
 		public float iceSpikeMultiplier = 2f;
 		public float jingleDMGv2 = 7f;
+		public float missileToeDMGNear = 120f;
+		public float missileToeDMGFar = 60f;
+		public float missileToeDMGRangeNear = 1.5f;
+		public float missileToeDMGRangeFar = 2.5f;
 		public float peaDMG = 4f;
 		public float pepperDMGv2 = 7f;
 		public float pepperSDMG = 2.5f;

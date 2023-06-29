@@ -39,13 +39,14 @@
         "pvzmod:plants/torchwood_entry",
         "pvzmod:plants/spikerock_entry",
         "pvzmod:plants/beeshooter_entry",
-        "pvzmod:plants/breezeshroom_entry"
+        "pvzmod:plants/magnetshroom_entry"
       ]
     },
     {
       "type": "relations",
       "title": "Recommended Plants",
       "entries": [
+        "pvzmod:plants/breezeshroom_entry",
         "pvzmod:plants/magicshroom_entry",
         "pvzmod:plants/jumpingbean_entry",
         "pvzmod:plants/narcissus_entry",

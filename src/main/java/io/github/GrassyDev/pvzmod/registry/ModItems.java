@@ -74,6 +74,7 @@ public class ModItems {
 		SEED_PACKET_LIST.add(ModItems.EMPEACH_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.PEPPERPULT_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.GOLDLEAF_SEED_PACKET);
+		SEED_PACKET_LIST.add(ModItems.MISSILETOE_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.FIRE_PEA_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.MAGICSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.LOQUAT_SEED_PACKET);
@@ -216,6 +217,7 @@ public class ModItems {
 	public static final Item PEPPERPULT_SEED_PACKET = new PepperpultSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item FIRE_PEA_SEED_PACKET = new FirepeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));
 	public static final Item GOLDLEAF_SEED_PACKET = new GoldLeafSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.RARE));
+	public static final Item MISSILETOE_SEED_PACKET = new MissileToeSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));
 	public static final Item ELECTROPEA_SEED_PACKET = new ElectropeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));
 	public static final Item MAGICSHROOM_SEED_PACKET = new MagicshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.RARE));
 	public static final Item LOQUAT_SEED_PACKET = new LoquatSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.UNCOMMON));
@@ -479,6 +481,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"pepperpult_seed_packet"), PEPPERPULT_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"firepea_seed_packet"), FIRE_PEA_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"goldleaf_seed_packet"), GOLDLEAF_SEED_PACKET);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"missiletoe_seed_packet"), MISSILETOE_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"electropea_seed_packet"), ELECTROPEA_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"magicshroom_seed_packet"), MAGICSHROOM_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"loquat_seed_packet"), LOQUAT_SEED_PACKET);

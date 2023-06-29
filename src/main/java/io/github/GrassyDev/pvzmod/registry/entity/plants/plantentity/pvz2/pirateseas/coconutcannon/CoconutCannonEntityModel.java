@@ -15,7 +15,7 @@ public class CoconutCannonEntityModel extends AnimatedGeoModel<CoconutCannonEnti
     public Identifier getTextureResource(CoconutCannonEntity object)
     {
 		Identifier identifier = new Identifier("pvzmod", "textures/entity/coconut/coconutcannon.png");
-		if (object.blink && !object.world.isClient){
+		if (object.blink){
 			identifier = new Identifier("pvzmod", "textures/entity/coconut/coconutcannon_blink.png");
 		}
 		return identifier;

@@ -47,7 +47,6 @@ public class MissileToeTargetItem extends SeedItem implements FabricItem {
 				player.getInventory().removeStack(slot);
 			}
 		}
-		System.out.println(targetID);
 	}
 
 	//Credits to Patchouli for the tooltip code!
@@ -107,14 +106,18 @@ public class MissileToeTargetItem extends SeedItem implements FabricItem {
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
 		World world = user.getWorld();
 		BlockPos blockPos = entity.getBlockPos();
-		ServerWorld serverWorld = (ServerWorld) world;
-		MissileToeTarget plantEntity = PvZEntity.MISSILETOETARGET.create(serverWorld, stack.getNbt(), (Text) null, user, blockPos, SpawnReason.SPAWN_EGG, true, true);
-		float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
-		plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
-		world.spawnEntity(plantEntity);
-		int slot = user.getInventory().getSlotWithStack(stack);
-		user.getInventory().removeStack(slot);
-		targetID = 0;
+		if (world instanceof ServerWorld serverWorld) {
+			MissileToeTarget targetTile = PvZEntity.MISSILETOETARGET.create(serverWorld, stack.getNbt(), (Text) null, user, blockPos, SpawnReason.SPAWN_EGG, true, true);
+			float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+			targetTile.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
+			if (targetID != 0){
+				targetTile.setTargetID(targetID);
+			}
+			world.spawnEntity(targetTile);
+			int slot = user.getInventory().getSlotWithStack(stack);
+			user.getInventory().removeStack(slot);
+			targetID = 0;
+		}
 		return ActionResult.SUCCESS;
 	}
 }

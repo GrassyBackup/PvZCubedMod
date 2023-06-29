@@ -1,7 +1,9 @@
 package io.github.GrassyDev.pvzmod.registry.entity.environment.target.missiletoe;
 
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.missiletoeproj.MissileToeProjEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
@@ -15,8 +17,8 @@ import java.util.List;
 
 public class MissileToeTarget extends TileEntity {
 
-	public boolean hasPlant;
-	protected int dragoTick = 360;
+	protected int shootTick = 20;
+	public boolean canShoot = false;
 	public MissileToeTarget(EntityType<? extends TileEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -66,7 +68,7 @@ public class MissileToeTarget extends TileEntity {
 		if (!hasTargetID()){
 			this.discard();
 		}
-		List<PlantEntity> targetList = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(50));
+		List<PlantEntity> targetList = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(30));
 		boolean targetIdBool = false;
 		for (PlantEntity plantEntity : targetList){
 			if (plantEntity.getId() == getTargetID()){
@@ -75,6 +77,17 @@ public class MissileToeTarget extends TileEntity {
 		}
 		if (!targetIdBool){
 			this.discard();
+		}
+		if (canShoot) {
+			if (--shootTick == 0) {
+				MissileToeProjEntity proj = new MissileToeProjEntity(PvZEntity.MISSILETOEPROJ, this.world);
+				proj.updatePosition(this.getX(), this.getY() + 5, this.getZ());
+				proj.setOwner(this);
+				this.world.spawnEntity(proj);
+			}
+			if (shootTick <= -60) {
+				this.discard();
+			}
 		}
 	}
 }

@@ -7,7 +7,6 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.sunflower.SunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
@@ -182,7 +181,7 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 		IceTile iceTile = (IceTile) PvZEntity.ICETILE.create(world);
 		iceTile.refreshPositionAndAngles(vec3d3.getX(), this.getY(), vec3d3.getZ(), 0, 0);
 		iceTile.setHeadYaw(0);
-		List<SunflowerEntity> listFlames = this.world.getNonSpectatingEntities(SunflowerEntity.class, iceTile.getBoundingBox());
+		List<IceTile> listFlames = this.world.getNonSpectatingEntities(IceTile.class, iceTile.getBoundingBox());
 		if (listFlames.isEmpty()) {
 			world.spawnEntity(iceTile);
 		}

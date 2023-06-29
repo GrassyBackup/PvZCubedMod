@@ -7,7 +7,6 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.sunflower.SunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
@@ -182,7 +181,7 @@ public class JalapenoEntity extends PlantEntity implements IAnimatable {
 		Vec3d vec3d3 = this.getBoundingBox().offset(vec3d2).getCenter();
 		FireTrailEntity fireTrailEntity = new FireTrailEntity(PvZEntity.FIRETRAIL, this.world);
 		fireTrailEntity.updatePositionAndAngles(vec3d3.getX(), this.getBlockY() + 1, vec3d3.getZ(), this.bodyYaw, 0.0F);
-		List<SunflowerEntity> listFlames = this.world.getNonSpectatingEntities(SunflowerEntity.class, fireTrailEntity.getBoundingBox());
+		List<FireTrailEntity> listFlames = this.world.getNonSpectatingEntities(FireTrailEntity.class, fireTrailEntity.getBoundingBox());
 		if (listFlames.isEmpty()) {
 			world.spawnEntity(fireTrailEntity);
 		}

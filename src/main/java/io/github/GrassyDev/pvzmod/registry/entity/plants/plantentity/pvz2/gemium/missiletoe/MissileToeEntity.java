@@ -1,13 +1,11 @@
-package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.peashooter;
+package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
-import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.target.missiletoe.MissileToeTarget;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.retrogatling.RetroGatlingEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pea.ShootingPeaEntity;
-import io.github.GrassyDev.pvzmod.registry.items.seedpackets.GatlingpeaSeeds;
+import io.github.GrassyDev.pvzmod.registry.items.targets.MissileToeTargetItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -18,21 +16,16 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -46,24 +39,23 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Objects;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class PeashooterEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
-
-    private String controllerName = "peacontroller";
-
-
+public class MissileToeEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
+    private String controllerName = "manualcontroller";
 
 	public boolean isFiring;
-
+	public boolean blink;
+	public int rechargeTime;
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
+	private boolean recharged;
 
-    public PeashooterEntity(EntityType<? extends PeashooterEntity> entityType, World world) {
+	public MissileToeEntity(EntityType<? extends MissileToeEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
-
+		this.targetStrength = true;
+		this.isBurst = true;
     }
 
 	static {
@@ -78,6 +70,21 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 			this.isFiring = true;
 		} else if (status == 110) {
 			this.isFiring = false;
+		}
+		if (status == 88){
+			this.recharged = true;
+		}
+		else if (status == 87) {
+			this.recharged = false;
+		}
+		if (status == 115){
+			for (int j = 0; j < 1; ++j) {
+				RandomGenerator randomGenerator = this.random;
+				double d = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
+				double e = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
+				double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
+				this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + 0.6, this.getZ(), d, e, f);
+			}
 		}
 	}
 
@@ -98,10 +105,13 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
 		if (this.isFiring) {
-			event.getController().setAnimation(new AnimationBuilder().playOnce("peashooter.shoot"));
+			event.getController().setAnimation(new AnimationBuilder().playOnce("missiletoe.shoot"));
+		}
+		else if (!this.recharged){
+			event.getController().setAnimation(new AnimationBuilder().loop("missiletoe.building"));
 		}
 		else {
-			event.getController().setAnimation(new AnimationBuilder().loop("peashooter.idle"));
+			event.getController().setAnimation(new AnimationBuilder().loop("missiletoe.idle"));
 		}
         return PlayState.CONTINUE;
     }
@@ -110,9 +120,12 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 	/** /~*~//~*AI*~//~*~/ **/
 
 	protected void initGoals() {
-		this.goalSelector.add(1, new PeashooterEntity.FireBeamGoal(this));
+		customGoals();
 	}
 
+	protected void customGoals(){
+		this.goalSelector.add(1, new MissileToeEntity.FireBeamGoal(this));
+	}
 
 	@Override
 	public void attack(LivingEntity target, float pullProgress) {
@@ -134,7 +147,7 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
 				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.PEASHOOTER_SEED_PACKET);
+					this.dropItem(ModItems.MISSILETOE_SEED_PACKET);
 				}
 				this.discard();
 			}
@@ -151,7 +164,33 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 			if (!this.isAiDisabled() && this.isAlive()) {
 				setPosition(this.getX(), this.getY(), this.getZ());
 			}
-			this.targetZombies(this.getPos(), 7, false, false, false);
+		}
+		--rechargeTime;
+		if (rechargeTime <= 0) {
+			this.world.sendEntityStatus(this, (byte) 88);
+		}
+
+		List<MissileToeTarget> targetList = this.world.getNonSpectatingEntities(MissileToeTarget.class, this.getBoundingBox().expand(30));
+		boolean targetIdBool = false;
+		for (MissileToeTarget missileToeTarget : targetList) {
+			if (missileToeTarget.getTargetID() == this.getId()) {
+				targetIdBool = true;
+				this.setTarget(missileToeTarget);
+			}
+		}
+		if (targetIdBool && !this.world.isClient) {
+			if (rechargeTime <= 0 && !this.isFiring) {
+				startShooting = true;
+			}
+		}
+
+		if (!this.world.isClient()) {
+			if (this.rechargeTime <= 0 && !isFiring) {
+				double random = Math.random();
+				if (random <= 0.33) {
+					this.world.sendEntityStatus(this, (byte) 115);
+				}
+			}
 		}
 	}
 
@@ -165,10 +204,19 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 
 	/** /~*~//~*INTERACTION*~//~*~/ **/
 
+	@Nullable
+	@Override
+	public ItemStack getPickBlockStack() {
+		return ModItems.MISSILETOE_SEED_PACKET.getDefaultStack();
+	}
+
+	protected boolean startShooting;
+
+
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		ItemStack itemStack = player.getStackInHand(hand);
 		if (itemStack.isOf(ModItems.GARDENINGGLOVE)) {
-			dropItem(ModItems.PEASHOOTER_SEED_PACKET);
+			dropItem(ModItems.MISSILETOE_SEED_PACKET);
 			if (!player.getAbilities().creativeMode) {
 				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
 					itemStack.decrement(1);
@@ -177,56 +225,25 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 			this.discard();
 			return ActionResult.SUCCESS;
 		}
-		Item item = itemStack.getItem();
-		if (itemStack.isOf(ModItems.RETROGATLING_SEED_PACKET) && !player.getItemCooldownManager().isCoolingDown(item)) {
-			this.playSound(PvZSounds.PLANTPLANTEDEVENT);
-			if ((this.world instanceof ServerWorld)) {
-				ServerWorld serverWorld = (ServerWorld) this.world;
-				RetroGatlingEntity plantEntity = (RetroGatlingEntity) PvZEntity.RETROGATLING.create(world);
-				plantEntity.setTarget(this.getTarget());
-				plantEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
-				plantEntity.setAiDisabled(this.isAiDisabled());
-				if (this.hasCustomName()) {
-					plantEntity.setCustomName(this.getCustomName());
-					plantEntity.setCustomNameVisible(this.isCustomNameVisible());
-				}
-				if (this.hasVehicle()){
-					plantEntity.startRiding(this.getVehicle(), true);
-				}
-
-				plantEntity.setPersistent();
-				serverWorld.spawnEntityAndPassengers(plantEntity);
-				this.remove(RemovalReason.DISCARDED);
+		else if (!this.world.isClient) {
+			if (!player.getInventory().contains(ModItems.MISSILETOE_TARGET.getDefaultStack()) && rechargeTime <= 0 && !isFiring) {
+				MissileToeTargetItem missileToeTargetItem = (MissileToeTargetItem) ModItems.MISSILETOE_TARGET;
+				missileToeTargetItem.targetID = this.getId();
+				player.getInventory().addPickBlock(missileToeTargetItem.getDefaultStack());
 			}
-			if (!player.getAbilities().creativeMode) {
-				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
-					itemStack.decrement(1);
-				}
-				if (!PVZCONFIG.nestedSeeds.instantRecharge() && !world.getGameRules().getBoolean(PvZCubed.INSTANT_RECHARGE)) {
-					player.getItemCooldownManager().set(ModItems.GATLINGPEA_SEED_PACKET, GatlingpeaSeeds.cooldown);
-				}
-			}
-			return ActionResult.SUCCESS;
 		}
 		return super.interactMob(player, hand);
-	}
-
-	@Nullable
-	@Override
-	public ItemStack getPickBlockStack() {
-		return ModItems.PEASHOOTER_SEED_PACKET.getDefaultStack();
 	}
 
 
 	/** /~*~//~*ATTRIBUTES*~//~*~/ **/
 
-	public static DefaultAttributeContainer.Builder createPeashooterAttributes() {
+	public static DefaultAttributeContainer.Builder createMissileToeAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 15.0D);
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 30.0D);
     }
 
 	protected boolean canClimb() {return false;}
@@ -284,35 +301,19 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 		return true;
 	}
 
-
-	/** /~*~//~*SPAWNING*~//~*~/ **/
-
-	public static boolean canPeashooterSpawn(EntityType<? extends PeashooterEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, RandomGenerator random) {
-		BlockPos blockPos = pos.down();
-		return checkVillager(Vec3d.ofCenter(pos), world) && !checkPeashooter(Vec3d.ofCenter(pos), world) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants();
-	}
-
-	public static boolean checkVillager(Vec3d pos, ServerWorldAccess world) {
-		List<VillagerEntity> list = world.getNonSpectatingEntities(VillagerEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(pos).expand(20));
-		return !list.isEmpty();
-	}
-
-	public static boolean checkPeashooter(Vec3d pos, ServerWorldAccess world) {
-		List<PeashooterEntity> list = world.getNonSpectatingEntities(PeashooterEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(pos).expand(20));
-		return !list.isEmpty();
-	}
+	private boolean attacked;
 
 
 	/** /~*~//~*GOALS*~//~*~/ **/
 
 	static class FireBeamGoal extends Goal {
-		private final PeashooterEntity plantEntity;
+		private final MissileToeEntity plantEntity;
 		private int beamTicks;
 		private int animationTicks;
 
-		public FireBeamGoal(PeashooterEntity plantEntity) {
+		public FireBeamGoal(MissileToeEntity plantEntity) {
 			this.plantEntity = plantEntity;
-			this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
+			this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
 		}
 
 		public boolean canStart() {
@@ -325,58 +326,66 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 		}
 
 		public void start() {
-			this.beamTicks = -7;
-			this.animationTicks = -16;
+			this.beamTicks = -8;
+			this.animationTicks = -20;
 			this.plantEntity.getNavigation().stop();
-			this.plantEntity.getLookControl().lookAt(this.plantEntity.getTarget(), 90.0F, 90.0F);
+			if (this.plantEntity.startShooting) {
+				this.plantEntity.getLookControl().lookAt(this.plantEntity.getTarget(), 90.0F, 90.0F);
+			}
 			this.plantEntity.velocityDirty = true;
 		}
 
 		public void stop() {
 			this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 110);
+			this.plantEntity.isFiring = false;
+			this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 87);
+			if (this.plantEntity.rechargeTime <= 0 && this.plantEntity.attacked) {
+				this.plantEntity.attacked = false;
+				this.plantEntity.rechargeTime = 280;
+				this.plantEntity.startShooting = false;
+			}
 			this.plantEntity.setTarget((LivingEntity)null);
 		}
 
 		public void tick() {
 			LivingEntity livingEntity = this.plantEntity.getTarget();
 			this.plantEntity.getNavigation().stop();
-			this.plantEntity.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
-			if ((!this.plantEntity.canSee(livingEntity)) &&
-					this.animationTicks >= 0) {
-				this.plantEntity.setTarget((LivingEntity) null);
-			} else {
+			if (this.plantEntity.startShooting) {
+				this.plantEntity.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
+			}
+			if (this.plantEntity.startShooting) {
 				this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
-				++this.beamTicks;
-				++this.animationTicks;
-				if (this.beamTicks >= 0 && this.animationTicks <= -7) {
-					// Huge thanks to pluiedev (Leah) for being cute and helping me with the code to predict trajectory
+				this.plantEntity.isFiring = true;
+				if (this.plantEntity.rechargeTime <= 0){
+					++this.beamTicks;
+					++this.animationTicks;
+				}
+				if (this.beamTicks >= 0 && this.plantEntity.rechargeTime <= 0) {
 					if (!this.plantEntity.isInsideWaterOrBubbleColumn()) {
-						ShootingPeaEntity proj = new ShootingPeaEntity(PvZEntity.PEA, this.plantEntity.world);
-						double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
-						Vec3d targetPos = livingEntity.getPos();
-						Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
-						double d = this.plantEntity.squaredDistanceTo(predictedPos);
-						float df = (float)d;
-						double e = predictedPos.getX() - this.plantEntity.getX();
-						double f = (livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.plantEntity.getY() + 0.3595 : livingEntity.getY() - this.plantEntity.getY();
-						double g = predictedPos.getZ() - this.plantEntity.getZ();
-						float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
-						proj.setVelocity(e * (double)h, f * (double)h, g * (double)h, 0.33F, 0F);
-						proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
-						proj.setOwner(this.plantEntity);
-						if (livingEntity.isAlive()) {
-							this.beamTicks = -7;
-							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
-							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);
-							this.plantEntity.world.spawnEntity(proj);
+						List<MissileToeTarget> targetList = this.plantEntity.world.getNonSpectatingEntities(MissileToeTarget.class, this.plantEntity.getBoundingBox().expand(30));
+						for (MissileToeTarget missileToeTarget : targetList) {
+							if (missileToeTarget.getTargetID() == this.plantEntity.getId()) {
+								missileToeTarget.canShoot = true;
+							}
 						}
+						this.beamTicks = -30;
+						this.plantEntity.attacked = true;
+						this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
+						this.plantEntity.isFiring = true;
+						this.plantEntity.playSound(PvZSounds.SNOWPEASHOOTEVENT, 4F, 1);
 					}
 				}
-				else if (this.animationTicks >= 0)
-				{
+				else if (this.animationTicks >= 0 && this.plantEntity.rechargeTime <= 0){
+					this.plantEntity.attacked = false;
+					this.plantEntity.rechargeTime = 280;
+				}
+				else if (this.plantEntity.rechargeTime > 0) {
 					this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 110);
-					this.beamTicks = -7;
-					this.animationTicks = -16;
+					this.plantEntity.isFiring = false;
+					this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 87);
+					this.beamTicks = -8;
+					this.animationTicks = -20;
+					this.plantEntity.startShooting = false;
 				}
 				super.tick();
 			}

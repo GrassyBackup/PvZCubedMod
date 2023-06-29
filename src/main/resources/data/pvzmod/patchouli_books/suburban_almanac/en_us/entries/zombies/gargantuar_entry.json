@@ -28,7 +28,6 @@
       "type": "relations",
       "title": "Recommended Plants",
       "entries": [
-        "pvzmod:plants/coconutcannon_entry",
         "pvzmod:plants/iceshroom_entry",
         "pvzmod:plants/cherrybomb_entry",
         "pvzmod:plants/doomshroom_entry",
@@ -39,13 +38,15 @@
         "pvzmod:plants/icebergpult_entry",
         "pvzmod:plants/snowqueenpea_entry",
         "pvzmod:plants/squash_entry",
-        "pvzmod:plants/cattail_entry"
+        "pvzmod:plants/cattail_entry",
+        "pvzmod:plants/missiletoe_entry"
       ]
     },
     {
       "type": "relations",
       "title": "Recommended Plants",
       "entries": [
+        "pvzmod:plants/coconutcannon_entry",
         "pvzmod:plants/jumpingbean_entry",
         "pvzmod:plants/magicshroom_entry",
         "pvzmod:plants/firepea_entry",

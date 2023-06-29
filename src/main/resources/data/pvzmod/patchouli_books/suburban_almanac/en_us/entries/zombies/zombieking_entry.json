@@ -44,6 +44,7 @@
       "type": "relations",
       "title": "Recommended Plants",
       "entries": [
+        "pvzmod:plants/magnetoshroom_entry",
         "pvzmod:plants/electropea_entry",
         "pvzmod:plants/firepea_entry",
         "pvzmod:plants/peapod_entry",
