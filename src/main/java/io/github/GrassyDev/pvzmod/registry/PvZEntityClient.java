@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTileRen
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.solarwinds.SolarWindsTileRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.target.missiletoe.MissileToeTargetRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.basicgrave.BasicGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone.EgyptGraveRenderer;
@@ -572,6 +573,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		/////////////////////////////////////////////////////////////////////////////////////////////////
 
 		EntityRendererRegistry.register(PvZEntity.SOLARWINDS, SolarWindsTileRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.MISSILETOETARGET, MissileToeTargetRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.SCORCHEDTILE, ScorchedTileRenderer::new);
 

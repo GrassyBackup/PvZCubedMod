@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.solarwinds.SolarWinds;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.target.missiletoe.MissileToeTarget;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.basicgrave.BasicGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone.EgyptGraveEntity;
@@ -1527,6 +1528,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<SolarWinds>create(SpawnGroup.MONSTER, SolarWinds::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
 	);
 
+	public static final EntityType<MissileToeTarget> MISSILETOETARGET = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "missiletoetarget"),
+			QuiltEntityTypeBuilder.<MissileToeTarget>create(SpawnGroup.MONSTER, MissileToeTarget::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
+	);
+
 	public static final EntityType<ScorchedTile> SCORCHEDTILE = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "scorchedtile"),
@@ -1960,6 +1967,8 @@ public class PvZEntity implements ModInitializer {
         /////////////////////////////////////////////////////////////////////////////////////////////////
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SOLARWINDS, SolarWinds.createTileAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MISSILETOETARGET, MissileToeTarget.createTileAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SCORCHEDTILE, ScorchedTile.createTileAttributes().build());
 

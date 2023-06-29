@@ -700,6 +700,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			if (graveEntity != null) {
 				graveEntity.decorative = true;
 				graveEntity.setAiDisabled(true);
+				graveEntity.setPersistent();
 			}
 		}
 		Iterator var9 = checkEntities.iterator();
@@ -927,6 +928,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						graveEntity.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
 					}
 					graveEntity.setChallenge(GraveEntity.Challenge.TRUE);
+					graveEntity.setPersistent();
 					serverWorld.spawnEntityAndPassengers(graveEntity);
 					if (!graveEntities.isEmpty()) {
 						if (graveEntities.contains(PvZEntity.POOLGRAVESTONE)) {
@@ -943,6 +945,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 								graveEntity2.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
 							}
 							graveEntity2.setChallenge(GraveEntity.Challenge.TRUE);
+							graveEntity2.setPersistent();
 							serverWorld.spawnEntityAndPassengers(graveEntity2);
 							this.setMinpool(this.getMinPool() - 1);
 						}
@@ -960,6 +963,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 							graveEntity2.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
 						}
 						graveEntity2.setChallenge(GraveEntity.Challenge.TRUE);
+						graveEntity2.setPersistent();
 						serverWorld.spawnEntityAndPassengers(graveEntity2);
 						if (entityType == PvZEntity.NIGHTGRAVESTONE) {
 							this.setMinnight(this.getMinNight() - 1);

@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.items.*;
 import io.github.GrassyDev.pvzmod.registry.items.seedpackets.*;
 import io.github.GrassyDev.pvzmod.registry.items.spawneggs.*;
+import io.github.GrassyDev.pvzmod.registry.items.targets.MissileToeTargetItem;
 import io.github.GrassyDev.pvzmod.registry.items.toolclasses.PlantKillingMaterial;
 import io.github.GrassyDev.pvzmod.registry.items.toolclasses.PlantKillingShovel;
 import net.minecraft.item.BlockItem;
@@ -239,6 +240,7 @@ public class ModItems {
 	public static final Item BELLFLOWER_SEED_PACKET = new BellflowerSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.COMMON));
 	public static final Item GARDEN_SPAWN = new GardenSpawn(new Item.Settings().group(PvZCubed.PVZPLANTS).rarity(Rarity.EPIC));
 	public static final Item GARDENCHALLENGE_SPAWN = new GardenChallengeSpawn(new Item.Settings().group(PvZCubed.PVZGRAVES).rarity(Rarity.EPIC));
+	public static final Item MISSILETOE_TARGET = new MissileToeTargetItem(new Item.Settings().rarity(Rarity.EPIC).maxCount(1));
 
     //Zombie Spawn
     public static final Item BROWNCOATEGG = new BrowncoatEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.COMMON));
@@ -499,6 +501,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"jumpingbean_seed_packet"), JUMPINGBEAN_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"sunflowerseed_seed_packet"), SUNFLOWERSEED_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"bellflower_seed_packet"), BELLFLOWER_SEED_PACKET);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"missiletoetarget"), MISSILETOE_TARGET);
         Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"browncoat_egg"), BROWNCOATEGG);
         Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"flagzombie_egg"), FLAGZOMBIEEGG);
         Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"conehead_egg"), CONEHEADEGG);

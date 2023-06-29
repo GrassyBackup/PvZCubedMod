@@ -8,6 +8,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.retrogatling.RetroGatlingEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pea.ShootingPeaEntity;
 import io.github.GrassyDev.pvzmod.registry.items.seedpackets.GatlingpeaSeeds;
+import io.github.GrassyDev.pvzmod.registry.items.targets.MissileToeTargetItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -203,12 +204,16 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
 					itemStack.decrement(1);
 				}
-				;
 				if (!PVZCONFIG.nestedSeeds.instantRecharge() && !world.getGameRules().getBoolean(PvZCubed.INSTANT_RECHARGE)) {
 					player.getItemCooldownManager().set(ModItems.GATLINGPEA_SEED_PACKET, GatlingpeaSeeds.cooldown);
 				}
 			}
 			return ActionResult.SUCCESS;
+		}
+		if (!player.getInventory().contains(ModItems.MISSILETOE_TARGET.getDefaultStack())){
+			MissileToeTargetItem missileToeTargetItem = (MissileToeTargetItem) ModItems.MISSILETOE_TARGET;
+			missileToeTargetItem.targetID = this.getId();
+			player.getInventory().addPickBlock(missileToeTargetItem.getDefaultStack());
 		}
 		return super.interactMob(player, hand);
 	}
