@@ -217,7 +217,7 @@ public class ModItems {
 	public static final Item PEPPERPULT_SEED_PACKET = new PepperpultSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item FIRE_PEA_SEED_PACKET = new FirepeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));
 	public static final Item GOLDLEAF_SEED_PACKET = new GoldLeafSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.RARE));
-	public static final Item MISSILETOE_SEED_PACKET = new MissileToeSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));
+	public static final Item MISSILETOE_SEED_PACKET = new MissileToeSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(1).rarity(Rarity.EPIC));
 	public static final Item ELECTROPEA_SEED_PACKET = new ElectropeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));
 	public static final Item MAGICSHROOM_SEED_PACKET = new MagicshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.RARE));
 	public static final Item LOQUAT_SEED_PACKET = new LoquatSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.UNCOMMON));
@@ -228,7 +228,7 @@ public class ModItems {
 	public static final Item DROPEA_SEED_PACKET = new DropeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item BEAUTYSHROOM_SEED_PACKET = new BeautyshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item CHARMSHROOM_SEED_PACKET = new CharmshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.RARE));
-	public static final Item MAGNETOSHROOM_SEED_PACKET = new MagnetoShroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.RARE));
+	public static final Item MAGNETOSHROOM_SEED_PACKET = new MagnetoShroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(1).rarity(Rarity.RARE));
 	public static final Item SMALLNUT_SEED_PACKET = new SmallnutSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item SMACKADAMIA_SEED_PACKET = new SmackadamiaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item BUTTONSHROOM_SEED_PACKET = new ButtonshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));

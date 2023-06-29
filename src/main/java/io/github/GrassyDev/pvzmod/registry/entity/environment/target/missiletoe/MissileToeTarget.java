@@ -19,8 +19,17 @@ public class MissileToeTarget extends TileEntity {
 
 	protected int shootTick = 20;
 	public boolean canShoot = false;
-	public MissileToeTarget(EntityType<? extends TileEntity> entityType, World world) {
+	public MissileToeTarget(EntityType<? extends MissileToeTarget> entityType, World world) {
 		super(entityType, world);
+		this.setNoGravity(true);
+	}
+
+	public MissileToeTarget(World world, double x, double y, double z) {
+		this(PvZEntity.MISSILETOETARGET, world);
+		this.setPosition(x, y, z);
+		this.prevX = x;
+		this.prevY = y;
+		this.prevZ = z;
 	}
 
 	@Environment(EnvType.CLIENT)
