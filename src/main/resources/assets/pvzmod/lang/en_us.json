@@ -933,6 +933,10 @@
   "entity.pvzmod.defensiveend_newyear": "Defensive End",
   "entity.pvzmod.defensiveend_newyear_hypnotized": "Hypnotized Defensive End",
 
+  "entity.pvzmod.impthrower": "Imp-Throwing Imp",
+  "item.pvzmod.impthrow_egg": "Imp-Throwing Imp",
+  "entity.pvzmod.impthrower_hypnotized": "Hypnotized Imp-Throwing Imp",
+
   "entity.pvzmod.bully": "Bully Zombie",
   "item.pvzmod.bully_egg": "Bully Zombie",
   "entity.pvzmod.bully_hypnotized": "Hypnotized Bully Zombie",

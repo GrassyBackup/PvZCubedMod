@@ -35,6 +35,10 @@ public class ImpEntityRenderer extends GeoEntityRenderer<ImpEntity> {
 						new Identifier("pvzmod", "geo/impdragon.geo.json"));
 				map.put(ImpVariants.IMPDRAGONHYPNO,
 						new Identifier("pvzmod", "geo/impdragon.geo.json"));
+				map.put(ImpVariants.THROWER,
+						new Identifier("pvzmod", "geo/imp.geo.json"));
+				map.put(ImpVariants.THROWERHYPNO,
+						new Identifier("pvzmod", "geo/imp.geo.json"));
 			});
 
 	public Identifier getModelResource(ImpEntity object) {

@@ -501,6 +501,9 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.IMP, ImpEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.IMPHYPNO, ImpEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.IMPTHROWER, ImpEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.IMPTHROWERHYPNO, ImpEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.IMPDRAGON, ImpEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.IMPDRAGONHYPNO, ImpEntityRenderer::new);
 

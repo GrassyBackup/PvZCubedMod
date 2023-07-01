@@ -687,6 +687,8 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 
 	private boolean canJump;
 
+	/**
+
 	@Override
 	public void setHeadYaw(float headYaw) {
 		if (this.onGround || this.isInsideWaterOrBubbleColumn() || this.isFlying() || this instanceof ZombiePropEntity) {
@@ -714,6 +716,8 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 			super.setRotation(yaw, pitch);
 		}
 	}
+
+	**/
 
 	private int unstuckDelay;
 	private int jumpDelay;
@@ -749,12 +753,13 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 			jumpOverGap();
 			jumpDelay = 20;
 		}**/
+		/**
 		if (!(this instanceof ZombiePropEntity)) {
 			this.canJump = this.onGround;
 			if (!this.canJump && !this.isFlying() && !this.isInsideWaterOrBubbleColumn()) {
 				this.getNavigation().stop();
 			}
-		}
+		}**/
 		if (this.getTarget() != null) {
 			if (this.isAttacking() && this.squaredDistanceTo(this.getTarget()) < 1) {
 				attackingTick = 40;

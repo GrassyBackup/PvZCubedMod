@@ -208,7 +208,10 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 			} else {
 				if (!this.isOnGround()) {
 					event.getController().setAnimation(new AnimationBuilder().loop("imp.ball"));
-					if (this.isFrozen || this.isStunned) {
+					if (this.hasVehicle()){
+						event.getController().setAnimationSpeed(0);
+					}
+					else if (this.isFrozen || this.isStunned) {
 						event.getController().setAnimationSpeed(0);
 					} else if (this.isIced) {
 						event.getController().setAnimationSpeed(0.5);
@@ -411,11 +414,14 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 	private float getAttackDamage(){
 		return (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 	}
+	int stealthTick = 0;
 
 	public void tick() {
 		super.tick();
-		if (age > 20){
-			this.setStealthTag(Stealth.FALSE);
+		if (this.isStealth()) {
+			if (++stealthTick > 20) {
+				this.setStealthTag(Stealth.FALSE);
+			}
 		}
 		if (this.isBeingRainedOn() || this.hasStatusEffect(PvZCubed.ICE) || this.hasStatusEffect(PvZCubed.FROZEN) || this.hasStatusEffect(PvZCubed.WET) || this.isSubmergedInWater()){
 			this.setFireStage(FireStage.EXTINGUISHED);

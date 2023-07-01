@@ -678,7 +678,7 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							impEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							impEntity.setOwner(RoofGraveEntity.this);
 							serverWorld.spawnEntityAndPassengers(impEntity);
-							graveWeight += 0.5;
+							graveWeight += 0.25;
 						}
 					}
 				}
@@ -700,7 +700,7 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								impEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								impEntity.setOwner(RoofGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(impEntity);
-								graveWeight += 0.5;
+								graveWeight += 0.25;
 							}
 						}
 					}

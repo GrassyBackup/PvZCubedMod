@@ -9,6 +9,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficult
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.browncoat.modernday.BrowncoatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.bully.basic.BullyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.flagzombie.modernday.FlagzombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.modernday.ImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.polevaulting.PoleVaultingEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -646,6 +647,29 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 								poleVaultingEntity.setOwner(BasicGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(poleVaultingEntity);
 								graveWeight += 0.75;
+							}
+						}
+					}
+				}
+				if (graveWeight <= 3) {
+					if (difficulty >= 1.909 && (isUnlockSpecial() || isUnlock())) {
+						if (probability5 <= 0.15 / halfModifier * survChance) { // 15% x3 Imp-Throwing Imp
+							for (int p = 0; p < 2; ++p) {
+								if (!BasicGraveEntity.this.is1x1()) {
+									zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
+									zombiePos = BasicGraveEntity.this.random.range(-1, 1);
+								}
+								if (BasicGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = BasicGraveEntity.this.random.range(-3, 3);
+									zombiePos = BasicGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = BasicGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								ImpEntity imp = (ImpEntity) PvZEntity.IMPTHROWER.create(BasicGraveEntity.this.world);
+								imp.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								imp.initialize(serverWorld, BasicGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								imp.setOwner(BasicGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(imp);
+								graveWeight += 0.25;
 							}
 						}
 					}

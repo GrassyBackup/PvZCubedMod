@@ -138,8 +138,8 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 			}
 		}
 		if (target != null){
-			if ((target.getHealth() > 0 && (this.getPos().getX() <= target.getPos().getX() + 0.2 && this.getPos().getX() >= target.getPos().getX() - 0.2) &&
-					this.getPos().getZ() <= target.getPos().getZ() + 0.2 && this.getPos().getZ() >= target.getPos().getZ() - 0.2)){
+			if ((target.getHealth() > 0 && (this.getPos().getX() <= target.getPos().getX() + 0.3 && this.getPos().getX() >= target.getPos().getX() - 0.3) &&
+					this.getPos().getZ() <= target.getPos().getZ() + 0.3 && this.getPos().getZ() >= target.getPos().getZ() - 0.3)){
 				this.setVelocity(0,this.getVelocity().getY(), 0);
 				this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
 			}
@@ -174,7 +174,6 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 
 				entity = (Entity) var9.next();
 			}while (entity == this);
-			System.out.println(entity.getBlockPos());
 			if (!world.isClient && entity instanceof MissileToeTarget missileToeTarget) {
 				for (int x = -1; x <= 1; ++x) {
 					for (int z = -1; z <= 1; ++z) {

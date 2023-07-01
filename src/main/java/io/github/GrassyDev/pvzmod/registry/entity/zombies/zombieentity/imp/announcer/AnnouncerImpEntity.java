@@ -46,6 +46,8 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -242,9 +244,15 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 
 
 	/** /~*~//~*TICKING*~//~*~/ **/
+	int stealthTick = 0;
 
 	public void tick() {
 		super.tick();
+		if (this.isStealth()) {
+			if (++stealthTick > 20){
+				this.setStealthTag(Stealth.FALSE);
+			}
+		}
 		if (this.isAggro && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 			this.setVelocity(0, -0.3, 0);
 		}
@@ -397,6 +405,16 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 		}
 
 		return bl;
+	}
+
+	public void setVelocity(double x, double y, double z, float speed, float divergence) {
+		Vec3d vec3d = (new Vec3d(x, y, z)).normalize().add(this.random.nextTriangular(0.0, 0.0172275 * (double)divergence), this.random.nextTriangular(0.0, 0.0172275 * (double)divergence), this.random.nextTriangular(0.0, 0.0172275 * (double)divergence)).multiply((double)speed);
+		this.setVelocity(vec3d);
+		double d = vec3d.horizontalLength();
+		this.setYaw((float)(MathHelper.atan2(vec3d.x, vec3d.z) * 57.2957763671875));
+		this.setPitch((float)(MathHelper.atan2(vec3d.y, d) * 57.2957763671875));
+		this.prevYaw = this.getYaw();
+		this.prevPitch = this.getPitch();
 	}
 
 
