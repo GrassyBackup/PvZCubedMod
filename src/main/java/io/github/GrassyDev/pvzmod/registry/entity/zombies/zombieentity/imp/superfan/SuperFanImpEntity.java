@@ -247,7 +247,10 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 			} else {
 				if (!this.isOnGround()) {
 					event.getController().setAnimation(new AnimationBuilder().loop("imp.ball.gearless"));
-					if (this.isFrozen || this.isStunned) {
+					if (this.hasVehicle()){
+						event.getController().setAnimationSpeed(0);
+					}
+					else if (this.isFrozen || this.isStunned) {
 						event.getController().setAnimationSpeed(0);
 					} else if (this.isIced) {
 						event.getController().setAnimationSpeed(0.5);

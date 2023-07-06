@@ -225,7 +225,7 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 			this.discard();
 			return ActionResult.SUCCESS;
 		}
-		else if (!this.world.isClient) {
+		else if (!this.world.isClient && !itemStack.isOf(ModItems.DAVES_SHOVEL)) {
 			if (!player.getInventory().contains(ModItems.MISSILETOE_TARGET.getDefaultStack()) && rechargeTime <= 0 && !isFiring) {
 				MissileToeTargetItem missileToeTargetItem = (MissileToeTargetItem) ModItems.MISSILETOE_TARGET;
 				missileToeTargetItem.targetID = this.getId();

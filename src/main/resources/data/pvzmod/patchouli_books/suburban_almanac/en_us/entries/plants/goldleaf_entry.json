@@ -12,7 +12,7 @@
         "$(br)$(#bd951a)Gold Tile Sun Rate: $()$(#ff0000)3 minutes",
         "$(br)$(#bd951a)Gold Tile Zombie Sun Radius: $()$(#ff0000)10 Blocks",
         "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)20s",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)Transforms into a Gold Tile on an empty block.",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Transforms into a Gold Tile on an empty block. The Gold Tile can be removed by using a Golden Shovel.",
         "$(br2)$(#bd951a)\"For a small initial investment, you too can generate huge sun,\" says Gold Leaf. She's a firm believer in solar markets."
       ]
     },

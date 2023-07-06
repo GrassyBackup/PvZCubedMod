@@ -652,7 +652,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 					}
 				}
 				if (graveWeight <= 3) {
-					if (difficulty >= 1.909 && (isUnlockSpecial() || isUnlock())) {
+					if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
 						if (probability5 <= 0.15 / halfModifier * survChance) { // 15% x3 Imp-Throwing Imp
 							for (int p = 0; p < 2; ++p) {
 								if (!BasicGraveEntity.this.is1x1()) {
