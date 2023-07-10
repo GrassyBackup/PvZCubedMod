@@ -95,6 +95,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.beeshooterS": "Beeshooter Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bellflowerS": "Bellflower Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bloomerangS": "Bloomerang Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bananasaurusS": "Bananasaurus Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bombseedlingS": "Bomb Seedling Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.breezesroomS": "Breeze-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.buttonshroomS": "Button-shroom Seed",
@@ -701,8 +702,14 @@
   "item.pvzmod.zapricot_seed_packet.flavour": "\"Some say that Zombies aren't easily shocked.",
   "item.pvzmod.zapricot_seed_packet.flavour2": "I beg to differ.\"",
 
+  "entity.pvzmod.bananasaurus": "Bananasaurus Rex",
+  "item.pvzmod.bananasaurus_seed_packet": "\uD83D\uDDE1 Bananasaurus Rex Seed Packet",
+  "item.pvzmod.bananasaurus_seed_packet.flavour": "She's a banana first and a dinosaur second.",
+  "item.pvzmod.bananasaurus_seed_packet.flavour2": "But it's a close second.",
+  "entity.pvzmod.bananatile": "Banana Peel",
+
   "entity.pvzmod.weeniebeanie": "Weenie Beanie",
-  "item.pvzmod.weeniebeanie_seed_packet": "⭘ Weenie Beanie Seed Packet",
+  "item.pvzmod.weeniebeanie_seed_packet": "\uD83D\uDDE1 Weenie Beanie Seed Packet",
   "item.pvzmod.weeniebeanie_seed_packet.flavour": "I prefer to be called a \"Little Beanie.\"",
 
   "entity.pvzmod.navybean": "Navy Bean",

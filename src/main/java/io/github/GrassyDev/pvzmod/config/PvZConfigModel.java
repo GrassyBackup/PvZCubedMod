@@ -164,6 +164,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float admiralnavybeanS = 10.0f;
 		@RestartRequired
+		public float bananasaurusS = 20f;
+		@RestartRequired
 		public float beautyshroomS = 12.5f;
 		@RestartRequired
 		public float beeshooterS = 15.0f;

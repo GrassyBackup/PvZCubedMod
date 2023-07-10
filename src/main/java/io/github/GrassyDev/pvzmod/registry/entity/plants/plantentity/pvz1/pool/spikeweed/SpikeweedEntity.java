@@ -138,7 +138,16 @@ public class SpikeweedEntity extends PlantEntity implements IAnimatable {
 						default -> PvZSounds.PEAHITEVENT;
 					};
 					livingEntity.playSound(sound, 0.1F, (float) (0.5F + Math.random()));
-					livingEntity.damage(DamageSource.thrownProjectile(this, this), 4);
+					float damage = 4;
+					if (damage > livingEntity.getHealth() &&
+							!(livingEntity instanceof ZombieShieldEntity) &&
+							livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+						float damage2 = damage - livingEntity.getHealth();
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
+					} else {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					}
 					this.zombieList.add(livingEntity);
 					this.attacking = true;
 				}

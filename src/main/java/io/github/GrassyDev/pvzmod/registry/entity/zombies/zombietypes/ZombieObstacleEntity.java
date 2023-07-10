@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes;
 
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.HostileEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 public abstract class ZombieObstacleEntity extends ZombieShieldEntity{
 
 	public boolean beingEaten = false;
+	public boolean dragger = true;
 	protected ZombieObstacleEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		this.noClip = false;
@@ -19,6 +21,9 @@ public abstract class ZombieObstacleEntity extends ZombieShieldEntity{
 
 	@Override
 	public void tick() {
+		if (this.getType().equals(PvZEntity.TRASHCANBIN)){
+			dragger = false;
+		}
 		super.tick();
 		this.setCanBurn(CanBurn.TRUE);
 		if (!(this instanceof ZombieRiderEntity)) {

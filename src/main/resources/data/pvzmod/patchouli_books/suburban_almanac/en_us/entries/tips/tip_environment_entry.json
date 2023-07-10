@@ -15,13 +15,12 @@
       "type": "text",
       "text": [
         "$(br)Solar Winds",
-        "$(br)Solar Winds convert Plant Food that lands on them into Petal Plant Food or Sun",
+        "$(br2)Solar Winds convert Plant Food that lands on them into Petal Plant Food or Sun",
         "$(br2)Plant Food, Mushroom PF, and Tough PF convert to 1 Petal PF",
         "$(br)Air PF and Elec PF convert to 2 Petal PF",
         "$(br)Cold PF and Blazing PF convert to 3 Petal PF",
         "$(br)Aquatic PF converts to 1 Large Sun",
         "$(br)Petal PF converts to 3 Large Suns"
-
       ]
     },
     {
@@ -47,10 +46,10 @@
       "type": "text",
       "text": [
         "$(br)Snow Tile",
-        "$(br)They prevent non-flying Plants and Plants that are not icy or fiery from being able to be planted on them. ",
-        "Fire attacks that damage the field (e.g. Jalapeno, Cherry Bomb, etc.) destroy them. ",
-        "Planting Pepper family Plants on top of them instantly destroys them. Pepper Plants emit heat around them that destroys the tiles.",
-        "They last for 2 minutes."
+        "$(br2)They prevent non-flying Plants and Plants that are not icy or fiery from being able to be planted on them. ",
+        "$(br)Fire attacks that damage the field (e.g. Jalapeno, Cherry Bomb, etc.) destroy them. ",
+        "$(br)Planting Pepper family Plants on top of them instantly destroys them. Pepper Plants emit heat around them that destroys the tiles.",
+        "$(br2)They last for 2 minutes."
 
       ]
     },
@@ -58,8 +57,9 @@
       "type": "text",
       "text": [
         "$(br)Ice Tile",
-        "$(br)They apply Chill to non-flying Zombies that are close to them. ",
-        "$(br)They are destroyed by fire attacks that damage the field (e.g. Cherry Bomb, Jalapeno, etc.)."
+        "$(br2)They apply Chill to non-flying Zombies that are close to them. ",
+        "$(br)They are destroyed by fire attacks that damage the field (e.g. Cherry Bomb, Jalapeno, etc.).",
+        "$(br2)They last for 2 minutes."
       ]
     },
     {
@@ -68,20 +68,37 @@
         "$(br)Gold Tile",
         "$(br2)Gold Tile produces one Small Sun every 3 minutes if there's a non-flying Plant on top of them. The Zombie Sun Radius is 10 blocks.",
         "$(br2)They can be removed by right clicking them with a Gold Shovel."
-
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br)Banana Peel",
+        "$(br2)When a Zombie steps on it, it Stuns them for 10 seconds and inflicts damage based on its weight.",
+        "$(br)Covered Zombies suffer a small knockback instead of a Stun.",
+        "$(br2)The weight depends on the Zombie's size, gear weight, and materials, and won't work on Machines.",
+        "$(br2)They last for 2 minutes or until a Zombie steps on it."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br)Obstacle",
+        "$(br2)Destroys Plants close to it. Takes damage, shielding zombies behind. They are Heavy. Gravebusters eat them."
       ]
     },
     {
       "type": "relations",
       "entries": [
-        "pvzmod:plants/trashcan_entry",
-        "pvzmod:plants/basketballcarrier_entry",
-        "pvzmod:plants/torchlight_entry",
+        "pvzmod:zombies/trashcan_entry",
+        "pvzmod:zombies/basketballcarrier_entry",
+        "pvzmod:zombies/torchlight_entry",
         "pvzmod:plants/iceberglettuce_entry",
         "pvzmod:plants/torchwood_entry",
         "pvzmod:plants/doomshroom_entry",
         "pvzmod:plants/smackadamia_entry",
-        "pvzmod:plants/goldleaf_entry"
+        "pvzmod:plants/goldleaf_entry",
+        "pvzmod:plants/bananasaurus_entry"
       ]
     }
   ]

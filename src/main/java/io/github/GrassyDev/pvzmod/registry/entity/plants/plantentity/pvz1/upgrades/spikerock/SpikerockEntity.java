@@ -191,7 +191,15 @@ public class SpikerockEntity extends PlantEntity implements IAnimatable {
 					else if (this.getCrack().equals(Crack.DYING)){
 						damage = 4;
 					}
-					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					if (damage > livingEntity.getHealth() &&
+							!(livingEntity instanceof ZombieShieldEntity) &&
+							livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+						float damage2 = damage - livingEntity.getHealth();
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
+					} else {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					}
 					this.attacking = true;
 					this.zombieList.add(livingEntity);
 				}

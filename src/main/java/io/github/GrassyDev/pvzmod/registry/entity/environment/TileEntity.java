@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.environment;
 
+import io.github.GrassyDev.pvzmod.registry.entity.environment.bananatile.BananaTile;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
@@ -12,7 +13,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -84,7 +84,9 @@ public abstract class TileEntity extends PathAwareEntity implements IAnimatable 
 
 	@Override
 	protected void applyDamage(DamageSource source, float amount) {
-
+		if (this instanceof BananaTile){
+			super.applyDamage(source, amount);
+		}
 	}
 
 	/** /~*~//~*TICKING*~//~*~/ **/

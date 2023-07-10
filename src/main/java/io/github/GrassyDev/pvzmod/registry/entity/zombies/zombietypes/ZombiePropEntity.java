@@ -59,7 +59,9 @@ public abstract class ZombiePropEntity extends GeneralPvZombieEntity implements 
 
 	public void tick() {
 		if (this instanceof ZombieObstacleEntity ||
-				this.getType().equals(PvZEntity.DEFENSIVEENDGEAR)){
+				this.getType().equals(PvZEntity.DEFENSIVEENDGEAR) ||
+				this.getType().equals(PvZEntity.PYRAMIDGEAR) ||
+				this.getType().equals(PvZEntity.SARCOPHAGUS)){
 			isHeavy = true;
 		}
 		if (this.getVehicle() != null){

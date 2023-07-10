@@ -9,7 +9,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.Scorc
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.smarty.weeniebeanie.WeenieBeanieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.megagrow.bananasaurus.BananasaurusEntity;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -37,12 +37,11 @@ import java.util.List;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class WeenieBeanieSeeds extends SeedItem implements FabricItem {
-	public static int cooldown = (int) (PVZCONFIG.nestedSeeds.moreSeeds.weeniebeanieS() * 20);
-
-	public WeenieBeanieSeeds(Settings settings) {
-		super(settings);
-	}
+public class BananasaurusSeeds extends SeedItem implements FabricItem {
+	public static int cooldown = (int) (PVZCONFIG.nestedSeeds.moreSeeds.bananasaurusS() * 20);
+    public BananasaurusSeeds(Settings settings) {
+        super(settings);
+    }
 
 	@Override
 	public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
@@ -56,14 +55,15 @@ public class WeenieBeanieSeeds extends SeedItem implements FabricItem {
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 		super.inventoryTick(stack, world, entity, slot, selected);
 		NbtCompound nbtCompound = stack.getOrCreateNbt();
-		if (entity instanceof PlayerEntity player) {
-			if (player.getItemCooldownManager().getCooldownProgress(this, 0) > 0.0f) {
+		if (entity instanceof PlayerEntity player){
+			if (player.getItemCooldownManager().getCooldownProgress(this, 0) > 0.0f){
 				nbtCompound.putFloat("Cooldown", player.getItemCooldownManager().getCooldownProgress(this, 0));
-			} else if (nbtCompound.getFloat("Cooldown") > 0.1f && player.getItemCooldownManager().getCooldownProgress(this, 0) <= 0.0f) {
+			}
+			else if (nbtCompound.getFloat("Cooldown") > 0.1f && player.getItemCooldownManager().getCooldownProgress(this, 0) <= 0.0f){
 				float progress = nbtCompound.getFloat("Cooldown");
 				player.getItemCooldownManager().set(this, (int) Math.floor(cooldown * progress));
 			}
-			if (!player.getItemCooldownManager().isCoolingDown(this) && (nbtCompound.getFloat("Cooldown") != 0 || nbtCompound.get("Cooldown") == null)) {
+			if (!player.getItemCooldownManager().isCoolingDown(this) && (nbtCompound.getFloat("Cooldown") != 0 || nbtCompound.get("Cooldown") == null)){
 				nbtCompound.putFloat("Cooldown", 0);
 			}
 		}
@@ -76,11 +76,14 @@ public class WeenieBeanieSeeds extends SeedItem implements FabricItem {
 
 		tooltip.add(Text.translatable("item.pvzmod.seed_packet.enforce.family").setStyle(Style.EMPTY.withColor(2528827)));
 
-		tooltip.add(Text.translatable("item.pvzmod.weeniebeanie_seed_packet.flavour")
+		tooltip.add(Text.translatable("item.pvzmod.bananasaurus_seed_packet.flavour")
+				.formatted(Formatting.DARK_GRAY));
+
+		tooltip.add(Text.translatable("item.pvzmod.bananasaurus_seed_packet.flavour2")
 				.formatted(Formatting.DARK_GRAY));
 	}
 
-	public ActionResult useOnBlock(ItemUsageContext context) {
+    public ActionResult useOnBlock(ItemUsageContext context) {
 		Direction direction = context.getSide();
 		if (direction == Direction.DOWN) {
 			return ActionResult.FAIL;
@@ -98,17 +101,15 @@ public class WeenieBeanieSeeds extends SeedItem implements FabricItem {
 			BlockPos blockPos = itemPlacementContext.getBlockPos();
 			ItemStack itemStack = context.getStack();
 			Vec3d vec3d = Vec3d.ofBottomCenter(blockPos);
-			Box box = PvZEntity.WEENIEBEANIE.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ());
+			Box box = PvZEntity.BANANASAURUS.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ());
 			if (world.isSpaceEmpty((Entity)null, box) && world instanceof ServerWorld serverWorld) {
-				WeenieBeanieEntity plantEntity = (WeenieBeanieEntity) PvZEntity.WEENIEBEANIE.create(serverWorld, itemStack.getNbt(), (Text) null, context.getPlayer(), blockPos, SpawnReason.SPAWN_EGG, true, true);
-				List<PlantEntity> list = world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.WEENIEBEANIE.getDimensions().getBoxAt(plantEntity.getPos()));
+				BananasaurusEntity plantEntity = PvZEntity.BANANASAURUS.create(serverWorld, itemStack.getNbt(), (Text) null, context.getPlayer(), blockPos, SpawnReason.SPAWN_EGG, true, true);
+				List<PlantEntity> list = world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.BANANASAURUS.getDimensions().getBoxAt(plantEntity.getPos()));
 				if (list.isEmpty()) {
 					float f = (float) MathHelper.floor((MathHelper.wrapDegrees(context.getPlayerYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 					plantEntity.refreshPositionAndAngles(plantEntity.getX(), plantEntity.getY(), plantEntity.getZ(), f, 0.0F);
-					((ServerWorld) world).spawnEntityAndPassengers(plantEntity);
-					plantEntity.setPuffshroomPermanency(WeenieBeanieEntity.PuffPermanency.PERMANENT);
+					world.spawnEntity(plantEntity);
 					world.playSound((PlayerEntity) null, plantEntity.getX(), plantEntity.getY(), plantEntity.getZ(), PvZSounds.PLANTPLANTEDEVENT, SoundCategory.BLOCKS, 0.6f, 0.8F);
-
 
 					PlayerEntity user = context.getPlayer();
 					if (!user.getAbilities().creativeMode) {
@@ -137,8 +138,8 @@ public class WeenieBeanieSeeds extends SeedItem implements FabricItem {
 		PlantEntity plantEntity = null;
 		List<PlantEntity> list = null;
 		if (world instanceof ServerWorld serverWorld) {
-			plantEntity = PvZEntity.WEENIEBEANIE.create(serverWorld, stack.getNbt(), (Text) null, user, blockPos, SpawnReason.SPAWN_EGG, true, true);
-			list = world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.WEENIEBEANIE.getDimensions().getBoxAt(plantEntity.getPos()));
+			plantEntity = PvZEntity.BANANASAURUS.create(serverWorld, stack.getNbt(), (Text) null, user, blockPos, SpawnReason.SPAWN_EGG, true, true);
+			list = world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.BANANASAURUS.getDimensions().getBoxAt(plantEntity.getPos()));
 		}
 		if (world instanceof ServerWorld serverWorld && entity instanceof TileEntity
 				&& !(entity instanceof ScorchedTile)
@@ -148,7 +149,6 @@ public class WeenieBeanieSeeds extends SeedItem implements FabricItem {
 				float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 				plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
 				world.spawnEntity(plantEntity);
-				((WeenieBeanieEntity) plantEntity).setPuffshroomPermanency(WeenieBeanieEntity.PuffPermanency.PERMANENT);
 				world.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(), PvZSounds.PLANTPLANTEDEVENT, SoundCategory.BLOCKS, 0.6f, 0.8F);
 
 				if (!user.getAbilities().creativeMode) {
@@ -177,7 +177,6 @@ public class WeenieBeanieSeeds extends SeedItem implements FabricItem {
 			float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 			plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
 			((ServerWorld) world).spawnEntityAndPassengers(plantEntity);
-			((WeenieBeanieEntity) plantEntity).setPuffshroomPermanency(WeenieBeanieEntity.PuffPermanency.PERMANENT);
 			plantEntity.rideLilyPad(entity);
 			world.playSound((PlayerEntity) null, plantEntity.getX(), plantEntity.getY(), plantEntity.getZ(), sound, SoundCategory.BLOCKS, 0.6f, 0.8F);
 			if (!user.getAbilities().creativeMode) {

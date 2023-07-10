@@ -7,7 +7,7 @@
     {
       "type": "text",
       "text": [
-        "$(#bd951a)Health: $()$(#ff0000)27 (Paper), 340(Stone Pyramid)",
+        "$(#bd951a)Health: $()$(#ff0000)27 (Paper), 340(Heavy Stone Pyramid)",
         "$(br)$(#bd951a)Damage: $()$(#ff0000)4",
         "$(br)$(#bd951a)Speed: $()$(#ff0000)Basic, Creeper (Pyramid)",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Immune to hypnosis.",
