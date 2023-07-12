@@ -488,7 +488,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 		LivingEntity livingEntity = this.getTarget();
 		++this.beamTicks;
 		++this.animationTicks;
-		if ((livingEntity != null && livingEntity.squaredDistanceTo(this) > 25 && this.bananaCount >= 1) || animationTicks < 0) {
+		if (((livingEntity != null && livingEntity.squaredDistanceTo(this) > 25) || animationTicks < 0) && this.bananaCount >= 1) {
 			if (this.shootSwitch){
 				this.beamTicks = -14;
 				this.animationTicks = -32;
