@@ -277,6 +277,7 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 				}
 				if (((livingEntity instanceof Monster &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) &&
+						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 								&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {ZombiePropEntity zombiePropEntity2 = null;
 					for (Entity entity1 : livingEntity.getPassengerList()) {

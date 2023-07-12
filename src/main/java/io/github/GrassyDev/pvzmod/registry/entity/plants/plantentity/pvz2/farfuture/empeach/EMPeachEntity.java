@@ -231,6 +231,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 
 			if (bl) {
 				if (((livingEntity instanceof Monster &&
+						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 								&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
 					float damage = 20;

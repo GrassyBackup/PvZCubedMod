@@ -175,7 +175,7 @@ public class ShootingPowerIcespikeEntity extends PvZProjectileEntity implements 
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
-				float damage = PVZCONFIG.nestedProjDMG.iceSpikeDMG() * 1.5f;
+				float damage = PVZCONFIG.nestedProjDMG.icespikeDMGv2() * 1.5f;
 				if (((LivingEntity) entity).hasStatusEffect(PvZCubed.ICE) || ((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
 					damage = damage * PVZCONFIG.nestedProjDMG.iceSpikeMultiplier();
 				}

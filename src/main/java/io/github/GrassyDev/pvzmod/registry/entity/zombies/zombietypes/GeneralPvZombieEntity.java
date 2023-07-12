@@ -832,7 +832,8 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 			this.removeStatusEffect(PVZPOISON);
 			this.removeStatusEffect(StatusEffects.POISON);
 		}
-		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("metallic")) && this.hasStatusEffect(ACID)){
+		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("metallic")) &&
+				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) && this.hasStatusEffect(ACID)){
 			this.removeStatusEffect(ACID);
 		}
 		LivingEntity target = this.getTarget();

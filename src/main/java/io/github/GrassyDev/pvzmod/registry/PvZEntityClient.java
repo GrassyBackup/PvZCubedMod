@@ -159,6 +159,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.polevault
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pumpkinzombie.PumpkinZombieEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.snorkel.SnorkelEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zombieking.ZombieKingEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zomblob.ZomblobEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zomboni.ZomboniEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiegrave.ZombieGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.MetalVehicleEntityRenderer;
@@ -583,6 +584,13 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.BASKETBALLBIN, MetalObstacleEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.BASKETBALLPROJ, ShootingBasketballEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.ZOMBLOB, ZomblobEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.ZOMBLOBHYPNO, ZomblobEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.ZOMBLOBSMALL, ZomblobEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.ZOMBLOBSMALLHYPNO, ZomblobEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.ZOMBLOBBIG, ZomblobEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.ZOMBLOBBIGHYPNO, ZomblobEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.LOCUSTSWARM, LocustswarmEntityRenderer::new);
 

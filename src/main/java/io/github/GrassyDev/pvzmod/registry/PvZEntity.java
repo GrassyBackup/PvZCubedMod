@@ -159,6 +159,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.polevault
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pumpkinzombie.PumpkinZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zombieking.ZombieKingEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zomblob.ZomblobEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zomboni.ZomboniEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiegrave.ZombieGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.MetalVehicleEntity;
@@ -1560,6 +1561,42 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<ShootingBasketballEntity>create(SpawnGroup.MONSTER, ShootingBasketballEntity::new).setDimensions(EntityDimensions.fixed(1f, 2f)).build()
 	);
 
+	public static final EntityType<ZomblobEntity> ZOMBLOB = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "zomblob"),
+			QuiltEntityTypeBuilder.<ZomblobEntity>create(SpawnGroup.MONSTER, ZomblobEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1.85f)).build()
+	);
+
+	public static final EntityType<ZomblobEntity> ZOMBLOBHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "zomblob_hypnotized"),
+			QuiltEntityTypeBuilder.<ZomblobEntity>create(SpawnGroup.MONSTER, ZomblobEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1.85f)).build()
+	);
+
+	public static final EntityType<ZomblobEntity> ZOMBLOBBIG = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "zomblobbig"),
+			QuiltEntityTypeBuilder.<ZomblobEntity>create(SpawnGroup.MONSTER, ZomblobEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 2.4f)).build()
+	);
+
+	public static final EntityType<ZomblobEntity> ZOMBLOBBIGHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "zomblobbig_hypnotized"),
+			QuiltEntityTypeBuilder.<ZomblobEntity>create(SpawnGroup.MONSTER, ZomblobEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 2.4f)).build()
+	);
+
+	public static final EntityType<ZomblobEntity> ZOMBLOBSMALL = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "zomblobsmall"),
+			QuiltEntityTypeBuilder.<ZomblobEntity>create(SpawnGroup.MONSTER, ZomblobEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1.85f)).build()
+	);
+
+	public static final EntityType<ZomblobEntity> ZOMBLOBSMALLHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "zomblobsmall_hypnotized"),
+			QuiltEntityTypeBuilder.<ZomblobEntity>create(SpawnGroup.MONSTER, ZomblobEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1f)).build()
+	);
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2015,6 +2052,13 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASKETBALLCARRIER, BasketballCarrierEntity.createBasketballCarrierAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASKETBALLCARRIERHYPNO, BasketballCarrierEntity.createBasketballCarrierAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASKETBALLBIN, MetalObstacleEntity.createBasketBallBinObstacleAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOB, ZomblobEntity.createZomblobAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBHYPNO, ZomblobEntity.createZomblobAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBBIG, ZomblobEntity.createZomblobBigAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBBIGHYPNO, ZomblobEntity.createZomblobBigAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBSMALL, ZomblobEntity.createZomblobSmallAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBSMALLHYPNO, ZomblobEntity.createZomblobSmallAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.LOCUSTSWARM, LocustSwarmEntity.createLocustSwarmAttributes().build());
 

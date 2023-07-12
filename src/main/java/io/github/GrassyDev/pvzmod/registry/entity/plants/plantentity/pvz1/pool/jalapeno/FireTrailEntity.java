@@ -1,6 +1,9 @@
 package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
@@ -178,7 +181,25 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 			playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH);
 			this.discard();
 		}
+		if (!this.world.isClient()) {
+			List<GeneralPvZombieEntity> list = world.getNonSpectatingEntities(GeneralPvZombieEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(5));
+			for (GeneralPvZombieEntity generalPvZombieEntity : list) {
+				if (generalPvZombieEntity.squaredDistanceTo(this) < 36) {
+					generalPvZombieEntity.setStealthTag(GeneralPvZombieEntity.Stealth.FALSE);
+				}
+			}
+		}
+		if (--heatTicks <= 0) {
+			List<TileEntity> list = world.getNonSpectatingEntities(TileEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(1.5));
+			for (TileEntity tileEntity : list) {
+				if (tileEntity instanceof SnowTile) {
+					tileEntity.discard();
+				}
+			}
+			heatTicks = 20;
+		}
 	}
+	protected int heatTicks = 20;
 
 
 	public void tickMovement() {

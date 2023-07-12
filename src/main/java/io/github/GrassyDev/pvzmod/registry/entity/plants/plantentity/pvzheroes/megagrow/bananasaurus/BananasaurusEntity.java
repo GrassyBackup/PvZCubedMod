@@ -14,7 +14,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.ProjectileAttackGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -44,7 +43,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -136,7 +134,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 	 **/
 
 	protected void initGoals() {
-		this.goalSelector.add(1, new BananasaurusEntity.FireBeamGoal(this));
+		/**this.goalSelector.add(1, new BananasaurusEntity.FireBeamGoal(this));**/
 		this.goalSelector.add(1, new ProjectileAttackGoal(this, 0D, 30, 15.0F));
 	}
 
@@ -246,6 +244,9 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 					this.world.sendEntityStatus(this, (byte) 121);
 				}
 			}
+		}
+		if (!this.world.isClient()) {
+			this.FireBeamGoal();
 		}
 	}
 
@@ -396,7 +397,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 
 	/** /~*~//~*GOALS*~//~*~/ **/
 
-	static class FireBeamGoal extends Goal {
+	/**static class FireBeamGoal extends Goal {
 		private final BananasaurusEntity plantEntity;
 		private int beamTicks;
 		private int animationTicks;
@@ -473,6 +474,72 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 					this.plantEntity.setTarget(null);
 				}
 				super.tick();
+			}
+		}
+	}**/
+
+	int beamTicks;
+	int animationTicks;
+
+	boolean shootSwitch = true;
+	boolean shot = false;
+
+	public void FireBeamGoal() {
+		LivingEntity livingEntity = this.getTarget();
+		++this.beamTicks;
+		++this.animationTicks;
+		if ((livingEntity != null && livingEntity.squaredDistanceTo(this) > 25 && this.bananaCount >= 1) || animationTicks < 0) {
+			if (this.shootSwitch){
+				this.beamTicks = -14;
+				this.animationTicks = -32;
+				this.getNavigation().stop();
+				this.getLookControl().lookAt(this.getTarget(), 90.0F, 90.0F);
+				this.velocityDirty = true;
+				this.shootSwitch = false;
+			}
+			this.getNavigation().stop();
+			if (livingEntity != null) {
+				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
+			}
+			this.world.sendEntityStatus(this, (byte) 111);
+			if (this.beamTicks >= 0 && this.animationTicks <= -10) {
+				for (int x = 0; x <= this.bananaCount; ++x) {
+					if (this.bananaCount > 0) {
+						this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 2F, 1);
+					}
+					if (!this.isInsideWaterOrBubbleColumn()) {
+						RandomGenerator randomGenerator = this.random;
+						double xr = (double) MathHelper.nextBetween(randomGenerator, 0F, 30F);
+						double zr = (double) MathHelper.nextBetween(randomGenerator, -5f, 5f);
+						Vec3d vec3d2 = new Vec3d((double) xr, 0.0, zr).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+						BananaProjEntity proj = new BananaProjEntity(PvZEntity.BANANAPROJ, this.world);
+						float h = MathHelper.sqrt(MathHelper.sqrt(100)) * 0.5F;
+						proj.setVelocity(vec3d2.x, -3.9200000762939453 + 28 / (h * 2.2), vec3d2.z, 0.5F, 0F);
+						proj.updatePosition(this.getX(), this.getY() + 0.75D, this.getZ());
+						proj.setOwner(this);
+						this.beamTicks = -14;
+						this.world.sendEntityStatus(this, (byte) 111);
+						this.world.spawnEntity(proj);
+						shot = true;
+					}
+				}
+			} else if (this.animationTicks >= 0) {
+				this.world.sendEntityStatus(this, (byte) 110);
+				this.beamTicks = -14;
+				this.animationTicks = -32;
+				this.bananaCount = 0;
+				shot = false;
+			}
+		}
+		else if (animationTicks >= 0){
+			if (shot){
+				this.bananaCount = 0;
+			}
+			shot = false;
+			this.shootSwitch = true;
+			this.world.sendEntityStatus(this, (byte) 110);
+			if (this.getTarget() != null){
+				this.attack(this.getTarget(), 0);
 			}
 		}
 	}

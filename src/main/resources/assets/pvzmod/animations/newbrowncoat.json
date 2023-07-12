@@ -661,6 +661,29 @@
 					"scale": {
 						"vector": [1, 1, 1]
 					}
+				},
+				"jigglehead": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"0.5": {
+							"vector": [1, 0.9, 1],
+							"easing": "easeInElastic"
+						},
+						"0.9": {
+							"vector": [1, 1, 1],
+							"easing": "easeInElastic"
+						},
+						"1.5": {
+							"vector": [1, 0.9, 1],
+							"easing": "easeInElastic"
+						},
+						"2.0": {
+							"vector": [1, 1, 1],
+							"easing": "easeInElastic"
+						}
+					}
 				}
 			}
 		},
@@ -699,10 +722,19 @@
 					},
 					"scale": {
 						"0.0": {
+							"vector": [1, 0.9, 1],
+							"easing": "easeInElastic"
+						},
+						"0.4167": {
 							"vector": [1, 1, 1]
 						},
+						"0.8333": {
+							"vector": [1, 1, 1],
+							"easing": "easeInElastic"
+						},
 						"1.6667": {
-							"vector": [1, 1, 1]
+							"vector": [1, 0.9, 1],
+							"easing": "easeInElastic"
 						}
 					}
 				},

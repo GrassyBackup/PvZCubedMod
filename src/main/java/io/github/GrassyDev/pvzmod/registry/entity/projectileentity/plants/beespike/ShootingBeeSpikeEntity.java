@@ -176,7 +176,7 @@ public class ShootingBeeSpikeEntity extends PvZProjectileEntity implements IAnim
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth())
 					&& !(entity instanceof ZombieVehicleEntity && (zombiePropEntity instanceof ZombieObstacleEntity))) {
-				float damage = PVZCONFIG.nestedProjDMG.beeSpikeDMG();
+				float damage = PVZCONFIG.nestedProjDMG.beespikeDMGv2();
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {

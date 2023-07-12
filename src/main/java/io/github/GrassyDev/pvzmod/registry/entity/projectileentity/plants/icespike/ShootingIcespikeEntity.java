@@ -202,7 +202,7 @@ public class ShootingIcespikeEntity extends PvZProjectileEntity implements IAnim
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
-				float damage = PVZCONFIG.nestedProjDMG.iceSpikeDMG();
+				float damage = PVZCONFIG.nestedProjDMG.icespikeDMGv2();
 				if (((LivingEntity) entity).hasStatusEffect(PvZCubed.ICE) || ((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
 					damage = damage * PVZCONFIG.nestedProjDMG.iceSpikeMultiplier();
 				}

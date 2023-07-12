@@ -115,6 +115,9 @@ public class BananaTile extends TileEntity {
 					else {
 						this.playSound(SoundEvents.ENTITY_GENERIC_BIG_FALL, 3f, 1f);
 					}
+					if (damage <= 0){
+						damage = 0;
+					}
 					if (zombiePropEntity2 == null ||
 							zombiePropEntity2 instanceof ZombieShieldEntity) {
 						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);

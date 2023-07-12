@@ -182,7 +182,7 @@ public class ShootingSpikeEntity extends PvZProjectileEntity implements IAnimata
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth())
 					&& !(entity instanceof ZombieVehicleEntity && (zombiePropEntity instanceof ZombieObstacleEntity))) {
-				float damage = PVZCONFIG.nestedProjDMG.spikeDMG();
+				float damage = PVZCONFIG.nestedProjDMG.spikeDMGv2();
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {

@@ -96,7 +96,7 @@
         "$(br2)Acid",
         "$(br2)Deals continuous damage to Metallic Zombies.",
         "$(br2)Deals 8 DMG/0.5sec.",
-        "$(br2)Can only be applied to Metal."
+        "$(br2)Can only be applied to Metal and Plant."
       ]
     },
     {

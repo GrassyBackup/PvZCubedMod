@@ -11,6 +11,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.flagzombi
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.announcer.AnnouncerImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.modernday.ImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pumpkinzombie.PumpkinZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zomblob.ZomblobEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityData;
@@ -409,6 +410,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 			double probability7 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability9 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability8 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability13 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 
 			int zombiePos = -2 + DarkAgesGraveEntity.this.random.nextInt(5);
 			int zombiePosZ = -2 + DarkAgesGraveEntity.this.random.nextInt(5);
@@ -733,6 +735,34 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								announcerImpEntity.setOwner(DarkAgesGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(announcerImpEntity);
 								graveWeight += 1;
+							}
+						}
+					}
+				}
+				if (graveWeight <= 3.5) {
+					if (isUnlock() || isUnlockSpecial()) {
+						if (probability13 <= 0.2 / halfModifier * survChance) { // 20% x2 Pumpkin Zombie
+							for (int h = 0; h < 2; ++h) {
+								double random = Math.random();
+								EntityType<?> entityType = PvZEntity.ZOMBLOB;
+								if (random <= 0.33){
+									entityType = PvZEntity.ZOMBLOBBIG;
+								}
+								if (!DarkAgesGraveEntity.this.is1x1()) {
+									zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
+									zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+								}
+								if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+									zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								ZomblobEntity zomblob = (ZomblobEntity) entityType.create(DarkAgesGraveEntity.this.world);
+								zomblob.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								zomblob.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								zomblob.setOwner(DarkAgesGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(zomblob);
+								graveWeight += 0.75;
 							}
 						}
 					}

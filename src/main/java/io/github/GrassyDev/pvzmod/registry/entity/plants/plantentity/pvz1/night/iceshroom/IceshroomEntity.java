@@ -227,6 +227,7 @@ public class IceshroomEntity extends PlantEntity implements IAnimatable {
 					livingEntity.discard();
 				}
 				if (((livingEntity instanceof Monster &&
+						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 								&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
 					ZombiePropEntity zombiePropEntity2 = null;

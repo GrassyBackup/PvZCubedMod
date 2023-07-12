@@ -280,6 +280,7 @@ public class DoomshroomEntity extends PlantEntity implements IAnimatable {
 			if (bl) {
 				float damage = 180;
 				if (((livingEntity instanceof Monster &&
+						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 								&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
 					ZombiePropEntity zombiePropEntity2 = null;

@@ -336,7 +336,7 @@ public class PvZConfigModel {
 		public float acidFumeDMG = 2.5f;
 		public float acidSporeDMG = 3f;
 		public float armorBubbleDMG = 2f;
-		public float beeSpikeDMG = 2f;
+		public float beespikeDMGv2 = 2f;
 		public float breezeDMG = 2f;
 		public float boomerangDMG = 3.5f;
 		public float bubblesDMG = 2f;
@@ -355,7 +355,7 @@ public class PvZConfigModel {
 		public float hypnoprojDMG = 16f;
 		public float icebergDMGv2 = 3f;
 		public float icebergSDMG = 1f;
-		public float iceSpikeDMG = 2f;
+		public float icespikeDMGv2 = 2f;
 		public float iceSpikeMultiplier = 2f;
 		public float jingleDMGv2 = 7f;
 		public float missileToeDMGNear = 120f;
@@ -371,7 +371,7 @@ public class PvZConfigModel {
 		public float snowPeaDMG = 4f;
 		public float snowQueenPeaDMGv2 = 9f;
 		public float snowQueenPeaSDMG = 3f;
-		public float spikeDMG = 2f;
+		public float spikeDMGv2 = 4f;
 		public float spitDMG = 2f;
 		public float sporeDMG = 2f;
 
@@ -470,6 +470,12 @@ public class PvZConfigModel {
 		public double snorkelH = 50D;
 		@RestartRequired
 		public double zombiekingH = 100D;
+		@RestartRequired
+		public double zomblobH = 64D;
+		@RestartRequired
+		public double zomblobBH = 128D;
+		@RestartRequired
+		public double zomblobSH = 32D;
 		@RestartRequired
 		public double zomboniH = 65D;
 

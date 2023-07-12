@@ -14,6 +14,8 @@
     "pvzmod:superfanimp": "small",
     "pvzmod:newyearimp": "small",
     "pvzmod:announcerimp": "small",
-    "pvzmod:impdragon": "small"
+    "pvzmod:impdragon": "small",
+    "pvzmod:zomblobsmall": "small",
+    "pvzmod:zomblobbig": "big"
   }
 }
