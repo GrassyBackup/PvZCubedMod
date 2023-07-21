@@ -60,7 +60,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 
     public MagicshroomEntity(EntityType<? extends MagicshroomEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	protected void initDataTracker() {

@@ -84,7 +84,7 @@ public class FootballEntity extends PvZombieEntity implements IAnimatable {
 
     public FootballEntity(EntityType<? extends FootballEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 12;
 		this.getNavigation().setCanSwim(true);
 		this.speedSwitch = false;

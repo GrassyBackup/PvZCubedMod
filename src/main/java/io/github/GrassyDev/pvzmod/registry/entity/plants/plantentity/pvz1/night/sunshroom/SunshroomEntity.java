@@ -62,7 +62,7 @@ public class SunshroomEntity extends PlantEntity implements IAnimatable {
 
 	public SunshroomEntity(EntityType<? extends SunshroomEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

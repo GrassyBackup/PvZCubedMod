@@ -56,7 +56,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public MagnetshroomEntity(EntityType<? extends MagnetshroomEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.targetHelmet = true;
 		this.magnetshroom = true;
 	}

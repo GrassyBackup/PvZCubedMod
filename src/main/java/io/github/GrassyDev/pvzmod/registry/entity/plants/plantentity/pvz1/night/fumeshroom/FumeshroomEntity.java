@@ -62,7 +62,7 @@ public class FumeshroomEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public FumeshroomEntity(EntityType<? extends FumeshroomEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 	}
 
 	protected void initDataTracker() {

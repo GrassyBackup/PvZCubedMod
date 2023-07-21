@@ -7,7 +7,6 @@
 		},
 		"potatomine.unarmed": {
 			"loop": true,
-			"animation_length": 0.04167,
 			"override_previous_animation": true,
 			"bones": {
 				"potato": {
@@ -84,7 +83,7 @@
 						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"vector": [1, 1, 1]
+						"vector": [0.5, 0.8, 0.5]
 					}
 				}
 			}
@@ -333,43 +332,16 @@
 					}
 				},
 				"burrow": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.0417": {
-							"vector": [0, 0, 0],
-							"easing": "easeInOutElastic",
-							"easingArgs": [1]
-						}
-					},
-					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.0417": {
-							"vector": [0, 0, 4.5],
-							"easing": "easeInOutElastic",
-							"easingArgs": [1]
-						},
-						"0.4583": {
-							"vector": [0, 0, 6],
-							"easing": "easeInOutElastic",
-							"easingArgs": [1]
-						}
-					},
 					"scale": {
 						"0.0": {
-							"vector": [1, 1, 1]
+							"vector": [0.5, 0.8, 0.5]
 						},
 						"0.0417": {
-							"vector": [2.125, 1, 2.125],
-							"easing": "easeInOutElastic",
-							"easingArgs": [1]
+							"vector": [0.5, 0.8, 0.5]
 						},
-						"0.4583": {
-							"vector": [2.5, 1, 2.5],
-							"easing": "easeInOutElastic",
+						"0.3333": {
+							"vector": [1, 1, 1],
+							"easing": "easeInElastic",
 							"easingArgs": [1]
 						}
 					}
@@ -525,37 +497,10 @@
 					}
 				},
 				"burrow": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.0": {
-							"vector": [0, 0, 0]
-						}
-					},
-					"position": {
-						"0.0": {
-							"vector": [0, 0, 6],
-							"easing": "easeInOutElastic",
-							"easingArgs": [1]
-						},
-						"1.0": {
-							"vector": [0, 0, 6],
-							"easing": "easeInOutElastic",
-							"easingArgs": [1]
-						}
-					},
 					"scale": {
-						"0.0": {
-							"vector": [2.5, 1, 2.5],
-							"easing": "easeInOutElastic",
-							"easingArgs": [1]
-						},
-						"1.0": {
-							"vector": [2.5, 1, 2.5],
-							"easing": "easeInOutElastic",
-							"easingArgs": [1]
-						}
+						"vector": [1, 1, 1],
+						"easing": "easeInOutElastic",
+						"easingArgs": [1]
 					}
 				},
 				"potato": {

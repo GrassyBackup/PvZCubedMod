@@ -61,7 +61,7 @@ public class CherrybombEntity extends PlantEntity implements IAnimatable {
     public CherrybombEntity(EntityType<? extends CherrybombEntity> entityType, World world) {
         super(entityType, world);
 		this.setFireImmune(FireImmune.TRUE);
-        this.ignoreCameraFrustum = true;
+
 		this.isBurst = true;
     }
 

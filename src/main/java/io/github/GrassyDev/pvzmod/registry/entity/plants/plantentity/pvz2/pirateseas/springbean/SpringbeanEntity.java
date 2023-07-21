@@ -63,7 +63,7 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 
     public SpringbeanEntity(EntityType<? extends SpringbeanEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
         this.animationScare = 30;
     }

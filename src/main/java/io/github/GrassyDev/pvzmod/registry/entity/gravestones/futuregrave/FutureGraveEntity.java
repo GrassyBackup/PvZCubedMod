@@ -68,7 +68,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 
     public FutureGraveEntity(EntityType<FutureGraveEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 25;
     }
 

@@ -71,7 +71,7 @@ public class ZomblobEntity extends PvZombieEntity implements IAnimatable {
 
 	public ZomblobEntity(EntityType<? extends ZomblobEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

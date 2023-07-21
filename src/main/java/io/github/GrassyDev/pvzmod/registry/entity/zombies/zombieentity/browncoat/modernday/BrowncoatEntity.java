@@ -77,7 +77,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public BrowncoatEntity(EntityType<? extends BrowncoatEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

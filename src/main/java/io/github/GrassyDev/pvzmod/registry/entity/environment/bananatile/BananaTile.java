@@ -24,7 +24,7 @@ public class BananaTile extends TileEntity {
 
 	public BananaTile(EntityType<? extends BananaTile> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 	}
 
 	@Override

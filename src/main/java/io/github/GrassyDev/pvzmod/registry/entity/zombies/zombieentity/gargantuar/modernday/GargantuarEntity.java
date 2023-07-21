@@ -83,7 +83,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 
 	public GargantuarEntity(EntityType<? extends GargantuarEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 100;
         this.firstAttack = true;
 		this.entityBox = PvZEntity.GARGANTUAR;

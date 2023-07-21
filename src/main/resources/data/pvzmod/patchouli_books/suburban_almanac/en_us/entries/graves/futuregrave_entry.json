@@ -30,7 +30,8 @@
         "pvzmod:zombies/flagzombie_entry",
         "pvzmod:zombies/conehead_entry",
         "pvzmod:zombies/buckethead_entry",
-        "pvzmod:zombies/jetpack_entry"
+        "pvzmod:zombies/jetpack_entry",
+        "pvzmod:zombies/robocone_entry"
       ],
       "title": "Spawnable Zombies"
     }

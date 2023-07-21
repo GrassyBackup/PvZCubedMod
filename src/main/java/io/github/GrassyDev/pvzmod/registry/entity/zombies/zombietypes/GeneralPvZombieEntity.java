@@ -833,8 +833,12 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 			this.removeStatusEffect(StatusEffects.POISON);
 		}
 		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("metallic")) &&
-				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) && this.hasStatusEffect(ACID)){
+				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) &&
+				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("paper")) && this.hasStatusEffect(ACID)){
 			this.removeStatusEffect(ACID);
+		}
+		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("stone")){
+			this.removeStatusEffect(FROZEN);
 		}
 		LivingEntity target = this.getTarget();
 		if (this.getHypno() && (target instanceof PlayerEntity || target instanceof PassiveEntity || target instanceof GolemEntity)){
@@ -904,7 +908,7 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 		if (this.submergedInWater){
 			this.jump();
 		}
-		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("flesh")) && (this.hasStatusEffect(PVZPOISON) || this.hasStatusEffect(StatusEffects.POISON) ) && !(this instanceof ZombiePropEntity)){
+		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("flesh")) && !(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) && (this.hasStatusEffect(PVZPOISON) || this.hasStatusEffect(StatusEffects.POISON) ) && !(this instanceof ZombiePropEntity)){
 			this.removeStatusEffect(PVZPOISON);
 			this.removeStatusEffect(StatusEffects.POISON);
 		}

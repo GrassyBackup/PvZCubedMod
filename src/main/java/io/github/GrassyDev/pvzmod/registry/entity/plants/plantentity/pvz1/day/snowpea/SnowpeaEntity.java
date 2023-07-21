@@ -69,7 +69,7 @@ public class SnowpeaEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	public SnowpeaEntity(EntityType<? extends SnowpeaEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.targetIce = true;
 	}
 

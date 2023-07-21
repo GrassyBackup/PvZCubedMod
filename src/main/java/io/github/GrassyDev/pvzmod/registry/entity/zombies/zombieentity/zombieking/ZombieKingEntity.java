@@ -65,7 +65,7 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 
 	public ZombieKingEntity(EntityType<? extends ZombieKingEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 12;
 	}
 

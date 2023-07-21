@@ -77,7 +77,7 @@ public class PoleVaultingEntity extends PvZombieEntity implements IAnimatable {
 	public PoleVaultingEntity(EntityType<? extends PoleVaultingEntity> entityType, World world) {
 		super(entityType, world);
 		//this.moveControl = new PoleVaultingEntity.PoleVaultingMoveControl(this);
-		this.ignoreCameraFrustum = true;
+
 		this.experiencePoints = 3;
 		this.firstAttack = true;
 		this.speedSwitch = false;

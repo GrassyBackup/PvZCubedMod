@@ -71,7 +71,7 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 
 	public ExplorerEntity(EntityType<? extends ExplorerEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

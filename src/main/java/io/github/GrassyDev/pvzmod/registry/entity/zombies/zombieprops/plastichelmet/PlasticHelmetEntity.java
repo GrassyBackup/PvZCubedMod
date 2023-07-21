@@ -44,7 +44,7 @@ public class PlasticHelmetEntity extends ZombiePropEntity implements IAnimatable
 
     public PlasticHelmetEntity(EntityType<? extends PlasticHelmetEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

@@ -56,7 +56,7 @@ public class RepeaterEntity extends PlantEntity implements RangedAttackMob, IAni
 
 	public RepeaterEntity(EntityType<? extends RepeaterEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 
 	}
 

@@ -89,7 +89,7 @@ public class LightningReedEntity extends PlantEntity implements IAnimatable, Ran
 
 	public LightningReedEntity(EntityType<? extends LightningReedEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 
 		this.setNoGravity(true);

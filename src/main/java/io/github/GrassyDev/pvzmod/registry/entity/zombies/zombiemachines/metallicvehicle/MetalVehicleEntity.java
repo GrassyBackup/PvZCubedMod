@@ -61,7 +61,7 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 
     public MetalVehicleEntity(EntityType<? extends MetalVehicleEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

@@ -48,7 +48,7 @@ public class ElectropeaEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public ElectropeaEntity(EntityType<? extends ElectropeaEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.illuminate = true;
     }
 

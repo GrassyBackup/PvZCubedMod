@@ -66,7 +66,7 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 
 	public BobsledRiderEntity(EntityType<? extends BobsledRiderEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

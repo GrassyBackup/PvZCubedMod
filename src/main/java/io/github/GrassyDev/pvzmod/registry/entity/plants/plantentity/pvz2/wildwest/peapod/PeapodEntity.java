@@ -68,7 +68,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 
 	public PeapodEntity(EntityType<? extends PeapodEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 	}
 
 	protected void initDataTracker() {

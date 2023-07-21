@@ -63,7 +63,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 
 	public SaucerEntity(EntityType<? extends SaucerEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 
 		this.setNoGravity(true);

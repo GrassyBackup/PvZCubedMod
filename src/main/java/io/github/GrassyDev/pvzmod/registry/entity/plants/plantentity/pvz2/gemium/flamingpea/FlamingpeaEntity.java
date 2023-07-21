@@ -51,7 +51,7 @@ public class FlamingpeaEntity extends PlantEntity implements IAnimatable, Ranged
 	public FlamingpeaEntity(EntityType<? extends FlamingpeaEntity> entityType, World world) {
         super(entityType, world);
 		this.setFireImmune(FireImmune.TRUE);
-        this.ignoreCameraFrustum = true;
+
 		this.illuminate = true;
     }
 

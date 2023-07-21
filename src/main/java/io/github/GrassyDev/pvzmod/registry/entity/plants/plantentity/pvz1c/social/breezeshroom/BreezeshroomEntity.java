@@ -53,7 +53,7 @@ public class BreezeshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public BreezeshroomEntity(EntityType<? extends BreezeshroomEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.targetIce = true;
 	}
 

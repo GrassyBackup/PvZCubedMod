@@ -58,7 +58,7 @@ public class BellflowerEntity extends PlantEntity implements IAnimatable, Ranged
 
     public BellflowerEntity(EntityType<? extends BellflowerEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

@@ -52,7 +52,7 @@ public class ThreepeaterEntity extends PlantEntity implements IAnimatable, Range
 
     public ThreepeaterEntity(EntityType<? extends ThreepeaterEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

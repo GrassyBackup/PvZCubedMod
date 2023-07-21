@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
@@ -25,13 +26,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -68,7 +67,7 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 
 	public SquashEntity(EntityType<? extends SquashEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.targetStrength = true;
 		this.isBurst = true;
     }
@@ -132,7 +131,6 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
 	protected void splashDamage() {
-		Vec3d vec3d = this.getPos();
 		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
@@ -147,41 +145,53 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 6);
 
-			boolean bl = false;
-
-			for (int i = 0; i < 2; ++i) {
-				Vec3d vec3d2 = new Vec3d(livingEntity.getX(), livingEntity.getBodyY(0.5 * (double) i), livingEntity.getZ());
-				HitResult hitResult = this.world.raycast(new RaycastContext(vec3d, vec3d2, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this));
-				if (hitResult.getType() == HitResult.Type.MISS) {
-					bl = true;
-					break;
+			if (livingEntity instanceof Monster &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+							&& (generalPvZombieEntity.getHypno()))) {
+				ZombiePropEntity zombiePropEntity2 = null;
+				for (Entity entity1 : livingEntity.getPassengerList()) {
+					if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity2 = zpe;
+					}
 				}
-			}
-
-			if (bl) {
-				float damage = 180;
-				if (((livingEntity instanceof Monster &&
-						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-								&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity) &&
-						(!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
-								generalPvZombieEntity.isFlying()) || livingEntity instanceof ZombieRiderEntity))) {
-					if (damage > livingEntity.getHealth() &&
-							(!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) &&
-							livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
-						float damage2 = damage - livingEntity.getHealth();
-						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-						generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
-						checkList.add(livingEntity);
-						checkList.add(generalPvZombieEntity);
-					} else {
-						if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+				if (livingEntity.getY() < (this.getY() + 1.5) && livingEntity.getY() > (this.getY() - 1.5)) {
+					if (!world.isClient &&
+							!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+							!(livingEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
+							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
+						float damage = 180;
+						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+						SoundEvent sound;
+						sound = switch (zombieMaterial) {
+							case "metallic" -> PvZSounds.BUCKETHITEVENT;
+							case "plastic" -> PvZSounds.CONEHITEVENT;
+							case "stone" -> PvZSounds.STONEHITEVENT;
+							default -> PvZSounds.PEAHITEVENT;
+						};
+						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
+						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+							damage = damage * 2;
+						}
+						if ("paper".equals(zombieMaterial)) {
+							damage = damage / 2;
+						}
+						if (damage > livingEntity.getHealth() &&
+								(!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) &&
+								livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+							float damage2 = damage - livingEntity.getHealth();
 							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+							generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
 							checkList.add(livingEntity);
 							checkList.add(generalPvZombieEntity);
-						}
-						else {
-							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-							checkList.add(livingEntity);
+						} else {
+							if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+								livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+								checkList.add(livingEntity);
+								checkList.add(generalPvZombieEntity);
+							} else {
+								livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+								checkList.add(livingEntity);
+							}
 						}
 					}
 				}

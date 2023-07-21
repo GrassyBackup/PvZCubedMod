@@ -71,6 +71,7 @@ public abstract class PlantEntity extends GolemEntity {
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(DATA_ID_ASLEEP, false);
+		this.dataTracker.startTracking(DATA_ALTFIRE, false);
 		this.dataTracker.startTracking(DATA_ID_LOWPROF, false);
 		this.dataTracker.startTracking(DATA_ID_FIREIMMUNE, false);
 	}
@@ -79,6 +80,7 @@ public abstract class PlantEntity extends GolemEntity {
 	public void writeCustomDataToNbt(NbtCompound tag) {
 		super.writeCustomDataToNbt(tag);
 		tag.putBoolean("Asleep", this.getIsAsleep());
+		tag.putBoolean("AltFire", this.getIsAltFire());
 		tag.putBoolean("lowProf", this.getLowProfile());
 		tag.putBoolean("fireImmune", this.getFireImmune());
 	}
@@ -86,6 +88,7 @@ public abstract class PlantEntity extends GolemEntity {
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(DATA_ID_ASLEEP, tag.getBoolean("Asleep"));
+		this.dataTracker.set(DATA_ALTFIRE, tag.getBoolean("AltFire"));
 		this.dataTracker.set(DATA_ID_LOWPROF, tag.getBoolean("lowProf"));
 		this.dataTracker.set(DATA_ID_FIREIMMUNE, tag.getBoolean("fireImmune"));
 	}
@@ -185,6 +188,33 @@ public abstract class PlantEntity extends GolemEntity {
 
 	public void setIsAsleep(PlantEntity.IsAsleep asleep) {
 		this.dataTracker.set(DATA_ID_ASLEEP, asleep.getId());
+	}
+
+
+	protected static final TrackedData<Boolean> DATA_ALTFIRE =
+			DataTracker.registerData(PlantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+	public enum AltFire {
+		FALSE(false),
+		TRUE(true);
+
+		AltFire(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getIsAltFire() {
+		return this.dataTracker.get(DATA_ALTFIRE);
+	}
+
+	public void setAltfire(PlantEntity.AltFire fireImmune) {
+		this.dataTracker.set(DATA_ALTFIRE, fireImmune.getId());
 	}
 
 	/** ----------------------------------------------------------------------- **/

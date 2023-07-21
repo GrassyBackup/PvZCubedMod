@@ -57,7 +57,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 
     public CharmshroomEntity(EntityType<? extends CharmshroomEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.targetStrength = true;
 		this.targetNotCovered = true;
 		this.isBurst = true;

@@ -59,7 +59,7 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 
     public DandelionWeedEntity(EntityType<? extends DandelionWeedEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.isBurst = true;
 
     }

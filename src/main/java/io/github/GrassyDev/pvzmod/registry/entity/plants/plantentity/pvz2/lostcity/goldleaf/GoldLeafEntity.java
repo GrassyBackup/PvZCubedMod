@@ -41,7 +41,7 @@ public class GoldLeafEntity extends PlantEntity implements IAnimatable {
 
     public GoldLeafEntity(EntityType<? extends GoldLeafEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	static {

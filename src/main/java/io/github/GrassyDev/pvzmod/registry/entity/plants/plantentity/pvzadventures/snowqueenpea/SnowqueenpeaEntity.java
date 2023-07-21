@@ -65,7 +65,7 @@ public class SnowqueenpeaEntity extends PlantEntity implements IAnimatable, Rang
 
 	public SnowqueenpeaEntity(EntityType<? extends SnowqueenpeaEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.targetChilled = true;
 	}
 

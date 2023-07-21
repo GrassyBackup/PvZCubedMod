@@ -69,7 +69,7 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 
     public RoofGraveEntity(EntityType<RoofGraveEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 25;
     }
 

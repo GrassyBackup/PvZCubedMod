@@ -64,7 +64,7 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 
     public IcebergLettuceEntity(EntityType<? extends IcebergLettuceEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.isBurst = true;
     }
 

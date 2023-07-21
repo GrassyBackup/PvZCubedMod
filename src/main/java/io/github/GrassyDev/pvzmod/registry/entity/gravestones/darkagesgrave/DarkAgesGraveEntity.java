@@ -68,7 +68,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 
     public DarkAgesGraveEntity(EntityType<DarkAgesGraveEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 25;
     }
 

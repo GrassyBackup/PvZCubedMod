@@ -63,7 +63,7 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 	public ChillyPepperEntity(EntityType<? extends ChillyPepperEntity> entityType, World world) {
 		super(entityType, world);
 		this.setFireImmune(FireImmune.TRUE);
-		this.ignoreCameraFrustum = true;
+
 		this.isBurst = true;
 	}
 

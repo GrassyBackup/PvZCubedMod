@@ -72,7 +72,7 @@ public class SunflowerEntity extends PlantEntity implements IAnimatable {
 
 	public SunflowerEntity(EntityType<? extends SunflowerEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 	}
 
 	protected void initDataTracker() {

@@ -139,6 +139,16 @@
       "pvzmod:empeach_explosion"
     ]
   },
+  "smoosh.smash": {
+    "sounds": [
+      "pvzmod:smoosh_smash"
+    ]
+  },
+  "smoosh.charge": {
+    "sounds": [
+      "pvzmod:smoosh_charge"
+    ]
+  },
   "squash.hm": {
     "sounds": [
       "pvzmod:squash_hm"

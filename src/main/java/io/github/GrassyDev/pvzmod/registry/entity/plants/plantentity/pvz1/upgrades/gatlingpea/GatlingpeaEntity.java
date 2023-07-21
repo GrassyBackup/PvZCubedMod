@@ -52,7 +52,7 @@ public class GatlingpeaEntity extends PlantEntity implements IAnimatable, Ranged
 
     public GatlingpeaEntity(EntityType<? extends GatlingpeaEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

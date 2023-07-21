@@ -66,7 +66,7 @@ public class TwinSunflowerEntity extends PlantEntity implements IAnimatable {
 
 	public TwinSunflowerEntity(EntityType<? extends TwinSunflowerEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

@@ -58,7 +58,7 @@ public class SeashroomEntity extends PlantEntity implements IAnimatable, RangedA
 
     public SeashroomEntity(EntityType<? extends SeashroomEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 		this.setNoGravity(true);
     }

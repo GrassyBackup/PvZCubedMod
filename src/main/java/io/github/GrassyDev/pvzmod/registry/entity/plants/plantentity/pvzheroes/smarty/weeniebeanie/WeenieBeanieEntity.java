@@ -60,7 +60,7 @@ public class WeenieBeanieEntity extends PlantEntity implements IAnimatable, Rang
 
     public WeenieBeanieEntity(EntityType<? extends WeenieBeanieEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.isBurst = true;
 
     }

@@ -444,7 +444,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 				this.setTarget(this.getClosestGarden(checkGarden(this.getPos(), serverWorldAccess), TargetPredicate.DEFAULT, this, this.getX(), this.getY(), this.getZ()));
 			}
 		}
-		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("flesh")) && (this.hasStatusEffect(PVZPOISON) || this.hasStatusEffect(StatusEffects.POISON))){
+		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("flesh")) && !(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) && (this.hasStatusEffect(PVZPOISON) || this.hasStatusEffect(StatusEffects.POISON))){
 			this.removeStatusEffect(PVZPOISON);
 			this.removeStatusEffect(StatusEffects.POISON);
 		}

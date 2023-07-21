@@ -72,6 +72,12 @@ public class PvZSounds {
 	public static final Identifier EMPEACHEXPLOSION = new Identifier("pvzmod:empeach.explosion");
 	public static SoundEvent EMPEACHEXPLOSIONEVENT = new SoundEvent(EMPEACHEXPLOSION);
 
+	public static final Identifier SHROOMCHARGE = new Identifier("pvzmod:smoosh.charge");
+	public static SoundEvent SHROOMCHARGEEVENT = new SoundEvent(SHROOMCHARGE);
+
+	public static final Identifier SHROOMHIT = new Identifier("pvzmod:smoosh.smash");
+	public static SoundEvent SHROOMHITEVENT = new SoundEvent(SHROOMHIT);
+
 	public static final Identifier SQUASHHUM = new Identifier("pvzmod:squash.hm");
 	public static SoundEvent SQUASHHUMEVENT = new SoundEvent(SQUASHHUM);
 

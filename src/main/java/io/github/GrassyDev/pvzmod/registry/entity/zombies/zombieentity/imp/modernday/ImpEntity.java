@@ -70,7 +70,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 
     public ImpEntity(EntityType<? extends ImpEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
     }
 

@@ -61,7 +61,7 @@ public class PuffshroomEntity extends PlantEntity implements IAnimatable, Ranged
 
     public PuffshroomEntity(EntityType<? extends PuffshroomEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.targetPoison = true;
     }
 

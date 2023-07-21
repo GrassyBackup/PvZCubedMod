@@ -52,7 +52,7 @@ public class CabbagepultEntity extends PlantEntity implements IAnimatable, Range
 
     public CabbagepultEntity(EntityType<? extends CabbagepultEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.lobbedTarget = true;
     }
 

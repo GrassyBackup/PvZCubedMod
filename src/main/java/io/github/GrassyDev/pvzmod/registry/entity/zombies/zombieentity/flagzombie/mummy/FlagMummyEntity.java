@@ -77,7 +77,7 @@ public class FlagMummyEntity extends SummonerEntity implements IAnimatable {
 
     public FlagMummyEntity(EntityType<? extends FlagMummyEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 12;
         this.isAggro = false;
     }

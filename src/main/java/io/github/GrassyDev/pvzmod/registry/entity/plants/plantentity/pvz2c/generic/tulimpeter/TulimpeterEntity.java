@@ -66,7 +66,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 
     public TulimpeterEntity(EntityType<? extends TulimpeterEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	protected void initDataTracker() {

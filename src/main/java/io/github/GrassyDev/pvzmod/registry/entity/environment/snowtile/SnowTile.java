@@ -8,7 +8,7 @@ public class SnowTile extends TileEntity {
 
 	public SnowTile(EntityType<? extends SnowTile> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.setInvulnerable(true);
 	}
 

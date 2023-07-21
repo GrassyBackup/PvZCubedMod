@@ -66,7 +66,7 @@ public class AdmiralNavyBeanEntity extends PlantEntity implements IAnimatable, R
 
 	public AdmiralNavyBeanEntity(EntityType<? extends AdmiralNavyBeanEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 
 		this.setNoGravity(true);

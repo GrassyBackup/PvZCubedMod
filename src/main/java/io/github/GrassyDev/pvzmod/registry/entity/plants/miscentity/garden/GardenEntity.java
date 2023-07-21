@@ -36,7 +36,7 @@ public class GardenEntity extends PlantEntity implements IAnimatable, RangedAtta
 
     public GardenEntity(EntityType<? extends GardenEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

@@ -59,7 +59,7 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 
     public PumpkinWitchEntity(EntityType<? extends PumpkinWitchEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.targetMedium = true;
 		this.targetNotCovered = true;
 		this.targetNotObstacle = true;

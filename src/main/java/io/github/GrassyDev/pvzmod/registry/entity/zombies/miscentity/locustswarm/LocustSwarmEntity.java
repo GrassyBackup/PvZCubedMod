@@ -42,7 +42,7 @@ public class LocustSwarmEntity extends PvZombieEntity implements IAnimatable {
 
     public LocustSwarmEntity(EntityType<? extends LocustSwarmEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	static {

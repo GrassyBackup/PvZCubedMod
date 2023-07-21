@@ -67,7 +67,7 @@ public class ShamrockEntity extends PlantEntity implements IAnimatable, RangedAt
 
     public ShamrockEntity(EntityType<? extends ShamrockEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
         this.animationScare = 30;
     }

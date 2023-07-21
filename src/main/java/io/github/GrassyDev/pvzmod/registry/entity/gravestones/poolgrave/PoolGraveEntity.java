@@ -69,7 +69,7 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 
     public PoolGraveEntity(EntityType<PoolGraveEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 25;
     }
 

@@ -33,7 +33,7 @@ public abstract class TileEntity extends PathAwareEntity implements IAnimatable 
 
     public TileEntity(EntityType<? extends TileEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	static {

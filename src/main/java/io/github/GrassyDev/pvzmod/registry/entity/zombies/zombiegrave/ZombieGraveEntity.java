@@ -59,7 +59,7 @@ public class ZombieGraveEntity extends ZombieObstacleEntity implements IAnimatab
 
     public ZombieGraveEntity(EntityType<ZombieGraveEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 25;
     }
 

@@ -52,7 +52,7 @@ public class RetroGatlingEntity extends PlantEntity implements IAnimatable, Rang
 
     public RetroGatlingEntity(EntityType<? extends RetroGatlingEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

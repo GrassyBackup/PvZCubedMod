@@ -40,7 +40,7 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 
     public MetalObstacleEntity(EntityType<? extends MetalObstacleEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

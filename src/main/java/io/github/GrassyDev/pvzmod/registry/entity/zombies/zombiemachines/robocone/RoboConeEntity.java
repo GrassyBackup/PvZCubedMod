@@ -68,7 +68,7 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 
 	public RoboConeEntity(EntityType<? extends RoboConeEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

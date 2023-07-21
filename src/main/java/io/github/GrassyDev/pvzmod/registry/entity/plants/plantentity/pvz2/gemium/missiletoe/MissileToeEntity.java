@@ -53,7 +53,7 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public MissileToeEntity(EntityType<? extends MissileToeEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.targetStrength = true;
 		this.isBurst = true;
     }

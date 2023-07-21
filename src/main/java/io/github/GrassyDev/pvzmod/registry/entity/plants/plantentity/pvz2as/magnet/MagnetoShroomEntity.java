@@ -60,7 +60,7 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 
 	public MagnetoShroomEntity(EntityType<? extends MagnetoShroomEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.targetHelmet = true;
 		this.magnetoshroom = true;
 		this.magnetOffsetY = 0.75f;

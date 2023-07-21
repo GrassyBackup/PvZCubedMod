@@ -6,7 +6,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 /*
  * A renderer is used to provide an entity model, shadow size, and texture.
  */
-public class PeashooterEntityRenderer extends GeoEntityRenderer<PeashooterEntity> {
+public class PeashooterEntityRenderer extends GeoEntityRenderer {
 
     public PeashooterEntityRenderer(EntityRendererFactory.Context ctx) {
 		super(ctx, new PeashooterEntityModel());

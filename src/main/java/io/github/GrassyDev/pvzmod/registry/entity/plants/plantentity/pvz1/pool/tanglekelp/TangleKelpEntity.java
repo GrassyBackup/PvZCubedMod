@@ -65,7 +65,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 
     public TangleKelpEntity(EntityType<? extends TangleKelpEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 		this.setNoGravity(true);
 		this.noBiggie = true;

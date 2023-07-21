@@ -79,7 +79,7 @@ public class DolphinRiderEntity extends PvZombieEntity implements IAnimatable {
 
 	public DolphinRiderEntity(EntityType<? extends DolphinRiderEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.experiencePoints = 3;
 		this.firstAttack = true;
 		this.speedSwitch = false;

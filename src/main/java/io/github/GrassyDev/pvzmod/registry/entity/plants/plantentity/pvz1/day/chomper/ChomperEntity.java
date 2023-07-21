@@ -62,7 +62,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
     public ChomperEntity(EntityType<? extends ChomperEntity> entityType, World world) {
         super(entityType, world);
 		this.attackTicksLeft = 0;
-        this.ignoreCameraFrustum = true;
+
 		this.targetStrength = true;
 		this.isBurst = true;
     }

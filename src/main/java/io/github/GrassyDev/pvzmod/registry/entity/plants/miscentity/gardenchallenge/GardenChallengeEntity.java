@@ -69,7 +69,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 
     public GardenChallengeEntity(EntityType<? extends GardenChallengeEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	protected void initDataTracker() {

@@ -53,7 +53,7 @@ public class DropeaEntity extends PlantEntity implements IAnimatable, RangedAtta
 
 	public DropeaEntity(EntityType<? extends DropeaEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 	}
 
 	static {

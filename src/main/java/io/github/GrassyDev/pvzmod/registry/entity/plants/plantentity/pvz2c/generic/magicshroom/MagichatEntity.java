@@ -44,7 +44,7 @@ public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAt
 
     public MagichatEntity(EntityType<? extends MagichatEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	static {

@@ -52,7 +52,7 @@ public class BloomerangEntity extends PlantEntity implements IAnimatable, Ranged
 
     public BloomerangEntity(EntityType<? extends BloomerangEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

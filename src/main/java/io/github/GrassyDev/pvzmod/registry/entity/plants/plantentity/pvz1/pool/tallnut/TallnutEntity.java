@@ -56,7 +56,7 @@ public class TallnutEntity extends PlantEntity implements IAnimatable {
 
     public TallnutEntity(EntityType<? extends TallnutEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	static {

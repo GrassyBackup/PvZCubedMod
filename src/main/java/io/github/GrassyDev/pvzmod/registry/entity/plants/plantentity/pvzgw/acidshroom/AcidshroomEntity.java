@@ -58,7 +58,7 @@ public class AcidshroomEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public AcidshroomEntity(EntityType<? extends AcidshroomEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.setNoGravity(true);
 	}
 

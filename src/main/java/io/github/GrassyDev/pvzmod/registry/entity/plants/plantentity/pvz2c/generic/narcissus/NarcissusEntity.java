@@ -59,7 +59,7 @@ public class NarcissusEntity extends PlantEntity implements IAnimatable, RangedA
 
     public NarcissusEntity(EntityType<? extends NarcissusEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 
 		this.setNoGravity(true);

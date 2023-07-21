@@ -76,7 +76,7 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 
     public AnnouncerImpEntity(EntityType<? extends AnnouncerImpEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 12;
         this.isAggro = false;
     }

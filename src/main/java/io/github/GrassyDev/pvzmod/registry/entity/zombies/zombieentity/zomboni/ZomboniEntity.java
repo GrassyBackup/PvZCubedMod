@@ -64,7 +64,7 @@ public class ZomboniEntity extends ZombieRiderEntity implements IAnimatable {
 
 	public ZomboniEntity(EntityType<? extends ZomboniEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

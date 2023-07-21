@@ -18,7 +18,7 @@ public class IceTile extends TileEntity {
 
 	public IceTile(EntityType<? extends IceTile> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		this.setInvulnerable(true);
 	}
 

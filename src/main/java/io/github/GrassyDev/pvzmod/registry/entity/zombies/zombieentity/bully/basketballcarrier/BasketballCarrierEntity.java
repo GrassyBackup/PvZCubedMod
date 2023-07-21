@@ -49,7 +49,7 @@ public class BasketballCarrierEntity extends BullyEntity implements IAnimatable 
 
 	public BasketballCarrierEntity(EntityType<? extends BasketballCarrierEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

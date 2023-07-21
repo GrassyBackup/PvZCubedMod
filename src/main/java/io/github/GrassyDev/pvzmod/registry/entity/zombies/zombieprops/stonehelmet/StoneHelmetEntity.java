@@ -40,7 +40,7 @@ public class StoneHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
     public StoneHelmetEntity(EntityType<? extends StoneHelmetEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

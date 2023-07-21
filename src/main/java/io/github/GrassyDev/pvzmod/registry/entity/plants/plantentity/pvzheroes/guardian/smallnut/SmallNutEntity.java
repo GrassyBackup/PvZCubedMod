@@ -51,7 +51,7 @@ public class SmallNutEntity extends PlantEntity implements IAnimatable {
 
     public SmallNutEntity(EntityType<? extends SmallNutEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	protected void initDataTracker() {

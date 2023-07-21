@@ -62,7 +62,7 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 
     public PeashooterEntity(EntityType<? extends PeashooterEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

@@ -54,7 +54,7 @@ public class ButtonshroomEntity extends PlantEntity implements IAnimatable {
 
     public ButtonshroomEntity(EntityType<? extends ButtonshroomEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	protected void initDataTracker() {

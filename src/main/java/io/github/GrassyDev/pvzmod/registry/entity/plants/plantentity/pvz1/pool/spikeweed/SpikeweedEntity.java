@@ -56,7 +56,7 @@ public class SpikeweedEntity extends PlantEntity implements IAnimatable {
 
     public SpikeweedEntity(EntityType<? extends SpikeweedEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
     }
 
 	static {

@@ -66,7 +66,7 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 
     public ScaredyshroomEntity(EntityType<? extends ScaredyshroomEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
         this.animationScare = 30;
 		this.targetPoison = true;

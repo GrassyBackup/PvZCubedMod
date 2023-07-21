@@ -69,7 +69,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 
     public NightGraveEntity(EntityType<NightGraveEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 25;
     }
 

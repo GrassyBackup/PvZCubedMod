@@ -29,8 +29,8 @@
         "$(br2)Frozen completely stops Zombies in their tracks.",
         "$(br2)Frozen Zombies can't attack.",
         "$(br2)Frozen Zombies can't do their abilities.",
-        "$(br2)Frozen instantly kills zombies that swim and aren't Gargantuars and flying Zombies.",
-        "$(br)Machines can't be Frozen."
+        "$(br)Frozen instantly kills zombies that swim and fly, and aren't Gargantuars ",
+        "$(br)Machines and Stone can't be Frozen."
       ]
     },
     {
@@ -87,7 +87,7 @@
         "$(br2)Poison",
         "$(br2)Deals continuous direct damage to the Zombie, ignoring armor.",
         "$(br2)Deals 1.5 DMG/0.5sec.",
-        "$(br2)Can only be applied to Zombies with Flesh (default type)."
+        "$(br2)Can only be applied to non-covered Flesh or Plant Zombies."
       ]
     },
     {
@@ -96,7 +96,7 @@
         "$(br2)Acid",
         "$(br2)Deals continuous damage to Metallic Zombies.",
         "$(br2)Deals 8 DMG/0.5sec.",
-        "$(br2)Can only be applied to Metal and Plant."
+        "$(br2)Can only be applied to Metal, Plant, or Paper."
       ]
     },
     {

@@ -20,7 +20,7 @@
       "images": [
         "pvzmod:textures/gui/entries/impthrower.png"
       ],
-      "title": "Basic Zombie",
+      "title": "Hard Basic Zombie",
       "border": "true",
       "text": "$(#25228d)They throw random Imps into your defenses."
     },

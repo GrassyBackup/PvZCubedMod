@@ -77,7 +77,7 @@ public class FlagzombieEntity extends SummonerEntity implements IAnimatable {
 
     public FlagzombieEntity(EntityType<? extends FlagzombieEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 12;
         this.isAggro = false;
     }

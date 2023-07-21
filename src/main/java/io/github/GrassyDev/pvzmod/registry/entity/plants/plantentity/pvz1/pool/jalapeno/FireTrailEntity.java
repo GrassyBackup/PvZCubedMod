@@ -43,7 +43,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 
     public FireTrailEntity(EntityType<? extends FireTrailEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.setInvulnerable(true);
     }
 

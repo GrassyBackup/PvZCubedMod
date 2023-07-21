@@ -21,6 +21,8 @@ import net.minecraft.world.World;
 
 import java.util.Objects;
 
+import static io.github.GrassyDev.pvzmod.PvZCubed.ZOMBIE_MATERIAL;
+
 public abstract class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 
 	public boolean isHeavy = false;
@@ -127,11 +129,15 @@ public abstract class ZombiePropEntity extends GeneralPvZombieEntity implements 
 		}
 		if (this.hasStatusEffect(PvZCubed.PVZPOISON) && vehicle != null && !(this instanceof ZombieShieldEntity)){
 			vehicle.addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, Objects.requireNonNull(this.getStatusEffect(PvZCubed.PVZPOISON)).getDuration(), Objects.requireNonNull(this.getStatusEffect(PvZCubed.PVZPOISON)).getAmplifier())));
-			this.removeStatusEffect(PvZCubed.PVZPOISON);
+			if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("flesh")) && !(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant"))){
+				this.removeStatusEffect(PvZCubed.PVZPOISON);
+			}
 		}
 		if (this.hasStatusEffect(StatusEffects.POISON) && vehicle != null && !(this instanceof ZombieShieldEntity)){
 			vehicle.addStatusEffect((new StatusEffectInstance(StatusEffects.POISON, Objects.requireNonNull(this.getStatusEffect(StatusEffects.POISON)).getDuration(), Objects.requireNonNull(this.getStatusEffect(StatusEffects.POISON)).getAmplifier())));
-			this.removeStatusEffect(StatusEffects.POISON);
+			if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("flesh")) && !(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant"))){
+				this.removeStatusEffect(StatusEffects.POISON);
+			}
 		}
 		if (vehicle != null && vehicle.isOnFire() && !(this instanceof ZombieShieldEntity)){
 			vehicle.setOnFire(false);

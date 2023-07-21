@@ -43,7 +43,7 @@ public class PlantHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
     public PlantHelmetEntity(EntityType<? extends PlantHelmetEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

@@ -40,7 +40,7 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 
     public NewspaperShieldEntity(EntityType<? extends NewspaperShieldEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

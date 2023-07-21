@@ -57,7 +57,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 
 	public SmackadamiaEntity(EntityType<? extends SmackadamiaEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 
 		this.setNoGravity(true);

@@ -72,7 +72,7 @@ public class PumpkinZombieEntity extends PvZombieEntity implements IAnimatable {
 
 	public PumpkinZombieEntity(EntityType<? extends PumpkinZombieEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

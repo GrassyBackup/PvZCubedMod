@@ -66,7 +66,7 @@ public class BackupDancerEntity extends PvZombieEntity implements IAnimatable {
 
     public BackupDancerEntity(EntityType<? extends BackupDancerEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
     }
 

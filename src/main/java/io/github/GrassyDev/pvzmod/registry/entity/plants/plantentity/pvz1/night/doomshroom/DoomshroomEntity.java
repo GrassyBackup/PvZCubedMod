@@ -64,7 +64,7 @@ public class DoomshroomEntity extends PlantEntity implements IAnimatable {
 
     public DoomshroomEntity(EntityType<? extends DoomshroomEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.isBurst = true;
     }
 

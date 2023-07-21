@@ -70,7 +70,7 @@ public class SnorkelEntity extends PvZombieEntity implements IAnimatable {
         super(entityType, world);
 		this.invulnerableZombie = false;
 		setInvisibleSnorkel(false);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 6;
 	}
 

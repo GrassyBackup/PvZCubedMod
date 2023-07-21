@@ -66,7 +66,7 @@ public class NavyBeanEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	public NavyBeanEntity(EntityType<? extends NavyBeanEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 
 		this.setNoGravity(true);

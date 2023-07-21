@@ -72,7 +72,7 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 	public LilyPadEntity(EntityType<? extends LilyPadEntity> entityType, World world) {
         super(entityType, world);
 		amphibiousRaycastDelay = 1;
-        this.ignoreCameraFrustum = true;
+
 		this.setNoGravity(true);
 		LilypadHats hat = Util.getRandom(LilypadHats.values(), this.random);
 		setHat(hat);

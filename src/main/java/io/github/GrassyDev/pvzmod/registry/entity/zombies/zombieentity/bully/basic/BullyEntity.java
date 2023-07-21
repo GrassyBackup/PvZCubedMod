@@ -76,7 +76,7 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 
 	public BullyEntity(EntityType<? extends BullyEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 		this.getNavigation().setCanSwim(true);
 		this.speedSwitch = false;

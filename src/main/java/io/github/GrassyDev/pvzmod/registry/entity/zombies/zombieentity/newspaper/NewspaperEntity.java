@@ -79,7 +79,7 @@ public class NewspaperEntity extends PvZombieEntity implements IAnimatable {
 
 	public NewspaperEntity(EntityType<? extends NewspaperEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 		this.speedSwitch = false;
 	}

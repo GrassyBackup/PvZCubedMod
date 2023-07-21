@@ -52,7 +52,7 @@ public class JumpingBeanEntity extends PlantEntity implements IAnimatable, Range
 
     public JumpingBeanEntity(EntityType<? extends JumpingBeanEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
     }
 

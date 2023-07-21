@@ -53,7 +53,7 @@ public class PepperpultEntity extends PlantEntity implements IAnimatable, Ranged
     public PepperpultEntity(EntityType<? extends PepperpultEntity> entityType, World world) {
         super(entityType, world);
 		this.setFireImmune(FireImmune.TRUE);
-        this.ignoreCameraFrustum = true;
+
 		this.lobbedTarget = true;
 		this.illuminate = true;
     }

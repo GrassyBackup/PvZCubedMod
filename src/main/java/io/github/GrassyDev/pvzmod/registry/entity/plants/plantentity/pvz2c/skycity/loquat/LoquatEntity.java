@@ -57,7 +57,7 @@ public class LoquatEntity extends PlantEntity implements IAnimatable {
 
 	public LoquatEntity(EntityType<? extends LoquatEntity> entityType, World world) {
 		super(entityType, world);
-		this.ignoreCameraFrustum = true;
+
 		amphibiousRaycastDelay = 1;
 
 		this.setNoGravity(true);

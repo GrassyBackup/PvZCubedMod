@@ -373,6 +373,7 @@ public class PvZConfigModel {
 		public float snowQueenPeaSDMG = 3f;
 		public float spikeDMGv2 = 4f;
 		public float spitDMG = 2f;
+		public float smooshProjDMG = 12f;
 		public float sporeDMG = 2f;
 
 		public float basketBallDMG = 4f;

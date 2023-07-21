@@ -55,7 +55,7 @@ public class GravebusterEntity extends PlantEntity implements IAnimatable {
 
     public GravebusterEntity(EntityType<? extends GravebusterEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 
         this.notready = true;
         this.attackTicksLeft = 80;

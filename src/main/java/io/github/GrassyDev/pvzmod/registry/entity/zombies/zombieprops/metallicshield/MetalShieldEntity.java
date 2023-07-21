@@ -31,7 +31,7 @@ public class MetalShieldEntity extends ZombieShieldEntity implements IAnimatable
 
     public MetalShieldEntity(EntityType<? extends MetalShieldEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

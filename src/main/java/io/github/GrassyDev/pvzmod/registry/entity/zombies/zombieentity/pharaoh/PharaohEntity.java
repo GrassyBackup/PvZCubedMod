@@ -75,7 +75,7 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 
 	public PharaohEntity(EntityType<? extends PharaohEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 3;
 	}
 

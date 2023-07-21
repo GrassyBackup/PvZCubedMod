@@ -76,7 +76,7 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 
     public DancingZombieEntity(EntityType<? extends DancingZombieEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
         this.experiencePoints = 12;
         this.isAggro = false;
         this.dancing = false;

@@ -52,7 +52,7 @@ public class IcebergpultEntity extends PlantEntity implements IAnimatable, Range
 
     public IcebergpultEntity(EntityType<? extends IcebergpultEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.targetIce = true;
     }
 

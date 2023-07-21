@@ -21,7 +21,7 @@
       "images": [
         "pvzmod:textures/gui/entries/zomblob.png"
       ],
-      "title": "Dark Ages Zombie",
+      "title": "Hard Dark Ages Zombie",
       "border": "true",
       "text": "$(#25228d)Zomblobs split into multiple smaller versions of themselves."
     },

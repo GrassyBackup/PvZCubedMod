@@ -54,7 +54,7 @@ public class BeeshooterEntity extends PlantEntity implements IAnimatable, Ranged
 
     public BeeshooterEntity(EntityType<? extends BeeshooterEntity> entityType, World world) {
         super(entityType, world);
-        this.ignoreCameraFrustum = true;
+
 		this.targetHelmet = true;
     }
 
