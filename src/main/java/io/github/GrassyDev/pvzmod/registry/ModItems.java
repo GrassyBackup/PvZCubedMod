@@ -57,6 +57,7 @@ public class ModItems {
 		SEED_PACKET_LIST.add(ModItems.TWINSUNFLOWER_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SPIKEROCK_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.ICEBERGPULT_SEED_PACKET);
+		SEED_PACKET_LIST.add(ModItems.BEET_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SHAMROCK_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.CHILLYPEPPER_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.BEESHOOTER_SEED_PACKET);
@@ -93,6 +94,7 @@ public class ModItems {
 		SEED_PACKET_LIST.add(ModItems.ZAPRICOT_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.BANANASAURUS_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.WEENIEBEANIE_SEED_PACKET);
+		SEED_PACKET_LIST.add(ModItems.SMOOSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.NAVYBEAN_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.ADMIRALNAVYBEAN_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.JUMPINGBEAN_SEED_PACKET);
@@ -156,6 +158,7 @@ public class ModItems {
 	public static final Item BUBBLES = new BubblesItem(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item ARMORBUBBLE = new ArmorBubbleItem(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item DROP = new DropItem(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.UNCOMMON));
+	public static final Item SMOOSH = new HammerItem(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.EPIC));
 	public static final Item SPIT = new SpitItem(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(32).rarity(Rarity.COMMON));
 	public static final Item JINGLE = new JingleItem(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(32).rarity(Rarity.COMMON));
 	public static final Item BRAIN = new Item(new Item.Settings().group(PvZCubed.PVZZOMBIES));
@@ -200,6 +203,7 @@ public class ModItems {
 	public static final Item CATTAIL_SEED_PACKET = new CattailSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
 	public static final Item SPIKEROCK_SEED_PACKET = new SpikerockSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
 	public static final Item ICEBERGPULT_SEED_PACKET = new IcebergpultSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
+	public static final Item BEET_SEED_PACKET = new BeetSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.COMMON));
 	public static final Item SHAMROCK_SEED_PACKET = new ShamrockSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item CHILLYPEPPER_SEED_PACKET = new ChillyPepperSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item BEESHOOTER_SEED_PACKET = new BeeshooterSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.EPIC));
@@ -237,6 +241,7 @@ public class ModItems {
 	public static final Item ZAPRICOT_SEED_PACKET = new ZapricotSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(1).rarity(Rarity.RARE));
 	public static final Item BANANASAURUS_SEED_PACKET = new BananasaurusSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(1).rarity(Rarity.EPIC));
 	public static final Item WEENIEBEANIE_SEED_PACKET = new WeenieBeanieSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
+	public static final Item SMOOSHROOM_SEED_PACKET = new SmooshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));
 	public static final Item ADMIRALNAVYBEAN_SEED_PACKET = new AdmiralNavyBeanSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item NAVYBEAN_SEED_PACKET = new NavyBeanSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.COMMON));
 	public static final Item JUMPINGBEAN_SEED_PACKET = new JumpingbeanSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.RARE));
@@ -399,6 +404,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"bubblesitem"), BUBBLES);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"armorbubbleitem"), ARMORBUBBLE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"drop"), DROP);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"smoosh"), SMOOSH);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"spit"), SPIT);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"jingle"), JINGLE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"brain"), BRAIN);
@@ -469,6 +475,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"spikerock_seed_packet"), SPIKEROCK_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"bloomerang_seed_packet"), BLOOMERANG_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"icebergpult_seed_packet"), ICEBERGPULT_SEED_PACKET);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"beet_seed_packet"), BEET_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"shamrock_seed_packet"), SHAMROCK_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"chillypepper_seed_packet"), CHILLYPEPPER_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"beeshooter_seed_packet"), BEESHOOTER_SEED_PACKET);
@@ -503,6 +510,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"bombseedling_seed_packet"), BOMBSEEDLING_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"zapricot_seed_packet"), ZAPRICOT_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"bananasaurus_seed_packet"), BANANASAURUS_SEED_PACKET);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"smooshroom_seed_packet"), SMOOSHROOM_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"weeniebeanie_seed_packet"), WEENIEBEANIE_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"navybean_seed_packet"), NAVYBEAN_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"admiralnavybean_seed_packet"), ADMIRALNAVYBEAN_SEED_PACKET);

@@ -3,7 +3,7 @@
   "icon": "pvzmod:jumpingbean_seed_packet",
   "category": "pvzmod:plant_category",
   "sortnum": 311,
-  "advancement": "pvzmod:start_pvz",
+  "advancement": "pvzmod:make_springbean",
   "pages": [
     {
       "type": "text",

@@ -2,7 +2,7 @@
   "name": "Shamrock",
   "icon": "pvzmod:shamrock_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 41,
+  "sortnum": 42,
   "advancement": "pvzmod:start_pvz",
   "pages": [
     {

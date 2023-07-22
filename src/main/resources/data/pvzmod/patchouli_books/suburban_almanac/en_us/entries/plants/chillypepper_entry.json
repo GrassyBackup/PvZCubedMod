@@ -2,7 +2,7 @@
   "name": "Chilly Pepper",
   "icon": "pvzmod:chillypepper_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 42,
+  "sortnum": 43,
   "advancement": "pvzmod:make_gravebuster",
   "pages": [
     {

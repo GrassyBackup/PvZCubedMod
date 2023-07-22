@@ -1069,6 +1069,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				graveEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 				graveEntity.initialize(serverWorld, this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				graveEntity.setAiDisabled(true);
+				graveEntity.decorative = true;
 				serverWorld.spawnEntityAndPassengers(graveEntity);
 			}
 		}

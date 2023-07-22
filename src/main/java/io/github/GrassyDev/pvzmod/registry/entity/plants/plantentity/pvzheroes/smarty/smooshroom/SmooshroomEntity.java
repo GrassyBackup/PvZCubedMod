@@ -148,7 +148,7 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
 				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.BANANASAURUS_SEED_PACKET);
+					this.dropItem(ModItems.SMOOSHROOM_SEED_PACKET);
 				}
 				this.discard();
 			}
@@ -178,7 +178,12 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 			this.setTarget(null);
 		}
 		else {
-			this.targetZombies(this.getPos(), 3, false, false, false);
+			if (this.getIsAltFire()) {
+				this.targetZombies(this.getPos(), 3, false, false, true);
+			}
+			else {
+				this.targetZombies(this.getPos(), 3, false, true, true);
+			}
 		}
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {
@@ -210,7 +215,7 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		ItemStack itemStack = player.getStackInHand(hand);
 		if (itemStack.isOf(ModItems.GARDENINGGLOVE)) {
-			dropItem(ModItems.BANANASAURUS_SEED_PACKET);
+			dropItem(ModItems.SMOOSHROOM_SEED_PACKET);
 			if (!player.getAbilities().creativeMode) {
 				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
 					itemStack.decrement(1);
@@ -225,7 +230,7 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.BANANASAURUS_SEED_PACKET.getDefaultStack();
+		return ModItems.SMOOSHROOM_SEED_PACKET.getDefaultStack();
 	}
 
 
@@ -406,7 +411,6 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 			}
 			this.world.sendEntityStatus(this, (byte) 111);
 			if (!charge){
-				System.out.println("test");
 				if (livingEntity != null && livingEntity.squaredDistanceTo(this) <= 16) {
 					this.setAltfire(AltFire.TRUE);
 				} else {

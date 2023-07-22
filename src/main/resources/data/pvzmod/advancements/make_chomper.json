@@ -10,7 +10,7 @@
     "announce_to_chat": true,
     "hidden": false
   },
-  "parent": "pvzmod:make_squash",
+  "parent": "pvzmod:make_beet",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",

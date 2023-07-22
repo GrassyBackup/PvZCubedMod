@@ -3,6 +3,7 @@
   "icon": "pvzmod:bananasaurus_seed_packet",
   "category": "pvzmod:plant_category",
   "sortnum": 304,
+  "advancement": "pvzmod:make_chomper",
   "pages": [
     {
       "type": "text",

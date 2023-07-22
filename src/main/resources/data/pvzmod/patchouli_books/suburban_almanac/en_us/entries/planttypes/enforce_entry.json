@@ -21,7 +21,9 @@
         "pvzmod:plants/admiralnavybean_entry",
         "pvzmod:plants/weeniebeanie_entry",
         "pvzmod:plants/dandelionweed_entry",
-        "pvzmod:plants/bananasaurus_entry"
+        "pvzmod:plants/bananasaurus_entry",
+        "pvzmod:plants/beet_entry",
+        "pvzmod:plants/smooshroom_entry"
       ],
       "title": "\uD83D\uDDE1 Enforce Plants:"
     }

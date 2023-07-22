@@ -220,6 +220,7 @@
   "text.config.pvz3-config.option.nestedProjDMG.snowQueenPeaDMGv2": "Snow Queen Pea Damage",
   "text.config.pvz3-config.option.nestedProjDMG.snowQueenPeaSDMG": "Snow Queen Pea Splash Damage",
   "text.config.pvz3-config.option.nestedProjDMG.spikeDMGv2": "Spike Damage",
+  "text.config.pvz3-config.option.nestedProjDMG.smooshProjDMG": "Hammer Cap Damage",
   "text.config.pvz3-config.option.nestedProjDMG.spitDMG": "Spit Damage",
   "text.config.pvz3-config.option.nestedProjDMG.sporeDMG": "Spore Damage",
   "text.config.pvz3-config.option.nestedProjDMG.basketBallDMG": "Basketball Damage",
@@ -516,6 +517,10 @@
   "item.pvzmod.icebergpult_seed_packet.flavour": "An exciting piggyback ride",
   "item.pvzmod.iceberg": "Iceberg",
 
+  "entity.pvzmod.beet": "Beet",
+  "item.pvzmod.beet_seed_packet": "\uD83D\uDDE1 Beet Seed Packet",
+  "item.pvzmod.beet_seed_packet.flavour": "Beet may be a roont, but he packs a punch.",
+
   "entity.pvzmod.shamrock": "Shamrock",
   "item.pvzmod.shamrock_seed_packet": "⭘ Shamrock Seed Packet",
   "item.pvzmod.shamrock_seed_packet.flavour": "\"Keep absolutely still. Its vision's based on movement.\"",
@@ -711,6 +716,13 @@
   "entity.pvzmod.weeniebeanie": "Weenie Beanie",
   "item.pvzmod.weeniebeanie_seed_packet": "\uD83D\uDDE1 Weenie Beanie Seed Packet",
   "item.pvzmod.weeniebeanie_seed_packet.flavour": "I prefer to be called a \"Little Beanie.\"",
+
+  "entity.pvzmod.smooshroom": "Smoo-shroom",
+  "item.pvzmod.smooshroom_seed_packet": "\uD83D\uDDE1 Smoo-shroom Seed Packet",
+  "item.pvzmod.smooshroom_seed_packet.flavour": "\"If I had a hammer...",
+  "item.pvzmod.smooshroom_seed_packet.flavour2": "Wait a sec...",
+  "item.pvzmod.smooshroom_seed_packet.flavour3": "I AM a hammer!\"",
+  "entity.pvzmod.smoosh": "Hammer Cap",
 
   "entity.pvzmod.navybean": "Navy Bean",
   "item.pvzmod.navybean_seed_packet": "\uD83D\uDDE1 Navy Bean Seed Packet",

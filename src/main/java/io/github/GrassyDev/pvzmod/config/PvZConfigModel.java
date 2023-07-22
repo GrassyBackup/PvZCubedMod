@@ -170,6 +170,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float beeshooterS = 15.0f;
 		@RestartRequired
+		public float beetS = 12.5f;
+		@RestartRequired
 		public float bellflowerS = 2.5f;
 		@RestartRequired
 		public float bloomerangS = 15f;
@@ -275,6 +277,8 @@ public class PvZConfigModel {
 		public float smackadamiaSv2 = 30.0f;
 		@RestartRequired
 		public float smallnutS = 10.0f;
+		@RestartRequired
+		public float smooshroomS = 25.0f;
 		@RestartRequired
 		public float snowpeaS = 7.5f;
 		@RestartRequired
