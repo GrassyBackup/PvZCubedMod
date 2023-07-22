@@ -1,4 +1,4 @@
-package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.beet;
+package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.hammerflower;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -15,14 +16,23 @@ import net.minecraft.entity.ai.goal.ProjectileAttackGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -37,18 +47,38 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
+public class HammerFlowerEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
 	private int attackTicksLeft;
-	private String controllerName = "beet";
+	private String controllerName = "hammerflower";
 	public boolean isFiring;
 
-	public BeetEntity(EntityType<? extends BeetEntity> entityType, World world) {
+	private static final TrackedData<Integer> ZOMB_ID;
+
+	public HammerFlowerEntity(EntityType<? extends HammerFlowerEntity> entityType, World world) {
 		super(entityType, world);
-		this.setFireImmune(FireImmune.TRUE);
 		this.setNoGravity(true);
+	}
+
+	protected void initDataTracker() {
+		super.initDataTracker();
+		this.dataTracker.startTracking(ZOMB_ID, 0);
+	}
+
+	public void writeCustomDataToNbt(NbtCompound tag) {
+		super.writeCustomDataToNbt(tag);
+		tag.putInt("ZombID", this.dataTracker.get(ZOMB_ID));
+	}
+
+	public void readCustomDataFromNbt(NbtCompound tag) {
+		super.readCustomDataFromNbt(tag);
+		this.dataTracker.set(ZOMB_ID, tag.getInt("ZombID"));
+	}
+
+	static {
+		ZOMB_ID = DataTracker.registerData(HammerFlowerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	}
 
 	static {
@@ -64,6 +94,33 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 		} else if (status == 110) {
 			this.isFiring = false;
 		}
+		BlockState blockState = this.getLandingBlockState();
+		LivingEntity livingEntity = getBeamTarget();
+		if (status == 120){
+			for(int i = 0; i < 100; ++i) {
+				RandomGenerator randomGenerator = this.getRandom();
+				if (livingEntity != null) {
+					blockState = livingEntity.getLandingBlockState();
+					double d = livingEntity.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
+					double e = livingEntity.getY();
+					double f = livingEntity.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
+					this.world.addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+				}
+			}
+		}
+	}
+
+	private void setZombId(int entityId) {
+		this.dataTracker.set(ZOMB_ID, entityId);
+	}
+
+	public boolean hasZombId() {
+		return (Integer)this.dataTracker.get(ZOMB_ID) != 0;
+	}
+
+	@Nullable
+	public LivingEntity getBeamTarget() {
+		return (LivingEntity) this.world.getEntityById((Integer)this.dataTracker.get(ZOMB_ID));
 	}
 
 
@@ -86,9 +143,9 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
 		if (this.isFiring) {
-			event.getController().setAnimation(new AnimationBuilder().playOnce("beet.attack"));
+			event.getController().setAnimation(new AnimationBuilder().playOnce("hammerflower.attack"));
 		} else {
-			event.getController().setAnimation(new AnimationBuilder().loop("beet.idle"));
+			event.getController().setAnimation(new AnimationBuilder().loop("hammerflower.idle"));
 		}
 		return PlayState.CONTINUE;
 	}
@@ -124,7 +181,7 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
 				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.BEET_SEED_PACKET);
+					this.dropItem(ModItems.HAMMERFLOWER_SEED_PACKET);
 				}
 				this.discard();
 			}
@@ -146,6 +203,9 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 			this.targetZombies(this.getPos(), 3, false, false, true);
 		}
 		if (!this.world.isClient()) {
+			if (this.getTarget() != null) {
+				this.setZombId(this.getTarget().getId());
+			}
 			this.FireBeamGoal();
 		}
 	}
@@ -169,7 +229,7 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		ItemStack itemStack = player.getStackInHand(hand);
 		if (itemStack.isOf(ModItems.GARDENINGGLOVE)) {
-			dropItem(ModItems.BEET_SEED_PACKET);
+			dropItem(ModItems.HAMMERFLOWER_SEED_PACKET);
 			if (!player.getAbilities().creativeMode) {
 				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
 					itemStack.decrement(1);
@@ -184,7 +244,7 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.BEET_SEED_PACKET.getDefaultStack();
+		return ModItems.HAMMERFLOWER_SEED_PACKET.getDefaultStack();
 	}
 
 
@@ -192,13 +252,13 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 	 * //~*~//~ATTRIBUTES~//~*~//
 	 **/
 
-	public static DefaultAttributeContainer.Builder createBeetAttributes() {
+	public static DefaultAttributeContainer.Builder createHammerFlowerAttributes() {
 		return MobEntity.createMobAttributes()
-				.add(EntityAttributes.GENERIC_MAX_HEALTH, 12.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, 24.0D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 5D)
-				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0D);
+				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 4D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 16.0D);
 	}
 
 	protected boolean canClimb() {
@@ -277,20 +337,36 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 
 	public void smack(Entity target) {
 		ZombiePropEntity passenger = null;
+		boolean hasHelmet = false;
 		for (Entity entity1 : target.getPassengerList()) {
 			if (entity1 instanceof ZombiePropEntity zpe) {
 				passenger = zpe;
+				hasHelmet = !(entity1 instanceof ZombieShieldEntity);
 			}
 		}
 		Entity damaged = target;
 		if (passenger != null && !(passenger instanceof ZombieRiderEntity)){
 			damaged = passenger;
 		}
-		boolean bl = damaged.damage(DamageSource.mob(this), this.getAttackDamage());
+		String zombieSize = PvZCubed.ZOMBIE_SIZE.get(damaged.getType()).orElse("medium");
+		if (!hasHelmet && !zombieSize.equals("big") && !zombieSize.equals("gargantuar")){
+			((LivingEntity) damaged).addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 1)));
+			this.world.sendEntityStatus(this, (byte) 120);
+			System.out.println(getBeamTarget());
+			target.playSound(SoundEvents.BLOCK_NETHERRACK_BREAK, 0.3F, (float) (0.5F + Math.random()));
+		}
+		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
+		float damage = this.getAttackDamage();
+		if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+			damage = damage * 2;
+		}
+		if ("paper".equals(zombieMaterial)) {
+			damage = damage / 2;
+		}
+		boolean bl = damaged.damage(DamageSource.mob(this), damage);
 		if (bl) {
 			this.applyDamageEffects(this, target);
 		}
-		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 		SoundEvent sound;
 		sound = switch (zombieMaterial) {
 			case "metallic" -> PvZSounds.BUCKETHITEVENT;

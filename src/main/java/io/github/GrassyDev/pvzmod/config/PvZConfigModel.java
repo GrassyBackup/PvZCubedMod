@@ -218,6 +218,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float gravebusterS = 5.0f;
 		@RestartRequired
+		public float hammerflowerS = 15.0f;
+		@RestartRequired
 		public float hypnoshroomS = 20.0f;
 		@RestartRequired
 		public float iceberglettuceS = 20.0f;

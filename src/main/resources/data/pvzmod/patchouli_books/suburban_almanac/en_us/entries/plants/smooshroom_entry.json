@@ -3,7 +3,7 @@
   "icon": "pvzmod:smooshroom_seed_packet",
   "category": "pvzmod:plant_category",
   "sortnum": 308,
-  "advancement": "pvzmod:make_beet",
+  "advancement": "pvzmod:make_hammerflower",
   "pages": [
     {
       "type": "text",

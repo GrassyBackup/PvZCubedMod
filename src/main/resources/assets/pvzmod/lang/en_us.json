@@ -664,6 +664,10 @@
   "item.pvzmod.tulimpeter_seed_packet.flavour": "Was a band kid.",
   "item.pvzmod.hypnoproj": "Hypno Projectile",
 
+  "entity.pvzmod.hammerflower": "Hammer Flower",
+  "item.pvzmod.hammerflower_seed_packet": "\uD83D\uDDE1 Hammer Flower Seed Packet",
+  "item.pvzmod.hammerflower_seed_packet.flavour": "\"I really wanna hammer the Zombie home.\"",
+
   "entity.pvzmod.narcissus": "Narcissus",
   "item.pvzmod.narcissus_seed_packet": "✂ Narcissus Seed Packet",
   "item.pvzmod.narcissus_seed_packet.flavour": "\"Magic mirror on the puddle,",
