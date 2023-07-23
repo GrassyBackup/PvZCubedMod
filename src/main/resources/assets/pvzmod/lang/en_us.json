@@ -116,6 +116,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gatlingpeaS": "Gatling Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gloomshroomS": "Gloom-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gravebusterS": "Grave Buster Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.hammerflowerS": "Hammer Flower Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.hypnoshroomS": "Hypno-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.iceberglettuceS": "Iceberg Lettuce Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.icebergpultS": "Iceberg-pult Seed",
@@ -143,6 +144,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.seashroomS": "Sea-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.magnetshroomS": "Magnet-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.magnetoshroomS": "Magneto-shroom Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.meteorhammerS": "Meteor Hammer Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.missileToeS": "Missile Toe Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.shamrockS": "Shamrock Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smackadamiaSv2": "Smackadamia Seed",
@@ -667,6 +669,10 @@
   "entity.pvzmod.hammerflower": "Hammer Flower",
   "item.pvzmod.hammerflower_seed_packet": "\uD83D\uDDE1 Hammer Flower Seed Packet",
   "item.pvzmod.hammerflower_seed_packet.flavour": "\"I really wanna hammer the Zombie home.\"",
+
+  "entity.pvzmod.meteorhammer": "Meteor Hammer",
+  "item.pvzmod.meteorhammer_seed_packet": "\uD83D\uDDE1 Meteor Hammer Seed Packet",
+  "item.pvzmod.meteorhammer_seed_packet.flavour": "\"I would be blunt, if it wasn't for the spikes.\"",
 
   "entity.pvzmod.narcissus": "Narcissus",
   "item.pvzmod.narcissus_seed_packet": "✂ Narcissus Seed Packet",

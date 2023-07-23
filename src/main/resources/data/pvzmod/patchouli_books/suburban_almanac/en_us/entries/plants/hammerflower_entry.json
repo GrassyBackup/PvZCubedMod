@@ -3,7 +3,7 @@
   "icon": "pvzmod:hammerflower_seed_packet",
   "category": "pvzmod:plant_category",
   "sortnum": 103,
-  "advancement": "pvzmod:start_pvz",
+  "advancement": "pvzmod:make_beet",
   "pages": [
     {
       "type": "text",

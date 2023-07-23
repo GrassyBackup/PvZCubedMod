@@ -1,11 +1,12 @@
-package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.hammerflower;
+package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.meteorhammer;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.snorkel.SnorkelEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,23 +17,16 @@ import net.minecraft.entity.ai.goal.ProjectileAttackGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -45,40 +39,23 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+import java.util.Iterator;
+import java.util.List;
+
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class HammerFlowerEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
+public class MeteorHammerEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
 	private int attackTicksLeft;
-	private String controllerName = "hammerflower";
+	private String controllerName = "meteorhammer";
 	public boolean isFiring;
+	public boolean charging;
 
-	private static final TrackedData<Integer> ZOMB_ID;
-
-	public HammerFlowerEntity(EntityType<? extends HammerFlowerEntity> entityType, World world) {
+	public MeteorHammerEntity(EntityType<? extends MeteorHammerEntity> entityType, World world) {
 		super(entityType, world);
 		this.setNoGravity(true);
-	}
-
-	protected void initDataTracker() {
-		super.initDataTracker();
-		this.dataTracker.startTracking(ZOMB_ID, 0);
-	}
-
-	public void writeCustomDataToNbt(NbtCompound tag) {
-		super.writeCustomDataToNbt(tag);
-		tag.putInt("ZombID", this.dataTracker.get(ZOMB_ID));
-	}
-
-	public void readCustomDataFromNbt(NbtCompound tag) {
-		super.readCustomDataFromNbt(tag);
-		this.dataTracker.set(ZOMB_ID, tag.getInt("ZombID"));
-	}
-
-	static {
-		ZOMB_ID = DataTracker.registerData(HammerFlowerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	}
 
 	static {
@@ -86,7 +63,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 
 	@Environment(EnvType.CLIENT)
 	public void handleStatus(byte status) {
-		if (status != 2 && status != 60){
+		if (status != 2 && status != 60) {
 			super.handleStatus(status);
 		}
 		if (status == 111) {
@@ -94,29 +71,11 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		} else if (status == 110) {
 			this.isFiring = false;
 		}
-		BlockState blockState = this.getLandingBlockState();
-		LivingEntity livingEntity = getBeamTarget();
-		if (status == 120){
-			for(int i = 0; i < 100; ++i) {
-				RandomGenerator randomGenerator = this.getRandom();
-				if (livingEntity != null) {
-					blockState = livingEntity.getLandingBlockState();
-					double d = livingEntity.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
-					double e = livingEntity.getY();
-					double f = livingEntity.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
-					this.world.addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
-				}
-			}
+		if (status == 113) {
+			this.charging = true;
+		} else if (status == 112) {
+			this.charging = false;
 		}
-	}
-
-	private void setZombId(int entityId) {
-		this.dataTracker.set(ZOMB_ID, entityId);
-	}
-
-	@Nullable
-	public LivingEntity getBeamTarget() {
-		return (LivingEntity) this.world.getEntityById((Integer)this.dataTracker.get(ZOMB_ID));
 	}
 
 
@@ -139,9 +98,12 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
 		if (this.isFiring) {
-			event.getController().setAnimation(new AnimationBuilder().playOnce("hammerflower.attack"));
+			event.getController().setAnimation(new AnimationBuilder().playOnce("meteorhammer.attack"));
+		}
+		else if (this.charging) {
+			event.getController().setAnimation(new AnimationBuilder().loop("meteorhammer.charge"));
 		} else {
-			event.getController().setAnimation(new AnimationBuilder().loop("hammerflower.idle"));
+			event.getController().setAnimation(new AnimationBuilder().loop("meteorhammer.idle"));
 		}
 		return PlayState.CONTINUE;
 	}
@@ -177,7 +139,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
 				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.HAMMERFLOWER_SEED_PACKET);
+					this.dropItem(ModItems.METEORHAMMER_SEED_PACKET);
 				}
 				this.discard();
 			}
@@ -190,6 +152,10 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 	 * //~*~//~TICKING~//~*~//
 	 **/
 
+	private int increment;
+
+	public float damage;
+
 	public void tick() {
 		super.tick();
 		if (tickDelay <= 1) {
@@ -199,10 +165,30 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 			this.targetZombies(this.getPos(), 3, false, false, true);
 		}
 		if (!this.world.isClient()) {
-			if (this.getTarget() != null) {
-				this.setZombId(this.getTarget().getId());
-			}
 			this.FireBeamGoal();
+		}
+		if (this.getTarget() != null) {
+			if (this.squaredDistanceTo(this.getTarget()) <= 49 && this.squaredDistanceTo(this.getTarget()) >= 9) {
+				this.charging = true;
+				this.world.sendEntityStatus(this, (byte) 113);
+			}
+			else {
+				this.charging = false;
+				this.world.sendEntityStatus(this, (byte) 112);
+			}
+		}
+		else {
+			damage = 0;
+			increment = 0;
+		}
+		if (charging){
+			if (++increment >= 10){
+				damage += 2;
+				increment = 0;
+			}
+		}
+		if (increment <= 0){
+			this.charging = false;
 		}
 	}
 
@@ -225,7 +211,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		ItemStack itemStack = player.getStackInHand(hand);
 		if (itemStack.isOf(ModItems.GARDENINGGLOVE)) {
-			dropItem(ModItems.HAMMERFLOWER_SEED_PACKET);
+			dropItem(ModItems.METEORHAMMER_SEED_PACKET);
 			if (!player.getAbilities().creativeMode) {
 				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
 					itemStack.decrement(1);
@@ -240,7 +226,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.HAMMERFLOWER_SEED_PACKET.getDefaultStack();
+		return ModItems.METEORHAMMER_SEED_PACKET.getDefaultStack();
 	}
 
 
@@ -248,12 +234,12 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 	 * //~*~//~ATTRIBUTES~//~*~//
 	 **/
 
-	public static DefaultAttributeContainer.Builder createHammerFlowerAttributes() {
+	public static DefaultAttributeContainer.Builder createMeteorHammerAttributes() {
 		return MobEntity.createMobAttributes()
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, 24.0D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 4D)
+				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 8D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 16.0D);
 	}
 
@@ -331,53 +317,69 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		return true;
 	}
 
-	public void smack(Entity target) {
-		ZombiePropEntity passenger = null;
-		boolean hasHelmet = false;
-		for (Entity entity1 : target.getPassengerList()) {
-			if (entity1 instanceof ZombiePropEntity zpe) {
-				passenger = zpe;
-				hasHelmet = !(entity1 instanceof ZombieShieldEntity);
+	protected void splashDamage(Vec3d vec3d) {
+		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(6));
+		Iterator var9 = list.iterator();
+		while (true) {
+			LivingEntity livingEntity;
+			do {
+				do {
+					if (!var9.hasNext()) {
+						return;
+					}
+
+					livingEntity = (LivingEntity) var9.next();
+				} while (livingEntity == this);
+			} while (livingEntity.squaredDistanceTo(vec3d) > 6.25);
+
+			if (livingEntity instanceof Monster &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+							&& (generalPvZombieEntity.getHypno()))) {
+				ZombiePropEntity zombiePropEntity2 = null;
+				for (Entity entity1 : livingEntity.getPassengerList()) {
+					if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity2 = zpe;
+					}
+				}
+				if (livingEntity.getY() < (this.getY() + 1.5) && livingEntity.getY() > (this.getY() - 1.5)) {
+					if (!world.isClient &&
+							!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+							!(livingEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
+							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
+						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+						SoundEvent sound;
+						sound = switch (zombieMaterial) {
+							case "metallic" -> PvZSounds.BUCKETHITEVENT;
+							case "plastic" -> PvZSounds.CONEHITEVENT;
+							case "stone" -> PvZSounds.STONEHITEVENT;
+							default -> PvZSounds.PEAHITEVENT;
+						};
+						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
+						float damageBase = damage + 6;
+						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+							damageBase = damageBase * 2;
+						}
+						if ("paper".equals(zombieMaterial)) {
+							damageBase = damageBase / 2;
+						}
+						if (damageBase > livingEntity.getHealth() &&
+								!(livingEntity instanceof ZombieShieldEntity) &&
+								livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+							float damage2 = damageBase - ((LivingEntity) livingEntity).getHealth();
+							livingEntity.damage(DamageSource.thrownProjectile(this, this), damageBase);
+							generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
+						} else {
+							livingEntity.damage(DamageSource.thrownProjectile(this, this), damageBase);
+						}
+					}
+				}
 			}
 		}
-		Entity damaged = target;
-		if (passenger != null && !(passenger instanceof ZombieRiderEntity)){
-			damaged = passenger;
-		}
-		String zombieSize = PvZCubed.ZOMBIE_SIZE.get(damaged.getType()).orElse("medium");
-		if (!hasHelmet && !zombieSize.equals("big") && !zombieSize.equals("gargantuar")){
-			((LivingEntity) damaged).addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 1)));
-			this.world.sendEntityStatus(this, (byte) 120);
-			System.out.println(getBeamTarget());
-			target.playSound(SoundEvents.BLOCK_NETHERRACK_BREAK, 0.3F, (float) (0.5F + Math.random()));
-		}
-		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
-		float damage = this.getAttackDamage();
-		if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
-			damage = damage * 2;
-		}
-		if ("paper".equals(zombieMaterial)) {
-			damage = damage / 2;
-		}
-		boolean bl = damaged.damage(DamageSource.mob(this), damage);
-		if (bl) {
-			this.applyDamageEffects(this, target);
-		}
-		SoundEvent sound;
-		sound = switch (zombieMaterial) {
-			case "metallic" -> PvZSounds.BUCKETHITEVENT;
-			case "plastic" -> PvZSounds.CONEHITEVENT;
-			case "stone" -> PvZSounds.STONEHITEVENT;
-			default -> PvZSounds.PEAHITEVENT;
-		};
-		target.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-		this.setTarget(null);
 	}
 
 	int beamTicks;
 	int animationTicks;
 
-	boolean charge = false;
 
 	boolean shootSwitch = true;
 	boolean shot = false;
@@ -386,9 +388,8 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		LivingEntity livingEntity = this.getTarget();
 		++this.beamTicks;
 		++this.animationTicks;
-		if ((livingEntity != null || animationTicks < 0) && !this.getIsAsleep()) {
+		if ((livingEntity != null && this.squaredDistanceTo(livingEntity) <= 9 || animationTicks < 0) && !this.getIsAsleep() && !this.charging) {
 			if (this.shootSwitch){
-				this.charge = false;
 				this.beamTicks = -10;
 				this.animationTicks = -30;
 				this.getNavigation().stop();
@@ -412,13 +413,15 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 			}
 			if (this.beamTicks >= 0) {
 				if (!this.isInsideWaterOrBubbleColumn()) {
-					if (livingEntity != null) {
-						this.smack(livingEntity);
-					}
+					Vec3d vec3d = new Vec3d((double) +1.5, 0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+					Vec3d targetPos = new Vec3d(this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z);
+					this.splashDamage(targetPos);
 					this.beamTicks = -30;
 					this.world.sendEntityStatus(this, (byte) 111);
 					this.playSound(PvZSounds.PEASHOOTEVENT, 1F, 1);
 					shot = true;
+					damage = 0;
+					increment = 0;
 				}
 			}
 		}

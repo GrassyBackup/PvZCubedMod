@@ -71,6 +71,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.magn
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.hammerflower.HammerFlowerEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.magicshroom.MagichatEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.magicshroom.MagicshroomEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.meteorhammer.MeteorHammerEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.narcissus.NarcissusEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.pumpkinwitch.PumpkinWitchEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.tulimpeter.TulimpeterEntityRenderer;
@@ -320,6 +321,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.NARCISSUS, NarcissusEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.HAMMERFLOWER, HammerFlowerEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.METEORHAMMER, MeteorHammerEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.DROPEA, DropeaEntityRenderer::new);
 

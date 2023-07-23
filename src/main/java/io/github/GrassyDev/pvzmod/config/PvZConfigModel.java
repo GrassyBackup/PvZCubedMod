@@ -244,6 +244,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float magnetoshroomS = 10.0f;
 		@RestartRequired
+		public float meteorhammerS = 15.0f;
+		@RestartRequired
 		public float missileToeS = 25.0f;
 		@RestartRequired
 		public float narcissusS = 7.5f;
