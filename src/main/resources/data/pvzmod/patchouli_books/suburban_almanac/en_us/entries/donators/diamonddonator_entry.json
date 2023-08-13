@@ -10,10 +10,15 @@
         "$(#bd951a)15$/month",
         "$(br)$(#bd951a)You can choose a Plant and a Zombie for the next update!",
         "$(br)$(#bd951a)Gives you access to early access builds of the mod before they go public!",
-        "$(br)$()$(#ff0000)Smuggy (Bananasaurus Rex, Zom-Blob, Dogwood, Hawker Cart & Zombie Piggy)",
-        "$(br)$()$(#ff0000)NovaChopy (Missile Toe, Imp-Throwing Imp)",
-        "$(br)$()$(#ff0000)Parker (Chester Chomper, Foot Soldier)",
-        "$(br)$()$(#ff0000)FlareRi (Princess Spring Grass, Bass Zombie)"
+        "$(br2)$()$(#ff0000)Smuggy (Bananasaurus Rex, Zom-Blob, Dogwood, Hawker Cart & Zombie Piggy)",
+        "$(br2)$()$(#ff0000)NovaChopy (Missile Toe, Imp-Throwing Imp)"
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br2)$()$(#ff0000)Parker (Chester Chomper, Foot Soldier)",
+        "$(br2)$()$(#ff0000)FlareRi (Princess Spring Grass, Bass Zombie)"
       ]
     }
   ]

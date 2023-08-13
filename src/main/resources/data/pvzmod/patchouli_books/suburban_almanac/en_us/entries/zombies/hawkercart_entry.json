@@ -3,6 +3,7 @@
   "icon": "pvzmod:hawkercart_egg",
   "category": "pvzmod:zombie_category",
   "sortnum": 400,
+  "advancement": "pvzmod:make_challenge",
   "pages": [
     {
       "type": "text",
