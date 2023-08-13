@@ -17,6 +17,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
@@ -337,7 +338,9 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 			double random = Math.random();
 			if (--createTileTicks <= 0) {
 				if (random <= 0.5 && HasTile(this.getBlockPos()) == null && this.getTarget() != null && this.onGround && !this.isInsideWaterOrBubbleColumn() && this.getTypeCount() <= 3) {
-					createScorchedTile(this.getBlockPos());
+					if (world.getBlockState(this.getBlockPos()).isOf(Blocks.AIR) || world.getBlockState(this.getBlockPos()).isOf(Blocks.CAVE_AIR)){
+						createScorchedTile(this.getBlockPos());
+					}
 					this.addCount();
 				}
 				createTileTicks = 100;
@@ -374,7 +377,9 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 					}
 					if (!bl2 && !bl3 && this.getVariant().equals(ExplorerVariants.TORCHLIGHT) && this.CollidesWithPlant(1f, 0f) == null) {
 						if (this.world instanceof ServerWorld) {
-							createScorchedTile(blockPos);
+							if (world.getBlockState(blockPos).isOf(Blocks.AIR) || world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
+								createScorchedTile(blockPos);
+							}
 							this.addCount();
 						}
 					}

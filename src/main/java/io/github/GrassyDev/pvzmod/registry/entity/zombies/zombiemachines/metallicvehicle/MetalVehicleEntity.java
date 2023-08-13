@@ -17,6 +17,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZ
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieVehicleEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -157,7 +158,9 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 			if (age >= 150 && !this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(DISABLE)){
 				Vec3d vec3d2 = new Vec3d((double) -1, 0.0, 0.0).rotateY(-this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				BlockPos blockPos = new BlockPos(Vec3d.ofCenter(new Vec3i(this.getX() + vec3d2.x, this.getY() + vec3d2.y, this.getZ() + vec3d2.z)));
-				this.createSnowTile(blockPos);
+				if (world.getBlockState(blockPos).isOf(Blocks.AIR) || world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
+					this.createSnowTile(blockPos);
+				}
 			}
 		}
 
