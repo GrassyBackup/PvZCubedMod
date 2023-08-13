@@ -22,5 +22,8 @@ public class Fertilizer extends Item {
 
 		tooltip.add(Text.translatable("item.pvzmod.fertilizer.flavour")
 				.formatted(Formatting.LIGHT_PURPLE));
+
+		tooltip.add(Text.translatable("item.pvzmod.fertilizer.flavour2")
+				.formatted(Formatting.LIGHT_PURPLE));
 	}
 }

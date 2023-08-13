@@ -1024,9 +1024,13 @@
 
   "entity.pvzmod.gardenchallenge": "Garden",
   "item.pvzmod.gardenchallenge_spawn": "Challenge Mode",
-  "item.pvzmod.gardenchallenge_spawn.flavour": "WARNING! This will destroy everything in a 53x7x53 area! Right Click to begin waves!",
+  "item.pvzmod.gardenchallenge_spawn.flavour": "WARNING!",
+  "item.pvzmod.gardenchallenge_spawn.flavour2": "This will destroy everything",
+  "item.pvzmod.gardenchallenge_spawn.flavour3": "in a 53x7x53 area!",
+  "item.pvzmod.gardenchallenge_spawn.flavour4": "Right Click to begin waves!",
   "item.pvzmod.fertilizer": "Fertilizer",
-  "item.pvzmod.fertilizer.flavour": "Increases number of defeated Waves by 1 in Challenge Mode.",
+  "item.pvzmod.fertilizer.flavour": "Increases number of defeated",
+  "item.pvzmod.fertilizer.flavour2": "Waves by 1 in Challenge Mode.",
 
   "entity.pvzmod.zombiegrave": "Zombie Gravestone",
   "item.pvzmod.zombiegrave_spawn": "Zombie Gravestone",

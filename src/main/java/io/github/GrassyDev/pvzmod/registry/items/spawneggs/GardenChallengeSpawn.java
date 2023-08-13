@@ -39,6 +39,15 @@ public class GardenChallengeSpawn extends SeedItem {
 
 		tooltip.add(Text.translatable("item.pvzmod.gardenchallenge_spawn.flavour")
 				.formatted(Formatting.LIGHT_PURPLE));
+
+		tooltip.add(Text.translatable("item.pvzmod.gardenchallenge_spawn.flavour2")
+				.formatted(Formatting.LIGHT_PURPLE));
+
+		tooltip.add(Text.translatable("item.pvzmod.gardenchallenge_spawn.flavour3")
+				.formatted(Formatting.LIGHT_PURPLE));
+
+		tooltip.add(Text.translatable("item.pvzmod.gardenchallenge_spawn.flavour4")
+				.formatted(Formatting.LIGHT_PURPLE));
 	}
 
     public ActionResult useOnBlock(ItemUsageContext context) {
