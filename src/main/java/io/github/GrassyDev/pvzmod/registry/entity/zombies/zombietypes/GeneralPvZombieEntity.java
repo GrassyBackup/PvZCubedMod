@@ -24,6 +24,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -723,10 +724,18 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 	private int jumpDelay;
 	private int chillTicks;
 	private int chillCDTicks;
+	private int barkTicks;
 
 	public void tick() {
 		if (!this.world.isClient) {
+			if (this.hasStatusEffect(BARK)){
+				barkTicks = this.getStatusEffect(BARK).getDuration();
+			}
 			if (this.hasStatusEffect(ICE)) {
+				if (this.hasStatusEffect(BARK)){
+					this.removeStatusEffect(BARK);
+				}
+				--barkTicks;
 				++chillTicks;
 			} else {
 				if (--chillTicks <= 0){
@@ -739,6 +748,12 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 			}
 			if (--chillCDTicks > 0) {
 				this.removeStatusEffect(ICE);
+			}
+			if (barkTicks > 0 && !this.hasStatusEffect(BARK)){
+				this.addStatusEffect((new StatusEffectInstance(BARK, barkTicks, 1)));
+			}
+			else if (barkTicks <= 0){
+				this.removeStatusEffect(BARK);
 			}
 		}
 		if (this.getOwner() instanceof GraveEntity graveEntity && graveEntity.isChallengeGrave()){

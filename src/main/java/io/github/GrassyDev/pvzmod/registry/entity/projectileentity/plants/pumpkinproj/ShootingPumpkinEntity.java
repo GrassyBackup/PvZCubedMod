@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pumpkinzombie.PumpkinZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import net.fabricmc.api.EnvType;
@@ -175,7 +176,10 @@ public class ShootingPumpkinEntity extends PvZProjectileEntity implements IAnima
 						hypnotizedZombie.setCustomNameVisible(entity.isCustomNameVisible());
 					}
 					for (Entity entity1 : entity.getPassengerList()) {
-						if (entity1 instanceof ZombiePropEntity zpe) {
+						if (entity1 instanceof ZombieObstacleEntity zpo){
+							zpo.dismountVehicle();
+						}
+						else if (entity1 instanceof ZombiePropEntity zpe) {
 							zpe.discard();
 						}
 					}

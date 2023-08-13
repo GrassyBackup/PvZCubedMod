@@ -198,6 +198,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float dandelionweedS = 7.5f;
 		@RestartRequired
+		public float dogwoodS = 15f;
+		@RestartRequired
 		public float doomshroomS = 25.0f;
 		@RestartRequired
 		public float dropeaS = 10f;
@@ -452,6 +454,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double defensiveendH = 360D;
 		@RestartRequired
+		public double hawkerpusherH = 50D;
+		@RestartRequired
 		public double impH = 20D;
 		@RestartRequired
 		public double impdragonH = 65D;
@@ -479,6 +483,8 @@ public class PvZConfigModel {
 		public double snorkelH = 50D;
 		@RestartRequired
 		public double zombiekingH = 100D;
+		@RestartRequired
+		public double zombiepigH = 50D;
 		@RestartRequired
 		public double zomblobH = 64D;
 		@RestartRequired
@@ -530,6 +536,9 @@ public class PvZConfigModel {
 		public double trashcanObstH = 225D;
 		@RestartRequired
 		public double basketballObstH = 120D;
+
+		@RestartRequired
+		public double hawkerObstH = 90D;
 
 		@RestartRequired
 		public double zomboniVH = 135D;

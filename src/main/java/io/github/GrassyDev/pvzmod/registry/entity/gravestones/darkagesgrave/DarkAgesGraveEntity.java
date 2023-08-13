@@ -8,6 +8,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.browncoat.modernday.BrowncoatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.flagzombie.darkages.FlagPeasantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.hawker.zombie.HawkerZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.announcer.AnnouncerImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.modernday.ImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pumpkinzombie.PumpkinZombieEntity;
@@ -410,6 +411,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 			double probability7 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability9 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability8 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability12 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability13 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 
 			int zombiePos = -2 + DarkAgesGraveEntity.this.random.nextInt(5);
@@ -734,6 +736,29 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								announcerImpEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								announcerImpEntity.setOwner(DarkAgesGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(announcerImpEntity);
+								graveWeight += 1;
+							}
+						}
+					}
+				}
+				if (graveWeight <= 3.5) {
+					if (isUnlock() || isUnlockSpecial()) {
+						if (probability12 <= 0.2 / halfModifier * survChance) { // 20% x1 Hawker Cart
+							for (int f = 0; f < 1; ++f) {
+								if (!DarkAgesGraveEntity.this.is1x1()) {
+									zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
+									zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
+								}
+								if (DarkAgesGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
+									zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								HawkerZombieEntity hawkerZombieEntity = (HawkerZombieEntity) PvZEntity.HAWKERPUSHER.create(DarkAgesGraveEntity.this.world);
+								hawkerZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								hawkerZombieEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								hawkerZombieEntity.setOwner(DarkAgesGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(hawkerZombieEntity);
 								graveWeight += 1;
 							}
 						}

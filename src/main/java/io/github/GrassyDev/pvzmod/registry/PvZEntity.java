@@ -77,6 +77,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.gener
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.tulimpeter.TulimpeterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.skycity.loquat.LoquatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.skycity.saucer.SaucerEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz3.devour.dogwood.DogwoodEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.beeshooter.BeeshooterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.beet.BeetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.chillypepper.ChillyPepperEntity;
@@ -104,6 +105,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.acidfu
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.acidspore.AcidSporeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.armorbubble.ArmorBubbleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.banana.BananaProjEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.bark.BarkEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.beespike.ShootingBeeSpikeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.beespike.ShootingPowerBeeSpikeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.boomerang.ShootingBoomerangEntity;
@@ -154,6 +156,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.flagzombi
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.flagzombie.mummy.FlagMummyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.football.FootballEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.gargantuar.modernday.GargantuarEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.hawker.piggy.PiggyEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.hawker.zombie.HawkerZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.announcer.AnnouncerImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.modernday.ImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.superfan.SuperFanImpEntity;
@@ -174,6 +178,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicob
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield.MetalShieldEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.papershield.NewspaperShieldEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.planthelmet.PlantHelmetEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.plantobstacle.WoodObstacleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.plastichelmet.PlasticHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.stonehelmet.StoneHelmetEntity;
 import net.minecraft.entity.EntityDimensions;
@@ -693,6 +698,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<BellflowerEntity>create(SpawnGroup.CREATURE, BellflowerEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.8f)).build()
 	);
 
+	public static final EntityType<DogwoodEntity> DOGWOOD = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "dogwood"),
+			QuiltEntityTypeBuilder.<DogwoodEntity>create(SpawnGroup.CREATURE, DogwoodEntity::new).setDimensions(EntityDimensions.fixed(1f, 1.55f)).build()
+	);
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -916,6 +927,12 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "jingle"),
 			QuiltEntityTypeBuilder.<JingleEntity>create(SpawnGroup.MISC, JingleEntity::new).setDimensions(EntityDimensions.fixed(.5f,.5f)).build()
+	);
+
+	public static final EntityType<BarkEntity> BARK = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "bark"),
+			QuiltEntityTypeBuilder.<BarkEntity>create(SpawnGroup.MISC, BarkEntity::new).setDimensions(EntityDimensions.fixed(.5f,.5f)).build()
 	);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1596,6 +1613,24 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<ShootingBasketballEntity>create(SpawnGroup.MONSTER, ShootingBasketballEntity::new).setDimensions(EntityDimensions.fixed(1f, 2f)).build()
 	);
 
+	public static final EntityType<HawkerZombieEntity> HAWKERPUSHER = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "hawkerpusher"),
+			QuiltEntityTypeBuilder.<HawkerZombieEntity>create(SpawnGroup.MONSTER, HawkerZombieEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1.8f)).build()
+	);
+
+	public static final EntityType<HawkerZombieEntity> HAWKERPUSHERHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "hawkerpusher_hypnotized"),
+			QuiltEntityTypeBuilder.<HawkerZombieEntity>create(SpawnGroup.MONSTER, HawkerZombieEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1.8f)).build()
+	);
+
+	public static final EntityType<WoodObstacleEntity> HAWKERCART = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "hawkercart"),
+			QuiltEntityTypeBuilder.<WoodObstacleEntity>create(SpawnGroup.MONSTER, WoodObstacleEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 2f)).build()
+	);
+
 	public static final EntityType<ZomblobEntity> ZOMBLOB = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "zomblob"),
@@ -1630,6 +1665,18 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "zomblobsmall_hypnotized"),
 			QuiltEntityTypeBuilder.<ZomblobEntity>create(SpawnGroup.MONSTER, ZomblobEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1f)).build()
+	);
+
+	public static final EntityType<PiggyEntity> PIGGY = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "piggy"),
+			QuiltEntityTypeBuilder.<PiggyEntity>create(SpawnGroup.MONSTER, PiggyEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1f)).build()
+	);
+
+	public static final EntityType<PiggyEntity> PIGGYHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "piggy_hypnotized"),
+			QuiltEntityTypeBuilder.<PiggyEntity>create(SpawnGroup.CREATURE, PiggyEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1f)).build()
 	);
 
 
@@ -1900,6 +1947,8 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BELLFLOWER, BellflowerEntity.createBellflowerAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DOGWOOD, DogwoodEntity.createDogwoodAttributes().build());
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2096,12 +2145,19 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASKETBALLCARRIERHYPNO, BasketballCarrierEntity.createBasketballCarrierAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASKETBALLBIN, MetalObstacleEntity.createBasketBallBinObstacleAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.HAWKERPUSHER, HawkerZombieEntity.createHawkerPusherAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.HAWKERPUSHERHYPNO, HawkerZombieEntity.createHawkerPusherAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.HAWKERCART, WoodObstacleEntity.createHawkerCartAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOB, ZomblobEntity.createZomblobAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBHYPNO, ZomblobEntity.createZomblobAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBBIG, ZomblobEntity.createZomblobBigAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBBIGHYPNO, ZomblobEntity.createZomblobBigAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBSMALL, ZomblobEntity.createZomblobSmallAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ZOMBLOBSMALLHYPNO, ZomblobEntity.createZomblobSmallAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.PIGGY, PiggyEntity.createZombiePiggyAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.PIGGYHYPNO, PiggyEntity.createZombiePiggyAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.LOCUSTSWARM, LocustSwarmEntity.createLocustSwarmAttributes().build());
 

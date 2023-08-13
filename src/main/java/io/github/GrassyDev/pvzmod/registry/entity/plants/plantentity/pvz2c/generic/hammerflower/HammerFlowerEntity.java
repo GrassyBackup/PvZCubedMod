@@ -348,7 +348,6 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		if (!hasHelmet && !zombieSize.equals("big") && !zombieSize.equals("gargantuar")){
 			((LivingEntity) damaged).addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 1)));
 			this.world.sendEntityStatus(this, (byte) 120);
-			System.out.println(getBeamTarget());
 			target.playSound(SoundEvents.BLOCK_NETHERRACK_BREAK, 0.3F, (float) (0.5F + Math.random()));
 		}
 		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");

@@ -93,6 +93,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.admiralnavybeanS": "Admiral Navy Bean Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.beautyshroomS": "Beauty-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.beeshooterS": "Beeshooter Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.beetS": "Beet Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bellflowerS": "Bellflower Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bloomerangS": "Bloomerang Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bananasaurusS": "Bananasaurus Seed",
@@ -107,6 +108,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.chomperS": "Chomper Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.coconutS": "Coconut Cannon Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dandelionweedS": "Dandelion Weed Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dogwoodS": "Dogwood Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.doomshroomS": "Doom-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dropeaS": "Dropea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.electropeaS": "Electro Pea Seed",
@@ -759,6 +761,11 @@
   "item.pvzmod.bellflower_seed_packet.flavour2": "Jingle all the zombies.\"",
   "item.pvzmod.jingle": "Jingle",
 
+  "entity.pvzmod.dogwood": "Dogwood",
+  "item.pvzmod.dogwood_seed_packet": "⏳ Dogwood Seed Packet",
+  "item.pvzmod.dogwood_seed_packet.flavour": "Zombie's worst friend.",
+  "item.pvzmod.bark": "Bark",
+
 
   "itemGroup.pvzmod.zombies": "Zombies",
 
@@ -953,6 +960,15 @@
   "entity.pvzmod.newyearimp": "New Years Imp",
   "item.pvzmod.newyearimp_egg": "New Years Imp",
   "entity.pvzmod.newyearimp_hypnotized": "Hypnotized New Years Imp",
+
+  "entity.pvzmod.hawkerpusher": "Hawker Cart Zombie",
+  "item.pvzmod.hawkercart_egg": "Hawker Cart",
+  "entity.pvzmod.hawkerpusher_hypnotized": "Hypnotized Hawker Cart Zombie",
+  "entity.pvzmod.hawkercart": "Hawker Cart",
+
+  "entity.pvzmod.piggy": "Zombie Piggy",
+  "item.pvzmod.zombiepiggy_egg": "Zombie Piggy",
+  "entity.pvzmod.piggy_hypnotized": "Hypnotized Zombie Piggy",
 
   "entity.pvzmod.zomblob": "Zomblob",
   "entity.pvzmod.zomblobbig": "Big Zomblob",

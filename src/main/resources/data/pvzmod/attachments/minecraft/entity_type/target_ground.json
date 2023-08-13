@@ -5,7 +5,9 @@
     "pvzmod:gargantuar": true,
     "pvzmod:basketballbin": true,
     "pvzmod:trashcanbin": true,
+    "pvzmod:hawkercart": true,
     "pvzmod:zombonivehicle": true,
-    "pvzmod:bobsledvehicle": true
+    "pvzmod:bobsledvehicle": true,
+    "pvzmod:piggy": true
   }
 }

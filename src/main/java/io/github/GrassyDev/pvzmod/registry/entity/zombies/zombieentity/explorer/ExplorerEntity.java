@@ -365,9 +365,9 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 							}
 						}
 					}
-					plantEntity.damage(DamageSource.mob(this), plantEntity.getMaxHealth() * 5);
+					plantEntity.damage(DamageSource.mob(this), Integer.MAX_VALUE);
 					if (vehicle != null) {
-						vehicle.damage(DamageSource.mob(this), vehicle.getMaxHealth() * 5);
+						vehicle.damage(DamageSource.mob(this), Integer.MAX_VALUE);
 					}
 					if (this.CollidesWithPlant(1f, 0f) == null) {
 						this.world.sendEntityStatus(this, (byte) 115);

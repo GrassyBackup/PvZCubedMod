@@ -33,7 +33,8 @@
     "recipes": [
       "pvzmod:plants/reinforce/tallnut",
       "pvzmod:plants/reinforce/smackadamia",
-      "pvzmod:plants/reinforce/torchwood"
+      "pvzmod:plants/reinforce/torchwood",
+      "pvzmod:plants/contain/dogwood"
     ],
     "experience": 25
   }

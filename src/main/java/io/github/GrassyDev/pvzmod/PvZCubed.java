@@ -68,6 +68,7 @@ public class PvZCubed implements ModInitializer {
 	public static final StatusEffect WARM = new Warm();
 	public static final StatusEffect WET = new Wet();
 	public static final StatusEffect PVZPOISON = new PvZPoison();
+	public static final StatusEffect BARK = new Bark();
 	public static final StatusEffect ACID = new Acid();
 
 	public static final GameRules.Key<GameRules.BooleanRule> SHOULD_PLANT_SPAWN =
@@ -205,6 +206,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.JUMPINGBEAN_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BELLFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SUNFLOWERSEED_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.DOGWOOD_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.PEA));
 				stacks.add(new ItemStack(ModItems.SNOWPEAPROJ));
 				stacks.add(new ItemStack(ModItems.SPORE));
@@ -240,6 +242,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.SMOOSH));
 				stacks.add(new ItemStack(ModItems.SPIT));
 				stacks.add(new ItemStack(ModItems.JINGLE));
+				stacks.add(new ItemStack(ModItems.BARK));
 			}).build();
 
 	public static final ItemGroup PVZZOMBIES = FabricItemGroupBuilder.create(
@@ -291,6 +294,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.SUPERFANIMPEGG));
 				stacks.add(new ItemStack(ModItems.PUMPKINZOMBIEEGG));
 				stacks.add(new ItemStack(ModItems.NEWYEARIMPEGG));
+				stacks.add(new ItemStack(ModItems.HAWKEREGG));
+				stacks.add(new ItemStack(ModItems.PIGGYEGG));
 				stacks.add(new ItemStack(ModItems.ZOMBLOBEGG));
 				stacks.add(new ItemStack(ModItems.DEFENSIVEENDEGG));
 				stacks.add(new ItemStack(ModItems.IMPTHROWEGG));
@@ -379,5 +384,6 @@ public class PvZCubed implements ModInitializer {
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "wet"), WET);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "pvzpoison"), PVZPOISON);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "acid"), ACID);
+		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "bark"), BARK);
 	}
 }
