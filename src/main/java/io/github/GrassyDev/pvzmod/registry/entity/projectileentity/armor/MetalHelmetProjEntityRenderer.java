@@ -21,6 +21,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/mummy/mummy.png"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant.png"));
+				map.put(MetalHelmetVariants.SERGEANTHELMET,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/sargeant/sargeant.png"));
 				map.put(MetalHelmetVariants.SCREENDOOR,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat.png"));
 				map.put(MetalHelmetVariants.FOOTBALL,
@@ -37,6 +39,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant.png"));
 				map.put(MetalHelmetVariants.MEDALLION,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/dancingzombie/backupdancer.png"));
+				map.put(MetalHelmetVariants.SOLDIERHELMET,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/soldier/soldier.png"));
 			});
 
 	public static final Map<MetalHelmetVariants, Identifier> LOCATION_BY_VARIANT_DAMAGED =
@@ -47,6 +51,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/mummy/mummy_geardmg1.png"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant_geardmg1.png"));
+				map.put(MetalHelmetVariants.SERGEANTHELMET,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/sargeant/sargeant_geardmg1.png"));
 				map.put(MetalHelmetVariants.SCREENDOOR,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat_geardmg1.png"));
 				map.put(MetalHelmetVariants.FOOTBALL,
@@ -61,8 +67,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/jetpack/blastronaut_geardmg1.png"));
 				map.put(MetalHelmetVariants.KNIGHT,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant_geardmg1.png"));
-				map.put(MetalHelmetVariants.MEDALLION,
-						new Identifier(PvZCubed.MOD_ID, "textures/entity/dancingzombie/backupdancer_geardmg1.png"));
+				map.put(MetalHelmetVariants.SOLDIERHELMET,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/soldier/soldier_geardmg1.png"));
 			});
 
 	public static final Map<MetalHelmetVariants, Identifier> MODEL_LOCATION_BY_VARIANT =
@@ -73,6 +79,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "geo/mummybucketproj.geo.json"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "geo/peasantbucketproj.geo.json"));
+				map.put(MetalHelmetVariants.SERGEANTHELMET,
+						new Identifier(PvZCubed.MOD_ID, "geo/helmetproj.geo.json"));
 				map.put(MetalHelmetVariants.SCREENDOOR,
 						new Identifier(PvZCubed.MOD_ID, "geo/screendoorproj.geo.json"));
 				map.put(MetalHelmetVariants.FOOTBALL,
@@ -89,6 +97,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "geo/knightproj.geo.json"));
 				map.put(MetalHelmetVariants.MEDALLION,
 						new Identifier(PvZCubed.MOD_ID, "geo/medallionproj.geo.json"));
+				map.put(MetalHelmetVariants.SOLDIERHELMET,
+						new Identifier(PvZCubed.MOD_ID, "geo/soldierproj.geo.json"));
 			});
 
 	public MetalHelmetProjEntityRenderer(EntityRendererFactory.Context ctx) {

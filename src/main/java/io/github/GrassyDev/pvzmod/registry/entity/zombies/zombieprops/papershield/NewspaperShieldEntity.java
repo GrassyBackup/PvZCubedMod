@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -130,6 +131,7 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 
 	public static DefaultAttributeContainer.Builder createNewspaperShieldAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -138,6 +140,7 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 
 	public static DefaultAttributeContainer.Builder createSundayEditionShieldAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)

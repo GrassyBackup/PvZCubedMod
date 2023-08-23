@@ -20,6 +20,7 @@ import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -258,6 +259,7 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 
 	public static DefaultAttributeContainer.Builder createRoboconeAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.11D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)

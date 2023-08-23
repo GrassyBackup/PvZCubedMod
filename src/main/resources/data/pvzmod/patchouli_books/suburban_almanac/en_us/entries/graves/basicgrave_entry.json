@@ -32,8 +32,10 @@
         "pvzmod:zombies/buckethead_entry",
         "pvzmod:zombies/polevaulting_entry",
         "pvzmod:zombies/brickhead_entry",
+        "pvzmod:zombies/trashcan_entry",
         "pvzmod:zombies/bully_entry",
-        "pvzmod:zombies/impthrower_entry"
+        "pvzmod:zombies/impthrower_entry",
+        "pvzmod:zombies/soldier_entry"
       ],
       "title": "Spawnable Zombies"
     }

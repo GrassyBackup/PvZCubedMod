@@ -6,7 +6,6 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.ChomperVariants;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
@@ -14,6 +13,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.RangedAttackMob;
+import net.minecraft.entity.ai.goal.ProjectileAttackGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -26,7 +27,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +47,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
-public class ChomperEntity extends PlantEntity implements IAnimatable {
+public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
 	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
 			DataTracker.registerData(ChomperEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -57,6 +57,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
     private int attackTicksLeft;
     public boolean notEating;
     public boolean eatingShield;
+	public boolean isFiring;
 	private String controllerName = "chompcontroller";
 
     public ChomperEntity(EntityType<? extends ChomperEntity> entityType, World world) {
@@ -70,17 +71,20 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+		this.dataTracker.startTracking(CHEWTIME, 0);
 	}
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		//Variant//
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
+		this.dataTracker.set(CHEWTIME, tag.getInt("Count"));
 	}
 
 	public void writeCustomDataToNbt(NbtCompound tag) {
 		super.writeCustomDataToNbt(tag);
 		//Variant//
 		tag.putInt("Variant", this.getTypeVariant());
+		tag.putInt("Count", this.getTypeCount());
 	}
 
 	static {
@@ -91,21 +95,20 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 		if (status != 2 && status != 60){
 			super.handleStatus(status);
 		}
+		if (status == 111) {
+			this.isFiring = true;
+		} else if (status == 110) {
+			this.isFiring = false;
+		}
 		if (status == 104) {
-			this.attackTicksLeft = 200;
-			this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, 1.0F);
 			this.eatingShield = false;
 			this.notEating = false;
 		}
 		if (status == 105) {
-			this.attackTicksLeft = 200;
-			this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, 1.0F);
 			this.eatingShield = true;
 			this.notEating = false;
 		}
 		else if (status == 106) {
-			this.attackTicksLeft = 30;
-			this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, 1.0F);
 			this.eatingShield = false;
 			this.notEating = true;
 		}
@@ -132,6 +135,24 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
 	}
 
+	//Counter
+
+	private static final TrackedData<Integer> CHEWTIME =
+			DataTracker.registerData(ChomperEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+	public int getTypeCount() {
+		return this.dataTracker.get(CHEWTIME);
+	}
+
+	public void setCount(Integer count) {
+		this.dataTracker.set(CHEWTIME, count);
+	}
+
+	public void reduceCount(){
+		int count = getTypeCount();
+		this.dataTracker.set(CHEWTIME, count - 1);
+	}
+
 
 	/** /~*~//~*GECKOLIB ANIMATION~//~*~// **/
 
@@ -149,133 +170,96 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        int i = this.attackTicksLeft;
-        if (this.eatingShield) {
-            event.getController().setAnimation(new AnimationBuilder().playOnce("chomper.chomp3"));
-        }
-        else if (i <= 0) {
-            event.getController().setAnimation(new AnimationBuilder().loop("chomper.idle"));
-        }
-        else if (this.notEating) {
-            event.getController().setAnimation(new AnimationBuilder().playOnce("chomper.chomp2"));
-        }
-        else {
-            event.getController().setAnimation(new AnimationBuilder().playOnce("chomper.chomp"));
-        }
+        int i = this.getTypeCount();
+		if (this.notEating) {
+			event.getController().setAnimation(new AnimationBuilder().playOnce("chomper.chomp2"));
+		}
+		else if (this.isFiring){
+			event.getController().setAnimation(new AnimationBuilder().playOnce("chomper.chomp4"));
+		}
+		else if (i > 0 && this.eatingShield) {
+			event.getController().setAnimation(new AnimationBuilder().loop("chomper.chew2"));
+		}
+		else if (i > 0) {
+			event.getController().setAnimation(new AnimationBuilder().loop("chomper.chew"));
+		}
+		else {
+			event.getController().setAnimation(new AnimationBuilder().loop("chomper.idle"));
+		}
         return PlayState.CONTINUE;
     }
 
-	/** /~*~//~*AI*~//~*~// **/
+	/**
+	 * /~*~//~**~//~*~//
+	 **/
 
 	protected void initGoals() {
+		this.goalSelector.add(1, new ProjectileAttackGoal(this, 0D, 30, 15.0F));
 	}
+
 
 	@Override
-	protected void applyDamage(DamageSource source, float amount) {
-		if (this.getTarget() == null || source.getAttacker() instanceof PlayerEntity || source.isOutOfWorld() || this.attackTicksLeft > 0) {
-			super.applyDamage(source, amount);
-		}
+	public void attack(LivingEntity target, float pullProgress) {
+
 	}
 
-	public void chomp(Entity target) {
-		int i = this.attackTicksLeft;
+
+
+	public void smack(Entity target) {
 		ZombiePropEntity passenger = null;
+		boolean hasHelmet = false;
+		boolean hasShield = false;
+		Entity damaged = target;
 		for (Entity entity1 : target.getPassengerList()) {
 			if (entity1 instanceof ZombiePropEntity zpe) {
 				passenger = zpe;
-			}
-		}
-		if ((passenger instanceof ZombieShieldEntity zombieShieldEntity && !(zombieShieldEntity instanceof ZombieObstacleEntity)) || (passenger != null && passenger.isCovered())) {
-			if (i <= 0) {
-				this.attackTicksLeft = 200;
-				this.world.sendEntityStatus(this, (byte) 105);
-				boolean bl = passenger.damage(DamageSource.mob(this), 999);
-				if (bl) {
-					this.applyDamageEffects(this, target);
+				hasHelmet = !(entity1 instanceof ZombieShieldEntity);
+				hasShield = (entity1 instanceof ZombieShieldEntity && !(entity1 instanceof ZombieRiderEntity)) || passenger.isCovered();
+				if (hasShield){
+					damaged = passenger;
 				}
-				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(passenger.getType()).orElse("flesh");
-				SoundEvent sound;
-				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
-					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
-					default -> PvZSounds.PEAHITEVENT;
-				};
-				passenger.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-				this.chomperAudioDelay = 3;
 			}
 		}
-		else if (target instanceof GraveEntity ||
-				(target instanceof ZombieObstacleEntity && !(target instanceof ZombieRiderEntity)) ||
+		String zombieSize = PvZCubed.ZOMBIE_SIZE.get(damaged.getType()).orElse("medium");
+		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
+		float damage = Integer.MAX_VALUE;
+		if ((target instanceof GraveEntity ||
 				IS_MACHINE.get(target.getType()).orElse(false).equals(true) ||
-				ZOMBIE_SIZE.get(target.getType()).orElse("medium").equals("gargantuar") ||
-				ZOMBIE_SIZE.get(target.getType()).orElse("medium").equals("big")) {
-			Entity damaged = target;
-			if (passenger != null && !(passenger instanceof ZombieRiderEntity)){
-				damaged = passenger;
-			}
-			if (i <= 0) {
-				this.attackTicksLeft = 30;
-				this.world.sendEntityStatus(this, (byte) 106);
-				boolean bl = damaged.damage(DamageSource.mob(this), 32);
-				if (bl) {
-					this.applyDamageEffects(this, target);
-				}
-				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
-				SoundEvent sound;
-				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
-					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
-					default -> PvZSounds.PEAHITEVENT;
-				};
-				target.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-				this.chomperAudioDelay = 3;
-			}
+				zombieSize.equals("gargantuar") ||
+				zombieSize.equals("big")) && !hasShield){
+			damage = 32;
+			this.attackTicksLeft = 25;
+			this.setCount(25);
+			this.world.sendEntityStatus(this, (byte) 106);
 		}
-		else if ((passenger instanceof ZombieShieldEntity zombieShieldEntity && !(zombieShieldEntity instanceof ZombieObstacleEntity)) || (passenger != null && passenger.isCovered())) {
-			if (i <= 0) {
-				this.attackTicksLeft = 200;
-				this.world.sendEntityStatus(this, (byte) 105);
-				boolean bl = passenger.damage(DamageSource.mob(this), 999);
-				if (bl) {
-					this.applyDamageEffects(this, target);
-				}
-				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(passenger.getType()).orElse("flesh");
-				SoundEvent sound;
-				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
-					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
-					default -> PvZSounds.PEAHITEVENT;
-				};
-				passenger.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-				this.chomperAudioDelay = 3;
-			}
+		else if (zombieSize.equals("small") && !hasShield){
+			this.attackTicksLeft = 25;
+			this.setCount(25);
+			this.world.sendEntityStatus(this, (byte) 106);
 		}
-		else if (ZOMBIE_SIZE.get(target.getType()).orElse("medium").equals("small")) {
-			if (i <= 0) {
-				this.attackTicksLeft = 30;
-				this.world.sendEntityStatus(this, (byte) 106);
-				boolean bl = target.damage(DamageSource.mob(this), 32);
-				if (bl) {
-					this.applyDamageEffects(this, target);
-				}
-				target.kill();
-				this.chomperAudioDelay = 3;
-			}
+		else if (hasShield) {
+			this.attackTicksLeft = 250;
+			this.setCount(250);
+			this.world.sendEntityStatus(this, (byte) 105);
 		}
 		else {
-			if (i <= 0) {
-				this.attackTicksLeft = 200;
-				this.world.sendEntityStatus(this, (byte) 104);
-				boolean bl = target.damage(DamageSource.mob(this), 999);
-				if (bl) {
-					this.applyDamageEffects(this, target);
-				}
-				this.chomperAudioDelay = 3;
-			}
+			this.attackTicksLeft = 250;
+			this.setCount(250);
+			this.world.sendEntityStatus(this, (byte) 104);
 		}
+		boolean bl = damaged.damage(DamageSource.mob(this), damage);
+		if (bl) {
+			this.applyDamageEffects(this, target);
+		}
+		SoundEvent sound;
+		sound = switch (zombieMaterial) {
+			case "metallic" -> PvZSounds.BUCKETHITEVENT;
+			case "plastic" -> PvZSounds.CONEHITEVENT;
+			case "stone" -> PvZSounds.STONEHITEVENT;
+			default -> PvZSounds.PEAHITEVENT;
+		};
+		target.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
+		this.setTarget(null);
 	}
 
 
@@ -309,11 +293,8 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		if (this.getTarget() != null){
-			this.chomp(this.getTarget());
-		}
-		if (--this.chomperAudioDelay == 0){
-			this.playSound(PvZSounds.CHOMPERBITEVENT, 1.0F, 1.0F);
+		if (!this.world.isClient()) {
+			this.FireBeamGoal();
 		}
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {
@@ -329,11 +310,12 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 			this.discard();
 		}
 
-		if (this.attackTicksLeft > 0) {
+		if (this.getTypeCount() > 0) {
 			--this.attackTicksLeft;
+			this.reduceCount();
 		}
 
-		if (this.attackTicksLeft <= 0){
+		if (this.getTypeCount() <= 0 && !this.isFiring){
 			this.eatingShield = false;
 			this.notEating = false;
 		}
@@ -476,5 +458,77 @@ public class ChomperEntity extends PlantEntity implements IAnimatable {
 		}
 		this.playBlockFallSound();
 		return true;
+	}
+
+
+
+	int beamTicks;
+	int animationTicks;
+
+	boolean charge = false;
+
+	boolean shootSwitch = true;
+	boolean shot = false;
+
+	public void FireBeamGoal() {
+		LivingEntity livingEntity = this.getTarget();
+		++this.beamTicks;
+		++this.animationTicks;
+		if ((livingEntity != null || animationTicks < 0) && !this.getIsAsleep() && this.getTypeCount() <= 0) {
+			if (this.shootSwitch){
+				this.charge = false;
+				this.beamTicks = -5;
+				this.animationTicks = -20;
+				this.getNavigation().stop();
+				this.getLookControl().lookAt(this.getTarget(), 90.0F, 90.0F);
+				this.velocityDirty = true;
+				this.shootSwitch = false;
+				this.playSound(PvZSounds.CHOMPERBITEVENT, 1.0F, 1.0F);
+			}
+			this.getNavigation().stop();
+			if (livingEntity != null) {
+				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
+				if (livingEntity instanceof GraveEntity ||
+						IS_MACHINE.get(livingEntity.getType()).orElse(false).equals(true) ||
+						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("gargantuar") ||
+						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("big") ||
+						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("small")){
+					this.world.sendEntityStatus(this, (byte) 106);
+				}
+			}
+			this.world.sendEntityStatus(this, (byte) 111);
+			this.isFiring = true;
+			if (this.animationTicks >= 0) {
+				this.world.sendEntityStatus(this, (byte) 110);
+				this.isFiring = false;
+				this.beamTicks = -5;
+				this.animationTicks = -20;
+				if (shot) {
+					this.world.sendEntityStatus(this, (byte) 121);
+				}
+				shot = false;
+			}
+			if (this.beamTicks >= 0) {
+				if (!this.isInsideWaterOrBubbleColumn()) {
+					if (livingEntity != null) {
+						this.smack(livingEntity);
+					}
+					this.beamTicks = -25;
+					shot = true;
+				}
+			}
+		}
+		else if (animationTicks >= 0){
+			this.shootSwitch = true;
+			this.world.sendEntityStatus(this, (byte) 110);
+			this.isFiring = false;
+			if (this.getTarget() != null){
+				this.attack(this.getTarget(), 0);
+			}
+			if (shot) {
+				this.world.sendEntityStatus(this, (byte) 121);
+			}
+			shot = false;
+		}
 	}
 }

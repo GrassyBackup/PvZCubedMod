@@ -4,7 +4,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.acidshroom.AcidshroomEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.potted.acidshroom.AcidshroomEntity;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;

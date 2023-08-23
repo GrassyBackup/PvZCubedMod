@@ -53,6 +53,9 @@ public class PvZSounds {
 	public static final Identifier BOOMERANGAMBIENT = new Identifier("pvzmod:boomerang.ambient");
 	public static SoundEvent BOOMERANGAMBIENTEVENT = new SoundEvent(BOOMERANGAMBIENT);
 
+	public static final Identifier ZPGAMBIENT = new Identifier("pvzmod:zpg.ambient");
+	public static SoundEvent ZPGAMBIENTEVENT = new SoundEvent(ZPGAMBIENT);
+
 	public static final Identifier MAGICHATAPPEAR = new Identifier("pvzmod:magichat.appear");
 	public static SoundEvent MAGICHATAPPEAREVENT = new SoundEvent(MAGICHATAPPEAR);
 
@@ -117,8 +120,18 @@ public class PvZSounds {
 	public static final Identifier DOLPHINJUMP = new Identifier("pvzmod:dolphin.jump");
 	public static SoundEvent DOLPHINJUMPEVENT = new SoundEvent(DOLPHINJUMP);
 
+	public static final Identifier SOLDIERJUMP = new Identifier("pvzmod:soldier.jump");
+	public static SoundEvent SOLDIERJUMPEVENT = new SoundEvent(SOLDIERJUMP);
+
 	public static final Identifier GARGANTUARSMASH = new Identifier("pvzmod:gargantuar.smash");
 	public static SoundEvent GARGANTUARSMASHEVENT = new SoundEvent(GARGANTUARSMASH);
+
+	public static final Identifier SOLDIERPREP = new Identifier("pvzmod:soldier.prep");
+	public static SoundEvent SOLDIERPREPEVENT = new SoundEvent(SOLDIERPREP);
+
+	public static final Identifier SOLDIERZPG = new Identifier("pvzmod:soldier.zpg");
+	public static SoundEvent SOLDIERZPGEVENT = new SoundEvent(SOLDIERZPG);
+
 
 	public static final Identifier IMPLAUNCH = new Identifier("pvzmod:imp.launch");
 	public static SoundEvent IMPLAUNCHEVENT = new SoundEvent(IMPLAUNCH);
@@ -171,6 +184,7 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.BLOOMERANGSHOOT, BLOOMERANGSHOOTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.LIGHTNINGSHOOT, LIGHTNINGSHOOTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.BOOMERANGAMBIENT, BOOMERANGAMBIENTEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.ZPGAMBIENT, ZPGAMBIENTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.MAGICHATAPPEAR, MAGICHATAPPEAREVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.MAGICHATZOMBIE, MAGICHATZOMBIEEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.CHERRYBOMBEXPLOSION, CHERRYBOMBEXPLOSIONEVENT);
@@ -179,6 +193,8 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.DOOMSHROOMEXPLOSION, DOOMSHROOMEXPLOSIONEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.ICEBERGEXPLOSION, ICEBERGEXPLOSIONEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.EMPEACHEXPLOSION, EMPEACHEXPLOSIONEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.SHROOMHIT, SHROOMHITEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.SHROOMCHARGE, SHROOMCHARGEEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SQUASHHUM, SQUASHHUMEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.CHOMPERBITE, CHOMPERBITEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.GRAVEBUSTEREATING, GRAVEBUSTEREATINGEVENT);
@@ -192,7 +208,10 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.POPHEAD, POPHEADEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.POLEVAULT, POLEVAULTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.DOLPHINJUMP, DOLPHINJUMPEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.SOLDIERJUMP, SOLDIERJUMPEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.GARGANTUARSMASH, GARGANTUARSMASHEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.SOLDIERPREP, SOLDIERPREPEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.SOLDIERZPG, SOLDIERZPGEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.IMPLAUNCH, IMPLAUNCHEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.IMPANNOUNCER, IMPANNOUNCEREVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.IMPANNOUNCERALT, IMPANNOUNCERALTEVENT);

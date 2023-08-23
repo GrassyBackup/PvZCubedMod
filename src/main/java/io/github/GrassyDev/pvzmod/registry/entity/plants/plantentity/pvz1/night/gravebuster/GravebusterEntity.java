@@ -14,6 +14,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;

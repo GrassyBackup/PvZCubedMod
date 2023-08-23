@@ -9,7 +9,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.Scorc
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.dandelionweed.DandelionWeedEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.summon.plants.dandelionweed.DandelionWeedEntity;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;

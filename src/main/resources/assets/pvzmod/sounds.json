@@ -99,6 +99,11 @@
       "pvzmod:boomerang_ambient"
     ]
   },
+  "zpg.ambient": {
+    "sounds": [
+      "pvzmod:zpg_ambient"
+    ]
+  },
   "magichat.appear": {
     "sounds": [
       "pvzmod:magichat_appear"
@@ -199,9 +204,24 @@
       "pvzmod:dolphin_jump"
     ]
   },
+  "soldier.jump": {
+    "sounds": [
+      "pvzmod:soldier_jump"
+    ]
+  },
   "gargantuar.smash": {
     "sounds": [
       "pvzmod:gargantuar_smash"
+    ]
+  },
+  "soldier.prep": {
+    "sounds": [
+      "pvzmod:soldier_prep"
+    ]
+  },
+  "soldier.zpg": {
+    "sounds": [
+      "pvzmod:soldier_zpg"
     ]
   },
   "imp.launch": {

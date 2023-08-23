@@ -63,6 +63,7 @@ public class ModItems {
 		SEED_PACKET_LIST.add(ModItems.BEESHOOTER_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SNOW_QUEENPEA_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.BREEZESHROOM_SEED_PACKET);
+		SEED_PACKET_LIST.add(ModItems.CHESTER_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.ACIDSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.DANDELIONWEED_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.PERFOOMSHROOM_SEED_PACKET);
@@ -201,7 +202,6 @@ public class ModItems {
 	public static final Item MAGNETSHROOM_SEED_PACKET = new MagnetshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item CABBAGEPULT_SEED_PACKET = new CabbagepultSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.COMMON));
 	public static final Item GATLINGPEA_SEED_PACKET = new GatlingpeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
-	public static final Item RETROGATLING_SEED_PACKET = new RetroGatlingSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
 	public static final Item TWINSUNFLOWER_SEED_PACKET = new TwinSunflowerSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
 	public static final Item GLOOMSHROOM_SEED_PACKET = new GloomshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
 	public static final Item CATTAIL_SEED_PACKET = new CattailSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
@@ -211,8 +211,10 @@ public class ModItems {
 	public static final Item SHAMROCK_SEED_PACKET = new ShamrockSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item CHILLYPEPPER_SEED_PACKET = new ChillyPepperSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item BEESHOOTER_SEED_PACKET = new BeeshooterSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.EPIC));
-	public static final Item SNOW_QUEENPEA_SEED_PACKET = new SnowqueenpeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.EPIC));
+	public static final Item SNOW_QUEENPEA_SEED_PACKET = new SnowqueenpeaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
 	public static final Item BREEZESHROOM_SEED_PACKET = new BreezeshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
+	public static final Item CHESTER_SEED_PACKET = new ChesterSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));
+	public static final Item RETROGATLING_SEED_PACKET = new RetroGatlingSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
 	public static final Item ACIDSHROOM_SEED_PACKET = new AcidshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item DANDELIONWEED_SEED_PACKET = new DandelionWeedSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item PERFOOMSHROOM_SEED_PACKET = new PerfoomshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(2).rarity(Rarity.EPIC));
@@ -304,6 +306,7 @@ public class ModItems {
 	public static final Item NEWYEARIMPEGG = new NewYearImpEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.EPIC));
 	public static final Item PIGGYEGG = new ZombiePiggyEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.UNCOMMON));
 	public static final Item HAWKEREGG = new HawkerCartEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.UNCOMMON));
+	public static final Item SOLDIEREGG = new SoldierEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
 	public static final Item ZOMBLOBEGG = new ZomblobEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
 	public static final Item DEFENSIVEENDEGG = new DefensiveEndEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.EPIC));
 	public static final Item IMPTHROWEGG = new ImpThrowEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
@@ -490,6 +493,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"chillypepper_seed_packet"), CHILLYPEPPER_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"beeshooter_seed_packet"), BEESHOOTER_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"snowqueenpea_seed_packet"), SNOW_QUEENPEA_SEED_PACKET);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"chester_seed_packet"), CHESTER_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"acidshroom_seed_packet"), ACIDSHROOM_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dandelionweed_seed_packet"), DANDELIONWEED_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"perfoomshroom_seed_packet"), PERFOOMSHROOM_SEED_PACKET);
@@ -576,6 +580,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"newyearimp_egg"), NEWYEARIMPEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"zombiepiggy_egg"), PIGGYEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"hawkercart_egg"), HAWKEREGG);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"soldier_egg"), SOLDIEREGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"zomblob_egg"), ZOMBLOBEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"defensiveend_egg"), DEFENSIVEENDEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"impthrow_egg"), IMPTHROWEGG);

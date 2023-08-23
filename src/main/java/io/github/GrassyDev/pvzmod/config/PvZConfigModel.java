@@ -190,6 +190,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float cherrybombS = 35.0f;
 		@RestartRequired
+		public float chesterS = 25.0f;
+		@RestartRequired
 		public float chillypepperS = 25.0f;
 		@RestartRequired
 		public float chomperS = 20.0f;
@@ -386,6 +388,7 @@ public class PvZConfigModel {
 		public float smooshProjDMG = 12f;
 		public float sporeDMG = 2f;
 
+		public float zpgDMG = 30f;
 		public float basketBallDMG = 4f;
 	}
 
@@ -427,6 +430,8 @@ public class PvZConfigModel {
 		public double peasantH = 27D;
 		@RestartRequired
 		public double mummyH = 27D;
+		@RestartRequired
+		public double sargeantH = 27D;
 		@RestartRequired
 		public double bullyH = 110D;
 		@RestartRequired
@@ -482,6 +487,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double snorkelH = 50D;
 		@RestartRequired
+		public double soldierH = 50D;
+		@RestartRequired
 		public double zombiekingH = 100D;
 		@RestartRequired
 		public double zombiepigH = 50D;
@@ -511,6 +518,10 @@ public class PvZConfigModel {
 		public double blastronautHelmH = 37D;
 		@RestartRequired
 		public double knightHelmH = 152D;
+		@RestartRequired
+		public double sargeanthelmetH = 140D;
+		@RestartRequired
+		public double soldierhelmetH = 110D;
 
 		@RestartRequired
 		public double brickH = 212D;
@@ -520,6 +531,8 @@ public class PvZConfigModel {
 		public double pyramidH = 340D;
 		@RestartRequired
 		public double sarcophagusH = 212D;
+		@RestartRequired
+		public double bowlH = 27D;
 
 		@RestartRequired
 		public double pumpkinH = 84D;

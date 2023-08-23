@@ -7,7 +7,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.spikeweed.SpikeweedEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.spikerock.SpikerockEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.hawker.piggy.PiggyEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.hawker.piggy.PiggyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
 import net.fabricmc.api.EnvType;
@@ -18,6 +18,7 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
@@ -149,6 +150,7 @@ public class WoodObstacleEntity extends ZombieObstacleEntity implements IAnimata
 
 	public static DefaultAttributeContainer.Builder createHawkerCartAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)

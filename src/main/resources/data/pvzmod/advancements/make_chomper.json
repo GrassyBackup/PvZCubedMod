@@ -31,7 +31,8 @@
   },
   "rewards": {
     "recipes": [
-      "pvzmod:plants/enforce/bananasaurus"
+      "pvzmod:plants/enforce/bananasaurus",
+      "pvzmod:plants/enforce/chester"
     ],
     "experience": 25
   }

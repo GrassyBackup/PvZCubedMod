@@ -15,6 +15,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -206,6 +207,7 @@ public class ZombieGraveEntity extends ZombieObstacleEntity implements IAnimatab
 
 	public static DefaultAttributeContainer.Builder createZombieGraveAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.zombieGraveH());

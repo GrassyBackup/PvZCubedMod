@@ -12,10 +12,10 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.hypnoshroom.HypnoshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.football.FootballEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.gargantuar.modernday.GargantuarEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.superfan.SuperFanImpEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zombieking.ZombieKingEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.football.FootballEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PowderSnowBlock;
 import net.minecraft.entity.*;
@@ -729,11 +729,15 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 	public void tick() {
 		if (!this.world.isClient) {
 			if (this.hasStatusEffect(BARK)){
+				this.removeStatusEffect(CHEESE);
 				barkTicks = this.getStatusEffect(BARK).getDuration();
 			}
 			if (this.hasStatusEffect(ICE)) {
 				if (this.hasStatusEffect(BARK)){
 					this.removeStatusEffect(BARK);
+				}
+				if (this.hasStatusEffect(CHEESE)){
+					this.removeStatusEffect(CHEESE);
 				}
 				--barkTicks;
 				++chillTicks;

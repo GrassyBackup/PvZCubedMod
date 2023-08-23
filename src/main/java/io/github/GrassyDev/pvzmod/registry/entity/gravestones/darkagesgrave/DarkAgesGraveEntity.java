@@ -1,18 +1,19 @@
 package io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.browncoat.modernday.BrowncoatEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.flagzombie.darkages.FlagPeasantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.hawker.zombie.HawkerZombieEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.announcer.AnnouncerImpEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.modernday.ImpEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pumpkinzombie.PumpkinZombieEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zomblob.ZomblobEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday.BrowncoatEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.darkages.FlagPeasantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.hawker.zombie.HawkerZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.pumpkinzombie.PumpkinZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzh.zomblob.ZomblobEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityData;
@@ -215,6 +216,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createDarkAgesGraveAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.darkAgesGraveH());

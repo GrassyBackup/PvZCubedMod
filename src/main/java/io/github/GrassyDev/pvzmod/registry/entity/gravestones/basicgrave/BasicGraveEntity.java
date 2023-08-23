@@ -1,16 +1,18 @@
 package io.github.GrassyDev.pvzmod.registry.entity.gravestones.basicgrave;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.browncoat.modernday.BrowncoatEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.bully.basic.BullyEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.flagzombie.modernday.FlagzombieEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.imp.modernday.ImpEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.polevaulting.PoleVaultingEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday.BrowncoatEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.bully.basic.BullyEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.flagzombie.modernday.FlagzombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.polevaulting.PoleVaultingEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.soldier.SoldierEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityData;
@@ -210,6 +212,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createBasicGraveAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.basicGraveH());
@@ -647,6 +650,29 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 								poleVaultingEntity.setOwner(BasicGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(poleVaultingEntity);
 								graveWeight += 0.75;
+							}
+						}
+					}
+				}
+				if (graveWeight <= 3) {
+					if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
+						if (probability12 <= 0.15 / halfModifier * survChance) { // 15% x1 Foot Soldier
+							for (int p = 0; p < 1; ++p) {
+								if (!BasicGraveEntity.this.is1x1()) {
+									zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
+									zombiePos = BasicGraveEntity.this.random.range(-1, 1);
+								}
+								if (BasicGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = BasicGraveEntity.this.random.range(-3, 3);
+									zombiePos = BasicGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = BasicGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								SoldierEntity soldier = (SoldierEntity) PvZEntity.SOLDIER.create(BasicGraveEntity.this.world);
+								soldier.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								soldier.initialize(serverWorld, BasicGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								soldier.setOwner(BasicGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(soldier);
+								graveWeight += 0.25;
 							}
 						}
 					}

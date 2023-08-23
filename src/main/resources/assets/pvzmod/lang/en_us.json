@@ -104,6 +104,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cattailS": "Cattail Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.charmshroomS": "Charm-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cherrybombS": "Cherry Bomb Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.chesterS": "Cheetah Chomper Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.chillypepperS": "Chilly Pepper Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.chomperS": "Chomper Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.coconutS": "Coconut Cannon Seed",
@@ -269,6 +270,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.jetpackH": "Jetpack Health",
   "text.config.pvz3-config.option.nestedZombieHealth.blastronautH": "Blastronaut Health",
   "text.config.pvz3-config.option.nestedZombieHealth.newspaperH": "Newspaper Zombie Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.soldierH": "Foot Soldier Health",
   "text.config.pvz3-config.option.nestedZombieHealth.sundayH": "Sunday Edition Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.pharaohH": "Pharaoh Health",
   "text.config.pvz3-config.option.nestedZombieHealth.undyingPharaohH": "Undying Pharaoh Health",
@@ -277,9 +279,13 @@
   "text.config.pvz3-config.option.nestedZombieHealth.snorkelH": "Snorkel Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.zombiekingH": "Zombie King Health",
   "text.config.pvz3-config.option.nestedZombieHealth.zomboniH": "Zomboni Pilot Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.zomblobH": "Zomblob Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.zomblobBH": "Big Zomblob Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.zomblobSH": "Small Zomblob Health",
 
   "text.config.pvz3-config.option.nestedZombieHealth.coneH": "Cone Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bucketH": "Bucket Gear Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.soldierhelmetH": "Soldier Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.medallionH": "Medallion Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.footballHelmH": "Football Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.berserkerHelmH": "Berserker Gear Health",
@@ -548,6 +554,11 @@
   "item.pvzmod.snowqueenpeaproj": "Snow Queen Pea",
   "item.pvzmod.icespike": "Ice Spike",
   "item.pvzmod.powericespike": "Powered Ice Spike",
+
+  "entity.pvzmod.chester": "Cheetah Chomper",
+  "item.pvzmod.chester_seed_packet": "\uD83D\uDDE1 Cheetah Chomper Seed Packet",
+  "item.pvzmod.chester_seed_packet.flavour": "™",
+  "entity.pvzmod.cheesetile": "Cheese Tile",
 
   "entity.pvzmod.retrogatling": "Retro Gatling",
   "item.pvzmod.retrogatling_seed_packet": "✂ Retro Gatling Seed Packet",
@@ -965,6 +976,11 @@
   "item.pvzmod.hawkercart_egg": "Hawker Cart",
   "entity.pvzmod.hawkerpusher_hypnotized": "Hypnotized Hawker Cart Zombie",
   "entity.pvzmod.hawkercart": "Hawker Cart",
+
+  "entity.pvzmod.soldier": "Foot Soldier",
+  "item.pvzmod.soldier_egg": "Foot Soldier",
+  "entity.pvzmod.soldiergear": "Foot Soldier Helmet",
+  "entity.pvzmod.soldier_hypnotized": "Hypnotized Foot Soldier",
 
   "entity.pvzmod.piggy": "Zombie Piggy",
   "item.pvzmod.zombiepiggy_egg": "Zombie Piggy",

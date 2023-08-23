@@ -3,7 +3,7 @@ package io.github.GrassyDev.pvzmod.registry.items.spawneggs;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pumpkinzombie.PumpkinZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.pumpkinzombie.PumpkinZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.items.seedpackets.SeedItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;

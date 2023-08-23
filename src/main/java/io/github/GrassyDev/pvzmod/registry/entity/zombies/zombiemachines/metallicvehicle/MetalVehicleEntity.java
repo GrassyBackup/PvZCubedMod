@@ -11,8 +11,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrad
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.BobsledPersonalityVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.bobsledteam.BobsledRiderEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.zomboni.ZomboniEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.bobsledteam.BobsledRiderEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.zomboni.ZomboniEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieVehicleEntity;
 import net.fabricmc.api.EnvType;
@@ -20,6 +20,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -492,6 +493,7 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 
 	public static DefaultAttributeContainer.Builder createZomboniVehicleAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0.0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -500,6 +502,7 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 
 	public static DefaultAttributeContainer.Builder createBobsledVehicleAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)

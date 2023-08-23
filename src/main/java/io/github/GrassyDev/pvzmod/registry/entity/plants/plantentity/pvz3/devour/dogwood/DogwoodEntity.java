@@ -26,9 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -38,8 +36,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
-import java.util.Optional;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
@@ -136,26 +132,7 @@ public class DogwoodEntity extends PlantEntity implements IAnimatable, RangedAtt
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
-		//ambient darkness: daytime = 0, rain = 2, thunder/night > 2
-		//skylight is the light of the sky hitting the block. Allows for mushrooms to stay awake underground while preventing light from torches making them asleep
-		//we need this switch to prevent high server lag because of the goals
-		if (!this.world.isClient) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
-				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
-				this.setIsAsleep(IsAsleep.TRUE);
-			}
-		}
-		if (this.getIsAsleep()){
-			this.setTarget(null);
-		}
-		else {
-			this.targetZombies(this.getPos(), 5, false, false, true);
-		}
+		this.targetZombies(this.getPos(), 5, false, false, true);
 		super.tick();
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {

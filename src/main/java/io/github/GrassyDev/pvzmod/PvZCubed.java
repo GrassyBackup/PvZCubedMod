@@ -69,6 +69,7 @@ public class PvZCubed implements ModInitializer {
 	public static final StatusEffect WET = new Wet();
 	public static final StatusEffect PVZPOISON = new PvZPoison();
 	public static final StatusEffect BARK = new Bark();
+	public static final StatusEffect CHEESE = new Cheese();
 	public static final StatusEffect ACID = new Acid();
 
 	public static final GameRules.Key<GameRules.BooleanRule> SHOULD_PLANT_SPAWN =
@@ -189,6 +190,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.BEAUTYSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.CHARMSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.MAGNETOSHROOM_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.CHESTER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.RETROGATLING_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ACIDSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DANDELIONWEED_SEED_PACKET));
@@ -296,6 +298,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.NEWYEARIMPEGG));
 				stacks.add(new ItemStack(ModItems.HAWKEREGG));
 				stacks.add(new ItemStack(ModItems.PIGGYEGG));
+				stacks.add(new ItemStack(ModItems.SOLDIEREGG));
 				stacks.add(new ItemStack(ModItems.ZOMBLOBEGG));
 				stacks.add(new ItemStack(ModItems.DEFENSIVEENDEGG));
 				stacks.add(new ItemStack(ModItems.IMPTHROWEGG));
@@ -385,5 +388,6 @@ public class PvZCubed implements ModInitializer {
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "pvzpoison"), PVZPOISON);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "acid"), ACID);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "bark"), BARK);
+		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "cheese"), CHEESE);
 	}
 }

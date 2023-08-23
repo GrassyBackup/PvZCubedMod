@@ -2,7 +2,7 @@
   "name": "Zomblob",
   "icon": "pvzmod:zomblob_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 299,
+  "sortnum": 600,
   "advancement": "pvzmod:make_challenge",
   "pages": [
     {

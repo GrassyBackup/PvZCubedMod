@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -96,8 +97,14 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.BLASTRONAUTGEAR)){
 			setVariant(MetallicHelmetVariants.BLASTRONAUT);
 		}
-		if (this.getType().equals(PvZEntity.KNIGHTGEAR)){
+		else if (this.getType().equals(PvZEntity.KNIGHTGEAR)){
 			setVariant(MetallicHelmetVariants.KNIGHT);
+		}
+		else if (this.getType().equals(PvZEntity.HELMETGEAR)){
+			setVariant(MetallicHelmetVariants.HELMET);
+		}
+		else if (this.getType().equals(PvZEntity.SOLDIERGEAR)){
+			setVariant(MetallicHelmetVariants.SOLDIER);
 		}
 		else {
 			setVariant(MetallicHelmetVariants.BUCKET);
@@ -151,6 +158,7 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createBucketGearAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -159,6 +167,7 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createMedallionGearAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -167,6 +176,7 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createFootballGearAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -175,6 +185,7 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createBerserkerGearAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -183,6 +194,7 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createDefensiveEndGearAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -191,6 +203,7 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createBlastronautGearAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -199,10 +212,29 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createKnightGearAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.knightHelmH());
+	}
+
+	public static DefaultAttributeContainer.Builder createHelmetGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.sargeanthelmetH());
+	}
+
+	public static DefaultAttributeContainer.Builder createSoldierGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.soldierhelmetH());
 	}
 
 	protected SoundEvent getAmbientSound() {
@@ -241,6 +273,12 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.KNIGHTGEAR)){
 			itemStack = ModItems.PEASANTKNIGHTEGG.getDefaultStack();
+		}
+		else if (this.getType().equals(PvZEntity.HELMETGEAR)){
+			itemStack = ModItems.BUCKETHEADEGG.getDefaultStack();
+		}
+		else if (this.getType().equals(PvZEntity.SOLDIER)){
+			itemStack = ModItems.SOLDIEREGG.getDefaultStack();
 		}
 		else{
 			itemStack = ModItems.BUCKETHEADEGG.getDefaultStack();

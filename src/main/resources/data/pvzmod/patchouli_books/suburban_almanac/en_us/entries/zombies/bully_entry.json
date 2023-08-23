@@ -2,7 +2,7 @@
   "name": "Bully Zombie",
   "icon": "pvzmod:bully_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 666,
+  "sortnum": 800,
   "pages": [
     {
       "type": "text",

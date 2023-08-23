@@ -29,6 +29,7 @@
       "type": "relations",
       "title": "Recommended Plants",
       "entries": [
+        "pvzmod:plants/chomper_entry",
         "pvzmod:plants/dogwood_entry",
         "pvzmod:plants/saucer_entry",
         "pvzmod:plants/repeater_entry",
