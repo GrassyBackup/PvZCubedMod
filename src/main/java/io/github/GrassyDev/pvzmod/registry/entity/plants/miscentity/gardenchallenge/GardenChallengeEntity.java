@@ -22,7 +22,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
@@ -814,6 +813,41 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				if (entityType.equals(PvZEntity.FUTUREGRAVESTONE)){
 					this.addedWorld = TypeOfWorld.FUTURE;
 				}
+				if (nextGrave == PvZEntity.BASICGRAVESTONE){
+					this.addedWorld = TypeOfWorld.BASIC;
+					entityType = PvZEntity.BASICGRAVESTONE;
+					this.nextGrave = null;
+				}
+				if (nextGrave == PvZEntity.NIGHTGRAVESTONE){
+					this.addedWorld = TypeOfWorld.NIGHT;
+					entityType = PvZEntity.NIGHTGRAVESTONE;
+					this.nextGrave = null;
+				}
+				if (nextGrave == PvZEntity.POOLGRAVESTONE){
+					this.addedWorld = TypeOfWorld.POOL;
+					entityType = PvZEntity.POOLGRAVESTONE;
+					this.nextGrave = null;
+				}
+				if (nextGrave == PvZEntity.ROOFGRAVESTONE){
+					this.addedWorld = TypeOfWorld.ROOF;
+					entityType = PvZEntity.ROOFGRAVESTONE;
+					this.nextGrave = null;
+				}
+				if (nextGrave == PvZEntity.EGYPTGRAVESTONE){
+					this.addedWorld = TypeOfWorld.EGYPT;
+					entityType = PvZEntity.EGYPTGRAVESTONE;
+					this.nextGrave = null;
+				}
+				if (nextGrave == PvZEntity.DARKAGESGRAVESTONE){
+					this.addedWorld = TypeOfWorld.DARKAGES;
+					entityType = PvZEntity.DARKAGESGRAVESTONE;
+					this.nextGrave = null;
+				}
+				if (nextGrave == PvZEntity.FUTUREGRAVESTONE){
+					this.addedWorld = TypeOfWorld.FUTURE;
+					entityType = PvZEntity.FUTUREGRAVESTONE;
+					this.nextGrave = null;
+				}
 				this.addWorld(entityType);
 			}
 			this.setWave(0);
@@ -1005,10 +1039,40 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 		}**/
 	}
 
+	protected EntityType<?> nextGrave = null;
+
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		ItemStack itemStack = player.getStackInHand(hand);
-		if (currentWorlds.get(0)== null) {
+		if (itemStack.isOf(ModItems.BASICGRAVESPAWN)){
+			nextGrave = PvZEntity.BASICGRAVESTONE;
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.NIGHTGRAVESPAWN)){
+			nextGrave = PvZEntity.NIGHTGRAVESTONE;
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.POOLGRAVESPAWN)){
+			nextGrave = PvZEntity.POOLGRAVESTONE;
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.ROOFGRAVESPAWN)){
+			nextGrave = PvZEntity.ROOFGRAVESTONE;
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.EGYPTGRAVESPAWN)){
+			nextGrave = PvZEntity.EGYPTGRAVESTONE;
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.DARKAGESGRAVESPAWN)){
+			nextGrave = PvZEntity.DARKAGESGRAVESTONE;
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.FUTUREGRAVESPAWN)){
+			nextGrave = PvZEntity.FUTUREGRAVESTONE;
+			return ActionResult.SUCCESS;
+		}
+		else if (currentWorlds.get(0)== null) {
 			this.addWorld(PvZEntity.BASICGRAVESTONE);
 			return ActionResult.SUCCESS;
 		}

@@ -672,7 +672,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 								soldier.initialize(serverWorld, BasicGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								soldier.setOwner(BasicGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(soldier);
-								graveWeight += 0.25;
+								graveWeight += 1.0;
 							}
 						}
 					}

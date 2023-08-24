@@ -251,7 +251,10 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 			event.getController().setAnimationSpeed(1);
 		}
 		if (this.isInsideWaterOrBubbleColumn()) {
-			if (inLaunchAnimation) {
+			if (inDyingAnimation){
+				event.getController().setAnimation(new AnimationBuilder().playOnce("gargantuar.ducky.death"));
+			}
+			else if (inLaunchAnimation) {
 				event.getController().setAnimation(new AnimationBuilder().playOnce("gargantuar.ducky.throw"));
 			} else if (this.getImpStage()) {
 				if (inAnimation) {
@@ -267,7 +270,10 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 				}
 			}
 		} else {
-			if (inLaunchAnimation) {
+			if (inDyingAnimation){
+				event.getController().setAnimation(new AnimationBuilder().playOnce("gargantuar.death"));
+			}
+			else if (inLaunchAnimation) {
 				event.getController().setAnimation(new AnimationBuilder().playOnce("gargantuar.throw"));
 			} else if (this.getImpStage()) {
 				if (inAnimation) {
@@ -427,10 +433,36 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 		}
 	}
 
+	@Override
+	public void setYaw(float yaw) {
+		if (!this.inDyingAnimation) {
+			super.setYaw(yaw);
+		}
+	}
 
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
+		if (this.getHealth() <= 0 && !inDyingAnimation){
+			this.inDyingAnimation = true;
+			this.deathTicks = 80;
+		}
+		if (this.inDyingAnimation){
+			this.getNavigation().stop();
+			this.setHealth(1);
+		}
+		--deathTicks;
+		if (deathTicks == 40){
+			if (this.isInsideWaterOrBubbleColumn()){
+				this.playSound(SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED, 1F, 1.0F);
+			}
+			else {
+				this.playSound(PvZSounds.GARGANTUARSMASHEVENT, 1F, 1.0F);
+			}
+		}
+		if (deathTicks == 1){
+			onDeath(DamageSource.GENERIC);
+		}
 		super.tick();
 		if (this.getAttacking() == null && !(this.getHypno())){
 			if (this.CollidesWithPlant(0f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
@@ -451,69 +483,67 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	}
 
 	public void mobTick() {
-		super.mobTick();
-		if (this.hasStatusEffect(PvZCubed.ICE)){
-			if (this.animationTicksLeft <= 0){
-				this.animationMultiplier = 2;
-				this.isIced = true;
-				this.world.sendEntityStatus(this, (byte) 71);
+		if (!this.inDyingAnimation) {
+			super.mobTick();
+			if (this.hasStatusEffect(PvZCubed.ICE)) {
+				if (this.animationTicksLeft <= 0) {
+					this.animationMultiplier = 2;
+					this.isIced = true;
+					this.world.sendEntityStatus(this, (byte) 71);
+				}
+			} else {
+				this.isIced = false;
+				this.world.sendEntityStatus(this, (byte) 72);
+				this.animationMultiplier = 1;
 			}
-		}
-		else {
-			this.isIced = false;
-			this.world.sendEntityStatus(this, (byte) 72);
-			this.animationMultiplier = 1;
-		}
-		if (this.animationTicksLeft <= 0){
-			this.setImp();
-			ZombiePropEntity zombiePropEntity = null;
-			for (Entity entity : this.getPassengerList()) {
-				if (entity instanceof ZombiePropEntity zpe) {
-					zombiePropEntity = zpe;
+			if (this.animationTicksLeft <= 0) {
+				this.setImp();
+				ZombiePropEntity zombiePropEntity = null;
+				for (Entity entity : this.getPassengerList()) {
+					if (entity instanceof ZombiePropEntity zpe) {
+						zombiePropEntity = zpe;
+					}
+				}
+				if (this.getHealth() <= this.healthImp && (zombiePropEntity == null) && getTarget() != null && this.getImpStage().equals(Boolean.TRUE) && !this.inLaunchAnimation) {
+					this.launchAnimation = 50 * animationMultiplier;
+					this.inLaunchAnimation = true;
+					this.world.sendEntityStatus(this, (byte) 104);
+				}
+				if (this.launchAnimation > 0) {
+					this.getNavigation().stop();
+					--launchAnimation;
+					tryLaunch(getTarget());
+					this.inLaunchAnimation = true;
+					this.world.sendEntityStatus(this, (byte) 104);
+				} else {
+					this.inLaunchAnimation = false;
+					this.world.sendEntityStatus(this, (byte) 103);
 				}
 			}
-			if (this.getHealth() <= this.healthImp && (zombiePropEntity == null) && getTarget() != null && this.getImpStage().equals(Boolean.TRUE) && !this.inLaunchAnimation) {
-				this.launchAnimation = 50 * animationMultiplier;
-				this.inLaunchAnimation = true;
-				this.world.sendEntityStatus(this, (byte) 104);
-			}
-			if (this.launchAnimation > 0) {
-				this.getNavigation().stop();
-				--launchAnimation;
-				tryLaunch(getTarget());
-				this.inLaunchAnimation = true;
-				this.world.sendEntityStatus(this, (byte) 104);
-			}
-			else {
-				this.inLaunchAnimation = false;
-				this.world.sendEntityStatus(this, (byte) 103);
-			}
-		}
-		if (this.animationTicksLeft == 40 * animationMultiplier && !inLaunchAnimation) {
-			if (!this.isInsideWaterOrBubbleColumn() && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
-				this.playSound(PvZSounds.GARGANTUARSMASHEVENT, 1F, 1.0F);
-			}
-			else if (!this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
-				world.sendEntityStatus(this, (byte) 107);
-				this.playSound(SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED, 1.5F, 1.0F);
-			}
-			if (getTarget() != null) {
+			if (this.animationTicksLeft == 40 * animationMultiplier && !inLaunchAnimation) {
+				if (!this.isInsideWaterOrBubbleColumn() && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
+					this.playSound(PvZSounds.GARGANTUARSMASHEVENT, 1F, 1.0F);
+				} else if (!this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
+					world.sendEntityStatus(this, (byte) 107);
+					this.playSound(SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED, 1.5F, 1.0F);
+				}
+				if (getTarget() != null) {
+					this.firstAttack = true;
+					if (!this.isIced) {
+						tryAttack(getTarget());
+					}
+				}
+			} else if (getTarget() == null) {
 				this.firstAttack = true;
-				if (!this.isIced){
-					tryAttack(getTarget());
-				}
 			}
-		}
-		else if (getTarget() == null){
-			this.firstAttack = true;
-		}
-		if (this.animationTicksLeft > 0) {
-			this.getNavigation().stop();
-			--this.animationTicksLeft;
-			this.world.sendEntityStatus(this, (byte) 113);
-		}
-		if (this.animationTicksLeft <= 0) {
-			this.world.sendEntityStatus(this, (byte) 112);
+			if (this.animationTicksLeft > 0) {
+				this.getNavigation().stop();
+				--this.animationTicksLeft;
+				this.world.sendEntityStatus(this, (byte) 113);
+			}
+			if (this.animationTicksLeft <= 0) {
+				this.world.sendEntityStatus(this, (byte) 112);
+			}
 		}
 	}
 
@@ -624,6 +654,13 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
+
+	@Override
+	public void onDeath(DamageSource source) {
+		if (inDyingAnimation && deathTicks <= 1) {
+			super.onDeath(source);
+		}
+	}
 
 	protected EntityType<?> hypnoType;
 

@@ -86,6 +86,9 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 	public boolean isStunned;
 	public int fireSplashTicks;
 
+	public boolean inDyingAnimation;
+	public int deathTicks;
+
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(FLYING_TAG, false);
@@ -437,7 +440,12 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 				}
 			}
 		}
-		super.onDeath(source);
+		if (inDyingAnimation && deathTicks == 1){
+			this.discard();
+		}
+		if (!inDyingAnimation) {
+			super.onDeath(source);
+		}
 	}
 
 
