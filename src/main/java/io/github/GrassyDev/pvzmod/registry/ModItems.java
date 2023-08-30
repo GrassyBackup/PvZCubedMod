@@ -31,75 +31,181 @@ public class ModItems {
 		SEED_PACKET_LIST.add(ModItems.SNOW_PEA_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.CHOMPER_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.REPEATER_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.SUNSHROOM_SEED_PACKET);
+		NIGHT_SEED_LIST.add(ModItems.SUNSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.PUFFSHROOM_SEED_PACKET);
+		NIGHT_SEED_LIST.add(ModItems.PUFFSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.FUMESHROOM_SEED_PACKET);
+		DARKAGES_SEED_LIST.add(ModItems.FUMESHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.GRAVEBUSTER_SEED_PACKET);
+		EGYPT_SEED_LIST.add(ModItems.GRAVEBUSTER_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.HYPNOSHROOM_SEED_PACKET);
+		DARKAGES_SEED_LIST.add(ModItems.HYPNOSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.SCAREDYSHROOM_SEED_PACKET);
+		NIGHT_SEED_LIST.add(ModItems.SCAREDYSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.ICESHROOM_SEED_PACKET);
+		NIGHT_SEED_LIST.add(ModItems.ICESHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.DOOMSHROOM_SEED_PACKET);
+		NIGHT_SEED_LIST.add(ModItems.DOOMSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.LILYPAD_SEED_PACKET);
+		POOL_SEED_LIST.add(ModItems.LILYPAD_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SQUASH_SEED_PACKET);
+		POOL_SEED_LIST.add(ModItems.SQUASH_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.THREEPEATER_SEED_PACKET);
+		PIRATE_SEED_LIST.add(ModItems.THREEPEATER_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.TANGLEKELP_SEED_PACKET);
+		BEACH_SEED_LIST.add(ModItems.TANGLEKELP_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.JALAPENO_SEED_PACKET);
+		WILDWEST_SEED_LIST.add(ModItems.JALAPENO_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.SPIKEWEED_SEED_PACKET);
+		PIRATE_SEED_LIST.add(ModItems.SPIKEWEED_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.TORCHWOOD_SEED_PACKET);
+		WILDWEST_SEED_LIST.add(ModItems.TORCHWOOD_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.TALLNUT_SEED_PACKET);
+		POOL_SEED_LIST.add(ModItems.TALLNUT_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.SEASHROOM_SEED_PACKET);
+		FOG_SEED_LIST.add(ModItems.SEASHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.MAGNETSHROOM_SEED_PACKET);
+		FOG_SEED_LIST.add(ModItems.MAGNETSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.CABBAGEPULT_SEED_PACKET);
+		ROOF_SEED_LIST.add(ModItems.CABBAGEPULT_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.GATLINGPEA_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.GATLINGPEA_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.RETROGATLING_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.RETROGATLING_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.GLOOMSHROOM_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.GLOOMSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.CATTAIL_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.CATTAIL_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.TWINSUNFLOWER_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.TWINSUNFLOWER_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SPIKEROCK_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.SPIKEROCK_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.ICEBERGPULT_SEED_PACKET);
+		ROOF_SEED_LIST.add(ModItems.ICEBERGPULT_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.BEET_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SHAMROCK_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.CHILLYPEPPER_SEED_PACKET);
+		EGYPT_SEED_LIST.add(ModItems.CHILLYPEPPER_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.BEESHOOTER_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.BEESHOOTER_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SNOW_QUEENPEA_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.SNOW_QUEENPEA_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.BREEZESHROOM_SEED_PACKET);
+		DARKAGES_SEED_LIST.add(ModItems.BREEZESHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.CHESTER_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.CHESTER_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.ACIDSHROOM_SEED_PACKET);
+		FOG_SEED_LIST.add(ModItems.ACIDSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.DANDELIONWEED_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.PERFOOMSHROOM_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.PERFOOMSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.BLOOMERANG_SEED_PACKET);
+		EGYPT_SEED_LIST.add(ModItems.BLOOMERANG_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.ICEBERGLETTUCE_SEED_PACKET);
+		EGYPT_SEED_LIST.add(ModItems.ICEBERGLETTUCE_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.SPRINGBEAN_SEED_PACKET);
+		PIRATE_SEED_LIST.add(ModItems.SPRINGBEAN_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.COCONUTCANNON_SEED_PACKET);
+		PIRATE_SEED_LIST.add(ModItems.COCONUTCANNON_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.LIGHTNINGREED_SEED_PACKET);
+		WILDWEST_SEED_LIST.add(ModItems.LIGHTNINGREED_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.PEAPOD_SEED_PACKET);
+		WILDWEST_SEED_LIST.add(ModItems.PEAPOD_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.EMPEACH_SEED_PACKET);
+		FUTURE_SEED_LIST.add(ModItems.EMPEACH_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.PEPPERPULT_SEED_PACKET);
+		FROSTBITE_SEED_LIST.add(ModItems.PEPPERPULT_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.GOLDLEAF_SEED_PACKET);
+		LOSTCITY_SEED_LIST.add(ModItems.GOLDLEAF_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.MISSILETOE_SEED_PACKET);
+		LEGENDARY_SEED_LIST.add(ModItems.MISSILETOE_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.FIRE_PEA_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.FIRE_PEA_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.MAGICSHROOM_SEED_PACKET);
+		NIGHT_SEED_LIST.add(ModItems.MAGICSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.LOQUAT_SEED_PACKET);
+		SKYCITY_SEED_LIST.add(ModItems.LOQUAT_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SAUCER_SEED_PACKET);
+		SKYCITY_SEED_LIST.add(ModItems.SAUCER_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.PUMPKINWITCH_SEED_PACKET);
+		DARKAGES_SEED_LIST.add(ModItems.PUMPKINWITCH_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.TULIMPETER_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.NARCISSUS_SEED_PACKET);
+		POOL_SEED_LIST.add(ModItems.NARCISSUS_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.HAMMERFLOWER_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.METEORHAMMER_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.DROPEA_SEED_PACKET);
+		POOL_SEED_LIST.add(ModItems.DROPEA_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.BEAUTYSHROOM_SEED_PACKET);
+		NIGHT_SEED_LIST.add(ModItems.BEAUTYSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.CHARMSHROOM_SEED_PACKET);
+		DARKAGES_SEED_LIST.add(ModItems.CHARMSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.MAGNETOSHROOM_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.MAGNETOSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.SMALLNUT_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SMACKADAMIA_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.BUTTONSHROOM_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.BOMBSEEDLING_SEED_PACKET);
+		SEED_PACKET_LIST.add(ModItems.OILYOLIVE_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.ZAPRICOT_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.BANANASAURUS_SEED_PACKET);
+		LEGENDARY_SEED_LIST.add(ModItems.BANANASAURUS_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.WEENIEBEANIE_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.SMOOSHROOM_SEED_PACKET);
+		PREMIUM_SEED_LIST.add(ModItems.SMOOSHROOM_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.NAVYBEAN_SEED_PACKET);
+		BEACH_SEED_LIST.add(ModItems.NAVYBEAN_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.ADMIRALNAVYBEAN_SEED_PACKET);
+		BEACH_SEED_LIST.add(ModItems.ADMIRALNAVYBEAN_SEED_PACKET);
+
 		SEED_PACKET_LIST.add(ModItems.JUMPINGBEAN_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.SUNFLOWERSEED_SEED_PACKET);
 		SEED_PACKET_LIST.add(ModItems.BELLFLOWER_SEED_PACKET);
@@ -246,6 +352,7 @@ public class ModItems {
 	public static final Item SMACKADAMIA_SEED_PACKET = new SmackadamiaSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(8).rarity(Rarity.UNCOMMON));
 	public static final Item BUTTONSHROOM_SEED_PACKET = new ButtonshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item BOMBSEEDLING_SEED_PACKET = new BombSeedlingSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
+	public static final Item OILYOLIVE_SEED_PACKET = new OilyOliveSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item ZAPRICOT_SEED_PACKET = new ZapricotSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(1).rarity(Rarity.RARE));
 	public static final Item BANANASAURUS_SEED_PACKET = new BananasaurusSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(1).rarity(Rarity.EPIC));
 	public static final Item WEENIEBEANIE_SEED_PACKET = new WeenieBeanieSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
@@ -307,6 +414,7 @@ public class ModItems {
 	public static final Item PIGGYEGG = new ZombiePiggyEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.UNCOMMON));
 	public static final Item HAWKEREGG = new HawkerCartEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.UNCOMMON));
 	public static final Item SOLDIEREGG = new SoldierEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
+	public static final Item SCIENTISTEGG = new ScientistEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
 	public static final Item ZOMBLOBEGG = new ZomblobEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
 	public static final Item DEFENSIVEENDEGG = new DefensiveEndEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.EPIC));
 	public static final Item IMPTHROWEGG = new ImpThrowEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
@@ -340,6 +448,8 @@ public class ModItems {
     //Blocks
     public static final BlockItem GRASS_TILE = new BlockItem(ModBlocks.GRASS_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
     public static final BlockItem DARK_GRASS_TILE = new BlockItem(ModBlocks.DARK_GRASS_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
+	public static final BlockItem NIGHT_TILE = new BlockItem(ModBlocks.NIGHT_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
+	public static final BlockItem DARK_NIGHT_TILE = new BlockItem(ModBlocks.DARK_NIGHT_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem ROOF_TILE = new BlockItem(ModBlocks.ROOF_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem DARK_ROOF_TILE = new BlockItem(ModBlocks.DARK_ROOF_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem UPGRADE_TILE = new BlockItem(ModBlocks.UPGRADE_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
@@ -352,8 +462,8 @@ public class ModItems {
 	public static final BlockItem DARK_WEST_TILE = new BlockItem(ModBlocks.DARK_WEST_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem FUTURE_TILE = new BlockItem(ModBlocks.FUTURE_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem DARK_FUTURE_TILE = new BlockItem(ModBlocks.DARK_FUTURE_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
-	public static final BlockItem NIGHT_TILE = new BlockItem(ModBlocks.NIGHT_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
-	public static final BlockItem DARK_NIGHT_TILE = new BlockItem(ModBlocks.DARK_NIGHT_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
+	public static final BlockItem DARKAGES_TILE = new BlockItem(ModBlocks.DARKAGES_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
+	public static final BlockItem DARK_DARKAGES_TILE = new BlockItem(ModBlocks.DARK_DARKAGES_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem SAND_TILE = new BlockItem(ModBlocks.SAND_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem DARK_SAND_TILE = new BlockItem(ModBlocks.DARK_SAND_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem UNDERWATER_TILE = new BlockItem(ModBlocks.UNDERWATER_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
@@ -369,6 +479,25 @@ public class ModItems {
     public static ToolItem DAVES_SHOVEL = new PlantKillingShovel(PlantKillingMaterial.INSTANCE, 2, 0F, new Item.Settings().group(PvZCubed.PVZPLANTS).rarity(Rarity.EPIC));
 
 	public static List<Item> SEED_PACKET_LIST = new ArrayList<>();
+	public static List<Item> NIGHT_SEED_LIST = new ArrayList<>();
+	public static List<Item> POOL_SEED_LIST = new ArrayList<>();
+	public static List<Item> FOG_SEED_LIST = new ArrayList<>();
+	public static List<Item> ROOF_SEED_LIST = new ArrayList<>();
+	public static List<Item> EGYPT_SEED_LIST = new ArrayList<>();
+	public static List<Item> PIRATE_SEED_LIST = new ArrayList<>();
+	public static List<Item> WILDWEST_SEED_LIST = new ArrayList<>();
+	public static List<Item> FUTURE_SEED_LIST = new ArrayList<>();
+	public static List<Item> DARKAGES_SEED_LIST = new ArrayList<>();
+	public static List<Item> BEACH_SEED_LIST = new ArrayList<>();
+	public static List<Item> FROSTBITE_SEED_LIST = new ArrayList<>();
+	public static List<Item> LOSTCITY_SEED_LIST = new ArrayList<>();
+	public static List<Item> MIXTAPE_SEED_LIST = new ArrayList<>();
+	public static List<Item> JURASSIC_SEED_LIST = new ArrayList<>();
+	public static List<Item> SKYCITY_SEED_LIST = new ArrayList<>();
+	public static List<Item> MAUSOLEUM_SEED_LIST = new ArrayList<>();
+
+	public static List<Item> PREMIUM_SEED_LIST = new ArrayList<>();
+	public static List<Item> LEGENDARY_SEED_LIST = new ArrayList<>();
 	public static List<Item> PLANTFOOD_LIST = new ArrayList<>();
 
     //addItem
@@ -440,6 +569,8 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dark_future_tile"), DARK_FUTURE_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"night_tile"), NIGHT_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dark_night_tile"), DARK_NIGHT_TILE);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"darkages_tile"), DARKAGES_TILE);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dark_darkages_tile"), DARK_DARKAGES_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"sand_tile"), SAND_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dark_sand_tile"), DARK_SAND_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"underwater_tile"), UNDERWATER_TILE);
@@ -524,6 +655,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"smackadamia_seed_packet"), SMACKADAMIA_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"buttonshroom_seed_packet"), BUTTONSHROOM_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"bombseedling_seed_packet"), BOMBSEEDLING_SEED_PACKET);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"oilyolive_seed_packet"), OILYOLIVE_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"zapricot_seed_packet"), ZAPRICOT_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"bananasaurus_seed_packet"), BANANASAURUS_SEED_PACKET);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"smooshroom_seed_packet"), SMOOSHROOM_SEED_PACKET);
@@ -581,6 +713,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"zombiepiggy_egg"), PIGGYEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"hawkercart_egg"), HAWKEREGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"soldier_egg"), SOLDIEREGG);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"scientist_egg"), SCIENTISTEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"zomblob_egg"), ZOMBLOBEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"defensiveend_egg"), DEFENSIVEENDEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"impthrow_egg"), IMPTHROWEGG);

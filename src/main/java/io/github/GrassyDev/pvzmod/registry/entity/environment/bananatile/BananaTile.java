@@ -55,12 +55,14 @@ public class BananaTile extends TileEntity {
 					(!(livingEntity instanceof ZombiePropEntity) || livingEntity instanceof ZombieRiderEntity)) {
 				boolean isMachine = PvZCubed.IS_MACHINE.get(livingEntity.getType()).orElse(false);
 				if (!isMachine) {
-					if (!livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE)) {
-						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 200, 5)));
-					}
 					if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered()){
-						Vec3d vec3d = new Vec3d((double) -0.5, 0, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-						livingEntity.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
+						livingEntity.setVelocity(0, 0, 0);
+					}
+					else if (!livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE)) {
+						livingEntity.setVelocity(0, 0, 0);
+						Vec3d vec3d = new Vec3d((double) 1, 0, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 200, 5)));
+						livingEntity.setVelocity(vec3d.x, vec3d.y, vec3d.z);
 					}
 					ZombiePropEntity zombiePropEntity2 = null;
 					int damage = 4;
@@ -140,6 +142,12 @@ public class BananaTile extends TileEntity {
 
 	@Override
 	public void tick() {
+		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		for (LivingEntity livingEntity : list){
+			if (livingEntity instanceof BananaTile && this.squaredDistanceTo(livingEntity) <= 0.5f && livingEntity != this){
+				this.discard();
+			}
+		}
 		super.tick();
 
 		if (this.age >= 1200){

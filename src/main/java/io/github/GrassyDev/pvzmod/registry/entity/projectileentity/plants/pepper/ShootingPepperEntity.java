@@ -3,6 +3,7 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.peppe
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
@@ -271,71 +272,71 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 									break;
 								}
 							}
-
-							if (bl) {
-								if (livingEntity instanceof Monster &&
-										!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-												&& (generalPvZombieEntity.getHypno())) && !livingEntity.hasStatusEffect(PvZCubed.WET) && !livingEntity.isWet() && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.canBurn())) {
-									if (livingEntity != entity) {
-										ZombiePropEntity zombiePropEntity3 = null;
-										for (Entity entity1 : livingEntity.getPassengerList()) {
-											if (entity1 instanceof ZombiePropEntity zpe) {
-												zombiePropEntity3 = zpe;
-											}
-										}
-										float damageSplash = PVZCONFIG.nestedProjDMG.pepperSDMG();
-										String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
-										if ("paper".equals(zombieMaterial2)) {
-											damageSplash = damageSplash * 2;
-										} else if ("plant".equals(zombieMaterial2)) {
-											damageSplash = damageSplash * 2;
-										}
-										if (!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity))) {
-											if (damageSplash > livingEntity.getHealth() &&
-													!(livingEntity instanceof ZombieShieldEntity) &&
-													livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-												float damageSplash2 = damageSplash - livingEntity.getHealth();
-												livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash);
-												generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash2);
-											} else if (livingEntity instanceof ZombiePropEntity zombiePropEntity) {
-												livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash);
-											} else {
-												livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash);
-											}
-											if (!livingEntity.hasStatusEffect(PvZCubed.WET) && !entity.isWet() && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) {
-												livingEntity.removeStatusEffect(PvZCubed.FROZEN);
-												livingEntity.removeStatusEffect(PvZCubed.ICE);
-												if (!(livingEntity instanceof ZombieShieldEntity)) {
-													livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 40, 1)));
-													livingEntity.setOnFireFor(4);
-												} else if (livingEntity instanceof ZombieShieldEntity && (PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh").equals("paper") || PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh").equals("plant"))) {
-													livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 40, 1)));
-													livingEntity.setOnFireFor(4);
-												}
-											} else if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn() && !(generalPvZombieEntity instanceof ZombieShieldEntity) && !livingEntity.hasStatusEffect(PvZCubed.WET) && !livingEntity.isWet()) {
-												livingEntity.removeStatusEffect(PvZCubed.FROZEN);
-												livingEntity.removeStatusEffect(PvZCubed.ICE);
-												livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
-											}
-											if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
-												generalPvZombieEntity.fireSplashTicks = 10;
-											}
-											if (livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
-												generalPvZombieEntity.fireSplashTicks = 10;
-											}
-											if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
-												generalPvZombieEntity.fireSplashTicks = 10;
-											}
-											if (!entity.isWet()) {
-												this.world.sendEntityStatus(this, (byte) 3);
-											}
+							if (livingEntity instanceof OilTile oilTile) {
+								oilTile.makeFireTrail(oilTile.getBlockPos());
+							}
+							if (livingEntity instanceof Monster &&
+									!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+											&& (generalPvZombieEntity.getHypno())) && !livingEntity.hasStatusEffect(PvZCubed.WET) && !livingEntity.isWet() && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.canBurn())) {
+								if (livingEntity != entity) {
+									ZombiePropEntity zombiePropEntity3 = null;
+									for (Entity entity1 : livingEntity.getPassengerList()) {
+										if (entity1 instanceof ZombiePropEntity zpe) {
+											zombiePropEntity3 = zpe;
 										}
 									}
-									if (!entity.isWet()) {
-										this.world.sendEntityStatus(this, (byte) 3);
+									float damageSplash = PVZCONFIG.nestedProjDMG.pepperSDMG();
+									String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+									if ("paper".equals(zombieMaterial2)) {
+										damageSplash = damageSplash * 2;
+									} else if ("plant".equals(zombieMaterial2)) {
+										damageSplash = damageSplash * 2;
 									}
-									this.remove(RemovalReason.DISCARDED);
+									if (!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity))) {
+										if (damageSplash > livingEntity.getHealth() &&
+												!(livingEntity instanceof ZombieShieldEntity) &&
+												livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+											float damageSplash2 = damageSplash - livingEntity.getHealth();
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash);
+											generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash2);
+										} else if (livingEntity instanceof ZombiePropEntity zombiePropEntity) {
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash);
+										} else {
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash);
+										}
+										if (!livingEntity.hasStatusEffect(PvZCubed.WET) && !entity.isWet() && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) {
+											livingEntity.removeStatusEffect(PvZCubed.FROZEN);
+											livingEntity.removeStatusEffect(PvZCubed.ICE);
+											if (!(livingEntity instanceof ZombieShieldEntity)) {
+												livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 40, 1)));
+												livingEntity.setOnFireFor(4);
+											} else if (livingEntity instanceof ZombieShieldEntity && (PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh").equals("paper") || PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh").equals("plant"))) {
+												livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 40, 1)));
+												livingEntity.setOnFireFor(4);
+											}
+										} else if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn() && !(generalPvZombieEntity instanceof ZombieShieldEntity) && !livingEntity.hasStatusEffect(PvZCubed.WET) && !livingEntity.isWet()) {
+											livingEntity.removeStatusEffect(PvZCubed.FROZEN);
+											livingEntity.removeStatusEffect(PvZCubed.ICE);
+											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
+										}
+										if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+											generalPvZombieEntity.fireSplashTicks = 10;
+										}
+										if (livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+											generalPvZombieEntity.fireSplashTicks = 10;
+										}
+										if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+											generalPvZombieEntity.fireSplashTicks = 10;
+										}
+										if (!entity.isWet()) {
+											this.world.sendEntityStatus(this, (byte) 3);
+										}
+									}
 								}
+								if (!entity.isWet()) {
+									this.world.sendEntityStatus(this, (byte) 3);
+								}
+								this.remove(RemovalReason.DISCARDED);
 							}
 						}
 					} else if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn() && !(generalPvZombieEntity instanceof ZombieShieldEntity) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET) && !entity.isWet()) {

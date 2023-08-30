@@ -13,7 +13,7 @@ public class BombSeedlingIgniteGoal extends Goal {
 
     public boolean canStart() {
         LivingEntity livingEntity = this.bombSeedling.getTarget();
-        return this.bombSeedling.getFuseSpeed() > 0 || livingEntity != null && this.bombSeedling.squaredDistanceTo(livingEntity) < 4.0D;
+        return this.bombSeedling.getFuseSpeed() > 0 || livingEntity != null && this.bombSeedling.squaredDistanceTo(livingEntity) < 25.0D;
     }
 
     public void start() {
@@ -28,7 +28,7 @@ public class BombSeedlingIgniteGoal extends Goal {
     public void tick() {
         if (this.target == null) {
             this.bombSeedling.setFuseSpeed(-1);
-        } else if (this.bombSeedling.squaredDistanceTo(this.target) > 4.0D || this.bombSeedling.isInsideWaterOrBubbleColumn()) {
+        } else if (this.bombSeedling.squaredDistanceTo(this.target) > 25.0D || this.bombSeedling.isInsideWaterOrBubbleColumn()) {
             this.bombSeedling.setFuseSpeed(-1);
         } else {
             this.bombSeedling.setFuseSpeed(1);

@@ -3,6 +3,8 @@
   "values": [
     "pvzmod:grass_tile",
     "pvzmod:dark_grass_tile",
+    "pvzmod:night_tile",
+    "pvzmod:dark_night_tile",
     "pvzmod:sand_tile",
     "pvzmod:dark_sand_tile",
     "pvzmod:underwater_tile",

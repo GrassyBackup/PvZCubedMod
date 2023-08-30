@@ -3,6 +3,7 @@ package io.github.GrassyDev.pvzmod;
 import io.github.GrassyDev.pvzmod.config.PvZConfig;
 import io.github.GrassyDev.pvzmod.registry.ModBlocks;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.damage.HypnoDamage;
 import io.github.GrassyDev.pvzmod.registry.entity.damage.LightningDamage;
@@ -43,6 +44,9 @@ public class PvZCubed implements ModInitializer {
 	// Thanks to Ennui Langeweile for the help with Registry Entry Attachments
 	public static final RegistryEntryAttachment<EntityType<?>, String> ZOMBIE_SIZE =
 			RegistryEntryAttachment.stringBuilder(Registry.ENTITY_TYPE, new Identifier("pvzmod", "zombie_size")).build();
+
+	public static final RegistryEntryAttachment<EntityType<?>, String> ZOMBIE_WORLD =
+			RegistryEntryAttachment.stringBuilder(Registry.ENTITY_TYPE, new Identifier("pvzmod", "zombie_world")).build();
 
 	public static final RegistryEntryAttachment<EntityType<?>, Boolean> IS_MACHINE =
 			RegistryEntryAttachment.boolBuilder(Registry.ENTITY_TYPE, new Identifier("pvzmod", "is_machine")).build();
@@ -181,6 +185,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.MAGICSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.LOQUAT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SAUCER_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.OILYOLIVE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.PUMPKINWITCH_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.TULIMPETER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.NARCISSUS_SEED_PACKET));
@@ -299,6 +304,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.HAWKEREGG));
 				stacks.add(new ItemStack(ModItems.PIGGYEGG));
 				stacks.add(new ItemStack(ModItems.SOLDIEREGG));
+				stacks.add(new ItemStack(ModItems.SCIENTISTEGG));
 				stacks.add(new ItemStack(ModItems.ZOMBLOBEGG));
 				stacks.add(new ItemStack(ModItems.DEFENSIVEENDEGG));
 				stacks.add(new ItemStack(ModItems.IMPTHROWEGG));
@@ -341,6 +347,8 @@ public class PvZCubed implements ModInitializer {
 			.appendItems(stacks -> {
 				stacks.add(new ItemStack(ModItems.GRASS_TILE));
 				stacks.add(new ItemStack(ModItems.DARK_GRASS_TILE));
+				stacks.add(new ItemStack(ModItems.NIGHT_TILE));
+				stacks.add(new ItemStack(ModItems.DARK_NIGHT_TILE));
 				stacks.add(new ItemStack(ModItems.ROOF_TILE));
 				stacks.add(new ItemStack(ModItems.DARK_ROOF_TILE));
 				stacks.add(new ItemStack(ModItems.UPGRADE_TILE));
@@ -353,8 +361,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.DARK_WEST_TILE));
 				stacks.add(new ItemStack(ModItems.FUTURE_TILE));
 				stacks.add(new ItemStack(ModItems.DARK_FUTURE_TILE));
-				stacks.add(new ItemStack(ModItems.NIGHT_TILE));
-				stacks.add(new ItemStack(ModItems.DARK_NIGHT_TILE));
+				stacks.add(new ItemStack(ModItems.DARKAGES_TILE));
+				stacks.add(new ItemStack(ModItems.DARK_DARKAGES_TILE));
 				stacks.add(new ItemStack(ModItems.SAND_TILE));
 				stacks.add(new ItemStack(ModItems.DARK_SAND_TILE));
 				stacks.add(new ItemStack(ModItems.UNDERWATER_TILE));
@@ -375,6 +383,7 @@ public class PvZCubed implements ModInitializer {
 		ModItems.setSeedPacketList();
 		ModItems.setPlantfoodList();
 		ModBlocks.registerBlocks();
+		PvZEntity.setPlantList();
 		GeckoLib.initialize();
 		PvZEntitySpawn.addEntitySpawn();
 		PvZSounds.registerSounds();

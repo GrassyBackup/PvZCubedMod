@@ -10,7 +10,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -24,13 +23,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.LightType;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
@@ -193,48 +190,62 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 25);
 
-			boolean bl = false;
-
-			for (int i = 0; i < 2; ++i) {
-				Vec3d vec3d2 = new Vec3d(livingEntity.getX(), livingEntity.getBodyY(0.5 * (double) i), livingEntity.getZ());
-				HitResult hitResult = this.world.raycast(new RaycastContext(vec3d, vec3d2, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this));
-				if (hitResult.getType() == HitResult.Type.MISS) {
-					bl = true;
-					break;
-				}
-			}
-
-			if (bl) {
-				if (((livingEntity instanceof Monster &&
-						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) &&
-						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
-						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-								&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
-					float damage = 20;
-					boolean hasHelmet = false;
-					ZombiePropEntity zombiePropEntity2 = null;
-					double random = Math.random();
-					for (Entity entity1 : livingEntity.getPassengerList()) {
-						if (entity1 instanceof ZombiePropEntity zpe) {
-							zombiePropEntity2 = zpe;
-						}
-						if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)){
-							hasHelmet = true;
-						}
+			if (((livingEntity instanceof Monster &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
+				float damage = 20;
+				boolean hasHelmet = false;
+				ZombiePropEntity zombiePropEntity2 = null;
+				double random = Math.random();
+				for (Entity entity1 : livingEntity.getPassengerList()) {
+					if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity2 = zpe;
 					}
-					if (livingEntity instanceof ZombiePropEntity zpe  && !(zpe instanceof ZombieShieldEntity)){
+					if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
 						hasHelmet = true;
 					}
-					if (hasHelmet || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())){
-						damage = damage / 2;
-					}
+				}
+				if (livingEntity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+					hasHelmet = true;
+				}
+				if (hasHelmet || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+					damage = damage / 2;
+				}
 
-					if (damage > livingEntity.getHealth() &&
-							(livingEntity instanceof ZombieShieldEntity) &&
-							livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-						float damage2 = damage - livingEntity.getHealth();
+				if (damage > livingEntity.getHealth() &&
+						(livingEntity instanceof ZombieShieldEntity) &&
+						livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+					float damage2 = damage - livingEntity.getHealth();
+					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
+					if (random <= 0.166) {
+						if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.isCovered()) {
+							livingEntity.damage(PvZCubed.HYPNO_DAMAGE, 0);
+						}
+						if (!generalPvZombieEntity.isCovered()) {
+							generalPvZombieEntity.damage(PvZCubed.HYPNO_DAMAGE, 0);
+						}
+					}
+					checkList.add(livingEntity);
+					checkList.add(generalPvZombieEntity);
+				} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
+					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					if (!(zombieShieldEntity instanceof ZombieRiderEntity)) {
+						checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
+					}
+					checkList.add(zombieShieldEntity);
+				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
+					if (zombieShieldEntity instanceof ZombieRiderEntity) {
+						livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
+					}
+					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					checkList.add(livingEntity);
+					checkList.add(zombieShieldEntity);
+				} else {
+					if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
 						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-						generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
 						if (random <= 0.166) {
 							if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.isCovered()) {
 								livingEntity.damage(PvZCubed.HYPNO_DAMAGE, 0);
@@ -245,53 +256,22 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 						}
 						checkList.add(livingEntity);
 						checkList.add(generalPvZombieEntity);
-					} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null){
-						zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-						if (!(zombieShieldEntity instanceof ZombieRiderEntity)){
-							checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
-						}
-						checkList.add(zombieShieldEntity);
-					}
-					else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
-						if (zombieShieldEntity instanceof ZombieRiderEntity){
-							livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
-						}
-						zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					} else if (livingEntity instanceof ZombieVehicleEntity) {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 						checkList.add(livingEntity);
-						checkList.add(zombieShieldEntity);
-					}
-					else {
-						if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-							if (random <= 0.166) {
-								if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.isCovered()) {
-									livingEntity.damage(PvZCubed.HYPNO_DAMAGE, 0);
-								}
-								if (!generalPvZombieEntity.isCovered()) {
-									generalPvZombieEntity.damage(PvZCubed.HYPNO_DAMAGE, 0);
-								}
+					} else if (zombiePropEntity2 == null && !checkList.contains(livingEntity)) {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						if (random <= 0.166) {
+							if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.isCovered()) {
+								livingEntity.damage(PvZCubed.HYPNO_DAMAGE, 0);
 							}
-							checkList.add(livingEntity);
-							checkList.add(generalPvZombieEntity);
 						}
-						else if (livingEntity instanceof ZombieVehicleEntity) {
-							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-							checkList.add(livingEntity);
-						}
-						else if (zombiePropEntity2 == null && !checkList.contains(livingEntity)) {
-							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-							if (random <= 0.166) {
-								if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.isCovered()) {
-									livingEntity.damage(PvZCubed.HYPNO_DAMAGE, 0);
-								}
-							}
-							checkList.add(livingEntity);
-						}
+						checkList.add(livingEntity);
 					}
-					if ((!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) && !(zombiePropEntity2 instanceof ZombieShieldEntity)) {
-						if (!livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE) && random > 0.166){
-							livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 5)));
-						}
+				}
+				if ((!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) && !(zombiePropEntity2 instanceof ZombieShieldEntity)) {
+					if (!livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE) && random > 0.166) {
+						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 5)));
 					}
 				}
 			}

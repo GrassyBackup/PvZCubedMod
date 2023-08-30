@@ -30,7 +30,7 @@ public abstract class ZombieObstacleEntity extends ZombieShieldEntity{
 			List<GravebusterEntity> list = world.getNonSpectatingEntities(GravebusterEntity.class, entityBox.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
 			this.beingEaten = !list.isEmpty();
 		}
-		if (!this.hasVehicle() && this.getHypno()){
+		if (!this.hasVehicle() && this.getHypno() && !this.getType().equals(PvZEntity.HEALSTATION)){
 			this.setHypno(IsHypno.FALSE);
 		}
 	}

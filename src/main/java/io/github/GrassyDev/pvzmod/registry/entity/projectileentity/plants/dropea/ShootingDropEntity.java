@@ -38,7 +38,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -240,54 +239,41 @@ public class ShootingDropEntity extends PvZProjectileEntity implements IAnimatab
 							} while (livingEntity == this.getOwner());
 						} while (entity.squaredDistanceTo(livingEntity) > 2.25);
 
-						boolean bl = false;
-
-						for (int i = 0; i < 2; ++i) {
-							Vec3d vec3d2 = new Vec3d(livingEntity.getX(), livingEntity.getBodyY(0.5 * (double) i), livingEntity.getZ());
-							HitResult hitResult = this.world.raycast(new RaycastContext(vec3d, vec3d2, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this));
-							if (hitResult.getType() == HitResult.Type.MISS) {
-								bl = true;
-								break;
-							}
-						}
-
-						if (bl) {
-							if (livingEntity instanceof Monster &&
-									!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-											&& (generalPvZombieEntity.getHypno()))) {
-								if (livingEntity != entity) {
-									float damage3 = PVZCONFIG.nestedProjDMG.dropSDMG();
-									String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
-									if ("paper".equals(zombieMaterial2) || "stone".equals(zombieMaterial2)) {
-										damage3 = damage3 * 2;
-									} else if ("plant".equals(zombieMaterial2)) {
-										damage3 = damage3 / 2;
-									}
-									ZombiePropEntity zombiePropEntity3 = null;
-									for (Entity entity1 : livingEntity.getPassengerList()) {
-										if (entity1 instanceof ZombiePropEntity zpe) {
-											zombiePropEntity3 = zpe;
-										}
-									}
-									if (!(zombiePropEntity3 instanceof ZombieShieldEntity)) {
-										if (zombiePropEntity3 == null) {
-											if (damage3 > livingEntity.getHealth() &&
-													!(livingEntity instanceof ZombieShieldEntity) &&
-													livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-												float damage4 = damage3 - livingEntity.getHealth();
-												livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
-												generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage4);
-											} else {
-												livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
-											}
-											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 100, 1)));
-											livingEntity.extinguish();
-										}
+						if (livingEntity instanceof Monster &&
+								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+										&& (generalPvZombieEntity.getHypno()))) {
+							if (livingEntity != entity) {
+								float damage3 = PVZCONFIG.nestedProjDMG.dropSDMG();
+								String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+								if ("paper".equals(zombieMaterial2) || "stone".equals(zombieMaterial2)) {
+									damage3 = damage3 * 2;
+								} else if ("plant".equals(zombieMaterial2)) {
+									damage3 = damage3 / 2;
+								}
+								ZombiePropEntity zombiePropEntity3 = null;
+								for (Entity entity1 : livingEntity.getPassengerList()) {
+									if (entity1 instanceof ZombiePropEntity zpe) {
+										zombiePropEntity3 = zpe;
 									}
 								}
-								this.world.sendEntityStatus(this, (byte) 3);
-								this.remove(RemovalReason.DISCARDED);
+								if (!(zombiePropEntity3 instanceof ZombieShieldEntity)) {
+									if (zombiePropEntity3 == null) {
+										if (damage3 > livingEntity.getHealth() &&
+												!(livingEntity instanceof ZombieShieldEntity) &&
+												livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+											float damage4 = damage3 - livingEntity.getHealth();
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+											generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage4);
+										} else {
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+										}
+										livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 100, 1)));
+										livingEntity.extinguish();
+									}
+								}
 							}
+							this.world.sendEntityStatus(this, (byte) 3);
+							this.remove(RemovalReason.DISCARDED);
 						}
 					}
 				}

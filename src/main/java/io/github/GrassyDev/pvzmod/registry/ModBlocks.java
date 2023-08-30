@@ -22,6 +22,18 @@ public class ModBlocks {
             .sounds(BlockSoundGroup.GRASS)
             .strength(1.9f, 1200f));
 
+	public static final Block NIGHT_TILE = new Block(QuiltBlockSettings
+			.of(Material.SOIL)
+			.requiresTool()
+			.sounds(BlockSoundGroup.GRASS)
+			.strength(1.9f, 1200f));
+
+	public static final Block DARK_NIGHT_TILE = new Block(QuiltBlockSettings
+			.of(Material.SOIL)
+			.requiresTool()
+			.sounds(BlockSoundGroup.GRASS)
+			.strength(1.9f, 1200f));
+
 	public static final Block ROOF_TILE = new Block(QuiltBlockSettings
 			.of(Material.STONE)
 			.requiresTool()
@@ -105,13 +117,13 @@ public class ModBlocks {
 			.strength(1.9f, 1200f)
 			.luminance(3));
 
-	public static final Block NIGHT_TILE = new Block(QuiltBlockSettings
+	public static final Block DARKAGES_TILE = new Block(QuiltBlockSettings
 			.of(Material.STONE)
 			.requiresTool()
 			.sounds(BlockSoundGroup.STONE)
 			.strength(1.9f, 1200f));
 
-	public static final Block DARK_NIGHT_TILE = new Block(QuiltBlockSettings
+	public static final Block DARK_DARKAGES_TILE = new Block(QuiltBlockSettings
 			.of(Material.STONE)
 			.requiresTool()
 			.sounds(BlockSoundGroup.STONE)
@@ -185,6 +197,8 @@ public class ModBlocks {
 
         Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"grass_tile"), GRASS_TILE);
         Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_grass_tile"), DARK_GRASS_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"night_tile"), NIGHT_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_night_tile"), DARK_NIGHT_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"roof_tile"), ROOF_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_roof_tile"), DARK_ROOF_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"upgrade_tile"), UPGRADE_TILE);
@@ -197,8 +211,8 @@ public class ModBlocks {
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_west_tile"), DARK_WEST_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"future_tile"), FUTURE_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_future_tile"), DARK_FUTURE_TILE);
-		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"night_tile"), NIGHT_TILE);
-		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_night_tile"), DARK_NIGHT_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"darkages_tile"), DARKAGES_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_darkages_tile"), DARK_DARKAGES_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"sand_tile"), SAND_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_sand_tile"), DARK_SAND_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"underwater_tile"), UNDERWATER_TILE);

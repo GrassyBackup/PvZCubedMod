@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "pvzmod:bombseedling_seed_packet"
+      "item": "pvzmod:oilyolive_seed_packet"
     }
   ],
   "result": {

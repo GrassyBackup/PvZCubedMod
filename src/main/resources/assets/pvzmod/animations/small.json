@@ -627,6 +627,22 @@
 					}
 				}
 			}
+		},
+		"small.oil.bomb": {
+			"animation_length": 0.79167,
+			"bones": {
+				"body": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"0.75": {
+							"vector": [2, 0.1, 1.5],
+							"easing": "easeInBack"
+						}
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

@@ -2,7 +2,7 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
@@ -10,7 +10,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRide
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -19,6 +18,7 @@ import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
@@ -41,6 +41,8 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
 	private String controllerName = "firetrailcontroller";
+
+	public float ageMax = 150;
 
     public FireTrailEntity(EntityType<? extends FireTrailEntity> entityType, World world) {
         super(entityType, world);
@@ -122,6 +124,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 						livingEntity.removeStatusEffect(PvZCubed.FROZEN);
 						livingEntity.removeStatusEffect(PvZCubed.ICE);
 						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
+						livingEntity.setOnFireFor(60);
 					}
 				}
 			}
@@ -129,6 +132,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 				livingEntity.removeStatusEffect(PvZCubed.FROZEN);
 				livingEntity.removeStatusEffect(PvZCubed.ICE);
 				livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
+				livingEntity.setOnFireFor(60);
 			}
 		}
 	}
@@ -169,14 +173,16 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 		if (!this.isAiDisabled() && this.isAlive()) {
 			setPosition(this.getX(), this.getY(), this.getZ());
 		}
-		if (this.age <= 100){
-			if (--tickDamage <= 0){
-				this.damageEntity();
-				tickDamage = 5;
+		if (this.world instanceof ServerWorld) {
+			if (this.age <= ageMax) {
+				if (--tickDamage <= 0) {
+					this.damageEntity();
+					tickDamage = 5;
+				}
 			}
-		}
-		else {
-			this.discard();
+			else {
+				this.discard();
+			}
 		}
 		if (this.isWet()){
 			playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH);
@@ -191,9 +197,15 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 			}
 		}
 		if (--heatTicks <= 0) {
-			List<TileEntity> list = world.getNonSpectatingEntities(TileEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(1.5));
-			for (TileEntity tileEntity : list) {
+			List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(1.5));
+			for (LivingEntity tileEntity : list) {
 				if (tileEntity instanceof SnowTile) {
+					tileEntity.discard();
+				}
+				if (tileEntity instanceof IceTile) {
+					tileEntity.discard();
+				}
+				if (tileEntity instanceof FireTrailEntity && this.squaredDistanceTo(tileEntity) <= 0.5f && tileEntity != this) {
 					tileEntity.discard();
 				}
 			}

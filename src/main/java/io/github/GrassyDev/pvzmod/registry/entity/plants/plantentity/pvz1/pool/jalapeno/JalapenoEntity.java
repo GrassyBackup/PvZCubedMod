@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -200,6 +201,10 @@ public class JalapenoEntity extends PlantEntity implements IAnimatable {
 				} while (this.squaredDistanceTo(livingEntity) > 100);
 
 				float damage = 0;
+
+				if (livingEntity instanceof OilTile oilTile){
+					oilTile.makeFireTrail(oilTile.getBlockPos());
+				}
 
 				if (livingEntity instanceof IceTile || livingEntity instanceof SnowTile){
 					livingEntity.discard();

@@ -514,7 +514,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 						Vec3d vec3d2 = new Vec3d((double) xr, 0.0, zr).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 						BananaProjEntity proj = new BananaProjEntity(PvZEntity.BANANAPROJ, this.world);
 						float h = MathHelper.sqrt(MathHelper.sqrt(100)) * 0.5F;
-						proj.setVelocity(vec3d2.x, -3.9200000762939453 + 28 / (h * 2.2), vec3d2.z, 0.5F, 0F);
+						proj.setVelocity(vec3d2.x, -3.9200000762939453 + 28 / (h * 2.2), vec3d2.z, 0.4F, 0F);
 						proj.updatePosition(this.getX(), this.getY() + 0.75D, this.getZ());
 						proj.setOwner(this);
 						this.beamTicks = -14;

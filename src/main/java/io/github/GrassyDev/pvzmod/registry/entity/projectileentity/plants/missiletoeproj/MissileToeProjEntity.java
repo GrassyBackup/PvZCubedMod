@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.bananatile.BananaTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.target.missiletoe.MissileToeTarget;
@@ -267,6 +268,7 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 			List<TileEntity> tileCheck = world.getNonSpectatingEntities(TileEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(blockPos.getX(), blockPos.getY(), blockPos.getZ()).expand(-0.5f, -0.5f, -0.5f));
 			tileCheck.removeIf(tile -> tile instanceof MissileToeTarget);
 			tileCheck.removeIf(tile -> tile instanceof ScorchedTile);
+			tileCheck.removeIf(tile -> tile instanceof BananaTile);
 			if (tileCheck.isEmpty()) {
 				IceTile tile = (IceTile) PvZEntity.ICETILE.create(world);
 				tile.refreshPositionAndAngles(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0, 0);

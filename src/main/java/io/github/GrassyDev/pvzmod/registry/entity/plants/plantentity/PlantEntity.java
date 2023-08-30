@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
@@ -805,6 +806,10 @@ public abstract class PlantEntity extends GolemEntity {
 				for (TileEntity tileEntity : list) {
 					if (tileEntity instanceof SnowTile) {
 						tileEntity.discard();
+					}
+					if (tileEntity instanceof OilTile oilTile) {
+						System.out.println("test");
+						oilTile.makeFireTrail(oilTile.getBlockPos());
 					}
 				}
 				heatTicks = 40;

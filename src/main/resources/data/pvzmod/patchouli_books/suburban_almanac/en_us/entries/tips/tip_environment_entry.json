@@ -74,8 +74,8 @@
       "type": "text",
       "text": [
         "$(br)Banana Peel",
-        "$(br2)When a Zombie steps on it, it Stuns them for 10 seconds and inflicts damage based on its weight.",
-        "$(br)Covered Zombies suffer a small knockback instead of a Stun.",
+        "$(br2)When a Zombie steps on it, it Stuns them for 10 seconds, inflicts damage based on it's weight, and moves them forward by about 3 blocks.",
+        "$(br)Covered Zombies aren't affected by the Stun and don't move.",
         "$(br2)The weight depends on the Zombie's size, gear weight, and materials, and won't work on Machines.",
         "$(br2)They last for 2 minutes or until a Zombie steps on it."
       ]

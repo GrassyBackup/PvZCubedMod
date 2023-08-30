@@ -2,6 +2,7 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
@@ -12,7 +13,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -27,8 +27,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -123,6 +123,12 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
 				double e = this.random.nextDouble() / 4 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 4 * this.random.range(-1, 1);
 				this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+			}
+			for(int i = 0; i < 32; ++i) {
+				double d = this.random.nextDouble() / 4 * this.random.range(-1, 1);
+				double e = this.random.nextDouble() / 4 * this.random.range(0, 1);
+				double f = this.random.nextDouble() / 4 * this.random.range(-1, 1);
+				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 		}
 	}
@@ -246,66 +252,49 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 4);
 
-			boolean bl = false;
-
-			for (int i = 0; i < 2; ++i) {
-				Vec3d vec3d2 = new Vec3d(livingEntity.getX(), livingEntity.getBodyY(0.5 * (double) i), livingEntity.getZ());
-				HitResult hitResult = this.world.raycast(new RaycastContext(vec3d, vec3d2, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this));
-				if (hitResult.getType() == HitResult.Type.MISS) {
-					bl = true;
-					break;
-				}
-			}
-
-			if (bl) {
-				float damage = 32;
-				if (((livingEntity instanceof Monster &&
-						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
-						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-								&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
-					ZombiePropEntity zombiePropEntity2 = null;
-					for (Entity entity1 : livingEntity.getPassengerList()) {
-						if (entity1 instanceof ZombiePropEntity zpe) {
-							zombiePropEntity2 = zpe;
-						}
+			float damage = 32;
+			if (((livingEntity instanceof Monster &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
+				ZombiePropEntity zombiePropEntity2 = null;
+				for (Entity entity1 : livingEntity.getPassengerList()) {
+					if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity2 = zpe;
 					}
-					if (damage > livingEntity.getHealth() &&
-							!(livingEntity instanceof ZombieShieldEntity) &&
-							livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-						float damage2 = damage - livingEntity.getHealth();
+				}
+				if (damage > livingEntity.getHealth() &&
+						!(livingEntity instanceof ZombieShieldEntity) &&
+						livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+					float damage2 = damage - livingEntity.getHealth();
+					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
+					checkList.add(livingEntity);
+					checkList.add(generalPvZombieEntity);
+				} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
+					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					if (!(zombieShieldEntity instanceof ZombieRiderEntity)) {
+						checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
+					}
+					checkList.add(zombieShieldEntity);
+				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
+					if (zombieShieldEntity instanceof ZombieRiderEntity) {
+						livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
+					}
+					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					checkList.add(livingEntity);
+					checkList.add(zombieShieldEntity);
+				} else {
+					if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
 						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-						generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
 						checkList.add(livingEntity);
 						checkList.add(generalPvZombieEntity);
-					} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null){
-						zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-						if (!(zombieShieldEntity instanceof ZombieRiderEntity)){
-							checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
-						}
-						checkList.add(zombieShieldEntity);
-					}
-					else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
-						if (zombieShieldEntity instanceof ZombieRiderEntity){
-							livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
-						}
-						zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					} else if (zombiePropEntity2 == null && !checkList.contains(livingEntity)) {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 						checkList.add(livingEntity);
-						checkList.add(zombieShieldEntity);
-					}
-					else {
-						if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-							checkList.add(livingEntity);
-							checkList.add(generalPvZombieEntity);
-						}
-						else if (zombiePropEntity2 == null && !checkList.contains(livingEntity)) {
-							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-							checkList.add(livingEntity);
-						}
-						else if (livingEntity instanceof ZombieVehicleEntity && !checkList.contains(livingEntity)){
-							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-							checkList.add(livingEntity);
-						}
+					} else if (livingEntity instanceof ZombieVehicleEntity && !checkList.contains(livingEntity)) {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						checkList.add(livingEntity);
 					}
 				}
 			}
@@ -329,6 +318,17 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
 		areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 80);
 		areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float)areaEffectCloudEntity2.getDuration());
 		this.world.spawnEntity(areaEffectCloudEntity2);
+	}
+
+	public void transform(){
+		if (this.world instanceof ServerWorld serverWorld) {
+			PlantEntity plant = (PlantEntity) PvZEntity.PLANT_LIST.get(getRandom().nextInt(PvZEntity.PLANT_LIST.size())).create(world);
+			plant.refreshPositionAndAngles(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), 0, 0);
+			plant.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+			plant.setYaw(this.getYaw());
+			serverWorld.spawnEntityAndPassengers(plant);
+		}
+		this.discard();
 	}
 
 
@@ -395,7 +395,7 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
 				this.playSound(PvZSounds.POTATOMINEEXPLOSIONEVENT, 0.7F, 1F);
 				this.spawnEffectsCloud();
 				this.dead = true;
-				this.remove(RemovalReason.DISCARDED);
+				this.transform();
 			}
 		}
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {
@@ -408,7 +408,6 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
 			}
 		}
 	}
-
 
 	public void tickMovement() {
         super.tickMovement();
@@ -435,7 +434,7 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 12.0D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 2D)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 5D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 32);
     }
 

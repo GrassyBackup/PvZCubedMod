@@ -34,6 +34,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -130,6 +131,14 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 	public void handleStatus(byte status) {
 		if (status != 2 && status != 60){
 			super.handleStatus(status);
+		}
+		if (status == 69) {
+			for (int i = 0; i < 64; ++i) {
+				double d = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
+				double e = this.random.nextDouble() / 2 * this.random.range(0, 3);
+				double f = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
+				this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + 0.5 + e, this.getZ() + f, d, e, f);
+			}
 		}
 		if (status == 70) {
 			this.isFrozen = true;
@@ -418,11 +427,46 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 						multiplier = 10;
 					}
 					double multiplierFinal = Math.pow(multiplier / 5, 2);
-					Item item = ModItems.SEED_PACKET_LIST.get(getRandom().nextInt(ModItems.SEED_PACKET_LIST.size()));
-					if (random <= 0.05 * multiplierFinal) {
+					Item item = ModItems.SUN;
+					double random2 = Math.random();
+					if (random2 <= 0.01){
+						item = ModItems.SEED_PACKET_LIST.get(getRandom().nextInt(ModItems.LEGENDARY_SEED_LIST.size()));
+					}
+					else if (random2 <= 0.1){
+						item = ModItems.SEED_PACKET_LIST.get(getRandom().nextInt(ModItems.PREMIUM_SEED_LIST.size()));
+					}
+					else if (random2 <= 0.43){
+						item = ModItems.SEED_PACKET_LIST.get(getRandom().nextInt(ModItems.SEED_PACKET_LIST.size()));
+					}
+					else {
+						String zombieWorld = ZOMBIE_WORLD.get(this.getType()).orElse("basic");
+						item = switch (zombieWorld) {
+							case "night" -> ModItems.NIGHT_SEED_LIST.get(getRandom().nextInt(ModItems.NIGHT_SEED_LIST.size()));
+							case "pool" -> ModItems.POOL_SEED_LIST.get(getRandom().nextInt(ModItems.POOL_SEED_LIST.size()));
+							case "fog" -> ModItems.FOG_SEED_LIST.get(getRandom().nextInt(ModItems.FOG_SEED_LIST.size()));
+							case "roof" -> ModItems.ROOF_SEED_LIST.get(getRandom().nextInt(ModItems.ROOF_SEED_LIST.size()));
+							case "egypt" -> ModItems.EGYPT_SEED_LIST.get(getRandom().nextInt(ModItems.EGYPT_SEED_LIST.size()));
+							case "pirate" -> ModItems.PIRATE_SEED_LIST.get(getRandom().nextInt(ModItems.PIRATE_SEED_LIST.size()));
+							case "wildwest" -> ModItems.WILDWEST_SEED_LIST.get(getRandom().nextInt(ModItems.WILDWEST_SEED_LIST.size()));
+							case "future" -> ModItems.FUTURE_SEED_LIST.get(getRandom().nextInt(ModItems.FUTURE_SEED_LIST.size()));
+							case "darkages" -> ModItems.DARKAGES_SEED_LIST.get(getRandom().nextInt(ModItems.DARKAGES_SEED_LIST.size()));
+							case "beach" -> ModItems.BEACH_SEED_LIST.get(getRandom().nextInt(ModItems.BEACH_SEED_LIST.size()));
+							case "frostbite" -> ModItems.FROSTBITE_SEED_LIST.get(getRandom().nextInt(ModItems.FROSTBITE_SEED_LIST.size()));
+							case "lostcity" -> ModItems.LOSTCITY_SEED_LIST.get(getRandom().nextInt(ModItems.LOSTCITY_SEED_LIST.size()));
+							case "mixtape" -> ModItems.MIXTAPE_SEED_LIST.get(getRandom().nextInt(ModItems.MIXTAPE_SEED_LIST.size()));
+							case "jurassic" -> ModItems.JURASSIC_SEED_LIST.get(getRandom().nextInt(ModItems.JURASSIC_SEED_LIST.size()));
+							case "skycity" -> ModItems.SKYCITY_SEED_LIST.get(getRandom().nextInt(ModItems.SKYCITY_SEED_LIST.size()));
+							case "mausoleum" -> ModItems.MAUSOLEUM_SEED_LIST.get(getRandom().nextInt(ModItems.MAUSOLEUM_SEED_LIST.size()));
+							default -> ModItems.SEED_PACKET_LIST.get(getRandom().nextInt(ModItems.SEED_PACKET_LIST.size()));
+						};
+						if (item == null){
+							item = ModItems.SEED_PACKET_LIST.get(getRandom().nextInt(ModItems.SEED_PACKET_LIST.size()));
+						}
+					}
+					if (random <= 0.075 * multiplierFinal) {
 						dropItem(item);
 						playSound(LOOTGIFTDEVENT);
-					} else if (random <= 0.10 * multiplierFinal) {
+					} else if (random <= 0.15 * multiplierFinal) {
 						dropItem(Items.DIAMOND);
 						playSound(LOOTDIAMONDEVENT);
 					} else if (random <= 0.30 * multiplierFinal) {
@@ -432,8 +476,8 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 						dropItem(Items.IRON_NUGGET);
 						playSound(LOOTNUGGETEVENT);
 					}
-					double random2 = Math.random();
-					if (random2 <= 0.2 && this.isChallengeZombie()) {
+					double random3 = Math.random();
+					if (random3 <= 0.2 && this.isChallengeZombie()) {
 						Item item2 = ModItems.PLANTFOOD_LIST.get(getRandom().nextInt(ModItems.PLANTFOOD_LIST.size()));
 						dropItem(item2);
 					}
@@ -733,8 +777,13 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 	private int chillTicks;
 	private int chillCDTicks;
 	private int barkTicks;
+	private float lastHealth = this.getHealth();
 
 	public void tick() {
+		if (this.lastHealth < this.getHealth()){
+			this.world.sendEntityStatus(this, (byte) 69);
+		}
+		this.lastHealth = this.getHealth();
 		if (!this.world.isClient) {
 			if (this.hasStatusEffect(BARK)){
 				this.removeStatusEffect(CHEESE);

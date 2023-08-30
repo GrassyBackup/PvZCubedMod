@@ -13,9 +13,9 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.pe
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.puffshroom.PuffshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.ancientegypt.iceberglettuce.IcebergLettuceEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.renaissance.oilyolive.OilyOliveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.skycity.loquat.LoquatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.guardian.smallnut.SmallNutEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.kabloom.bombseedling.BombSeedlingEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.kabloom.buttonshroom.ButtonshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.kabloom.zapricot.ZapricotEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.smarty.weeniebeanie.WeenieBeanieEntity;
@@ -76,8 +76,8 @@ public class PvZEntitySpawn {
 		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.LILYPAD, PVZCONFIG.nestedSpawns.nestedPlantSpawns.lilypadSP(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.lilypadSPmin(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.lilypadSPmax());
 		SpawnRestriction.register(PvZEntity.LILYPAD, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, LilyPadEntity::canLilyPadSpawn);
 
-		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.BOMBSEEDLING, PVZCONFIG.nestedSpawns.nestedPlantSpawns.bombseedlingSP(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.bombseedlingSPmin(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.bombseedlingSPmax());
-		SpawnRestriction.register(PvZEntity.BOMBSEEDLING, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BombSeedlingEntity::canBombSeedlingSpawn);
+		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.OILYOLIVE, PVZCONFIG.nestedSpawns.nestedPlantSpawns.bombseedlingSP(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.bombseedlingSPmin(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.bombseedlingSPmax());
+		SpawnRestriction.register(PvZEntity.OILYOLIVE, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, OilyOliveEntity::canOilyOliveSpawn);
 
 		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.SMALLNUT, PVZCONFIG.nestedSpawns.nestedPlantSpawns.smallnutSP(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.smallnutSPmin(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.smallnutSPmax());
 		SpawnRestriction.register(PvZEntity.SMALLNUT, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SmallNutEntity::canSmallnutSpawn);

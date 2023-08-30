@@ -35,7 +35,8 @@
         "pvzmod:zombies/trashcan_entry",
         "pvzmod:zombies/bully_entry",
         "pvzmod:zombies/impthrower_entry",
-        "pvzmod:zombies/soldier_entry"
+        "pvzmod:zombies/soldier_entry",
+        "pvzmod:zombies/scientist_entry"
       ],
       "title": "Spawnable Zombies"
     }

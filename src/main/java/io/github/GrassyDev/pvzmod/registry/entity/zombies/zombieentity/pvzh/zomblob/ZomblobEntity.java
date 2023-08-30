@@ -296,56 +296,6 @@ public class ZomblobEntity extends PvZombieEntity implements IAnimatable {
 		return itemStack;
 	}
 
-
-	@Override
-	public void onDeath(DamageSource source) {
-		if (this.getType().equals(PvZEntity.ZOMBLOBBIGHYPNO) || this.getType().equals(PvZEntity.ZOMBLOBBIG)){
-			EntityType<?> type = PvZEntity.ZOMBLOB;
-			if (this.getType().equals(PvZEntity.ZOMBLOBBIGHYPNO)){
-				type = PvZEntity.ZOMBLOBHYPNO;
-			}
-			if (this.world instanceof ServerWorld serverWorld) {
-				for (int x = -1; x <= 1; x += 2) {
-					Vec3d vec3d = new Vec3d((double) 0, 0, x).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-					BlockPos blockPos = this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
-					if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)) {
-						vec3d = new Vec3d((double) 0, 0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-					}
-					ZomblobEntity zomblob = (ZomblobEntity) type.create(world);
-					zomblob.refreshPositionAndAngles(this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z, 0, 0);
-					zomblob.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
-					zomblob.setOwner(this);
-					serverWorld.spawnEntityAndPassengers(zomblob);
-				}
-			}
-			this.discard();
-		}
-		if (this.getType().equals(PvZEntity.ZOMBLOBHYPNO) || this.getType().equals(PvZEntity.ZOMBLOB)){
-			EntityType<?> type = PvZEntity.ZOMBLOBSMALL;
-			if (this.getType().equals(PvZEntity.ZOMBLOBHYPNO)){
-				type = PvZEntity.ZOMBLOBSMALLHYPNO;
-			}
-			if (this.world instanceof ServerWorld serverWorld) {
-				for (int x = -1; x <= 1; x += 2) {
-					Vec3d vec3d = new Vec3d((double) 0, 0, x).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-					BlockPos blockPos = this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
-					if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)) {
-						vec3d = new Vec3d((double) 0, 0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-					}
-					ZomblobEntity zomblob = (ZomblobEntity) type.create(world);
-					zomblob.refreshPositionAndAngles(this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z, 0, 0);
-					zomblob.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
-					zomblob.setOwner(this);
-					serverWorld.spawnEntityAndPassengers(zomblob);
-				}
-			}
-			this.discard();
-		}
-		if (this.getType().equals(PvZEntity.ZOMBLOBSMALLHYPNO) || this.getType().equals(PvZEntity.ZOMBLOBSMALL)) {
-			super.onDeath(source);
-		}
-	}
-
 	/** /~*~//~*ATTRIBUTES*~//~*~/ **/
 
 	@Override
@@ -497,5 +447,55 @@ public class ZomblobEntity extends PvZombieEntity implements IAnimatable {
 		}
 
 		return bl;
+	}
+
+
+	@Override
+	public void onDeath(DamageSource source) {
+		if (this.getType().equals(PvZEntity.ZOMBLOBBIGHYPNO) || this.getType().equals(PvZEntity.ZOMBLOBBIG)){
+			EntityType<?> type = PvZEntity.ZOMBLOB;
+			if (this.getType().equals(PvZEntity.ZOMBLOBBIGHYPNO)){
+				type = PvZEntity.ZOMBLOBHYPNO;
+			}
+			if (this.world instanceof ServerWorld serverWorld) {
+				for (int x = -1; x <= 1; x += 2) {
+					Vec3d vec3d = new Vec3d((double) 0, 0, x).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+					BlockPos blockPos = this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
+					if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)) {
+						vec3d = new Vec3d((double) 0, 0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+					}
+					ZomblobEntity zomblob = (ZomblobEntity) type.create(world);
+					zomblob.refreshPositionAndAngles(this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z, 0, 0);
+					zomblob.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+					zomblob.setOwner(this);
+					serverWorld.spawnEntityAndPassengers(zomblob);
+				}
+			}
+			this.discard();
+		}
+		if (this.getType().equals(PvZEntity.ZOMBLOBHYPNO) || this.getType().equals(PvZEntity.ZOMBLOB)){
+			EntityType<?> type = PvZEntity.ZOMBLOBSMALL;
+			if (this.getType().equals(PvZEntity.ZOMBLOBHYPNO)){
+				type = PvZEntity.ZOMBLOBSMALLHYPNO;
+			}
+			if (this.world instanceof ServerWorld serverWorld) {
+				for (int x = -1; x <= 1; x += 2) {
+					Vec3d vec3d = new Vec3d((double) 0, 0, x).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+					BlockPos blockPos = this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
+					if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)) {
+						vec3d = new Vec3d((double) 0, 0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+					}
+					ZomblobEntity zomblob = (ZomblobEntity) type.create(world);
+					zomblob.refreshPositionAndAngles(this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z, 0, 0);
+					zomblob.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+					zomblob.setOwner(this);
+					serverWorld.spawnEntityAndPassengers(zomblob);
+				}
+			}
+			this.discard();
+		}
+		if (this.getType().equals(PvZEntity.ZOMBLOBSMALLHYPNO) || this.getType().equals(PvZEntity.ZOMBLOBSMALL)) {
+			super.onDeath(source);
+		}
 	}
 }

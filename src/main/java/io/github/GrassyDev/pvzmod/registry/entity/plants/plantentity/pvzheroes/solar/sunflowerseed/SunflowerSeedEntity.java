@@ -32,7 +32,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -215,51 +214,38 @@ public class SunflowerSeedEntity extends PlantEntity implements IAnimatable, Ran
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 9);
 
-			boolean bl = false;
-
-			for (int i = 0; i < 2; ++i) {
-				Vec3d vec3d2 = new Vec3d(livingEntity.getX(), livingEntity.getBodyY(0.5 * (double) i), livingEntity.getZ());
-				HitResult hitResult = this.world.raycast(new RaycastContext(vec3d, vec3d2, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this));
-				if (hitResult.getType() == HitResult.Type.MISS) {
-					bl = true;
-					break;
-				}
-			}
-
-			if (bl) {
-				if (livingEntity instanceof Monster &&
-						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-								&& (generalPvZombieEntity.getHypno()))) {
-					ZombiePropEntity zombiePropEntity2 = null;
-					for (Entity entity1 : livingEntity.getPassengerList()) {
-						if (entity1 instanceof ZombiePropEntity zpe) {
-							zombiePropEntity2 = zpe;
-						}
+			if (livingEntity instanceof Monster &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+							&& (generalPvZombieEntity.getHypno()))) {
+				ZombiePropEntity zombiePropEntity2 = null;
+				for (Entity entity1 : livingEntity.getPassengerList()) {
+					if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity2 = zpe;
 					}
-					if (livingEntity.getY() < (this.getY() + 1.5) && livingEntity.getY() > (this.getY() - 1.5)) {
-						if (!world.isClient &&
-								!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
-								!(livingEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
-								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
-							String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
-							SoundEvent sound;
-							sound = switch (zombieMaterial) {
-								case "metallic" -> PvZSounds.BUCKETHITEVENT;
-								case "plastic" -> PvZSounds.CONEHITEVENT;
-								case "stone" -> PvZSounds.STONEHITEVENT;
-									default -> PvZSounds.PEAHITEVENT;
-							};
-							livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-							float damage = 4F;
-							if (damage > livingEntity.getHealth() &&
-									!(livingEntity instanceof ZombieShieldEntity) &&
-									livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-								float damage2 = damage - ((LivingEntity) livingEntity).getHealth();
-								livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-								generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
-							} else {
-								livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-							}
+				}
+				if (livingEntity.getY() < (this.getY() + 1.5) && livingEntity.getY() > (this.getY() - 1.5)) {
+					if (!world.isClient &&
+							!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+							!(livingEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
+							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
+						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+						SoundEvent sound;
+						sound = switch (zombieMaterial) {
+							case "metallic" -> PvZSounds.BUCKETHITEVENT;
+							case "plastic" -> PvZSounds.CONEHITEVENT;
+							case "stone" -> PvZSounds.STONEHITEVENT;
+							default -> PvZSounds.PEAHITEVENT;
+						};
+						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
+						float damage = 4F;
+						if (damage > livingEntity.getHealth() &&
+								!(livingEntity instanceof ZombieShieldEntity) &&
+								livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+							float damage2 = damage - ((LivingEntity) livingEntity).getHealth();
+							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+							generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
+						} else {
+							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 						}
 					}
 				}

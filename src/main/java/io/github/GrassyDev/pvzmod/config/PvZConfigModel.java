@@ -256,6 +256,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float navybeanS = 5.0f;
 		@RestartRequired
+		public float oilyOliveS = 2.5f;
+		@RestartRequired
 		public float peapodS = 3.75f;
 		@RestartRequired
 		public float peashooterS = 5.0f;
@@ -475,6 +477,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double newspaperH = 27D;
 		@RestartRequired
+		public double scientistH = 27D;
+		@RestartRequired
 		public double sundayH = 50D;
 		@RestartRequired
 		public double poleH = 50D;
@@ -549,6 +553,8 @@ public class PvZConfigModel {
 		public double trashcanObstH = 225D;
 		@RestartRequired
 		public double basketballObstH = 120D;
+		@RestartRequired
+		public double healstationObstH = 60D;
 
 		@RestartRequired
 		public double hawkerObstH = 90D;

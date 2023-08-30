@@ -1,7 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicobstacle;
 
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
-import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
@@ -14,6 +13,9 @@ public class MetalObstacleEntityModel extends AnimatedGeoModel<MetalObstacleEnti
 		identifier = new Identifier("pvzmod", "geo/basketballbin.geo.json");
 		if (object.getType().equals(PvZEntity.BASKETBALLBIN)) {
 			identifier = new Identifier("pvzmod", "geo/basketballbin.geo.json");
+		}
+		else if (object.getType().equals(PvZEntity.HEALSTATION)) {
+			identifier = new Identifier("pvzmod", "geo/healstation.geo.json");
 		}
 		else if (object.getType().equals(PvZEntity.TRASHCANBIN)) {
 			identifier = new Identifier("pvzmod", "geo/trashcanbin.geo.json");
@@ -43,6 +45,9 @@ public class MetalObstacleEntityModel extends AnimatedGeoModel<MetalObstacleEnti
 			else if (object.armless) {
 				identifier = new Identifier("pvzmod", "textures/entity/obstacles/basketballbin_dmg1.png");
 			}
+		}
+		else if (object.getType().equals(PvZEntity.HEALSTATION)) {
+			identifier = new Identifier("pvzmod", "textures/entity/scientist/scientist.png");
 		}
 		else if (object.getType().equals(PvZEntity.TRASHCANBIN)) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/browncoat.png");

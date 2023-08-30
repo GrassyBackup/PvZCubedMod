@@ -4,6 +4,7 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.ImpVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
@@ -25,13 +26,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -323,10 +322,9 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 
 	private void raycastExplode() {
 		double squaredDist;
-		if (this.getVariant().equals(ImpVariants.NEWYEAR)){
+		if (this.getVariant().equals(ImpVariants.NEWYEAR)) {
 			squaredDist = 25;
-		}
-		else {
+		} else {
 			squaredDist = 9;
 		}
 		Vec3d vec3d = this.getPos();
@@ -344,36 +342,23 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > squaredDist);
 
-			boolean bl = false;
-
-			for (int i = 0; i < 2; ++i) {
-				Vec3d vec3d2 = new Vec3d(livingEntity.getX(), livingEntity.getBodyY(0.5 * (double) i), livingEntity.getZ());
-				HitResult hitResult = this.world.raycast(new RaycastContext(vec3d, vec3d2, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this));
-				if (hitResult.getType() == HitResult.Type.MISS) {
-					bl = true;
-					break;
-				}
+			if (livingEntity instanceof OilTile oilTile){
+				oilTile.makeFireTrail(oilTile.getBlockPos());
 			}
-
-			if (bl) {
-				if (this.getHypno()){
-					if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-						if (livingEntity.getFirstPassenger() != null){
-							livingEntity.getFirstPassenger().damage(DamageSource.explosion(this), 30);
-						}
-						else {
-							livingEntity.damage(DamageSource.explosion(this), 30);
-						}
+			if (this.getHypno()) {
+				if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+					if (livingEntity.getFirstPassenger() != null) {
+						livingEntity.getFirstPassenger().damage(DamageSource.explosion(this), 30);
+					} else {
+						livingEntity.damage(DamageSource.explosion(this), 30);
 					}
 				}
-				else {
-					if (livingEntity instanceof PlantEntity || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno())) {
-						if (livingEntity.getFirstPassenger() != null && livingEntity instanceof GeneralPvZombieEntity){
-							livingEntity.getFirstPassenger().damage(DamageSource.explosion(this), 30);
-						}
-						else {
-							livingEntity.damage(DamageSource.explosion(this), 30);
-						}
+			} else {
+				if (livingEntity instanceof PlantEntity || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno())) {
+					if (livingEntity.getFirstPassenger() != null && livingEntity instanceof GeneralPvZombieEntity) {
+						livingEntity.getFirstPassenger().damage(DamageSource.explosion(this), 30);
+					} else {
+						livingEntity.damage(DamageSource.explosion(this), 30);
 					}
 				}
 			}

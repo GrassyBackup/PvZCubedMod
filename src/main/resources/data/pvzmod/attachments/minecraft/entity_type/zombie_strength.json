@@ -9,7 +9,8 @@
     "pvzmod:zomblob": 6,
     "pvzmod:zomblobsmall": 4,
     "pvzmod:gargantuar": 8,
-    "pvzmod:soldier": 8,
+    "pvzmod:footsoldier": 8,
+    "pvzmod:healstation": 8,
     "pvzmod:zomboni": 7,
     "pvzmod:zombonivehicle": 7,
     "pvzmod:bobsledvehicle": 7,
@@ -37,6 +38,7 @@
     "pvzmod:trashcanbin": 5,
     "pvzmod:brickhead": 5,
     "pvzmod:peasantknight": 5,
+    "pvzmod:scientist": 5,
     "pvzmod:bobsled": 4,
     "pvzmod:bully": 4,
     "pvzmod:buckethead": 4,
@@ -58,6 +60,7 @@
     "pvzmod:backup_dancer": 2,
     "pvzmod:browncoat": 1,
     "pvzmod:mummy": 1,
-    "pvzmod:peasant": 1
+    "pvzmod:peasant": 1,
+    "pvzmod:sergeant": 1
   }
 }
