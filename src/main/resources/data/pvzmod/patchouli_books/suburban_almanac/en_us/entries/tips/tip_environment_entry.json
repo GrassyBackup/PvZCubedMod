@@ -65,6 +65,17 @@
     {
       "type": "text",
       "text": [
+        "$(br)Oil Tile",
+        "$(br)When a Zombie steps on it, it Stuns them for 5 seconds and slides them forward by about 2 blocks. Unless it's on fire.",
+        "$(br)Covered and Machine Zombies don't slide.",
+        "$(br)Gets set on fire inside the warm radius of a Plant, a fire projectile goes over it, hit by fire splash or some explosions, or when a Zombie on fire is near it.",
+        "$(br)When on fire, it makes a Fire Trail with double the original duration over it."
+
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
         "$(br)Gold Tile",
         "$(br2)Gold Tile produces one Small Sun every 3 minutes if there's a non-flying Plant on top of them. The Zombie Sun Radius is 10 blocks.",
         "$(br2)They can be removed by right clicking them with a Gold Shovel."
@@ -74,8 +85,8 @@
       "type": "text",
       "text": [
         "$(br)Banana Peel",
-        "$(br2)When a Zombie steps on it, it Stuns them for 10 seconds, inflicts damage based on it's weight, and moves them forward by about 3 blocks.",
-        "$(br)Covered Zombies aren't affected by the Stun and don't move.",
+        "$(br)When a Zombie steps on it, it Stuns them for 10 seconds, inflicts damage based on it's weight, and slides them forward by about 3 blocks.",
+        "$(br)Covered Zombies aren't affected by the Stun and don't slide.",
         "$(br2)The weight depends on the Zombie's size, gear weight, and materials, and won't work on Machines.",
         "$(br2)They last for 2 minutes or until a Zombie steps on it."
       ]

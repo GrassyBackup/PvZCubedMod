@@ -1,16 +1,16 @@
 {
   "display": {
     "icon": {
-      "item": "pvzmod:potatomine_seed_packet"
+      "item": "pvzmod:olivepit_seed_packet"
     },
-    "title": "The Explosives",
-    "description": "Craft a Potato Mine",
+    "title": "That's the Pits",
+    "description": "Craft an Olive Pit",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
-  "parent": "pvzmod:start_pvz",
+  "parent": "pvzmod:make_gravebuster",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",
@@ -18,7 +18,7 @@
         "items": [
           {
             "items": [
-              "pvzmod:potatomine_seed_packet"
+              "pvzmod:olivepit_seed_packet"
             ],
             "count": {
               "min": 1,
@@ -31,10 +31,6 @@
   },
   "rewards": {
     "recipes": [
-      "pvzmod:plants/bombard/cherrybomb",
-      "pvzmod:plants/enforce/squash",
-      "pvzmod:plants/pepper/jalapeno",
-      "pvzmod:plants/bombard/bombseedling"
     ],
     "experience": 25
   }

@@ -61,6 +61,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.frostb
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.electropea.ElectropeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.flamingpea.FlamingpeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.coconutcannon.CoconutCannonEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.springbean.SpringbeanEntity;
@@ -252,6 +253,7 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.ICEBERGLETTUCE);
 		PLANT_LIST.add(PvZEntity.MISSILETOE);
 		PLANT_LIST.add(PvZEntity.ELECTROPEA);
+		PLANT_LIST.add(PvZEntity.OLIVEPIT);
 		PLANT_LIST.add(PvZEntity.MAGICSHROOM);
 		PLANT_LIST.add(PvZEntity.LOQUAT);
 		PLANT_LIST.add(PvZEntity.SAUCER);
@@ -645,6 +647,12 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "electropea"),
 			QuiltEntityTypeBuilder.<ElectropeaEntity>create(SpawnGroup.CREATURE, ElectropeaEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.8f)).build()
+	);
+
+	public static final EntityType<OlivePitEntity> OLIVEPIT = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "olivepit"),
+			QuiltEntityTypeBuilder.<OlivePitEntity>create(SpawnGroup.CREATURE, OlivePitEntity::new).setDimensions(EntityDimensions.fixed(1f,0.125f)).build()
 	);
 
 	public static final EntityType<MagicshroomEntity> MAGICSHROOM = Registry.register(
@@ -2103,6 +2111,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MISSILETOE, MissileToeEntity.createMissileToeAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ELECTROPEA, ElectropeaEntity.createElectropeaAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.OLIVEPIT, OlivePitEntity.createOlivePitAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MAGICSHROOM, MagicshroomEntity.createMagicshroomAttributes().build());
 

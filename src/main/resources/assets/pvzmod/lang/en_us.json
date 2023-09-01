@@ -134,6 +134,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.narcissusS": "Narcissus Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.navybeanS": "Navy Bean Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.oilyOliveS": "Oily Olive Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.oliveS": "Olive Pit Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.peapodS": "Pea Pod Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.peashooterS": "Peashooter Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.pepperpultS": "Pepper-pult Seed",
@@ -650,6 +651,10 @@
   "item.pvzmod.electropea_seed_packet": "⚡ Electro Pea Seed Packet",
   "item.pvzmod.electropea_seed_packet.flavour": "\"Overpowered? Yes, I'm very powered.\"",
   "item.pvzmod.electricpea": "Electric Pea",
+
+  "entity.pvzmod.olivepit": "Olive Pit",
+  "item.pvzmod.olivepit_seed_packet": "⏳ Olive Pit Seed Packet",
+  "item.pvzmod.olivepit_seed_packet.flavour": "\"Careful! Holey floor!\"",
 
   "entity.pvzmod.magicshroom": "Magic-shroom",
   "entity.pvzmod.magichat": "Magic Hat",

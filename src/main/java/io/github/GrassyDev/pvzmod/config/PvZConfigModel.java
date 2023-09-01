@@ -258,6 +258,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float oilyOliveS = 2.5f;
 		@RestartRequired
+		public float olivepitS = 12.5f;
+		@RestartRequired
 		public float peapodS = 3.75f;
 		@RestartRequired
 		public float peashooterS = 5.0f;

@@ -60,14 +60,11 @@ public class OilTile extends TileEntity {
 							&& (generalPvZombieEntity.getHypno()))) &&
 					(!(livingEntity instanceof ZombiePropEntity) || livingEntity instanceof ZombieRiderEntity)) {
 				boolean isMachine = PvZCubed.IS_MACHINE.get(livingEntity.getType()).orElse(false);
-				if (!isMachine) {
-					if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered()){
-						livingEntity.setVelocity(0, 0, 0);
-					}
-					else if (!livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE)) {
+				if (!isMachine && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+					if (!livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE)) {
 						livingEntity.setVelocity(0, 0, 0);
 						Vec3d vec3d = new Vec3d((double) 0.5, 0, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 200, 5)));
+						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 5)));
 						livingEntity.setVelocity(vec3d.x, vec3d.y, vec3d.z);
 					}
 					ZombiePropEntity zombiePropEntity2 = null;

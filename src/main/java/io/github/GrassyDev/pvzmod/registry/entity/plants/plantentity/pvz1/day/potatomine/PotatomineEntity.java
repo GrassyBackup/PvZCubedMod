@@ -125,7 +125,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 		if (status != 2 && status != 60){
 			super.handleStatus(status);
 		}
-		RandomGenerator randomGenerator = this.getRandom();
+
 		ItemStack itemStack = Items.POTATO.getDefaultStack();
 		if (status == 80) {
 			for(int i = 0; i < 96; ++i) {
@@ -145,6 +145,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 8; ++i) {
+				RandomGenerator randomGenerator = this.getRandom();
 				double e = this.random.nextDouble() / 2 * (this.random.range(-1, 1) * 0.5);
 				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (this.random.range(-1, 1)),
@@ -155,6 +156,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 		BlockState blockState = this.getLandingBlockState();
 		if (status == 108) {
 			for(int i = 0; i < 4; ++i) {
+				RandomGenerator randomGenerator = this.getRandom();
 				double d = this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
 				double e = this.getY();
 				double f = this.getZ() + (double)MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);

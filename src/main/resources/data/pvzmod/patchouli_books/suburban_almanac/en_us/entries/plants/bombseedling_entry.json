@@ -3,17 +3,18 @@
   "icon": "pvzmod:bombseedling_seed_packet",
   "category": "pvzmod:plant_category",
   "sortnum": 302,
+  "advancement": "pvzmod:make_potatomine",
   "pages": [
     {
       "type": "text",
       "text": [
         "$(#bd951a)Damage: $()$(#ff0000)32",
-        "$(br)$(#bd951a)Activation Range: $()$(#ff0000)2 Blocks",
+        "$(br)$(#bd951a)Activation Range: $()$(#ff0000)5 Blocks",
         "$(br)$(#bd951a)Explosion Range: $()$(#ff0000)2 Blocks",
         "$(br)$(#bd951a)Fuse Time: $()$(#ff0000)0.75s",
         "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)2.5s",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)Immune to Fire. Spawns uncommonly. Drops Blazing Plant Food",
-        "$(br)$(#bd951a)\"Don't you love creative liberty?\" says Bomb Seedling. \"I could turn into most plants before, now I'm just a resource for gameplay reasons.\", \"I can also explode.\""
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Immune to Fire. Transforms into a random Plant after exploding.",
+        "$(br2)$(#bd951a)It's the tiny seed of a... nobody actually knows."
       ]
     },
     {
@@ -23,7 +24,7 @@
       ],
       "title": "☄ Bombard Family",
       "border": "true",
-      "text": "$(#25228d)Explodes nearby Zombies and their Blazing Plant Food makes combustive plants. "
+      "text": "$(#25228d)Explodes nearby Zombies and transforms into a random Plant."
     },
     {
       "type": "crafting",
