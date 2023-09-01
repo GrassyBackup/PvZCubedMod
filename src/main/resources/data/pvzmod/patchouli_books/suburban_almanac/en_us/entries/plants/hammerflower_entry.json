@@ -2,7 +2,7 @@
   "name": "Hammer Flower",
   "icon": "pvzmod:hammerflower_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 103,
+  "sortnum": 108,
   "advancement": "pvzmod:make_beet",
   "pages": [
     {

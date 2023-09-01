@@ -775,6 +775,8 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 	private int unstuckDelay;
 	private int jumpDelay;
 	private int chillTicks;
+	public int oilTicks;
+	public boolean canSlide = true;
 	private int chillCDTicks;
 	private int barkTicks;
 	private float lastHealth = this.getHealth();
@@ -809,6 +811,12 @@ public abstract class GeneralPvZombieEntity extends HostileEntity {
 			}
 			if (--chillCDTicks > 0) {
 				this.removeStatusEffect(ICE);
+			}
+			if (!this.hasStatusEffect(STUN)){
+				this.canSlide = oilTicks <= 0;
+			}
+			if (--oilTicks <= 0){
+				oilTicks = 0;
 			}
 			if (barkTicks > 0 && !this.hasStatusEffect(BARK)){
 				this.addStatusEffect((new StatusEffectInstance(BARK, barkTicks, 1)));

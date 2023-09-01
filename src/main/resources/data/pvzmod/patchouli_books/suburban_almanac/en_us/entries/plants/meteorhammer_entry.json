@@ -2,7 +2,7 @@
   "name": "Meteor Hammer",
   "icon": "pvzmod:meteorhammer_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 104,
+  "sortnum": 109,
   "advancement": "pvzmod:make_beet",
   "pages": [
     {

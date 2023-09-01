@@ -84,6 +84,14 @@
     {
       "type": "text",
       "text": [
+        "$(br)Spring Tile",
+        "$(br2)When a Zombie steps on it, it slightly Bounces them back and it vanishes.",
+        "$(br2)They last for a few seconds."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
         "$(br)Banana Peel",
         "$(br)When a Zombie steps on it, it Stuns them for 10 seconds, inflicts damage based on it's weight, and slides them forward by about 3 blocks.",
         "$(br)Covered Zombies aren't affected by the Stun and don't slide.",

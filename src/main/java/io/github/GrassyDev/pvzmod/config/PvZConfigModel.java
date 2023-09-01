@@ -302,6 +302,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float springbeanS = 15f;
 		@RestartRequired
+		public float springprincessS = 15.0f;
+		@RestartRequired
 		public float squashS = 25.0f;
 		@RestartRequired
 		public float sunflowerS = 2.5f;
@@ -387,6 +389,7 @@ public class PvZConfigModel {
 		public float snowPeaDMG = 4f;
 		public float snowQueenPeaDMGv2 = 9f;
 		public float snowQueenPeaSDMG = 3f;
+		public float springDMG = 4f;
 		public float spikeDMGv2 = 4f;
 		public float spitDMG = 2f;
 		public float smooshProjDMG = 12f;

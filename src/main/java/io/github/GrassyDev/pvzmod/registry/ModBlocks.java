@@ -191,6 +191,18 @@ public class ModBlocks {
 			.sounds(BlockSoundGroup.METAL)
 			.strength(1.9f, 1200f));
 
+	public static final Block FAIRY_TILE = new Block(QuiltBlockSettings
+			.of(Material.SOIL)
+			.requiresTool()
+			.sounds(BlockSoundGroup.GRASS)
+			.strength(1.9f, 1200f));
+
+	public static final Block DARK_FAIRY_TILE = new Block(QuiltBlockSettings
+			.of(Material.SOIL)
+			.requiresTool()
+			.sounds(BlockSoundGroup.GRASS)
+			.strength(1.9f, 1200f));
+
 
 
 	public static void registerBlocks(){
@@ -223,6 +235,8 @@ public class ModBlocks {
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_lostcity_tile"), DARK_LOSTCITY_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"skycity_tile"), SKYCITY_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_skycity_tile"), DARK_SKYCITY_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"fairytale_tile"), FAIRY_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_fairytale_tile"), DARK_FAIRY_TILE);
 
     }
 

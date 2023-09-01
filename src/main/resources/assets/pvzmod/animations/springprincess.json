@@ -69,7 +69,7 @@
 			}
 		},
 		"springprincess.shoot": {
-			"animation_length": 1.5,
+			"animation_length": 4,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -83,6 +83,24 @@
 						"1.5": {
 							"vector": [0, 0, 0],
 							"easing": "easeInBack"
+						},
+						"2.25": {
+							"vector": [0, 12.5, 0],
+							"easing": "easeOutElastic",
+							"easingArgs": [1]
+						},
+						"2.75": {
+							"vector": [0, 0, 0],
+							"easing": "easeInSine"
+						},
+						"3.5": {
+							"vector": [0, -7.5, 0],
+							"easing": "easeOutElastic",
+							"easingArgs": [1]
+						},
+						"4.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInSine"
 						}
 					},
 					"position": {
@@ -92,6 +110,14 @@
 						"1.5": {
 							"vector": [0, 0, 0],
 							"easing": "easeInBack"
+						},
+						"2.75": {
+							"vector": [0, 0, 0],
+							"easing": "easeInSine"
+						},
+						"4.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInSine"
 						}
 					},
 					"scale": {
@@ -110,6 +136,24 @@
 						"1.5": {
 							"vector": [1, 1, 1],
 							"easing": "easeInBack"
+						},
+						"2.25": {
+							"vector": [1, 0.9, 1],
+							"easing": "easeOutElastic",
+							"easingArgs": [1]
+						},
+						"2.75": {
+							"vector": [1, 1, 1],
+							"easing": "easeInSine"
+						},
+						"3.5": {
+							"vector": [1, 0.9, 1],
+							"easing": "easeOutElastic",
+							"easingArgs": [1]
+						},
+						"4.0": {
+							"vector": [1, 1, 1],
+							"easing": "easeInSine"
 						}
 					}
 				},

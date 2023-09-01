@@ -2,7 +2,7 @@
   "name": "Pumpkin Witch",
   "icon": "pvzmod:pumpkinwitch_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 100,
+  "sortnum": 105,
   "advancement": "pvzmod:make_charmshroom",
   "pages": [
     {

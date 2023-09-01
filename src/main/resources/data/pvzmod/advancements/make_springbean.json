@@ -31,7 +31,8 @@
   },
   "rewards": {
     "recipes": [
-      "pvzmod:plants/contain/jumpingbean"
+      "pvzmod:plants/contain/jumpingbean",
+      "pvzmod:plants/contain/springprincess"
     ],
     "experience": 25
   }

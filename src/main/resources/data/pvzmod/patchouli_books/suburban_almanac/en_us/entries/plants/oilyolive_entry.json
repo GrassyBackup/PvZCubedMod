@@ -2,7 +2,7 @@
   "name": "Oily Olive",
   "icon": "pvzmod:oilyolive_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 302,
+  "sortnum": 100,
   "pages": [
     {
       "type": "text",

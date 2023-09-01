@@ -159,6 +159,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.spikerockS": "Spikerock Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.spikeweedS": "Spikeweed Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.springbeanS": "Spring Bean Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.springprincessS": "Spring Princess Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.squashS": "Squash Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.sunflowerS": "Sunflower Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.sunflowerseedS": "Sunflower Seed Seed",
@@ -227,6 +228,7 @@
   "text.config.pvz3-config.option.nestedProjDMG.snowQueenPeaDMGv2": "Snow Queen Pea Damage",
   "text.config.pvz3-config.option.nestedProjDMG.snowQueenPeaSDMG": "Snow Queen Pea Splash Damage",
   "text.config.pvz3-config.option.nestedProjDMG.spikeDMGv2": "Spike Damage",
+  "text.config.pvz3-config.option.nestedProjDMG.springDMG": "Spring Hair Damage",
   "text.config.pvz3-config.option.nestedProjDMG.smooshProjDMG": "Hammer Cap Damage",
   "text.config.pvz3-config.option.nestedProjDMG.spitDMG": "Spit Damage",
   "text.config.pvz3-config.option.nestedProjDMG.sporeDMG": "Spore Damage",
@@ -679,6 +681,11 @@
   "entity.pvzmod.oilyolive": "Oily Olive",
   "item.pvzmod.oilyolive_seed_packet": "⏳ Oily Olive Seed Packet",
   "item.pvzmod.oilyolive_seed_packet.flavour": "\"Careful! Oily floor!\"",
+
+  "entity.pvzmod.springprincess": "Spring Princess",
+  "item.pvzmod.springprincess_seed_packet": "⏳ Spring Princess Seed Packet",
+  "item.pvzmod.springprincess_seed_packet.flavour": "\"Climb the tower with my hair!\" *BOING*",
+  "item.pvzmod.springhair": "Spring Hair",
 
   "entity.pvzmod.pumpkinwitch": "Pumpkin Witch",
   "item.pvzmod.pumpkinwitch_seed_packet": "⭐ Pumpkin Witch Seed Packet",

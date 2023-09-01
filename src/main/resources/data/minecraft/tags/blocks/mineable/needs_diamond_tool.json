@@ -26,6 +26,8 @@
     "pvzmod:lostcity_tile",
     "pvzmod:dark_lostcity_tile",
     "pvzmod:skycity_tile",
-    "pvzmod:dark_skycity_tile"
+    "pvzmod:dark_skycity_tile",
+    "pvzmod:fairy_tile",
+    "pvzmod:dark_fairy_tile"
   ]
 }

@@ -4,11 +4,11 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.flamingpea.ShootingFlamingPeaEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pepper.ShootingPepperEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.piercingpea.FirePiercePeaEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.plasmapea.ShootingPlasmaPeaEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pumpkinproj.ShootingPumpkinEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.flamingpea.ShootingFlamingPeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.pepper.ShootingPepperEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.piercingpea.FirePiercePeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.plasmapea.ShootingPlasmaPeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.pumpkinproj.ShootingPumpkinEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
@@ -23,8 +23,7 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.DISABLE;
-import static io.github.GrassyDev.pvzmod.PvZCubed.FROZEN;
+import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
 public class OilTile extends TileEntity {
 
@@ -53,7 +52,7 @@ public class OilTile extends TileEntity {
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 1);
 
-			if (!onFire && ((livingEntity instanceof Monster &&
+			if (!onFire && livingEntity.isOnGround() && ((livingEntity instanceof Monster &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
 							generalPvZombieEntity.isFlying())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
@@ -61,10 +60,14 @@ public class OilTile extends TileEntity {
 					(!(livingEntity instanceof ZombiePropEntity) || livingEntity instanceof ZombieRiderEntity)) {
 				boolean isMachine = PvZCubed.IS_MACHINE.get(livingEntity.getType()).orElse(false);
 				if (!isMachine && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
-					if (!livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE)) {
+					if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.canSlide && !livingEntity.hasStatusEffect(BOUNCED)) {
+						Vec3d vec3d = new Vec3d((double) 1, -0.1, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 						livingEntity.setVelocity(0, 0, 0);
-						Vec3d vec3d = new Vec3d((double) 0.5, 0, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 5)));
+
+						if (!generalPvZombieEntity.hasStatusEffect(STUN) && generalPvZombieEntity.oilTicks <= 0) {
+							generalPvZombieEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 5)));
+							generalPvZombieEntity.oilTicks = 300;
+						}
 						livingEntity.setVelocity(vec3d.x, vec3d.y, vec3d.z);
 					}
 					ZombiePropEntity zombiePropEntity2 = null;

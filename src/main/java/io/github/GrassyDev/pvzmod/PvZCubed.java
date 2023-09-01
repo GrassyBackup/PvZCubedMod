@@ -187,6 +187,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.LOQUAT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SAUCER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.OILYOLIVE_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.SPRINGPRINCESS_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.PUMPKINWITCH_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.TULIMPETER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.NARCISSUS_SEED_PACKET));
@@ -236,14 +237,15 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.PLASMAPEA));
 				stacks.add(new ItemStack(ModItems.POWERSPIKE));
 				stacks.add(new ItemStack(ModItems.ELECTRICPEA));
-				stacks.add(new ItemStack(ModItems.ICESPIKE));
-				stacks.add(new ItemStack(ModItems.POWERICESPIKE));
+				stacks.add(new ItemStack(ModItems.SPRINGHAIR));
 				stacks.add(new ItemStack(ModItems.CARDPROJ));
 				stacks.add(new ItemStack(ModItems.PUMPKINPROJ));
 				stacks.add(new ItemStack(ModItems.HYPNOPROJ));
 				stacks.add(new ItemStack(ModItems.BUBBLES));
 				stacks.add(new ItemStack(ModItems.ARMORBUBBLE));
 				stacks.add(new ItemStack(ModItems.DROP));
+				stacks.add(new ItemStack(ModItems.ICESPIKE));
+				stacks.add(new ItemStack(ModItems.POWERICESPIKE));
 				stacks.add(new ItemStack(ModItems.PIERCEPEA));
 				stacks.add(new ItemStack(ModItems.FIREPIERCEPEA));
 				stacks.add(new ItemStack(ModItems.ACIDFUME));
@@ -374,6 +376,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.DARK_LOSTCITY_TILE));
 				stacks.add(new ItemStack(ModItems.SKYCITY_TILE));
 				stacks.add(new ItemStack(ModItems.DARK_SKYCITY_TILE));
+				stacks.add(new ItemStack(ModItems.FAIRY_TILE));
+				stacks.add(new ItemStack(ModItems.DARK_FAIRY_TILE));
 			}).build();
 
 	@Override
