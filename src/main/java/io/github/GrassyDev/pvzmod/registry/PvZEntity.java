@@ -150,6 +150,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straig
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.spore.SporeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.springproj.SpringProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.basketball.ShootingBasketballEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.soundwave.SoundwaveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.zpg.ZPGEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.miscentity.locustswarm.LocustSwarmEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.bully.basic.BullyEntity;
@@ -177,6 +178,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.jetpack.JetpackEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.pharaoh.PharaohEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.browncoat.sargeant.SargeantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.hawker.piggy.PiggyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.hawker.zombie.HawkerZombieEntity;
@@ -186,6 +188,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.sol
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzh.zomblob.ZomblobEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiegrave.ZombieGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.MetalVehicleEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.robocone.RoboConeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallichelmet.MetalHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicobstacle.MetalObstacleEntity;
@@ -1814,6 +1817,30 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<ShootingBasketballEntity>create(SpawnGroup.MONSTER, ShootingBasketballEntity::new).setDimensions(EntityDimensions.fixed(1f, 2f)).build()
 	);
 
+	public static final EntityType<BassZombieEntity> BASS = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "bass"),
+			QuiltEntityTypeBuilder.<BassZombieEntity>create(SpawnGroup.MONSTER, BassZombieEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1.8f)).build()
+	);
+
+	public static final EntityType<BassZombieEntity> BASSHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "bass_hypnotized"),
+			QuiltEntityTypeBuilder.<BassZombieEntity>create(SpawnGroup.MONSTER, BassZombieEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1.8f)).build()
+	);
+
+	public static final EntityType<SpeakerVehicleEntity> SPEAKER = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "speaker"),
+			QuiltEntityTypeBuilder.<SpeakerVehicleEntity>create(SpawnGroup.MONSTER, SpeakerVehicleEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 1.2f)).build()
+	);
+
+	public static final EntityType<SoundwaveEntity> SOUNDWAVE = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "soundwave"),
+			QuiltEntityTypeBuilder.<SoundwaveEntity>create(SpawnGroup.MONSTER, SoundwaveEntity::new).setDimensions(EntityDimensions.fixed(0.5f, 0.5f)).build()
+	);
+
 	public static final EntityType<HawkerZombieEntity> HAWKERPUSHER = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "hawkerpusher"),
@@ -2414,6 +2441,10 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASKETBALLCARRIER, BasketballCarrierEntity.createBasketballCarrierAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASKETBALLCARRIERHYPNO, BasketballCarrierEntity.createBasketballCarrierAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASKETBALLBIN, MetalObstacleEntity.createBasketBallBinObstacleAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASS, BassZombieEntity.createBassAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASSHYPNO, BassZombieEntity.createBassAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SPEAKER, SpeakerVehicleEntity.createSpeakerVehicleAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.HAWKERPUSHER, HawkerZombieEntity.createHawkerPusherAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.HAWKERPUSHERHYPNO, HawkerZombieEntity.createHawkerPusherAttributes().build());

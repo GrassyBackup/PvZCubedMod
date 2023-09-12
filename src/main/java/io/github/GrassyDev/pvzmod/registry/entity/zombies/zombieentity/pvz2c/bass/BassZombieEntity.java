@@ -1,5 +1,6 @@
-package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.bobsledteam;
+package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -11,10 +12,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.sunflower.SunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.sunshroom.SunshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.BobsledPersonalityVariants;
-import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.DefaultAndHypnoVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.MetalVehicleEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -22,12 +21,8 @@ import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -44,8 +39,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -60,12 +53,12 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable {
+public class BassZombieEntity extends ZombieRiderEntity implements IAnimatable {
 
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private String controllerName = "walkingcontroller";
 
-	public BobsledRiderEntity(EntityType<? extends BobsledRiderEntity> entityType, World world) {
+	public BassZombieEntity(EntityType<? extends BassZombieEntity> entityType, World world) {
         super(entityType, world);
 
         this.experiencePoints = 3;
@@ -73,73 +66,20 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 
 	protected void initDataTracker() {
 		super.initDataTracker();
-		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
-		this.dataTracker.startTracking(PERSONALITY, 0);
 	}
 
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
-		nbt.putInt("Variant", this.getTypeVariant());
-		nbt.putInt("Personality", this.getTypePersonality());
 	}
 
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
-		this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
-		this.dataTracker.set(PERSONALITY, nbt.getInt("Personality"));
 	}
 
 	@Override
 	public void setHypno(IsHypno hypno) {
 		super.setHypno(hypno);
 	}
-
-
-	/** /~*~//~*VARIANTS*~//~*~/ **/
-
-	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
-			DataTracker.registerData(BobsledRiderEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-								 SpawnReason spawnReason, @Nullable EntityData entityData,
-								 @Nullable NbtCompound entityNbt) {
-		if (this.getType().equals(PvZEntity.BOBSLEDHYPNO)){
-			setVariant(DefaultAndHypnoVariants.HYPNO);
-			this.setHypno(IsHypno.TRUE);
-		}
-		else {
-			setVariant(DefaultAndHypnoVariants.DEFAULT);
-		}
-		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-	}
-
-	private int getTypeVariant() {
-		return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
-	}
-
-	public DefaultAndHypnoVariants getVariant() {
-		return DefaultAndHypnoVariants.byId(this.getTypeVariant() & 255);
-	}
-
-	public void setVariant(DefaultAndHypnoVariants variant) {
-		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
-	}
-
-	private static final TrackedData<Integer> PERSONALITY =
-			DataTracker.registerData(BobsledRiderEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
-	private int getTypePersonality() {
-		return this.dataTracker.get(PERSONALITY);
-	}
-
-	public BobsledPersonalityVariants getPersonality() {
-		return BobsledPersonalityVariants.byId(this.getTypePersonality() & 255);
-	}
-
-	public void setPersonality(BobsledPersonalityVariants variant) {
-		this.dataTracker.set(PERSONALITY, variant.getId() & 255);
-	}
-
 
 
 	/** /~*~//~*GECKOLIB ANIMATION*~//~*~/ **/
@@ -158,22 +98,8 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
 		if (this.hasVehicle()){
-			if (this.getVehicle() instanceof MetalVehicleEntity metalVehicleEntity && metalVehicleEntity.isSliding()) {
-				event.getController().setAnimation(new AnimationBuilder().loop("bobsled.slide"));
-			}
-			else {
-				if (this.getPersonality().equals(BobsledPersonalityVariants.LEADER)){
-					event.getController().setAnimation(new AnimationBuilder().loop("bobsled.sit.leader"));
-				}
-				else if (this.getPersonality().equals(BobsledPersonalityVariants.MOVER)){
-					event.getController().setAnimation(new AnimationBuilder().loop("bobsled.sit.mover"));
-				}
-				else if (this.getPersonality().equals(BobsledPersonalityVariants.YOUNG)){
-					event.getController().setAnimation(new AnimationBuilder().loop("bobsled.sit.young"));
-				}
-				else {
-					event.getController().setAnimation(new AnimationBuilder().loop("bobsled.sit"));
-				}
+			if (this.getVehicle() instanceof SpeakerVehicleEntity) {
+				event.getController().setAnimation(new AnimationBuilder().loop("bass.idle"));
 			}
 			if (this.isIced) {
 				event.getController().setAnimationSpeed(0.5);
@@ -182,7 +108,7 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 			}
 		}
 		else if (this.isInsideWaterOrBubbleColumn()) {
-			event.getController().setAnimation(new AnimationBuilder().loop("headwear.ducky"));
+			event.getController().setAnimation(new AnimationBuilder().loop("bass.ducky"));
 			if (this.isIced) {
 				event.getController().setAnimationSpeed(0.5);
 			}
@@ -191,9 +117,9 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 			}
 		} else {
 			if (!(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F)) {
-				event.getController().setAnimation(new AnimationBuilder().loop("headwear.walking"));
+				event.getController().setAnimation(new AnimationBuilder().loop("bass.walking"));
 			} else {
-				event.getController().setAnimation(new AnimationBuilder().loop("headwear.idle"));
+				event.getController().setAnimation(new AnimationBuilder().loop("bass.idle2"));
 			}
 			if (this.isFrozen || this.isStunned) {
 				event.getController().setAnimationSpeed(0);
@@ -291,13 +217,13 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 		return true;
 	}
 
-	public static DefaultAttributeContainer.Builder createBobsledAttributes() {
+	public static DefaultAttributeContainer.Builder createBassAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
 				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.bobsledH());
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.bassH());
     }
 
 	protected SoundEvent getAmbientSound() {
@@ -329,7 +255,7 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 
 	protected EntityType<?> hypnoType;
 	protected void checkHypno(){
-		hypnoType = PvZEntity.ZOMBONIHYPNO;
+		hypnoType = PvZEntity.BASSHYPNO;
 	}
 
 	public boolean damage(DamageSource source, float amount) {
@@ -348,7 +274,7 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
             if (this.getRecentDamageSource() == PvZCubed.HYPNO_DAMAGE && !(this.getHypno())) {
 				checkHypno();
                 this.playSound(PvZSounds.HYPNOTIZINGEVENT, 1.5F, 1.0F);
-                BobsledRiderEntity hypnotizedZombie = (BobsledRiderEntity) hypnoType.create(world);
+                BassZombieEntity hypnotizedZombie = (BassZombieEntity) hypnoType.create(world);
                 hypnotizedZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
                 hypnotizedZombie.initialize(serverWorld, world.getLocalDifficulty(hypnotizedZombie.getBlockPos()), SpawnReason.CONVERSION, (EntityData)null, (NbtCompound) null);
                 hypnotizedZombie.setAiDisabled(this.isAiDisabled());
@@ -362,6 +288,9 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 						zpe.setHypno(IsHypno.TRUE);
 						zpe.startRiding(hypnotizedZombie);
 					}
+				}
+				if (this.hasVehicle() && this.getVehicle() instanceof SpeakerVehicleEntity speakerVehicleEntity){
+					speakerVehicleEntity.setHypno(IsHypno.TRUE);
 				}
 
 				hypnotizedZombie.setPersistent();

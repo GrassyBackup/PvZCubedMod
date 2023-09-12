@@ -395,8 +395,9 @@ public class PvZConfigModel {
 		public float smooshProjDMG = 12f;
 		public float sporeDMG = 2f;
 
-		public float zpgDMG = 30f;
 		public float basketBallDMG = 4f;
+		public float soundwaveDMG = 15f;
+		public float zpgDMG = 30f;
 	}
 
 	@SectionHeader("zombieVar")
@@ -429,6 +430,8 @@ public class PvZConfigModel {
 
 		@RestartRequired
 		public double backupH = 27D;
+		@RestartRequired
+		public double bassH = 80D;
 		@RestartRequired
 		public double browncoatH = 27D;
 		@RestartRequired
@@ -568,5 +571,7 @@ public class PvZConfigModel {
 		public double zomboniVH = 135D;
 		@RestartRequired
 		public double bobsledVH = 65D;
+		@RestartRequired
+		public double speakerVH = 110D;
 	}
 }
