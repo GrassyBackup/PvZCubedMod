@@ -1133,5 +1133,7 @@
   "block.pvzmod.lostcity_tile": "Lost City Tile",
   "block.pvzmod.dark_lostcity_tile": "Dark Lost City Tile",
   "block.pvzmod.skycity_tile": "Sky City Tile",
-  "block.pvzmod.dark_skycity_tile": "Dark Sky City Tile"
+  "block.pvzmod.dark_skycity_tile": "Dark Sky City Tile",
+  "block.pvzmod.fairy_tile": "Fairy Tile",
+  "block.pvzmod.dark_fairy_tile": "Dark Fairy Tile"
 }

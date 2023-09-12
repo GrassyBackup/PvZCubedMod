@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.cratertile.CraterT
 import io.github.GrassyDev.pvzmod.registry.entity.environment.goldtile.GoldTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTileRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.rifttile.RiftTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.solarwinds.SolarWindsTileRenderer;
@@ -692,6 +693,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.SNOWTILE, SnowTileRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.CRATERTILE, CraterTileRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.RIFTTILE, RiftTileRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.GOLDTILE, GoldTileRenderer::new);
 

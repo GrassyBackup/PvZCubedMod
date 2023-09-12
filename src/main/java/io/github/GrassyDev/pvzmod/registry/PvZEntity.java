@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.cratertile.CraterT
 import io.github.GrassyDev.pvzmod.registry.entity.environment.goldtile.GoldTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.rifttile.RiftTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.solarwinds.SolarWinds;
@@ -1961,6 +1962,13 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<CraterTile>create(SpawnGroup.MONSTER, CraterTile::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
 	);
 
+
+	public static final EntityType<RiftTile> RIFTTILE = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "rifttile"),
+			QuiltEntityTypeBuilder.<RiftTile>create(SpawnGroup.MONSTER, RiftTile::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
+	);
+
 	public static final EntityType<GoldTile> GOLDTILE = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "goldtile"),
@@ -2449,6 +2457,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SNOWTILE, SnowTile.createTileAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.CRATERTILE, CraterTile.createTileAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.RIFTTILE, RiftTile.createTileAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GOLDTILE, GoldTile.createTileAttributes().build());
 

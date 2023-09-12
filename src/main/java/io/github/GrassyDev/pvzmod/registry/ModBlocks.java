@@ -235,8 +235,8 @@ public class ModBlocks {
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_lostcity_tile"), DARK_LOSTCITY_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"skycity_tile"), SKYCITY_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_skycity_tile"), DARK_SKYCITY_TILE);
-		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"fairytale_tile"), FAIRY_TILE);
-		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_fairytale_tile"), DARK_FAIRY_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"fairy_tile"), FAIRY_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_fairy_tile"), DARK_FAIRY_TILE);
 
     }
 

@@ -50,8 +50,8 @@ import java.util.List;
 import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 import static io.github.GrassyDev.pvzmod.registry.PvZSounds.*;
 
-public abstract class GeneralPvZombieEntity extends HostileEntity {
-	protected GeneralPvZombieEntity(EntityType<? extends HostileEntity> entityType, World world) {
+public class GeneralPvZombieEntity extends HostileEntity {
+	public GeneralPvZombieEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		this.stepHeight = PVZCONFIG.nestedGeneralZombie.zombieStep();
 		this.setPathfindingPenalty(PathNodeType.RAIL, 0.0F);

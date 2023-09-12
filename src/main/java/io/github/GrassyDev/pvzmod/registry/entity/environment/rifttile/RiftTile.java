@@ -1,0 +1,141 @@
+package io.github.GrassyDev.pvzmod.registry.entity.environment.rifttile;
+
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.RiftVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday.BrowncoatEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.dancingzombie.DancingZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.football.FootballEntity;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+public class RiftTile extends TileEntity {
+
+	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
+			DataTracker.registerData(RiftTile.class, TrackedDataHandlerRegistry.INTEGER);
+
+	public RiftTile(EntityType<? extends TileEntity> entityType, World world) {
+		super(entityType, world);
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if (this.age >= 2400){
+			this.discard();
+		}
+		addCount();
+		if (this.getVariant().equals(RiftVariants.FOOTBALL)){
+			if (this.getTypeCount() >= 300) {
+				this.createFootball();
+				this.discard();
+			}
+		}
+		else if (this.getVariant().equals(RiftVariants.DANCINGZOMBIE)){
+			if (this.getTypeCount() >= 150) {
+				this.createDancing();
+				this.discard();
+			}
+		}
+		else if (this.getTypeCount() >= 75){
+			this.createBrowncoat();
+			this.discard();
+		}
+	}
+
+	public void createFootball(){
+		if (world instanceof ServerWorld serverWorld) {
+			FootballEntity zombie = new FootballEntity(PvZEntity.FOOTBALL, this.world);
+			zombie.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
+			serverWorld.spawnEntityAndPassengers(zombie);
+		}
+	}
+
+	public void createDancing(){
+		if (world instanceof ServerWorld serverWorld) {
+			DancingZombieEntity zombie = new DancingZombieEntity(PvZEntity.DANCINGZOMBIE, this.world);
+			zombie.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
+			serverWorld.spawnEntityAndPassengers(zombie);
+		}
+	}
+
+	public void createBrowncoat(){
+		if (world instanceof ServerWorld serverWorld) {
+			BrowncoatEntity zombie = new BrowncoatEntity(PvZEntity.BROWNCOAT, this.world);
+			zombie.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
+			serverWorld.spawnEntityAndPassengers(zombie);
+		}
+	}
+
+	protected void initDataTracker() {
+		super.initDataTracker();
+		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+		this.dataTracker.startTracking(SPAWNTIME, 0);
+	}
+	public void readCustomDataFromNbt(NbtCompound tag) {
+		super.readCustomDataFromNbt(tag);
+		//Variant//
+		this.dataTracker.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
+		this.dataTracker.set(SPAWNTIME, tag.getInt("Count"));
+	}
+
+	public void writeCustomDataToNbt(NbtCompound tag) {
+		super.writeCustomDataToNbt(tag);
+		//Variant//
+		tag.putInt("Variant", this.getTypeVariant());
+		tag.putInt("Count", this.getTypeCount());
+	}
+
+
+	/** /~*~//~*VARIANTS~//~*~// **/
+
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+								 SpawnReason spawnReason, @Nullable EntityData entityData,
+								 @Nullable NbtCompound entityNbt) {
+		this.setVariant(RiftVariants.byId(getRandom().nextInt(RiftVariants.values().length)));
+		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+	}
+
+	private int getTypeVariant() {
+		return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
+	}
+
+	public RiftVariants getVariant() {
+		return RiftVariants.byId(this.getTypeVariant() & 255);
+	}
+
+	public void setVariant(RiftVariants variant) {
+		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+	}
+
+	//Counter
+
+	private static final TrackedData<Integer> SPAWNTIME =
+			DataTracker.registerData(RiftTile.class, TrackedDataHandlerRegistry.INTEGER);
+
+	public int getTypeCount() {
+		return this.dataTracker.get(SPAWNTIME);
+	}
+
+	public void setCount(Integer count) {
+		this.dataTracker.set(SPAWNTIME, count);
+	}
+
+	public void addCount(){
+		int count = getTypeCount();
+		this.dataTracker.set(SPAWNTIME, count + 1);
+	}
+}
