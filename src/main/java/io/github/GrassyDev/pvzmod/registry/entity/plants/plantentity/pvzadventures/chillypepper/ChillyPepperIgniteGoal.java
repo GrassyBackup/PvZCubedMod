@@ -1,7 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.chillypepper;
 
 import net.minecraft.entity.LivingEntity;
-import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import net.minecraft.entity.ai.goal.Goal;
 
 public class ChillyPepperIgniteGoal extends Goal {
@@ -14,7 +13,7 @@ public class ChillyPepperIgniteGoal extends Goal {
 
     public boolean canStart() {
         LivingEntity livingEntity = this.pepper.getTarget();
-        return this.pepper.getFuseSpeed() > 0 || livingEntity != null && this.pepper.squaredDistanceTo(livingEntity) < 144.0D && !pepper.isWet();
+        return this.pepper.getFuseSpeed() > 0 || livingEntity != null && this.pepper.squaredDistanceTo(livingEntity) < 144.0D;
     }
 
     public void start() {
@@ -27,14 +26,12 @@ public class ChillyPepperIgniteGoal extends Goal {
     }
 
     public void tick() {
-		if (!pepper.isWet()) {
-			if (this.target == null) {
-				this.pepper.setFuseSpeed(-1);
-			} else if (this.pepper.squaredDistanceTo(this.target) > 144D || this.pepper.isInsideWaterOrBubbleColumn()) {
-				this.pepper.setFuseSpeed(-1);
-			} else {
-				this.pepper.setFuseSpeed(1);
-			}
+		if (this.target == null) {
+			this.pepper.setFuseSpeed(-1);
+		} else if (this.pepper.squaredDistanceTo(this.target) > 144D) {
+			this.pepper.setFuseSpeed(-1);
+		} else {
+			this.pepper.setFuseSpeed(1);
 		}
     }
 }

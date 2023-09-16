@@ -369,7 +369,7 @@ public class ModItems {
 	public static final Item BUTTONSHROOM_SEED_PACKET = new ButtonshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item BOMBSEEDLING_SEED_PACKET = new BombSeedlingSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item OILYOLIVE_SEED_PACKET = new OilyOliveSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
-	public static final Item ZAPRICOT_SEED_PACKET = new ZapricotSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(1).rarity(Rarity.RARE));
+	public static final Item ZAPRICOT_SEED_PACKET = new ZapricotSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item BANANASAURUS_SEED_PACKET = new BananasaurusSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(1).rarity(Rarity.EPIC));
 	public static final Item WEENIEBEANIE_SEED_PACKET = new WeenieBeanieSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(16).rarity(Rarity.COMMON));
 	public static final Item SMOOSHROOM_SEED_PACKET = new SmooshroomSeeds(new Item.Settings().group(PvZCubed.PVZPLANTS).maxCount(4).rarity(Rarity.EPIC));

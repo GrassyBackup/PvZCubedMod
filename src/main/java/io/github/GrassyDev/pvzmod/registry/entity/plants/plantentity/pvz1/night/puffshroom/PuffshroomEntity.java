@@ -347,19 +347,19 @@ public class PuffshroomEntity extends PlantEntity implements IAnimatable, Ranged
 		BlockPos blockPos = pos.down();
 		float cavespawn = random.nextFloat();
 		if (cavespawn <= 0.66) {
-			return !world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) &&
+			return (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) &&
 					!checkPlant(Vec3d.ofCenter(pos), world, type) &&
 					pos.getY() > 50 &&
 					!world.getBlockState(blockPos).getBlock().hasDynamicBounds() && world.getAmbientDarkness() >= 2 ||
 					world.getLightLevel(LightType.SKY, pos) < 2 ||
-					(world.getBiome(blockPos).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants());
+					(world.getBiome(blockPos).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants());
 		}
 		else {
-			return !world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) &&
+			return (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) &&
 					!checkPlant(Vec3d.ofCenter(pos), world, type) &&
 					!world.getBlockState(blockPos).getBlock().hasDynamicBounds() && world.getAmbientDarkness() >= 2 ||
 					world.getLightLevel(LightType.SKY, pos) < 2 ||
-					(world.getBiome(blockPos).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants());
+					(world.getBiome(blockPos).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants());
 		}
 	}
 

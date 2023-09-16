@@ -298,7 +298,7 @@ public class JalapenoEntity extends PlantEntity implements IAnimatable {
 
 	@Override
 	protected void applyDamage(DamageSource source, float amount) {
-		if (this.getTarget() == null || source.getAttacker() instanceof PlayerEntity || source.isOutOfWorld()) {
+		if (this.getTarget() == null || source.getAttacker() instanceof PlayerEntity || source.isOutOfWorld() || this.isWet()) {
 			super.applyDamage(source, amount);
 		}
 	}
