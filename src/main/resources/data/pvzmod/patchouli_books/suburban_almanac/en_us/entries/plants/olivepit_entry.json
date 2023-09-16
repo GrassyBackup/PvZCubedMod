@@ -2,7 +2,7 @@
   "name": "Olive Pit",
   "icon": "pvzmod:olivepit_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 21,
+  "sortnum": 91,
   "advancement": "pvzmod:make_gravebuster",
   "pages": [
     {

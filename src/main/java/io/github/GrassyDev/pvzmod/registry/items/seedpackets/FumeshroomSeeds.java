@@ -10,10 +10,12 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.fumeshroom.FumeshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.FumeshroomVariants;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,11 +23,11 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -113,6 +115,7 @@ public class FumeshroomSeeds extends SeedItem implements FabricItem {
 				if (list.isEmpty()) {
 					float f = (float) MathHelper.floor((MathHelper.wrapDegrees(context.getPlayerYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 					plantEntity.refreshPositionAndAngles(plantEntity.getX(), plantEntity.getY(), plantEntity.getZ(), f, 0.0F);
+					plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
 					double random = Math.random();
 					if (random <= 0.125) {
 						plantEntity.setVariant(FumeshroomVariants.GAY);
@@ -161,6 +164,7 @@ public class FumeshroomSeeds extends SeedItem implements FabricItem {
 			if (list.isEmpty()) {
 				float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 				plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
+			plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
 				double random = Math.random();
 				if (random <= 0.125) {
 					((FumeshroomEntity) plantEntity).setVariant(FumeshroomVariants.GAY);
@@ -184,19 +188,23 @@ public class FumeshroomSeeds extends SeedItem implements FabricItem {
 			} else {
 				return ActionResult.FAIL;
 			}
-		} else if (world instanceof ServerWorld serverWorld && entity instanceof LilyPadEntity lilyPadEntity) {
-			if (lilyPadEntity.onWater) {
-				sound = SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED;
-			} else {
-				sound = PvZSounds.PLANTPLANTEDEVENT;
+		} else if (world instanceof ServerWorld serverWorld && (entity instanceof LilyPadEntity ||
+				entity instanceof BubblePadEntity))  {
+			if (entity instanceof LilyPadEntity lilyPadEntity) {
+				if (lilyPadEntity.onWater) {
+					sound = SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED;
+				} else {
+					sound = PvZSounds.PLANTPLANTEDEVENT;
+				}
+				lilyPadEntity.setPuffshroomPermanency(LilyPadEntity.PuffPermanency.PERMANENT);
 			}
-			lilyPadEntity.setPuffshroomPermanency(LilyPadEntity.PuffPermanency.PERMANENT);
 			if (plantEntity == null) {
 				return ActionResult.FAIL;
 			}
 
 			float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 			plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
+			plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
 			double random = Math.random();
 			if (random <= 0.125) {
 				((FumeshroomEntity) plantEntity).setVariant(FumeshroomVariants.GAY);

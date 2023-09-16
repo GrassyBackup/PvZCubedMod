@@ -37,7 +37,8 @@
         "pvzmod:zombies/backupdancer_entry",
         "pvzmod:zombies/berserker_entry",
         "pvzmod:zombies/sundayedition_entry",
-        "pvzmod:zombies/superfanimp_entry"
+        "pvzmod:zombies/superfanimp_entry",
+        "pvzmod:zombies/bass_entry"
       ],
       "title": "Spawnable Zombies"
     },

@@ -204,6 +204,14 @@ public class ModBlocks {
 			.strength(1.9f, 1200f));
 
 
+	public static final Block LEGENDARY_TILE = new Block(QuiltBlockSettings
+			.of(Material.AMETHYST)
+			.requiresTool()
+			.sounds(BlockSoundGroup.AMETHYST_BLOCK)
+			.strength(1.9f, 1200f)
+			.luminance(3));
+
+
 
 	public static void registerBlocks(){
 
@@ -237,6 +245,7 @@ public class ModBlocks {
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_skycity_tile"), DARK_SKYCITY_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"fairy_tile"), FAIRY_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_fairy_tile"), DARK_FAIRY_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"legendary_tile"), LEGENDARY_TILE);
 
     }
 

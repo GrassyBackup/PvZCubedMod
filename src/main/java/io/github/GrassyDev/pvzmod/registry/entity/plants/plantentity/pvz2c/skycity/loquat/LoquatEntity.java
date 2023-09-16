@@ -221,7 +221,7 @@ public class LoquatEntity extends PlantEntity implements IAnimatable {
 			if (hitResult.getType() == HitResult.Type.MISS) {
 				kill();
 			}
-			if (this.age != 0) {
+			if (this.age > 1) {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));

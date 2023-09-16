@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.registry.ModBlocks;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.rifttile.RiftTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone.EgyptGraveEntity;
@@ -15,6 +16,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.variants.challenge.ChallengeTiers;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.challenge.TypeOfWorld;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.RiftVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -642,6 +644,9 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 	protected List<GraveEntity> currentWorlds = new ArrayList<>();
 	protected List<GraveEntity> firsWorldCheck = new ArrayList<>();
 	protected List<BlockPos> spawnableSpots = new ArrayList<>();
+	protected List<BlockPos> rift1Spots = new ArrayList<>();
+	protected List<BlockPos> rift2Spots = new ArrayList<>();
+	protected List<BlockPos> rift3Spots = new ArrayList<>();
 	protected List<BlockPos> world2Favorable = new ArrayList<>();
 	protected List<BlockPos> world3Favorable = new ArrayList<>();
 	protected List<BlockPos> world4Favorable = new ArrayList<>();
@@ -889,6 +894,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				this.setLockMinCheck(LockMinCheck.TRUE);
 			}
 			int numOfGraves = 3;
+			int numOfAmbushes = 0;
 			numOfGraves = numOfGraves + getWaveCount() + getTierCount();
 			if (this.getTierCount() >= 3 && !this.getTier().equals(ChallengeTiers.EIGHT)){
 				numOfGraves = numOfGraves - 3;
@@ -949,6 +955,43 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			if (this.getWaveTicks() >= waveInterval){
 				this.setWaveticks(0);
 				this.addGravesSpawned();
+				if (this.getTierCount() >= 3){
+					if (graveEntities.contains(PvZEntity.NIGHTGRAVESTONE)) {
+						double bassRandom = this.random.nextDouble();
+						double nightChance = 0;
+						double locationRandom = this.random.nextDouble();
+						for (EntityType<?> entityType : graveEntities){
+							if (entityType.equals(PvZEntity.NIGHTGRAVESTONE)){
+								nightChance = nightChance + 0.125;
+							}
+						}
+						for (int x = 0; x <= this.getWaveCount(); ++x){
+							nightChance = nightChance + 0.05;
+						}
+						for (int x = 0; x <= this.getTierCount() - 3; ++x){
+							nightChance = nightChance + 0.05;
+						}
+						if (bassRandom <= 0.125 + nightChance) {
+							BlockPos getPos;
+							if (locationRandom <= 0.33){
+								getPos = rift1Spots.get(this.random.range(0, rift1Spots.size() -1));
+							}
+							else if (locationRandom <= 0.83){
+								getPos = rift2Spots.get(this.random.range(0, rift2Spots.size() -1));
+							}
+							else {
+								getPos = rift3Spots.get(this.random.range(0, rift3Spots.size() -1));
+							}
+							if (this.world instanceof ServerWorld serverWorld) {
+								RiftTile riftTile = (RiftTile) PvZEntity.RIFTTILE.create(this.world);
+								riftTile.refreshPositionAndAngles(getPos, 0.0F, 0.0F);
+								riftTile.initialize(serverWorld, this.world.getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								riftTile.setVariant(RiftVariants.BASS);
+								serverWorld.spawnEntityAndPassengers(riftTile);
+							}
+						}
+					}
+				}
 				BlockPos getPos = spawnableSpots.get(this.random.range(0, spawnableSpots.size() -1));
 				if (this.world instanceof ServerWorld serverWorld) {
 					GraveEntity graveEntity = (GraveEntity) PvZEntity.BASICGRAVESTONE.create(this.world);
@@ -1857,40 +1900,20 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
-								if (x <= -24 || x >= 24) {
-									if (!spawnableSpots.contains(blockPos74)) {
-										spawnableSpots.add(blockPos74);
-									}
-								}
 							}
 						} else {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
-								if (x <= -24 || x >= 24) {
-									if (!spawnableSpots.contains(blockPos74)) {
-										spawnableSpots.add(blockPos74);
-									}
-								}
 							}
 						}
 					} else {
 						if ((x & 1) == 0) {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
-								if (x <= -24 || x >= 24) {
-									if (!spawnableSpots.contains(blockPos74)) {
-										spawnableSpots.add(blockPos74);
-									}
-								}
 							}
 						} else {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
-								if (x <= -24 || x >= 24) {
-									if (!spawnableSpots.contains(blockPos74)) {
-										spawnableSpots.add(blockPos74);
-									}
-								}
 							}
 						}
 					}
@@ -1900,42 +1923,49 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
-								if (z <= -24 || z >= 24) {
-									if (!spawnableSpots.contains(blockPos74)) {
-										spawnableSpots.add(blockPos74);
-									}
-								}
 							}
 						} else {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
-								if (z <= -24 || z >= 24) {
-									if (!spawnableSpots.contains(blockPos74)) {
-										spawnableSpots.add(blockPos74);
-									}
-								}
 							}
 						}
 					} else {
 						if ((x & 1) == 0) {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
-								if (z <= -24 || z >= 24) {
-									if (!spawnableSpots.contains(blockPos74)) {
-										spawnableSpots.add(blockPos74);
-									}
-								}
 							}
 						} else {
 							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
 								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
-								if (z <= -24 || z >= 24) {
-									if (!spawnableSpots.contains(blockPos74)) {
-										spawnableSpots.add(blockPos74);
-									}
-								}
 							}
 						}
+					}
+				}
+				if (x <= -23 || x >= 23 || z <= -23 || z >= 23) {
+					BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+					if (!spawnableSpots.contains(testPos)) {
+						spawnableSpots.add(testPos);
+					}
+				}
+				if ((x <= -8 || x >= 8 || z <= -8 || z >= 8)  &&
+						!(x <= -13 || x >= 13 || z <= -13 || z >= 13)) {
+					BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+					if (!rift1Spots.contains(testPos)) {
+						rift1Spots.add(testPos);
+					}
+				}
+				if ((x <= -13 || x >= 13 || z <= -13 || z >= 13)  &&
+						!(x <= -18 || x >= 18 || z <= -18 || z >= 18)) {
+					BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+					if (!rift2Spots.contains(testPos)) {
+						rift2Spots.add(testPos);
+					}
+				}
+				if ((x <= -18 || x >= 18 || z <= -18 || z >= 18)  &&
+						!(x <= -23 || x >= 23 || z <= -23 || z >= 23)) {
+					BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+					if (!rift3Spots.contains(testPos)) {
+						rift3Spots.add(testPos);
 					}
 				}
 			}

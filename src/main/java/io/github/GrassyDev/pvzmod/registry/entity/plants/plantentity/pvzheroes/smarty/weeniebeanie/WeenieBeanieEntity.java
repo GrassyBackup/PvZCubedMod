@@ -6,7 +6,6 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -15,7 +14,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.ProjectileAttackGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -196,7 +194,7 @@ public class WeenieBeanieEntity extends PlantEntity implements IAnimatable, Rang
 			}
 		}
 		Entity damaged = target;
-		if (passenger != null && !(passenger instanceof ZombieRiderEntity)){
+		if (passenger != null){
 			damaged = passenger;
 		}
 		if (i <= 0) {
@@ -209,7 +207,7 @@ public class WeenieBeanieEntity extends PlantEntity implements IAnimatable, Rang
 			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 			SoundEvent sound;
 			sound = switch (zombieMaterial) {
-				case "metallic" -> PvZSounds.BUCKETHITEVENT;
+				case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 				case "plastic" -> PvZSounds.CONEHITEVENT;
 				case "stone" -> PvZSounds.STONEHITEVENT;
 				default -> PvZSounds.PEAHITEVENT;

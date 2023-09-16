@@ -8,7 +8,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.FumeshroomVari
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -244,7 +243,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 						SoundEvent sound;
 						sound = switch (zombieMaterial) {
-							case "metallic" -> PvZSounds.BUCKETHITEVENT;
+							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 							case "plastic" -> PvZSounds.CONEHITEVENT;
 							case "stone" -> PvZSounds.STONEHITEVENT;
 							default -> PvZSounds.PEAHITEVENT;
@@ -260,7 +259,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 						} else {
 							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 						}
-						if ((!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity))) {
+						if (!(livingEntity instanceof ZombieShieldEntity)) {
 							livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
 						}
 					}

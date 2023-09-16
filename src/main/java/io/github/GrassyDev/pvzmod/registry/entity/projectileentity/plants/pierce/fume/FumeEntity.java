@@ -8,11 +8,11 @@ import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.FumeVaria
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -213,7 +213,7 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
+					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
@@ -231,7 +231,7 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 					}
 					entityStore.add((LivingEntity) entity);
 				}
-				if (!(entity instanceof ZombieShieldEntity) || (entity instanceof ZombieRiderEntity)) {
+				if (!(entity instanceof ZombieShieldEntity)) {
 					((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
 				}
 				entityStore.add((LivingEntity) entity);

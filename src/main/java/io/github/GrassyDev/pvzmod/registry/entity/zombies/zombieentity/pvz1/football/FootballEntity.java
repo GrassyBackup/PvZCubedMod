@@ -13,6 +13,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.sunshroom.SunshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.tallnut.TallnutEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.FootballVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
@@ -347,6 +348,9 @@ public class FootballEntity extends PvZombieEntity implements IAnimatable {
 	}
 
 	public boolean tryAttack(Entity target) {
+		if (target.getVehicle() instanceof BubblePadEntity bubblePadEntity){
+			target = bubblePadEntity;
+		}
 		int i = this.attackTicksLeft;
 		if (this.getTarget() != null &&
 				(!(PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("ground")) && !(this.getTarget() instanceof PlantEntity plantEntity && plantEntity.getLowProfile()) && !(PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("flying"))) && !((LivingEntity) target).hasStatusEffect(StatusEffects.RESISTANCE)) {

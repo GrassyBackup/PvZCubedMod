@@ -7,14 +7,12 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
@@ -142,7 +140,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 				}
 			}
 			Entity damaged = target;
-			if (passenger != null && (!(passenger instanceof ZombieShieldEntity) || passenger instanceof ZombieRiderEntity)) {
+			if (passenger != null && !(passenger instanceof ZombieShieldEntity)) {
 				damaged = passenger;
 			}
 			if (i <= 0) {
@@ -155,7 +153,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
+					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
@@ -222,7 +220,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 			if (hitResult.getType() == HitResult.Type.MISS) {
 				kill();
 			}
-			if (this.age != 0) {
+			if (this.age > 1) {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));

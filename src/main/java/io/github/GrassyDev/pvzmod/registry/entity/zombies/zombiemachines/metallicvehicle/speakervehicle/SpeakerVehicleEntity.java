@@ -4,9 +4,13 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.potatomine.PotatomineEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.spikeweed.SpikeweedEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.spikerock.SpikerockEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.ancientegypt.iceberglettuce.IcebergLettuceEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.springbean.SpringbeanEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.soundwave.SoundwaveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntity;
@@ -48,8 +52,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.DISABLE;
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
+import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
 public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimatable {
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -61,7 +64,7 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
         this.experiencePoints = 3;
 	}
 
-	private int launchTicks = 40;
+	private int launchTicks = 60;
 
 	static {
 
@@ -110,59 +113,80 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 	/** /~*~//~*AI*~//~*~/ **/
 
 	protected void initGoals() {
-		this.goalSelector.add(1, new PvZombieAttackGoal(this, 1.0D, true));
+		this.goalSelector.add(1, new PvZombieAttackGoal(this, 0D, true));
 	}
 
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	boolean beingEaten;
 
+	@Override
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+		this.playSound(PvZSounds.SPEAKERCRASHEVENT);
+		return super.handleFallDamage(fallDistance, damageMultiplier, damageSource);
+	}
+
 	public void tick() {
 		super.tick();
 		List<GravebusterEntity> list = world.getNonSpectatingEntities(GravebusterEntity.class, entityBox.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
 		this.beingEaten = !list.isEmpty();
-		this.setVelocity(0, -0.05, 0);
+		if (age <= 60) {
+			this.setVelocity(0, -0.0125, 0);
+		} else {
+			this.setVelocity(0, -1, 0);
+		}
 		this.getNavigation().stop();
-		if (this.hasStatusEffect(DISABLE)){
+		if (this.hasStatusEffect(DISABLE)) {
 			this.world.sendEntityStatus(this, (byte) 106);
 		}
-		if (this.hasPassengers() && this.getFirstPassenger() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()){
+		if (this.hasPassengers() && this.getFirstPassenger() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()) {
 			this.setHypno(IsHypno.TRUE);
 		}
 		if (!this.getHypno()) {
 			if (this.CollidesWithPlant(0f, 0f) != null) {
-				if (this.CollidesWithPlant(0f, 0f) instanceof SpikerockEntity) {
-					if (this.getType().equals(PvZEntity.TRASHCANBIN) && !this.hasVehicle()) {
-						this.CollidesWithPlant(0f, 0f).damage(DamageSource.thrownProjectile(this, this), 90);
-						this.kill();
-					} else if (!(this.getType().equals(PvZEntity.TRASHCANBIN))) {
-						this.CollidesWithPlant(0f, 0f).damage(DamageSource.thrownProjectile(this, this), 90);
-						this.kill();
-					}
-				} else if (this.CollidesWithPlant(0f, 0f) instanceof SpikeweedEntity) {
-					if (this.getType().equals(PvZEntity.TRASHCANBIN) && !this.hasVehicle()) {
-						this.CollidesWithPlant(0f, 0f).kill();
-						this.kill();
-					} else if (!(this.getType().equals(PvZEntity.TRASHCANBIN))) {
-						this.CollidesWithPlant(0f, 0f).kill();
-						this.kill();
-					}
-				} else if (this.CollidesWithPlant(0f, 0f) != null && !(this.CollidesWithPlant(0f, 0f) instanceof GravebusterEntity)) {
-					if (this.getType().equals(PvZEntity.TRASHCANBIN) && !this.hasVehicle()) {
-						this.CollidesWithPlant(0f, 0f).kill();
-					} else if (!(this.getType().equals(PvZEntity.TRASHCANBIN))) {
-						this.CollidesWithPlant(0f, 0f).kill();
+				if (!(this.CollidesWithPlant(0f, 0f) instanceof PotatomineEntity ||
+						this.CollidesWithPlant(0f, 0f) instanceof SpringbeanEntity ||
+						this.CollidesWithPlant(0f, 0f) instanceof IcebergLettuceEntity ||
+						this.CollidesWithPlant(0f, 0f) instanceof OlivePitEntity)) {
+					if (this.CollidesWithPlant(0f, 0f) instanceof SpikerockEntity) {
+						if (this.getType().equals(PvZEntity.TRASHCANBIN) && !this.hasVehicle()) {
+							this.CollidesWithPlant(0f, 0f).damage(DamageSource.thrownProjectile(this, this), 90);
+							this.kill();
+						} else if (!(this.getType().equals(PvZEntity.TRASHCANBIN))) {
+							this.CollidesWithPlant(0f, 0f).damage(DamageSource.thrownProjectile(this, this), 90);
+							this.kill();
+						}
+					} else if (this.CollidesWithPlant(0f, 0f) instanceof SpikeweedEntity) {
+						if (this.getType().equals(PvZEntity.TRASHCANBIN) && !this.hasVehicle()) {
+							this.CollidesWithPlant(0f, 0f).kill();
+							this.kill();
+						} else if (!(this.getType().equals(PvZEntity.TRASHCANBIN))) {
+							this.CollidesWithPlant(0f, 0f).kill();
+							this.kill();
+						}
+					} else if (this.CollidesWithPlant(0f, 0f) != null && !(this.CollidesWithPlant(0f, 0f) instanceof GravebusterEntity)) {
+						if (this.getType().equals(PvZEntity.TRASHCANBIN) && !this.hasVehicle()) {
+							this.CollidesWithPlant(0f, 0f).kill();
+						} else if (!(this.getType().equals(PvZEntity.TRASHCANBIN))) {
+							this.CollidesWithPlant(0f, 0f).kill();
+						}
 					}
 				}
 			}
 		}
-		if (this.isOnGround() && this.getFirstPassenger() instanceof BassZombieEntity){
+		if (this.beingEaten){
+			this.removeAllPassengers();
+		}
+		if (this.isOnGround() && this.getFirstPassenger() instanceof BassZombieEntity bassZombieEntity &&
+				(!bassZombieEntity.hasStatusEffect(FROZEN) && !bassZombieEntity.hasStatusEffect(STUN) && !bassZombieEntity.hasStatusEffect(DISABLE)) &&
+				!this.beingEaten &&
+				(!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(STUN) && !this.hasStatusEffect(DISABLE))) {
 			if (--this.launchTicks <= 0) {
 				double time = 1;
 				Vec3d noZombie = new Vec3d((double) +1, 0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				Vec3d predictedPos = new Vec3d(this.getX() + noZombie.x, this.getY() + noZombie.y, this.getZ() + noZombie.z);
 				double d = this.squaredDistanceTo(predictedPos);
-				float df = (float)d;
+				float df = (float) d;
 				double e = predictedPos.getX() - this.getX();
 				double f = 0;
 				double g = predictedPos.getZ() - this.getZ();
@@ -171,10 +195,15 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 				proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.85F, 0F);
 				proj.updatePosition(this.getX(), this.getY() + 0.5D, this.getZ());
 				proj.setOwner(this);
-				this.launchTicks = 40;
-				this.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BASS, 1F, 0.5f);
+				this.launchTicks = 60;
+				this.playSound(PvZSounds.BASSPLAYEVENT, 1F, 1f);
 				this.world.spawnEntity(proj);
 			}
+		}
+		if (this.onGround) {
+			this.setFlying(Flying.FALSE);
+		} else {
+			this.setFlying(Flying.TRUE);
 		}
 	}
 
@@ -282,6 +311,6 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.BOBSLEDEGG.getDefaultStack();
+		return ModItems.BASSEGG.getDefaultStack();
 	}
 }

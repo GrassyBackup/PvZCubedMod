@@ -349,14 +349,14 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 						SoundEvent sound;
 						sound = switch (zombieMaterial) {
-							case "metallic" -> PvZSounds.BUCKETHITEVENT;
+							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 							case "plastic" -> PvZSounds.CONEHITEVENT;
 							case "stone" -> PvZSounds.STONEHITEVENT;
 							default -> PvZSounds.PEAHITEVENT;
 						};
 						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
 						float damageBase = damage + 6;
-						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial)) {
 							damageBase = damageBase * 2;
 						}
 						if ("paper".equals(zombieMaterial)) {

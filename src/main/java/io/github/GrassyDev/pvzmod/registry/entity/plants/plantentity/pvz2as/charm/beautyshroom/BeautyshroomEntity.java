@@ -232,14 +232,10 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 					checkList.add(generalPvZombieEntity);
 				} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
 					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-					if (!(zombieShieldEntity instanceof ZombieRiderEntity)) {
-						checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
-					}
+					checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
 					checkList.add(zombieShieldEntity);
 				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
-					if (zombieShieldEntity instanceof ZombieRiderEntity) {
-						livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
-					}
+					livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
 					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 					checkList.add(livingEntity);
 					checkList.add(zombieShieldEntity);
@@ -269,7 +265,7 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 						checkList.add(livingEntity);
 					}
 				}
-				if ((!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) && !(zombiePropEntity2 instanceof ZombieShieldEntity)) {
+				if (!(livingEntity instanceof ZombieShieldEntity) && !(zombiePropEntity2 instanceof ZombieShieldEntity)) {
 					if (!livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE) && random > 0.166) {
 						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 5)));
 					}
@@ -340,7 +336,7 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 			this.setTarget(null);
 		}
 		else {
-			this.targetZombies(this.getPos(), 5, false, false, true);
+			this.targetZombies(this.getPos(), 5, true, false, true);
 		}
 		super.tick();
 		if (tickDelay <= 1) {

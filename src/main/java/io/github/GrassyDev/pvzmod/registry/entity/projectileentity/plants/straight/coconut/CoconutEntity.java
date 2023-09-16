@@ -6,7 +6,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectile
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,6 +14,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -177,7 +177,7 @@ public class CoconutEntity extends PvZProjectileEntity implements IAnimatable {
 						oilTile.makeFireTrail(oilTile.getBlockPos());
 					}
 					if (livingEntity instanceof Monster &&
-							(!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) &&
+							!(livingEntity instanceof ZombieShieldEntity) &&
 							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 									&& (generalPvZombieEntity.getHypno()))) {
 						if (livingEntity != entity) {

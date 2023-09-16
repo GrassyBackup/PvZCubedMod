@@ -12,7 +12,7 @@
         "$(#bd951a)Range: $()$(#ff0000)15 Blocks ",
         "$(#bd951a)Ability Recharge: $()$(#ff0000)5s (Throw), 7.5s (Total) ",
         "$(#bd951a)Seed Recharge: $()$(#ff0000)10s ",
-        "$(#bd951a)Special: $()$(#ff0000)Nocturnal. Steals one non-obstacle metal object from a Zombie, and up to two 2 blocks near it, then throws them, causing damage based on the object's health (64 dmg w/o health) + half of that dmg as 1.5 block splash.",
+        "$(#bd951a)Special: $()$(#ff0000)Nocturnal. Steals one non-obstacle Metal/Electronic object from a Zombie, and up to two 2 blocks near it, then throws them, causing damage based on the object's health (64 dmg w/o health) + half of that dmg as 1.5 block splash.",
         "$(br)$(#bd951a)I would insert a Marvel reference here, if I knew anything about it."
       ]
     },

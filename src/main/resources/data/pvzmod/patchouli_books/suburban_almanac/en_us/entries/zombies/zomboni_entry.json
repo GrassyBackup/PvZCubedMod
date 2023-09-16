@@ -8,7 +8,7 @@
     {
       "type": "text",
       "text": [
-        "$(#bd951a)(Metal) Vehicle Health: $()$(#ff0000)135",
+        "$(#bd951a)(Electronic) Vehicle Health: $()$(#ff0000)135",
         "$(br)$(#bd951a)Rider Health: $()$(#ff0000)65",
         "$(br)$(#bd951a)Damage: $()$(#ff0000)360",
         "$(br)$(#bd951a)Speed: $()$(#ff0000)Basic, slightly faster without a pilot.",
@@ -35,7 +35,11 @@
         "pvzmod:plants/spikerock_entry",
         "pvzmod:plants/repeater_entry",
         "pvzmod:plants/torchwood_entry",
-        "pvzmod:plants/jumpingbean_entry"
+        "pvzmod:plants/jumpingbean_entry",
+        "pvzmod:plants/dropea_entry",
+        "pvzmod:plants/admiralnavybean_entry",
+        "pvzmod:plants/acidshroom_entry",
+        "pvzmod:plants/dogwood_entry"
       ]
     },
     {

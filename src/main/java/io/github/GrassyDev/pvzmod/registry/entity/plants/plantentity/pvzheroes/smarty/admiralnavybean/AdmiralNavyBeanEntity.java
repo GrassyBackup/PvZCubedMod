@@ -8,7 +8,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.spit.SpitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -173,7 +172,7 @@ public class AdmiralNavyBeanEntity extends PlantEntity implements IAnimatable, R
 			}
 		}
 		Entity damaged = target;
-		if (passenger != null && !(passenger instanceof ZombieRiderEntity)){
+		if (passenger != null){
 			damaged = passenger;
 		}
 		if (i <= 0) {
@@ -186,7 +185,7 @@ public class AdmiralNavyBeanEntity extends PlantEntity implements IAnimatable, R
 			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 			SoundEvent sound;
 			sound = switch (zombieMaterial) {
-				case "metallic" -> PvZSounds.BUCKETHITEVENT;
+				case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 				case "plastic" -> PvZSounds.CONEHITEVENT;
 				case "stone" -> PvZSounds.STONEHITEVENT;
 				default -> PvZSounds.PEAHITEVENT;
@@ -243,7 +242,7 @@ public class AdmiralNavyBeanEntity extends PlantEntity implements IAnimatable, R
 			if (hitResult.getType() == HitResult.Type.MISS) {
 				kill();
 			}
-			if (this.age != 0) {
+			if (this.age > 1) {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));
@@ -461,7 +460,9 @@ public class AdmiralNavyBeanEntity extends PlantEntity implements IAnimatable, R
 						SpitEntity proj = new SpitEntity(PvZEntity.SPIT, this.plantEntity.world);
 						double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
 						Vec3d targetPos = livingEntity.getPos();
-						Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+						double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
+						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 						double d = this.plantEntity.squaredDistanceTo(predictedPos);
 						float df = (float)d;
 						double e = predictedPos.getX() - this.plantEntity.getX();

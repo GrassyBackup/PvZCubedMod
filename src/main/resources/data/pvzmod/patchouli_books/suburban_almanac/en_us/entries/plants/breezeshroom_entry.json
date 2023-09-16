@@ -2,7 +2,7 @@
   "name": "Breeze-shroom",
   "icon": "pvzmod:breezeshroom_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 47,
+  "sortnum": 48,
   "advancement": "pvzmod:make_fumeshroom",
   "pages": [
     {

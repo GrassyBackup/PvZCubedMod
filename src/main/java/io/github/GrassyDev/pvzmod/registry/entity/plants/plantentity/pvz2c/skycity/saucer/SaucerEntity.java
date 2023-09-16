@@ -5,10 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -68,6 +65,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 
 		this.setNoGravity(true);
 		this.illuminate = true;
+		this.targetNotObstacle = true;
 		this.isBurst = true;
 	}
 
@@ -200,8 +198,10 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 							(zombiePropEntity2 == null || zombiePropEntity2 instanceof ZombieShieldEntity))) &&
 					!(ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("gargantuar") ||
 							ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("big") ||
-							ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("tall")) &&
-					(!generalPvZombieEntity.isFlying() || generalPvZombieEntity instanceof ZombieRiderEntity) && !(livingEntity instanceof ZombiePropEntity && !(livingEntity instanceof ZombieRiderEntity)) && !generalPvZombieEntity.isCovered()){
+							ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("tall") ||
+							livingEntity instanceof ZombieVehicleEntity) &&
+					(!generalPvZombieEntity.isFlying() ||
+					!(generalPvZombieEntity.isFlying() && !(generalPvZombieEntity instanceof ZombieRidersEntity))) && !(livingEntity instanceof ZombiePropEntity) && !generalPvZombieEntity.isCovered()){
 				livingEntity.setVelocity(0, 0, 0);
 				livingEntity.addVelocity(0, 0.5, 0);
 				livingEntity.kill();
@@ -211,7 +211,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 &&
-							generalPvZombieEntity1.isFlying())) && !livingEntity.isInsideWaterOrBubbleColumn() && (!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) &&
+							generalPvZombieEntity1.isFlying())) && !livingEntity.isInsideWaterOrBubbleColumn() && !(livingEntity instanceof ZombieShieldEntity) &&
 					!(ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("gargantuar") || ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("big"))) {
 				if (zombiePropEntity2 == null ||
 						zombiePropEntity2 instanceof ZombieShieldEntity) {
@@ -236,7 +236,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		targetZombies(this.getPos(), 4, true, false, true);
+		targetZombies(this.getPos(), 4, true, true, true);
 		if (attacking) {
 			this.world.sendEntityStatus(this, (byte) 106);
 			if (--tickPermanency <= 0) {
@@ -262,7 +262,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 			if (hitResult.getType() == HitResult.Type.MISS) {
 				kill();
 			}
-			if (this.age != 0) {
+			if (this.age > 1) {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));

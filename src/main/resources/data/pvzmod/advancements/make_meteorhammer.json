@@ -4,7 +4,7 @@
       "item": "pvzmod:meteorhammer_seed_packet"
     },
     "title": "I Can Fix It!",
-    "description": "Craft a Hammer Flower",
+    "description": "Craft a Meteor Hammer",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,

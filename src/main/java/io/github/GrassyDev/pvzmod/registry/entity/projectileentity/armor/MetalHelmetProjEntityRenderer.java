@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelmetVariants;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
@@ -41,6 +42,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/dancingzombie/backupdancer.png"));
 				map.put(MetalHelmetVariants.SOLDIERHELMET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/soldier/soldier.png"));
+				map.put(MetalHelmetVariants.BASSPROP,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/bass/bass.png"));
 			});
 
 	public static final Map<MetalHelmetVariants, Identifier> LOCATION_BY_VARIANT_DAMAGED =
@@ -69,6 +72,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant_geardmg1.png"));
 				map.put(MetalHelmetVariants.SOLDIERHELMET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/soldier/soldier_geardmg1.png"));
+				map.put(MetalHelmetVariants.BASSPROP,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/bass/bass.png"));
 			});
 
 	public static final Map<MetalHelmetVariants, Identifier> MODEL_LOCATION_BY_VARIANT =
@@ -99,6 +104,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "geo/medallionproj.geo.json"));
 				map.put(MetalHelmetVariants.SOLDIERHELMET,
 						new Identifier(PvZCubed.MOD_ID, "geo/soldierproj.geo.json"));
+				map.put(MetalHelmetVariants.BASSPROP,
+						new Identifier(PvZCubed.MOD_ID, "geo/guitarproj.geo.json"));
 			});
 
 	public MetalHelmetProjEntityRenderer(EntityRendererFactory.Context ctx) {

@@ -11,7 +11,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
@@ -70,6 +69,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		amphibiousRaycastDelay = 1;
 		this.setNoGravity(true);
 		this.noBiggie = true;
+		this.targetNotObstacle = true;
 		this.isBurst = true;
     }
 
@@ -160,7 +160,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
 
-		if (this.age != 0 && !this.world.isClient()) {
+		if (this.age > 1 && !this.world.isClient()) {
 			if (this.animationTicksLeft <= 0) {
 				BlockPos blockPos2 = this.getBlockPos();
 				if (!this.world.isClient()) {
@@ -233,7 +233,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 			if (hitResult.getType() == HitResult.Type.MISS) {
 				kill();
 			}
-			if (this.age != 0) {
+			if (this.age > 1) {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));

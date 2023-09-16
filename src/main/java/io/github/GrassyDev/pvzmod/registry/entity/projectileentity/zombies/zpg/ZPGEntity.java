@@ -3,6 +3,7 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.zpg;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -155,7 +156,7 @@ public class ZPGEntity extends PvZProjectileEntity implements IAnimatable {
 
 				entity = (Entity) var9.next();
 			} while (entity == this.getOwner());
-			if (!world.isClient && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity && (plantEntity.getLowProfile() || PLANT_LOCATION.get(plantEntity.getType()).orElse("ground").equals("flying")))) {
+			if (!world.isClient && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity && (plantEntity.getLowProfile() || PLANT_LOCATION.get(plantEntity.getType()).orElse("normal").equals("flying"))) && !(entity.getVehicle() instanceof BubblePadEntity)) {
 				entity.playSound(PvZSounds.CHERRYBOMBEXPLOSIONEVENT, 0.2F, 1F);
 				float damage = PVZCONFIG.nestedProjDMG.zpgDMG();
 				entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);

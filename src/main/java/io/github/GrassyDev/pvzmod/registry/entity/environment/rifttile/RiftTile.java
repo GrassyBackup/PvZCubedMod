@@ -4,8 +4,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.RiftVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday.BrowncoatEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.dancingzombie.DancingZombieEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.football.FootballEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -35,15 +34,9 @@ public class RiftTile extends TileEntity {
 			this.discard();
 		}
 		addCount();
-		if (this.getVariant().equals(RiftVariants.FOOTBALL)){
+		if (this.getVariant().equals(RiftVariants.BASS)){
 			if (this.getTypeCount() >= 300) {
-				this.createFootball();
-				this.discard();
-			}
-		}
-		else if (this.getVariant().equals(RiftVariants.DANCINGZOMBIE)){
-			if (this.getTypeCount() >= 150) {
-				this.createDancing();
+				this.createBass();
 				this.discard();
 			}
 		}
@@ -53,20 +46,11 @@ public class RiftTile extends TileEntity {
 		}
 	}
 
-	public void createFootball(){
+	public void createBass(){
 		if (world instanceof ServerWorld serverWorld) {
-			FootballEntity zombie = new FootballEntity(PvZEntity.FOOTBALL, this.world);
+			SpeakerVehicleEntity zombie = new SpeakerVehicleEntity(PvZEntity.SPEAKER, this.world);
 			zombie.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
-			serverWorld.spawnEntityAndPassengers(zombie);
-		}
-	}
-
-	public void createDancing(){
-		if (world instanceof ServerWorld serverWorld) {
-			DancingZombieEntity zombie = new DancingZombieEntity(PvZEntity.DANCINGZOMBIE, this.world);
-			zombie.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
+			zombie.refreshPositionAndAngles(this.getX(), this.getY() + 3, this.getZ(), this.getYaw(), 0.0F);
 			serverWorld.spawnEntityAndPassengers(zombie);
 		}
 	}
@@ -105,7 +89,6 @@ public class RiftTile extends TileEntity {
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
 								 SpawnReason spawnReason, @Nullable EntityData entityData,
 								 @Nullable NbtCompound entityNbt) {
-		this.setVariant(RiftVariants.byId(getRandom().nextInt(RiftVariants.values().length)));
 		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
 	}
 

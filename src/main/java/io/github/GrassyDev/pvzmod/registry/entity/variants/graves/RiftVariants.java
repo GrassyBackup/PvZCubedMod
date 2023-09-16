@@ -5,8 +5,7 @@ import java.util.Comparator;
 
 public enum RiftVariants {
 	DEFAULT(0),
-	FOOTBALL(1),
-	DANCINGZOMBIE(2);
+	BASS(1);
 
 	private static final RiftVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(RiftVariants::getId)).toArray(RiftVariants[]::new);

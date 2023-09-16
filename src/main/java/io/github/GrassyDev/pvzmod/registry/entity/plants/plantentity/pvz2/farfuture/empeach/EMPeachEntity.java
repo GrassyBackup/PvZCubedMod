@@ -247,7 +247,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 					}
 				}
 				if (damage > livingEntity.getHealth() &&
-						(!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) &&
+						!(livingEntity instanceof ZombieShieldEntity) &&
 						livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
 					float damage2 = damage - livingEntity.getHealth();
 					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
@@ -256,14 +256,10 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 					checkList.add(generalPvZombieEntity);
 				} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
 					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-					if (!(zombieShieldEntity instanceof ZombieRiderEntity)) {
-						checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
-					}
+					checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
 					checkList.add(zombieShieldEntity);
 				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
-					if (zombieShieldEntity instanceof ZombieRiderEntity) {
-						livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
-					}
+
 					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 					checkList.add(livingEntity);
 					checkList.add(zombieShieldEntity);

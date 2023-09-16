@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -26,7 +27,6 @@ import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -359,6 +359,9 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 					this.animationTicksLeft = 90 * animationMultiplier;
 					this.firstAttack = false;
 				} else if (this.animationTicksLeft == 40 * animationMultiplier) {
+					if (target.hasVehicle()){
+						target.getVehicle().damage(DamageSource.mob(this), 360);
+					}
 					if (target instanceof SpikerockEntity && this.squaredDistanceTo(target) < 16D) {
 						bl = true;
 					}

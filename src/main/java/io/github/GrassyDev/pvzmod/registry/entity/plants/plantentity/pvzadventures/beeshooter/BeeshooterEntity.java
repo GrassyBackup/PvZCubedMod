@@ -295,7 +295,9 @@ public class BeeshooterEntity extends PlantEntity implements IAnimatable, Ranged
 						ShootingBeeSpikeEntity proj = new ShootingBeeSpikeEntity(PvZEntity.BEESPIKE, this.plantEntity.world);
 						double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 225) ? 50 : 5;
 						Vec3d targetPos = livingEntity.getPos();
-						Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+						double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
+						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 						double d = this.plantEntity.squaredDistanceTo(predictedPos);
 						float df = (float)d;
 						double e = predictedPos.getX() - this.plantEntity.getX();

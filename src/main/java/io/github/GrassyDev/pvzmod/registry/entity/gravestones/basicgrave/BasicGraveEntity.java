@@ -12,6 +12,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.bully.
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.flagzombie.modernday.FlagzombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.polevaulting.PoleVaultingEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.scientist.ScientistEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.soldier.SoldierEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -401,6 +402,7 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 			double probability10 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability12 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability13 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability14 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 
 			int zombiePos = -2 + BasicGraveEntity.this.random.nextInt(5);
 			int zombiePosZ = -2 + BasicGraveEntity.this.random.nextInt(5);
@@ -672,6 +674,30 @@ public class BasicGraveEntity extends GraveEntity implements IAnimatable {
 								soldier.initialize(serverWorld, BasicGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								soldier.setOwner(BasicGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(soldier);
+								graveWeight += 1.0;
+							}
+						}
+					}
+				}
+
+				if (graveWeight <= 3) {
+					if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
+						if (probability14 <= 0.15 / halfModifier * survChance) { // 15% x1 Scientist
+							for (int p = 0; p < 1; ++p) {
+								if (!BasicGraveEntity.this.is1x1()) {
+									zombiePosZ = BasicGraveEntity.this.random.range(-1, 1);
+									zombiePos = BasicGraveEntity.this.random.range(-1, 1);
+								}
+								if (BasicGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = BasicGraveEntity.this.random.range(-3, 3);
+									zombiePos = BasicGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = BasicGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								ScientistEntity scientistEntity = (ScientistEntity) PvZEntity.SCIENTIST.create(BasicGraveEntity.this.world);
+								scientistEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								scientistEntity.initialize(serverWorld, BasicGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								scientistEntity.setOwner(BasicGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(scientistEntity);
 								graveWeight += 1.0;
 							}
 						}

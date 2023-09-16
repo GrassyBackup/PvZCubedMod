@@ -283,14 +283,10 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 					checkList.add(generalPvZombieEntity);
 				} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
 					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-					if (!(zombieShieldEntity instanceof ZombieRiderEntity)) {
-						checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
-					}
+					checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
 					checkList.add(zombieShieldEntity);
 				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
-					if (zombieShieldEntity instanceof ZombieRiderEntity) {
-						livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
-					}
+
 					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 					checkList.add(livingEntity);
 					checkList.add(zombieShieldEntity);
@@ -307,7 +303,7 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 						checkList.add(livingEntity);
 					}
 				}
-				if ((!(livingEntity instanceof ZombieShieldEntity) || (livingEntity instanceof ZombieRiderEntity)) && !(zombiePropEntity2 instanceof ZombieShieldEntity)) {
+				if (!(livingEntity instanceof ZombieShieldEntity) && !(zombiePropEntity2 instanceof ZombieShieldEntity)) {
 					livingEntity.removeStatusEffect(PvZCubed.FROZEN);
 					livingEntity.removeStatusEffect(PvZCubed.ICE);
 					if (livingEntity.hasStatusEffect(PvZCubed.WARM) || livingEntity.isOnFire()) {

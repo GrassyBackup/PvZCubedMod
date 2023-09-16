@@ -2,34 +2,37 @@ package io.github.GrassyDev.pvzmod.registry.items.seedpackets;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
-import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.fog.seashroom.SeashroomEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
-import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Style;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.RaycastContext;
@@ -100,7 +103,7 @@ public class SeashroomSeeds extends SeedItem implements FabricItem {
 			return TypedActionResult.pass(itemStack);
 		} else {
 			if (hitResult.getType() == HitResult.Type.BLOCK) {
-				if (world instanceof ServerWorld) {
+				if (world instanceof ServerWorld serverWorld) {
 					SeashroomEntity aquaticEntity = this.createEntity(world, hitResult);
 					aquaticEntity.setYaw(user.getYaw());
 					if (!world.isSpaceEmpty(aquaticEntity, aquaticEntity.getBoundingBox())) {
@@ -112,6 +115,7 @@ public class SeashroomSeeds extends SeedItem implements FabricItem {
 							if (list.isEmpty() && list2.isEmpty()){
 								float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 								aquaticEntity.refreshPositionAndAngles(aquaticEntity.getX(), aquaticEntity.getY(), aquaticEntity.getZ(), f, 0.0F);
+								aquaticEntity.initialize(serverWorld, world.getLocalDifficulty(aquaticEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
 								FluidState fluidState = world.getFluidState(aquaticEntity.getBlockPos().add(0, -0.25, 0));
 								if (fluidState.getFluid() == Fluids.WATER) {
 									((ServerWorld) world).spawnEntityAndPassengers(aquaticEntity);
@@ -151,6 +155,42 @@ public class SeashroomSeeds extends SeedItem implements FabricItem {
 			}
 		}
 		return TypedActionResult.pass(itemStack);
+	}
+
+	@Override
+	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+		World world = user.getWorld();
+		BlockPos blockPos = entity.getBlockPos();
+		SoundEvent sound = null;
+		PlantEntity plantEntity = null;
+		List<PlantEntity> list = null;
+		if (world instanceof ServerWorld serverWorld) {
+			plantEntity = PvZEntity.SEASHROOM.create(serverWorld, stack.getNbt(), (Text) null, user, blockPos, SpawnReason.SPAWN_EGG, true, true);
+			list = world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.SEASHROOM.getDimensions().getBoxAt(plantEntity.getPos()));
+		}
+		if (world instanceof ServerWorld serverWorld && (entity instanceof BubblePadEntity))  {
+			if (plantEntity == null) {
+				return ActionResult.FAIL;
+			}
+
+			float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+			plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
+			plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+			((ServerWorld) world).spawnEntityAndPassengers(plantEntity);
+			plantEntity.rideLilyPad(entity);
+			world.playSound((PlayerEntity) null, plantEntity.getX(), plantEntity.getY(), plantEntity.getZ(), sound, SoundCategory.BLOCKS, 0.6f, 0.8F);
+			if (!user.getAbilities().creativeMode) {
+				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
+					stack.decrement(1);
+				}
+				if (!PVZCONFIG.nestedSeeds.instantRecharge() && !world.getGameRules().getBoolean(PvZCubed.INSTANT_RECHARGE)) {
+					user.getItemCooldownManager().set(this, cooldown);
+				}
+			}
+			return ActionResult.success(world.isClient);
+		} else {
+			return ActionResult.PASS;
+		}
 	}
 
 	private SeashroomEntity createEntity(World world, HitResult hitResult) {

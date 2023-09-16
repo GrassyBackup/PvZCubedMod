@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.items.seedpackets.SeedItem;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -68,7 +69,7 @@ public class MissileToeTargetItem extends SeedItem implements FabricItem {
 			return TypedActionResult.pass(itemStack);
 		} else {
 			if (hitResult.getType() == HitResult.Type.BLOCK) {
-				if (world instanceof ServerWorld) {
+				if (world instanceof ServerWorld serverWorld) {
 					MissileToeTarget tileEntity = this.createEntity(world, hitResult);
 					tileEntity.setYaw(user.getYaw());
 					if (!world.isSpaceEmpty(tileEntity, tileEntity.getBoundingBox())) {

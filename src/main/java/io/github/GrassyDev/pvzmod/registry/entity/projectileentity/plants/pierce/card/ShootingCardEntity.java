@@ -7,13 +7,13 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectile
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -241,7 +241,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 					SoundEvent sound;
 					sound = switch (zombieMaterial) {
-						case "metallic" -> PvZSounds.BUCKETHITEVENT;
+						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
 						case "stone" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
@@ -258,7 +258,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 					}
 					entityStore.remove(entity);
 					entityStoreVehicle.remove(entity);
-					if (!(entity instanceof ZombieShieldEntity) || (entity instanceof ZombieRiderEntity)) {
+					if (!(entity instanceof ZombieShieldEntity)) {
 						entityStoreVehicle.remove(entity.getVehicle());
 					}
 				}
@@ -267,7 +267,6 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity2 && (generalPvZombieEntity2.isFlying())) &&
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
-					!(monster instanceof ZombieRiderEntity zombieRiderEntity && zombieRiderEntity.hasVehicle()) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
 					!this.getReturning() && !this.retuningStart && damageCounter <= 2 && !entityStore.contains(entity) && !entityStoreVehicle.contains(entity)) {
 				boolean hasHelmet = false;
@@ -286,7 +285,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
+					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
@@ -303,7 +302,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 				} else {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					entityStore.add(entity);
-					if (!(entity instanceof ZombieShieldEntity) || (entity instanceof ZombieRiderEntity)) {
+					if (!(entity instanceof ZombieShieldEntity)) {
 						entityStoreVehicle.add(entity.getVehicle());
 					}
 				}

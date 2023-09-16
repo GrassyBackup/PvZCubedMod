@@ -231,7 +231,7 @@ public class SunflowerSeedEntity extends PlantEntity implements IAnimatable, Ran
 						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 						SoundEvent sound;
 						sound = switch (zombieMaterial) {
-							case "metallic" -> PvZSounds.BUCKETHITEVENT;
+							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 							case "plastic" -> PvZSounds.CONEHITEVENT;
 							case "stone" -> PvZSounds.STONEHITEVENT;
 							default -> PvZSounds.PEAHITEVENT;

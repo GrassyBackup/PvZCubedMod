@@ -299,7 +299,9 @@ public class ThreepeaterEntity extends PlantEntity implements IAnimatable, Range
 				if (this.beamTicks >= 0 && this.animationTicks <= -9) {
 					double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
 					Vec3d targetPos = livingEntity.getPos();
-					Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+					double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
+						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 					if (!this.plantEntity.isInsideWaterOrBubbleColumn()) {
 						// Middle Pea
 						ShootingPeaEntity proj = new ShootingPeaEntity(PvZEntity.PEA, this.plantEntity.world);

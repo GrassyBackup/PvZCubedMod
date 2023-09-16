@@ -15,7 +15,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -291,7 +290,7 @@ public class LightningReedEntity extends PlantEntity implements IAnimatable, Ran
 			if (hitResult.getType() == HitResult.Type.MISS) {
 				kill();
 			}
-			if (this.age != 0) {
+			if (this.age > 1) {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));
@@ -470,7 +469,7 @@ public class LightningReedEntity extends PlantEntity implements IAnimatable, Ran
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
+					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
@@ -488,7 +487,7 @@ public class LightningReedEntity extends PlantEntity implements IAnimatable, Ran
 				if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 					this.lightningCounter -= 2;
 				}
-				else if (!zombieMaterial.equals("metallic")){
+				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic")){
 					--this.lightningCounter;
 				}
 				if (getBeamTarget2() == null && getElectricBeamTarget2() == null){
@@ -964,7 +963,7 @@ public class LightningReedEntity extends PlantEntity implements IAnimatable, Ran
 							String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 							SoundEvent sound;
 							sound = switch (zombieMaterial) {
-								case "metallic" -> PvZSounds.BUCKETHITEVENT;
+								case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 								case "plastic" -> PvZSounds.CONEHITEVENT;
 								case "stone" -> PvZSounds.STONEHITEVENT;
 								default -> PvZSounds.PEAHITEVENT;

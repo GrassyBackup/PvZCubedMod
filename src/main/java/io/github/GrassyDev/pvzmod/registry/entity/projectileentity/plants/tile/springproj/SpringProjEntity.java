@@ -8,7 +8,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.springtile.SpringT
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -174,14 +173,11 @@ public class SpringProjEntity extends PvZProjectileEntity implements IAnimatable
 			if (!noDMG && !world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
-					!(entity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.hasVehicle() && !(entity instanceof ZombieRiderEntity))) {
-				if (zombiePropEntity2 instanceof ZombieRiderEntity) {
-
-				} else {
+					!(entity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.hasVehicle())) {
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 					SoundEvent sound;
 					sound = switch (zombieMaterial) {
-						case "metallic" -> PvZSounds.BUCKETHITEVENT;
+						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
 						case "stone" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
@@ -210,7 +206,6 @@ public class SpringProjEntity extends PvZProjectileEntity implements IAnimatable
 					}
 					this.setVelocity(this.getVelocity().multiply(vec3d2));
 					this.noDMG = true;
-				}
 			}
 		}
     }

@@ -8,7 +8,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelm
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -259,7 +258,7 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 					}
 					this.world.sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
-					if (!(entity instanceof ZombieShieldEntity) || (entity instanceof ZombieRiderEntity)) {
+					if (!(entity instanceof ZombieShieldEntity)) {
 						Vec3d vec3d = this.getPos();
 						hit = true;
 						List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
@@ -330,7 +329,7 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 			SoundEvent sound;
 			sound = switch (zombieMaterial) {
-				case "metallic" -> PvZSounds.BUCKETHITEVENT;
+				case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 				case "plastic" -> PvZSounds.CONEHITEVENT;
 				case "stone" -> PvZSounds.STONEHITEVENT;
 				default -> PvZSounds.PEAHITEVENT;

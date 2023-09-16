@@ -374,7 +374,9 @@ public class SnowqueenpeaEntity extends PlantEntity implements IAnimatable, Rang
 						ShootingSnowqueenPeaEntity proj = new ShootingSnowqueenPeaEntity(PvZEntity.SNOWQUEENPEAPROJ, this.plantEntity.world);
 						double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
 						Vec3d targetPos = livingEntity.getPos();
-						Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+						double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
+						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 						double d = this.plantEntity.squaredDistanceTo(predictedPos);
 						float df = (float)d;
 						double e = predictedPos.getX() - this.plantEntity.getX();
@@ -397,7 +399,9 @@ public class SnowqueenpeaEntity extends PlantEntity implements IAnimatable, Rang
 						ShootingIcespikeEntity proj = new ShootingIcespikeEntity(PvZEntity.ICESPIKEPROJ, this.plantEntity.world);
 						double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
 						Vec3d targetPos = livingEntity.getPos();
-						Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+						double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
+						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 						double d = this.plantEntity.squaredDistanceTo(predictedPos);
 						float df = (float)d;
 						double e = predictedPos.getX() - this.plantEntity.getX();

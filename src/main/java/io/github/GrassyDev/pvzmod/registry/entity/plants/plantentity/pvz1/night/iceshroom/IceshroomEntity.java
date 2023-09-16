@@ -235,9 +235,7 @@ public class IceshroomEntity extends PlantEntity implements IAnimatable {
 					checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
 					checkList.add(zombieShieldEntity);
 				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
-					if (zombieShieldEntity instanceof ZombieRiderEntity) {
-						livingEntity.getVehicle().damage(DamageSource.thrownProjectile(this, this), damage);
-					}
+
 					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 					checkList.add(livingEntity);
 					checkList.add(zombieShieldEntity);

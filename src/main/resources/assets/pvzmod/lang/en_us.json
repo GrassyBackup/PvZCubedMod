@@ -151,6 +151,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.magnetoshroomS": "Magneto-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.meteorhammerS": "Meteor Hammer Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.missileToeS": "Missile Toe Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.oxygaeS": "Oxygae Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.shamrockS": "Shamrock Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smackadamiaSv2": "Smackadamia Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smallnutS": "Small-nut Seed",
@@ -233,6 +234,7 @@
   "text.config.pvz3-config.option.nestedProjDMG.spitDMG": "Spit Damage",
   "text.config.pvz3-config.option.nestedProjDMG.sporeDMG": "Spore Damage",
   "text.config.pvz3-config.option.nestedProjDMG.basketBallDMG": "Basketball Damage",
+  "text.config.pvz3-config.option.nestedProjDMG.soundwaveDMG": "Soundwave Damage",
 
   "text.config.pvz3-config.section.zombieVar": "Zombie Settings",
 
@@ -255,6 +257,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.peasantH": "Peasant Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bullyH": "Bully Health",
   "text.config.pvz3-config.option.nestedZombieHealth.basketballH": "Basketball Carrier Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.bassH": "Bass Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.dancingH": "Dancing Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.dolphinH": "Dolphin Rider Health",
   "text.config.pvz3-config.option.nestedZombieHealth.explorerH": "Explorer Health",
@@ -309,6 +312,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.basketballObstH": "Basketball Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.healstationObstH": "Heal Station Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bobsledVH": "Bobsled Vehicle Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.speakerVH": "Speaker Vehicle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.zomboniVH": "Zomboni Vehicle Health",
 
 
@@ -578,6 +582,11 @@
   "item.pvzmod.acidshroom_seed_packet.flavour": "\"Aaaa- Aaaaa- AAAAAA-\"",
   "item.pvzmod.acidshroom_seed_packet.flavour2": "\"tchoo.\"",
   "item.pvzmod.acidfume": "Acid Goop",
+
+  "entity.pvzmod.oxygae": "Oxygae",
+  "item.pvzmod.oxygae_seed_packet": "⛨ Oxygae Seed Packet",
+  "item.pvzmod.oxygae_seed_packet.flavour": "Don't call him an oxymoron.",
+  "entity.pvzmod.bubblepad": "Bubble",
 
   "entity.pvzmod.breezeshroom": "Breeze-shroom",
   "item.pvzmod.breezeshroom_seed_packet": "❄ Breeze-shroom Seed Packet",
@@ -1006,6 +1015,11 @@
   "entity.pvzmod.scientist_hypnotized": "Hypnotized Scientist Zombie",
   "entity.pvzmod.healstation": "Heal Station",
 
+  "entity.pvzmod.bass": "Bass Zombie",
+  "item.pvzmod.bass_egg": "Bass Zombie",
+  "entity.pvzmod.bass_hypnotized": "Hypnotized Bass Zombie",
+  "entity.pvzmod.speaker": "Speaker",
+
   "entity.pvzmod.piggy": "Zombie Piggy",
   "item.pvzmod.zombiepiggy_egg": "Zombie Piggy",
   "entity.pvzmod.piggy_hypnotized": "Hypnotized Zombie Piggy",
@@ -1114,6 +1128,7 @@
   "block.pvzmod.dark_roof_tile": "Dark Roof Tile",
   "block.pvzmod.upgrade_tile": "Upgrade Tile",
   "block.pvzmod.premium_tile": "Premium Tile",
+  "block.pvzmod.legendary_tile": "Legendary Tile",
   "block.pvzmod.egypt_tile": "Egypt Tile",
   "block.pvzmod.dark_egypt_tile": "Dark Egypt Tile",
   "block.pvzmod.pirate_tile": "Pirate Tile",

@@ -42,6 +42,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.JalapenoEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.OxygaeEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.spikeweed.SpikeweedEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.squash.SquashEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.tallnut.TallnutEntity;
@@ -111,6 +113,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.s
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.acidfume.AcidFumeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.acidspore.AcidSporeEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.bubbles.BubbleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.armorbubble.ArmorBubbleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.banana.BananaProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.bark.BarkEntity;
@@ -118,7 +121,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.spiked
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.spiked.beespike.ShootingPowerBeeSpikeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.boomerang.ShootingBoomerangEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.breeze.BreezeEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.bubbles.BubbleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.cabbage.ShootingCabbageEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.card.ShootingCardEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.cheese.CheeseProjEntity;
@@ -255,6 +257,7 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.CHILLYPEPPER);
 		PLANT_LIST.add(PvZEntity.BEESHOOTER);
 		PLANT_LIST.add(PvZEntity.SNOWQUEENPEA);
+		PLANT_LIST.add(PvZEntity.OXYGAE);
 		PLANT_LIST.add(PvZEntity.BREEZESHROOM);
 		PLANT_LIST.add(PvZEntity.BLOOMERANG);
 		PLANT_LIST.add(PvZEntity.ICEBERGLETTUCE);
@@ -381,6 +384,17 @@ public class PvZEntity implements ModInitializer {
             new Identifier(ModID, "fumeshroom"),
             QuiltEntityTypeBuilder.<FumeshroomEntity>create(SpawnGroup.CREATURE, FumeshroomEntity::new).setDimensions(EntityDimensions.fixed(1f, 1.55f)).build()
     );
+
+	public static final EntityType<OxygaeEntity> OXYGAE = Registry.register((
+					Registry.ENTITY_TYPE),
+			new Identifier(ModID, "oxygae"),
+			QuiltEntityTypeBuilder.<OxygaeEntity>create(SpawnGroup.CREATURE, OxygaeEntity::new).setDimensions(EntityDimensions.fixed(0.99f,0.4f)).build()
+	);
+	public static final EntityType<BubblePadEntity> BUBBLEPAD = Registry.register((
+					Registry.ENTITY_TYPE),
+			new Identifier(ModID, "bubblepad"),
+			QuiltEntityTypeBuilder.<BubblePadEntity>create(SpawnGroup.CREATURE, BubblePadEntity::new).setDimensions(EntityDimensions.fixed(0.99f,0.1f)).build()
+	);
 
 	public static final EntityType <BreezeshroomEntity> BREEZESHROOM = Registry.register(
 			Registry.ENTITY_TYPE,
@@ -1402,6 +1416,11 @@ public class PvZEntity implements ModInitializer {
 			new Identifier(ModID, "blastronautgear"),
 			QuiltEntityTypeBuilder.<MetalHelmetEntity>create(SpawnGroup.MONSTER, MetalHelmetEntity::new).setDimensions(EntityDimensions.fixed(0.9f, 2.55f)).build()
 	);
+	public static final EntityType<MetalHelmetEntity> BASSGEAR = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "bassprop"),
+			QuiltEntityTypeBuilder.<MetalHelmetEntity>create(SpawnGroup.MONSTER, MetalHelmetEntity::new).setDimensions(EntityDimensions.fixed(0.8f, 1.95f)).build()
+	);
 
 	public static final EntityType<PlantHelmetEntity> PUMPKINGEAR = Registry.register(
 			Registry.ENTITY_TYPE,
@@ -2082,6 +2101,9 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MAGNETOSHROOM, MagnetoShroomEntity.createMagnetoshroomAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.OXYGAE, OxygaeEntity.createOxygaeAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BUBBLEPAD, BubblePadEntity.createBubbleAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BREEZESHROOM, BreezeshroomEntity.createBreezeshroomAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GRAVEBUSTER, GravebusterEntity.createGravebusterAttributes().build());
@@ -2280,6 +2302,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DEFENSIVEENDGEAR, MetalHelmetEntity.createDefensiveEndGearAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BLASTRONAUTGEAR, MetalHelmetEntity.createBlastronautGearAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASSGEAR, MetalHelmetEntity.createBassGearAttributes().build());
 
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.TOWERGEAR, StoneHelmetEntity.createTowerGearAttributes().build());

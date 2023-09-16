@@ -2,7 +2,10 @@ package io.github.GrassyDev.pvzmod.registry.entity.environment.bananatile;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,7 +20,7 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.*;
+import static io.github.GrassyDev.pvzmod.PvZCubed.BOUNCED;
 
 public class BananaTile extends TileEntity {
 
@@ -51,7 +54,7 @@ public class BananaTile extends TileEntity {
 							generalPvZombieEntity.isFlying())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) &&
-					(!(livingEntity instanceof ZombiePropEntity) || livingEntity instanceof ZombieRiderEntity)) {
+					!(livingEntity instanceof ZombiePropEntity)) {
 				boolean isMachine = PvZCubed.IS_MACHINE.get(livingEntity.getType()).orElse(false);
 				if (!isMachine) {
 					if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered()){
@@ -82,7 +85,7 @@ public class BananaTile extends TileEntity {
 							String helmetMaterial = PvZCubed.ZOMBIE_MATERIAL.get(zpe.getType()).orElse("flesh");
 							damage = switch (helmetMaterial) {
 								case "plastic" -> damage + 4;
-								case "metallic" -> damage + 8;
+								case "metallic", "electronic" -> damage + 8;
 								case "stone" -> damage + 16;
 								default -> damage;
 							};
@@ -99,7 +102,7 @@ public class BananaTile extends TileEntity {
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 					damage = switch (zombieMaterial) {
 						case "plastic" -> damage + 4;
-						case "metallic" -> damage + 8;
+						case "metallic", "electronic" -> damage + 8;
 						case "stone" -> damage + 16;
 						case "paper" -> damage - 8;
 						default -> damage;

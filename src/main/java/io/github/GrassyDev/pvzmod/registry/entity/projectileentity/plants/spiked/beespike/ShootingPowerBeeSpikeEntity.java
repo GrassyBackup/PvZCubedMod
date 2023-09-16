@@ -158,7 +158,7 @@ public class ShootingPowerBeeSpikeEntity extends PvZProjectileEntity implements 
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
+					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
@@ -181,7 +181,7 @@ public class ShootingPowerBeeSpikeEntity extends PvZProjectileEntity implements 
 					}
 					entityStore.add((LivingEntity) entity);
 				}
-				if (!(entity instanceof ZombieShieldEntity) || (entity instanceof ZombieRiderEntity)) {
+				if (!(entity instanceof ZombieShieldEntity)) {
 					((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
 				}
 				entityStore.add((LivingEntity) entity);

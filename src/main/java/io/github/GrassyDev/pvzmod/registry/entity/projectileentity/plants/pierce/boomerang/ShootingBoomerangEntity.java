@@ -224,7 +224,7 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 					SoundEvent sound;
 					sound = switch (zombieMaterial) {
-						case "metallic" -> PvZSounds.BUCKETHITEVENT;
+						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
 						case "stone" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
@@ -241,7 +241,7 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 					}
 					entityStore.remove(entity);
 					entityStoreVehicle.remove(entity);
-					if (!(entity instanceof ZombieShieldEntity) || (entity instanceof ZombieRiderEntity)) {
+					if (!(entity instanceof ZombieShieldEntity)) {
 						entityStoreVehicle.remove(entity.getVehicle());
 					}
 				}
@@ -256,7 +256,7 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
+					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
@@ -273,7 +273,7 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 				} else {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					entityStore.add(entity);
-					if (!(entity instanceof ZombieShieldEntity) || (entity instanceof ZombieRiderEntity)) {
+					if (!(entity instanceof ZombieShieldEntity)) {
 						entityStoreVehicle.add(entity.getVehicle());
 					}
 				}

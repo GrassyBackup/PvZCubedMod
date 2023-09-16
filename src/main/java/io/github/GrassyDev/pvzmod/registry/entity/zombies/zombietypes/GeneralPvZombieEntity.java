@@ -12,6 +12,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.hypnoshroom.HypnoshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.football.FootballEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntity;
@@ -420,7 +421,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		}
 		if (randomChallenge <= 0.33333) {
 			if (this.world.getGameRules().getBoolean(PvZCubed.SHOULD_ZOMBIE_DROP)) {
-				if (!(this instanceof ZombiePropEntity && !(this instanceof ZombieRiderEntity))) {
+				if (!(this instanceof ZombiePropEntity)) {
 					double random = Math.random();
 					float multiplier = ZOMBIE_STRENGTH.get(this.getType()).orElse(1);
 					if (multiplier > 9) {
@@ -779,6 +780,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public boolean canSlide = true;
 	private int chillCDTicks;
 	private int barkTicks;
+	private int elecWetTicks;
 	private float lastHealth = this.getHealth();
 
 	public void tick() {
@@ -917,6 +919,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			this.removeStatusEffect(StatusEffects.POISON);
 		}
 		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("metallic")) &&
+				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("electronic")) &&
 				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) &&
 				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("paper")) && this.hasStatusEffect(ACID)){
 			this.removeStatusEffect(ACID);
@@ -995,6 +998,15 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("flesh")) && !(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) && (this.hasStatusEffect(PVZPOISON) || this.hasStatusEffect(StatusEffects.POISON) ) && !(this instanceof ZombiePropEntity)){
 			this.removeStatusEffect(PVZPOISON);
 			this.removeStatusEffect(StatusEffects.POISON);
+		}
+		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("electronic") && (this.hasStatusEffect(WET) || this.isWet())){
+			if (--elecWetTicks <= 0) {
+				this.damage(DamageSource.GENERIC, 4.0F);
+				elecWetTicks = 20;
+			}
+		}
+		else {
+			elecWetTicks = 0;
 		}
 		if (this.hasStatusEffect(WARM) || this.isOnFire()){
 			this.removeStatusEffect(FROZEN);
@@ -1090,6 +1102,9 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	@Override
 	public boolean tryAttack(Entity target) {
 		if (this.age > 1) {
+			if (target.getVehicle() instanceof BubblePadEntity bubblePadEntity){
+				target = bubblePadEntity;
+			}
 			if (this.getTarget() != null &&
 					(((PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("ground") || (this.getTarget() instanceof PlantEntity plantEntity && plantEntity.getLowProfile())) &&
 							TARGET_GROUND.get(this.getType()).orElse(false).equals(true)) ||

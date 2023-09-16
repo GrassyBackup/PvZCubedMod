@@ -8,11 +8,13 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.cratertile.CraterT
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.wildwest.lightningreed.LightningReedEntity;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -99,7 +101,7 @@ public class LightningReedSeeds extends SeedItem implements FabricItem {
 			return TypedActionResult.pass(itemStack);
 		} else {
 			if (hitResult.getType() == HitResult.Type.BLOCK) {
-				if (world instanceof ServerWorld) {
+				if (world instanceof ServerWorld serverWorld) {
 					LightningReedEntity aquaticEntity = this.createEntity(world, hitResult);
 					aquaticEntity.setYaw(user.getYaw());
 					if (!world.isSpaceEmpty(aquaticEntity, aquaticEntity.getBoundingBox())) {
@@ -111,6 +113,7 @@ public class LightningReedSeeds extends SeedItem implements FabricItem {
 							if (list.isEmpty() && list2.isEmpty()){
 								float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 								aquaticEntity.refreshPositionAndAngles(aquaticEntity.getX(), aquaticEntity.getY(), aquaticEntity.getZ(), f, 0.0F);
+								aquaticEntity.initialize(serverWorld, world.getLocalDifficulty(aquaticEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
 								((ServerWorld) world).spawnEntityAndPassengers(aquaticEntity);
 								RandomGenerator randomGenerator = aquaticEntity.getRandom();
 								BlockState blockState = aquaticEntity.getLandingBlockState();
@@ -170,6 +173,7 @@ public class LightningReedSeeds extends SeedItem implements FabricItem {
 			if (list.isEmpty()) {
 				float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 				plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
+			plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
 				world.spawnEntity(plantEntity);
 				world.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(), PvZSounds.PLANTPLANTEDEVENT, SoundCategory.BLOCKS, 0.6f, 0.8F);
 
@@ -185,6 +189,26 @@ public class LightningReedSeeds extends SeedItem implements FabricItem {
 			} else {
 				return ActionResult.FAIL;
 			}
+		} else if (world instanceof ServerWorld serverWorld && entity instanceof BubblePadEntity)  {
+			if (plantEntity == null) {
+				return ActionResult.FAIL;
+			}
+
+			float f = (float) MathHelper.floor((MathHelper.wrapDegrees(user.getYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+			plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
+			plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+			((ServerWorld) world).spawnEntityAndPassengers(plantEntity);
+			plantEntity.rideLilyPad(entity);
+			world.playSound((PlayerEntity) null, plantEntity.getX(), plantEntity.getY(), plantEntity.getZ(), sound, SoundCategory.BLOCKS, 0.6f, 0.8F);
+			if (!user.getAbilities().creativeMode) {
+				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
+					stack.decrement(1);
+				}
+				if (!PVZCONFIG.nestedSeeds.instantRecharge() && !world.getGameRules().getBoolean(PvZCubed.INSTANT_RECHARGE)) {
+					user.getItemCooldownManager().set(this, cooldown);
+				}
+			}
+			return ActionResult.success(world.isClient);
 		} else {
 			return ActionResult.PASS;
 		}

@@ -5,8 +5,8 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -14,7 +14,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
@@ -104,7 +103,7 @@ public class GravebusterEntity extends PlantEntity implements IAnimatable {
 	protected void initGoals() {
 		this.goalSelector.add(1, new MeleeAttackGoal(this, 0D, true));
 		this.targetSelector.add(1, new TargetGoal<>(this, MobEntity.class, 0, false, false, (livingEntity) -> {
-			return livingEntity instanceof GraveEntity || (livingEntity instanceof ZombieObstacleEntity && !(livingEntity instanceof ZombieRiderEntity)); }));
+			return livingEntity instanceof GraveEntity || livingEntity instanceof SpeakerVehicleEntity || livingEntity instanceof ZombieObstacleEntity; }));
 	}
 
 	public boolean tryAttack(Entity target) {
@@ -146,12 +145,8 @@ public class GravebusterEntity extends PlantEntity implements IAnimatable {
 		List<LivingEntity> list = new ArrayList<>();
 		list.addAll(world.getNonSpectatingEntities(GraveEntity.class, box.expand(0)));
 		list.addAll(world.getNonSpectatingEntities(ZombieObstacleEntity.class, box.expand(0)));
+		list.addAll(world.getNonSpectatingEntities(SpeakerVehicleEntity.class, box.expand(0)));
 		List<LivingEntity> list2 = list;
-		for (LivingEntity livingEntity : list){
-			if (livingEntity instanceof ZombieRiderEntity){
-				list2.remove(livingEntity);
-			}
-		}
 		if (list2.isEmpty() && this.age > 10){
 			this.discard();
 		}

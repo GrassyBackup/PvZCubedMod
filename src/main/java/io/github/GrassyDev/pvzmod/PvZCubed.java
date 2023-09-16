@@ -169,6 +169,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.CHILLYPEPPER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BEESHOOTER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SNOW_QUEENPEA_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.OXYGAE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BREEZESHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BLOOMERANG_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ICEBERGLETTUCE_SEED_PACKET));
@@ -302,6 +303,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.BRICKHEADEGG));
 				stacks.add(new ItemStack(ModItems.SUNDAYEDITIONEGG));
 				stacks.add(new ItemStack(ModItems.SUPERFANIMPEGG));
+				stacks.add(new ItemStack(ModItems.BASSEGG));
 				stacks.add(new ItemStack(ModItems.PUMPKINZOMBIEEGG));
 				stacks.add(new ItemStack(ModItems.NEWYEARIMPEGG));
 				stacks.add(new ItemStack(ModItems.HAWKEREGG));
@@ -346,7 +348,7 @@ public class PvZCubed implements ModInitializer {
 
 	public static final ItemGroup PVZBLOCKS = FabricItemGroupBuilder.create(
 					new Identifier(MOD_ID, "blocks"))
-			.icon(() -> new ItemStack(ModItems.PREMIUM_TILE))
+			.icon(() -> new ItemStack(ModItems.FAIRY_TILE))
 			.appendItems(stacks -> {
 				stacks.add(new ItemStack(ModItems.GRASS_TILE));
 				stacks.add(new ItemStack(ModItems.DARK_GRASS_TILE));
@@ -378,6 +380,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.DARK_SKYCITY_TILE));
 				stacks.add(new ItemStack(ModItems.FAIRY_TILE));
 				stacks.add(new ItemStack(ModItems.DARK_FAIRY_TILE));
+				stacks.add(new ItemStack(ModItems.LEGENDARY_TILE));
 			}).build();
 
 	@Override

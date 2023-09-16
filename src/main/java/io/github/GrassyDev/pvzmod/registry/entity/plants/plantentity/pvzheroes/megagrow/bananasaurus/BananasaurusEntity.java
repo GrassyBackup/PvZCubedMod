@@ -8,7 +8,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.banana.BananaProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -153,7 +152,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 			}
 		}
 		Entity damaged = target;
-		if (passenger != null && !(passenger instanceof ZombieRiderEntity)){
+		if (passenger != null){
 			damaged = passenger;
 		}
 		if (i <= 0) {
@@ -164,7 +163,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 			SoundEvent sound;
 			sound = switch (zombieMaterial) {
-				case "metallic" -> PvZSounds.BUCKETHITEVENT;
+				case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 				case "plastic" -> PvZSounds.CONEHITEVENT;
 				case "stone" -> PvZSounds.STONEHITEVENT;
 				default -> PvZSounds.PEAHITEVENT;

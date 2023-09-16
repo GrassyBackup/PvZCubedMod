@@ -378,7 +378,9 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 						ShootingPumpkinEntity proj = new ShootingPumpkinEntity(PvZEntity.PUMPKINPROJ, this.plantEntity.world);
 						double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
 						Vec3d targetPos = livingEntity.getPos();
-						Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+						double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
+						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 						float dist = (this.plantEntity.squaredDistanceTo(predictedPos) >= 729) ? 1.1f : 1f;
 						double d = this.plantEntity.squaredDistanceTo(predictedPos);
 						float df = (float)d;

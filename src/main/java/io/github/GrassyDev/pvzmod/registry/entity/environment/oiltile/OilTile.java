@@ -57,7 +57,7 @@ public class OilTile extends TileEntity {
 							generalPvZombieEntity.isFlying())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) &&
-					(!(livingEntity instanceof ZombiePropEntity) || livingEntity instanceof ZombieRiderEntity)) {
+					!(livingEntity instanceof ZombiePropEntity)) {
 				boolean isMachine = PvZCubed.IS_MACHINE.get(livingEntity.getType()).orElse(false);
 				if (!isMachine && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
 					if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.canSlide && !livingEntity.hasStatusEffect(BOUNCED)) {
@@ -89,7 +89,7 @@ public class OilTile extends TileEntity {
 							String helmetMaterial = PvZCubed.ZOMBIE_MATERIAL.get(zpe.getType()).orElse("flesh");
 							damage = switch (helmetMaterial) {
 								case "plastic" -> damage + 4;
-								case "metallic" -> damage + 8;
+								case "metallic", "electronic" -> damage + 8;
 								case "stone" -> damage + 16;
 								default -> damage;
 							};

@@ -58,7 +58,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class ZomboniEntity extends ZombieRiderEntity implements IAnimatable {
+public class ZomboniEntity extends ZombieRidersEntity implements IAnimatable {
 
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private String controllerName = "walkingcontroller";

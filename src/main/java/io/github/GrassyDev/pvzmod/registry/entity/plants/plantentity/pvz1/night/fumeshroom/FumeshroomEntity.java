@@ -431,7 +431,9 @@ public class FumeshroomEntity extends PlantEntity implements IAnimatable, Ranged
 				if (this.beamTicks >= 0 && this.animationTicks <= -4) {
 					double time = 1;
 					Vec3d targetPos = livingEntity.getPos();
-					Vec3d predictedPos = targetPos.add(livingEntity.getVelocity().multiply(time));
+					double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
+						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 					double d = this.plantEntity.squaredDistanceTo(predictedPos);
 					float df = (float)d;
 					double e = predictedPos.getX() - this.plantEntity.getX();

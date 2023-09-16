@@ -50,6 +50,7 @@
       "text": [
         "$(br2)Water",
         "$(br2)Wet Zombies, extinguishing and preventing Fire for a short time.",
+        "$(br2)Deals 4 DMG/sec to Electronic Zombies.",
         "$(br2)Deals double the damage against Paper and Stone, and half against Plant."
       ]
     },
@@ -94,9 +95,9 @@
       "type": "text",
       "text": [
         "$(br2)Acid",
-        "$(br2)Deals continuous damage to Metallic Zombies.",
+        "$(br2)Deals continuous damage to Zombies.",
         "$(br2)Deals 8 DMG/0.5sec.",
-        "$(br2)Can only be applied to Metal, Plant, or Paper."
+        "$(br2)Can only be applied to Metal, Electronic, Plant, or Paper."
       ]
     },
     {

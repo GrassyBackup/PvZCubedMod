@@ -14,7 +14,6 @@ import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
@@ -198,6 +197,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 			this.magnetized = true;
 			this.world.sendEntityStatus(this, (byte) 109);
 		}
+		System.out.println(this.getTarget());
 	}
 
 	@Override
@@ -340,12 +340,12 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 		public boolean canStart() {
 			LivingEntity livingEntity = this.plantEntity.getTarget();
-			return livingEntity != null && livingEntity.isAlive() && livingEntity.hasPassengers() && !plantEntity.magnetized;
+			return livingEntity != null && livingEntity.isAlive() && !plantEntity.magnetized;
 		}
 
 		public boolean shouldContinue() {
 			LivingEntity livingEntity = this.plantEntity.getTarget();
-			return super.shouldContinue() && !this.plantEntity.getIsAsleep() && (livingEntity != null && livingEntity.hasPassengers()) && !plantEntity.magnetized;
+			return super.shouldContinue() && !this.plantEntity.getIsAsleep() && livingEntity != null && !plantEntity.magnetized;
 		}
 
 		public void start() {
@@ -363,8 +363,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 			LivingEntity livingEntity = this.plantEntity.getTarget();
 			this.plantEntity.getNavigation().stop();
 			this.plantEntity.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
-			if ((!this.plantEntity.canSee(livingEntity) && this.animationTicks >= 0) || this.plantEntity.getIsAsleep() ||
-					(livingEntity != null && !livingEntity.hasPassengers())){
+			if ((!this.plantEntity.canSee(livingEntity) && this.animationTicks >= 0) || this.plantEntity.getIsAsleep()){
 				this.plantEntity.setTarget((LivingEntity) null);
 			} else {
 				this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);

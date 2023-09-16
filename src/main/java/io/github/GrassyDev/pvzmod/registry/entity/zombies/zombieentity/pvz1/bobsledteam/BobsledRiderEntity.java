@@ -60,7 +60,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable {
+public class BobsledRiderEntity extends ZombieRidersEntity implements IAnimatable {
 
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private String controllerName = "walkingcontroller";
@@ -175,9 +175,13 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 					event.getController().setAnimation(new AnimationBuilder().loop("bobsled.sit"));
 				}
 			}
-			if (this.isIced) {
+			if (this.isFrozen || this.isStunned) {
+				event.getController().setAnimationSpeed(0);
+			}
+			else if (this.isIced) {
 				event.getController().setAnimationSpeed(0.5);
-			} else {
+			}
+			else {
 				event.getController().setAnimationSpeed(1);
 			}
 		}
@@ -212,7 +216,7 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 	/** /~*~//~*AI*~//~*~/ **/
 
 	protected void initGoals() {
-		if (this.getType().equals(PvZEntity.ZOMBONIHYPNO)) {
+		if (this.getType().equals(PvZEntity.BOBSLEDHYPNO)) {
 			initHypnoGoals();
 		}
 		else {
@@ -262,9 +266,16 @@ public class BobsledRiderEntity extends ZombieRiderEntity implements IAnimatable
 
 	public void tick() {
 		super.tick();
-		LivingEntity target = this.getTarget();
-		if (target instanceof PlayerEntity player && player.getAbilities().creativeMode){
-			this.setTarget(null);
+		if (this.getAttacking() == null && !(this.getHypno())){
+			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
+				this.setVelocity(0, -0.3, 0);
+				this.setTarget(CollidesWithPlant(1f, 0f));
+				this.setStealthTag(Stealth.FALSE);
+			}
+			else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()){
+				this.setTarget(CollidesWithPlayer(1.5f));
+				this.setStealthTag(Stealth.FALSE);
+			}
 		}
 	}
 

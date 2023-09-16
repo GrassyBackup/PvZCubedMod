@@ -3,6 +3,7 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.bask
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
@@ -14,6 +15,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -165,7 +167,7 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 			if (entity instanceof LivingEntity livingEntity) {
 				if (entity != this) {
 					if (!this.isHypno) {
-						if (!world.isClient && (!(entity instanceof Monster) || entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno())) {
+						if (!world.isClient && (!(entity instanceof Monster) || entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()) && !(entity.getVehicle() instanceof BubblePadEntity)) {
 							entity.playSound(PvZSounds.PEAHITEVENT, 0.2F, (float) (0.5F + Math.random()));
 							float damage = 4F;
 							if (damage > livingEntity.getHealth() &&
@@ -187,7 +189,7 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 							String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 							SoundEvent sound;
 							sound = switch (zombieMaterial) {
-								case "metallic" -> PvZSounds.BUCKETHITEVENT;
+								case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 								case "plastic" -> PvZSounds.CONEHITEVENT;
 								case "stone" -> PvZSounds.STONEHITEVENT;
 								default -> PvZSounds.PEAHITEVENT;

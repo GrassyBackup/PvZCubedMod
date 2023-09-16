@@ -402,7 +402,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
+					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
@@ -420,7 +420,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 				if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 					this.lightningCounter -= 2;
 				}
-				else if (!zombieMaterial.equals("metallic")){
+				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic")){
 					--this.lightningCounter;
 				}
 				if (getBeamTarget2() == null && getElectricBeamTarget2() == null){

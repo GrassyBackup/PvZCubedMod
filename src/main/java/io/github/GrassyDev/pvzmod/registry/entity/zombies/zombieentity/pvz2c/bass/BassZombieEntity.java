@@ -12,7 +12,9 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.sunflower.SunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.sunshroom.SunshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.DefaultAndHypnoVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.backupdancer.BackupDancerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.minecraft.block.BlockState;
@@ -23,6 +25,9 @@ import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -39,6 +44,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -53,7 +60,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class BassZombieEntity extends ZombieRiderEntity implements IAnimatable {
+public class BassZombieEntity extends ZombieRidersEntity implements IAnimatable {
 
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private String controllerName = "walkingcontroller";
@@ -66,19 +73,61 @@ public class BassZombieEntity extends ZombieRiderEntity implements IAnimatable {
 
 	protected void initDataTracker() {
 		super.initDataTracker();
+		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
 	}
 
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
+		nbt.putInt("Variant", this.getTypeVariant());
 	}
 
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
+		this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
 	}
+
+	static {
+
+	}
+
+
 
 	@Override
 	public void setHypno(IsHypno hypno) {
 		super.setHypno(hypno);
+	}
+
+
+	/** /~*~//~*VARIANTS*~//~*~/ **/
+
+	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
+			DataTracker.registerData(BackupDancerEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+								 SpawnReason spawnReason, @Nullable EntityData entityData,
+								 @Nullable NbtCompound entityNbt) {
+		if (this.getType().equals(PvZEntity.BASSHYPNO)){
+			setVariant(DefaultAndHypnoVariants.HYPNO);
+			this.setHypno(IsHypno.TRUE);
+			System.out.println("test");
+		}
+		else {
+			System.out.println("test2");
+			setVariant(DefaultAndHypnoVariants.DEFAULT);
+		}
+		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+	}
+
+	private int getTypeVariant() {
+		return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
+	}
+
+	public DefaultAndHypnoVariants getVariant() {
+		return DefaultAndHypnoVariants.byId(this.getTypeVariant() & 255);
+	}
+
+	public void setVariant(DefaultAndHypnoVariants variant) {
+		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
 	}
 
 
@@ -101,9 +150,13 @@ public class BassZombieEntity extends ZombieRiderEntity implements IAnimatable {
 			if (this.getVehicle() instanceof SpeakerVehicleEntity) {
 				event.getController().setAnimation(new AnimationBuilder().loop("bass.idle"));
 			}
-			if (this.isIced) {
+			if (this.isFrozen || this.isStunned) {
+				event.getController().setAnimationSpeed(0);
+			}
+			else if (this.isIced) {
 				event.getController().setAnimationSpeed(0.5);
-			} else {
+			}
+			else {
 				event.getController().setAnimationSpeed(1);
 			}
 		}
@@ -138,7 +191,7 @@ public class BassZombieEntity extends ZombieRiderEntity implements IAnimatable {
 	/** /~*~//~*AI*~//~*~/ **/
 
 	protected void initGoals() {
-		if (this.getType().equals(PvZEntity.ZOMBONIHYPNO)) {
+		if (this.getType().equals(PvZEntity.BASSHYPNO)) {
 			initHypnoGoals();
 		}
 		else {
@@ -188,9 +241,16 @@ public class BassZombieEntity extends ZombieRiderEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		LivingEntity target = this.getTarget();
-		if (target instanceof PlayerEntity player && player.getAbilities().creativeMode){
-			this.setTarget(null);
+		if (this.getAttacking() == null && !(this.getHypno())){
+			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
+				this.setVelocity(0, -0.3, 0);
+				this.setTarget(CollidesWithPlant(1f, 0f));
+				this.setStealthTag(Stealth.FALSE);
+			}
+			else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()){
+				this.setTarget(CollidesWithPlayer(1.5f));
+				this.setStealthTag(Stealth.FALSE);
+			}
 		}
 	}
 
@@ -203,7 +263,7 @@ public class BassZombieEntity extends ZombieRiderEntity implements IAnimatable {
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.ZOMBONIEGG.getDefaultStack();
+		return ModItems.BASSEGG.getDefaultStack();
 	}
 
 
@@ -291,6 +351,7 @@ public class BassZombieEntity extends ZombieRiderEntity implements IAnimatable {
 				}
 				if (this.hasVehicle() && this.getVehicle() instanceof SpeakerVehicleEntity speakerVehicleEntity){
 					speakerVehicleEntity.setHypno(IsHypno.TRUE);
+					hypnotizedZombie.startRiding(speakerVehicleEntity, true);
 				}
 
 				hypnotizedZombie.setPersistent();

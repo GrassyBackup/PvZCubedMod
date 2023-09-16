@@ -5,12 +5,13 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -115,13 +117,11 @@ public class GraveBusterSeeds extends SeedItem implements FabricItem {
 			List<LivingEntity> list2 = new ArrayList<>();
 			list.addAll(world.getNonSpectatingEntities(GraveEntity.class, box.expand(0)));
 			list.addAll(world.getNonSpectatingEntities(ZombieObstacleEntity.class, box.expand(0)));
+			list.addAll(world.getNonSpectatingEntities(SpeakerVehicleEntity.class, box.expand(0)));
 			for (LivingEntity livingEntity : list){
 				if (livingEntity instanceof GraveEntity graveEntity && graveEntity.isChallengeGrave()){
 					list2.clear();
 					break;
-				}
-				else if (livingEntity instanceof ZombieRiderEntity){
-					list2.remove(livingEntity);
 				}
 				else {
 					list2.add(livingEntity);
@@ -136,6 +136,7 @@ public class GraveBusterSeeds extends SeedItem implements FabricItem {
 
                     float f = (float) MathHelper.floor((MathHelper.wrapDegrees(context.getPlayerYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
                     plantEntity.refreshPositionAndAngles(plantEntity.getX(), plantEntity.getY(), plantEntity.getZ(), f, 0.0F);
+					plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
                     world.spawnEntity(plantEntity);
 				RandomGenerator randomGenerator = plantEntity.getRandom();
 				BlockState blockState = plantEntity.getLandingBlockState();

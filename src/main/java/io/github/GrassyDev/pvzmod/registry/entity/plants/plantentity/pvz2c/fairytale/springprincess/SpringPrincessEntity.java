@@ -292,7 +292,9 @@ public class SpringPrincessEntity extends PlantEntity implements IAnimatable, Ra
 				SpringProjEntity proj = new SpringProjEntity(PvZEntity.SPRINGPROJ, this.world);
 				double time = (livingEntity != null) ? ((this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1) : 1;
 				Vec3d targetPos = (livingEntity != null) ? livingEntity.getPos() : this.getPos();
-				Vec3d predictedPos = (livingEntity != null) ? targetPos.add(livingEntity.getVelocity().multiply(time)) : this.getPos();
+				double predictedPosX = (livingEntity != null) ? targetPos.getX() + (livingEntity.getVelocity().x * time) : this.getX();
+				double predictedPosZ = (livingEntity != null) ? targetPos.getZ() + (livingEntity.getVelocity().z * time) : this.getZ();
+				Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 				float dist = (this.squaredDistanceTo(predictedPos) >= 729) ? 1.1f : 1f;
 				double d = this.squaredDistanceTo(predictedPos);
 				float df = (float)d;

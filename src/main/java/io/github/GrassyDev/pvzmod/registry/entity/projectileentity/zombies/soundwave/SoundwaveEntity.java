@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -120,7 +121,7 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 60) {
+        if (!this.world.isClient && this.age >= 20) {
             this.world.sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
@@ -161,7 +162,7 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 					SoundEvent sound;
 					sound = switch (zombieMaterial) {
-						case "metallic" -> PvZSounds.BUCKETHITEVENT;
+						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
 						case "stone" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
@@ -184,7 +185,7 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 			else {
 				if (entity instanceof LilyPadEntity && entity.hasPassengers()) {
 
-				} else if (!world.isClient && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity && PLANT_LOCATION.get(plantEntity.getType()).orElse("ground").equals("flying"))) {
+				} else if (!world.isClient && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity && PLANT_LOCATION.get(plantEntity.getType()).orElse("normal").equals("flying")) && !(entity.getVehicle() instanceof BubblePadEntity)) {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					this.world.sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);

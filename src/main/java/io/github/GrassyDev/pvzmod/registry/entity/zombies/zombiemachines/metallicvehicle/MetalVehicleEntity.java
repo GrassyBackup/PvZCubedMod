@@ -122,7 +122,29 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 		this.goalSelector.add(1, new PvZombieAttackGoal(this, 1.0D, true));
 	}
 
+	@Override
+	public void setBodyYaw(float bodyYaw) {
+		if (this.hasPassengers()) {
+			super.setBodyYaw(bodyYaw);
+		}
+	}
+
+	@Override
+	public void setHeadYaw(float headYaw) {
+		if (this.hasPassengers()) {
+			super.setHeadYaw(headYaw);
+		}
+	}
+
+	@Override
+	public void setYaw(float yaw) {
+		if (this.hasPassengers()) {
+			super.setYaw(yaw);
+		}
+	}
+
 	/** /~*~//~*TICKING*~//~*~/ **/
+
 
 
 	public void tick() {

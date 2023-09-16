@@ -260,6 +260,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float olivepitS = 12.5f;
 		@RestartRequired
+		public float oxygaeS = 25.0f;
+		@RestartRequired
 		public float peapodS = 3.75f;
 		@RestartRequired
 		public float peashooterS = 5.0f;
@@ -396,7 +398,7 @@ public class PvZConfigModel {
 		public float sporeDMG = 2f;
 
 		public float basketBallDMG = 4f;
-		public float soundwaveDMG = 15f;
+		public float soundwaveDMG = 9f;
 		public float zpgDMG = 30f;
 	}
 

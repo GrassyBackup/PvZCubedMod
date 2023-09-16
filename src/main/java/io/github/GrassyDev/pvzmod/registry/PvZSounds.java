@@ -41,6 +41,9 @@ public class PvZSounds {
 	public static final Identifier FUMESHROOMSHOOT = new Identifier("pvzmod:fumeshroom.shoot");
 	public static SoundEvent FUMESHROOMSHOOTEVENT = new SoundEvent(FUMESHROOMSHOOT);
 
+	public static final Identifier BASSPLAY = new Identifier("pvzmod:bass.play");
+	public static SoundEvent BASSPLAYEVENT = new SoundEvent(BASSPLAY);
+
 	public static final Identifier MAGNETATTRACT = new Identifier("pvzmod:magnet.attract");
 	public static SoundEvent MAGNETATTRACTEVENT = new SoundEvent(MAGNETATTRACT);
 
@@ -126,6 +129,9 @@ public class PvZSounds {
 	public static final Identifier GARGANTUARSMASH = new Identifier("pvzmod:gargantuar.smash");
 	public static SoundEvent GARGANTUARSMASHEVENT = new SoundEvent(GARGANTUARSMASH);
 
+	public static final Identifier SPEAKERCRASH = new Identifier("pvzmod:bass.crash");
+	public static SoundEvent SPEAKERCRASHEVENT = new SoundEvent(SPEAKERCRASH);
+
 	public static final Identifier SOLDIERPREP = new Identifier("pvzmod:soldier.prep");
 	public static SoundEvent SOLDIERPREPEVENT = new SoundEvent(SOLDIERPREP);
 
@@ -180,6 +186,7 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SNOWPEAHIT, SNOWPEAHITEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.MUSHROOMSHOOT, MUSHROOMSHOOTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.FUMESHROOMSHOOT, FUMESHROOMSHOOTEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.BASSPLAY, BASSPLAYEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.MAGNETATTRACT, MAGNETATTRACTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.BLOOMERANGSHOOT, BLOOMERANGSHOOTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.LIGHTNINGSHOOT, LIGHTNINGSHOOTEVENT);
@@ -210,6 +217,7 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.DOLPHINJUMP, DOLPHINJUMPEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SOLDIERJUMP, SOLDIERJUMPEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.GARGANTUARSMASH, GARGANTUARSMASHEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.SPEAKERCRASH, SPEAKERCRASHEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SOLDIERPREP, SOLDIERPREPEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SOLDIERZPG, SOLDIERZPGEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.IMPLAUNCH, IMPLAUNCHEVENT);

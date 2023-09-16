@@ -5,7 +5,6 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -341,7 +340,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 			}
 		}
 		Entity damaged = target;
-		if (passenger != null && !(passenger instanceof ZombieRiderEntity)){
+		if (passenger != null){
 			damaged = passenger;
 		}
 		String zombieSize = PvZCubed.ZOMBIE_SIZE.get(damaged.getType()).orElse("medium");
@@ -352,7 +351,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		}
 		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 		float damage = this.getAttackDamage();
-		if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+		if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial)) {
 			damage = damage * 2;
 		}
 		if ("paper".equals(zombieMaterial)) {
@@ -364,7 +363,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		}
 		SoundEvent sound;
 		sound = switch (zombieMaterial) {
-			case "metallic" -> PvZSounds.BUCKETHITEVENT;
+			case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 			case "plastic" -> PvZSounds.CONEHITEVENT;
 			case "stone" -> PvZSounds.STONEHITEVENT;
 			default -> PvZSounds.PEAHITEVENT;

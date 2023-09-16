@@ -14,7 +14,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -75,8 +74,6 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 		amphibiousRaycastDelay = 1;
 
 		this.setNoGravity(true);
-		LilypadHats hat = Util.getRandom(LilypadHats.values(), this.random);
-		setHat(hat);
     }
 
 	public LilyPadEntity(World world, double x, double y, double z) {
@@ -206,16 +203,6 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
         return PlayState.CONTINUE;
     }
 
-
-	/** /~*~//~*AI*~//~*~/ **/
-
-	/**protected void initGoals() {
-		this.targetSelector.add(1, new TargetGoal<>(this, MobEntity.class, 0, false, false, (livingEntity) -> {
-			return livingEntity instanceof Monster && (!(livingEntity instanceof ZombiePropEntity) || (livingEntity instanceof ZombieObstacleEntity));
-		}));
-	}**/
-
-
 	/** /~*~//~*POSITION*~//~*~/ **/
 
 	public void setPosition(double x, double y, double z) {
@@ -257,7 +244,7 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 			if (hitResult.getType() == HitResult.Type.MISS) {
 				kill();
 			}
-			if (this.age != 0) {
+			if (this.age > 1) {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));

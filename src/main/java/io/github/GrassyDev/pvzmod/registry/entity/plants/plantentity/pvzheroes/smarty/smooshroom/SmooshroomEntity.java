@@ -356,13 +356,13 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 						SoundEvent sound;
 						sound = switch (zombieMaterial) {
-							case "metallic" -> PvZSounds.BUCKETHITEVENT;
+							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 							case "plastic" -> PvZSounds.CONEHITEVENT;
 							case "stone" -> PvZSounds.STONEHITEVENT;
 							default -> PvZSounds.PEAHITEVENT;
 						};
 						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial)) {
 							damage = damage * 2;
 						}
 						if ("paper".equals(zombieMaterial)) {
@@ -450,7 +450,9 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 					SmooshProjEntity proj = new SmooshProjEntity(PvZEntity.SMOOSHPROJ, this.world);
 					double time = (livingEntity != null) ? ((this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1) : 1;
 					Vec3d targetPos = (livingEntity != null) ? livingEntity.getPos() : this.getPos();
-					Vec3d predictedPos = (livingEntity != null) ? targetPos.add(livingEntity.getVelocity().multiply(time)) : this.getPos();
+					double predictedPosX = (livingEntity != null) ? targetPos.getX() + (livingEntity.getVelocity().x * time) : this.getX();
+					double predictedPosZ = (livingEntity != null) ? targetPos.getZ() + (livingEntity.getVelocity().z * time) : this.getZ();
+					Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 					float dist = (this.squaredDistanceTo(predictedPos) >= 729) ? 1.1f : 1f;
 					double d = this.squaredDistanceTo(predictedPos);
 					float df = (float)d;

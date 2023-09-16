@@ -178,7 +178,7 @@ public class AcidSporeEntity extends PvZProjectileEntity implements IAnimatable 
 				String zombieMaterial = ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
-					case "metallic" -> PvZSounds.BUCKETHITEVENT;
+					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
@@ -194,7 +194,7 @@ public class AcidSporeEntity extends PvZProjectileEntity implements IAnimatable 
 				} else {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 				}
-				if (ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh").equals("metallic")) {
+				if (ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh").equals("metallic") || ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh").equals("electronic")) {
 					((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ACID, 60, 6)));
 				}
 				this.world.sendEntityStatus(this, (byte) 3);

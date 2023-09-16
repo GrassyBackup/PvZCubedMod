@@ -8,7 +8,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.cheese.CheeseProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -235,7 +234,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			if (entity1 instanceof ZombiePropEntity zpe) {
 				passenger = zpe;
 				hasHelmet = !(entity1 instanceof ZombieShieldEntity);
-				hasShield = (entity1 instanceof ZombieShieldEntity && !(entity1 instanceof ZombieRiderEntity)) || passenger.isCovered();
+				hasShield = entity1 instanceof ZombieShieldEntity || passenger.isCovered();
 				if (hasShield){
 					damaged = passenger;
 				}
@@ -274,7 +273,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 		}
 		SoundEvent sound;
 		sound = switch (zombieMaterial) {
-			case "metallic" -> PvZSounds.BUCKETHITEVENT;
+			case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 			case "plastic" -> PvZSounds.CONEHITEVENT;
 			case "stone" -> PvZSounds.STONEHITEVENT;
 			default -> PvZSounds.PEAHITEVENT;
