@@ -146,7 +146,6 @@ public class OilTile extends TileEntity {
 					bl = false;
 				}
 			}
-			System.out.println(bl);
 			if (bl) {
 				FireTrailEntity tile = (FireTrailEntity) PvZEntity.FIRETRAIL.create(world);
 				tile.refreshPositionAndAngles(blockPos.getX(), blockPos.getY() + 0.5f, blockPos.getZ(), 0, 0);

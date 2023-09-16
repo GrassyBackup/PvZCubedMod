@@ -865,7 +865,6 @@ public abstract class PlantEntity extends GolemEntity {
 						tileEntity.discard();
 					}
 					if (tileEntity instanceof OilTile oilTile) {
-						System.out.println("test");
 						oilTile.makeFireTrail(oilTile.getBlockPos());
 					}
 				}
@@ -947,7 +946,6 @@ public abstract class PlantEntity extends GolemEntity {
 							livingEntity3 = (LivingEntity) entity;
 						}
 					}
-					System.out.println(setGear2);
 				}
 			}
 			if (setGear != null) {

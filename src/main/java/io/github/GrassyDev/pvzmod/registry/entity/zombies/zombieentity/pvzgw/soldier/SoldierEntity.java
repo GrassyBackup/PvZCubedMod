@@ -393,7 +393,6 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 						livingEntity.removeStatusEffect(FROZEN);
 					}
 					this.removeStatusEffect(FROZEN);
-					System.out.println(this.hasStatusEffect(FROZEN));
 				}
 				else if (this.CollidesWithPlant(x, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && this.getZPGStage() && !canFly) {
 					this.inLaunchAnimation = true;

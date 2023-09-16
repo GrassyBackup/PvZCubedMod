@@ -197,7 +197,6 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 			this.magnetized = true;
 			this.world.sendEntityStatus(this, (byte) 109);
 		}
-		System.out.println(this.getTarget());
 	}
 
 	@Override

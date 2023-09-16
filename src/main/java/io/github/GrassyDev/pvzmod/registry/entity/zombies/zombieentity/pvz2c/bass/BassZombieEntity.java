@@ -109,10 +109,8 @@ public class BassZombieEntity extends ZombieRidersEntity implements IAnimatable 
 		if (this.getType().equals(PvZEntity.BASSHYPNO)){
 			setVariant(DefaultAndHypnoVariants.HYPNO);
 			this.setHypno(IsHypno.TRUE);
-			System.out.println("test");
 		}
 		else {
-			System.out.println("test2");
 			setVariant(DefaultAndHypnoVariants.DEFAULT);
 		}
 		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);

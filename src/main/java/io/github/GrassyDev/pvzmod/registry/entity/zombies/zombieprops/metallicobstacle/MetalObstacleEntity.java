@@ -12,7 +12,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -245,7 +244,6 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 9);
 
-			System.out.println(this.getHypno());
 			if (!this.getHypno() && (livingEntity instanceof Monster &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && !(livingEntity instanceof ZombieShieldEntity) && (!(livingEntity instanceof MachinePvZombieEntity)) && !(IS_MACHINE.get(livingEntity.getType()).orElse(false).equals(true))) {
