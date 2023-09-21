@@ -185,7 +185,7 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 			else {
 				if (entity instanceof LilyPadEntity && entity.hasPassengers()) {
 
-				} else if (!world.isClient && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity && PLANT_LOCATION.get(plantEntity.getType()).orElse("normal").equals("flying")) && !(entity.getVehicle() instanceof BubblePadEntity)) {
+				} else if (!world.isClient && !(entity instanceof PlantEntity plantEntity && plantEntity.getImmune()) && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity2 && PLANT_LOCATION.get(plantEntity2.getType()).orElse("normal").equals("flying")) && !(entity.getVehicle() instanceof BubblePadEntity)) {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					this.world.sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);

@@ -1,0 +1,40 @@
+{
+  "name": "Ghost Pepper",
+  "icon": "pvzmod:ghostpepper_seed_packet",
+  "category": "pvzmod:plant_category",
+  "sortnum": 91,
+  "advancement": "pvzmod:make_spikeweed",
+  "pages": [
+    {
+      "type": "text",
+      "text": [
+        "$(#bd951a)Damage: $()$(#ff0000)12 DMG/1s ",
+        "$(br)$(#bd951a)Damage Area: $()$(#ff0000)Low Profile. 2 Blocks in front and behind, 3 wide. ",
+        "$(#bd951a)Range: $()$(#ff0000)2 Blocks ",
+        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)30s",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Flying. Immune to damage. Zombies ignore. Deals damage directly to Zombies, can't hurt Obstacles. Dies after attacking for 8 seconds total.",
+        "$(br)$(#bd951a)It may look like she is wearing a white sheet, but this is how ghosts actually look like."
+        ]
+    },
+    {
+      "type": "image",
+      "images": [
+        "pvzmod:textures/gui/entries/ghostpepper.png"
+      ],
+      "title": "☁ Conceal Family",
+      "border": "true",
+      "text": "$(#25228d)Ghost Peppers haunt zombies that pass by."
+    },
+    {
+      "type": "crafting",
+      "recipe": "pvzmod:plants/conceal/ghostpepper"
+    },
+    {
+      "type": "text",
+      "title": "References",
+      "text": [
+        "$(br2)$(#bd951a)Plants vs. Zombies 2: $()$(#ff0000)Ghost Pepper"
+      ]
+    }
+  ]
+}

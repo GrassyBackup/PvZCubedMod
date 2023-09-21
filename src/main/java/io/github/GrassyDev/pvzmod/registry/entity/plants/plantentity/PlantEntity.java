@@ -78,6 +78,7 @@ public abstract class PlantEntity extends GolemEntity {
 		this.dataTracker.startTracking(DATA_ALTFIRE, false);
 		this.dataTracker.startTracking(DATA_ID_LOWPROF, false);
 		this.dataTracker.startTracking(DATA_ID_FIREIMMUNE, false);
+		this.dataTracker.startTracking(DATA_ID_IMMUNE, false);
 	}
 
 	@Override
@@ -87,6 +88,7 @@ public abstract class PlantEntity extends GolemEntity {
 		tag.putBoolean("AltFire", this.getIsAltFire());
 		tag.putBoolean("lowProf", this.getLowProfile());
 		tag.putBoolean("fireImmune", this.getFireImmune());
+		tag.putBoolean("Immune", this.getImmune());
 	}
 
 	public void readCustomDataFromNbt(NbtCompound tag) {
@@ -95,6 +97,7 @@ public abstract class PlantEntity extends GolemEntity {
 		this.dataTracker.set(DATA_ALTFIRE, tag.getBoolean("AltFire"));
 		this.dataTracker.set(DATA_ID_LOWPROF, tag.getBoolean("lowProf"));
 		this.dataTracker.set(DATA_ID_FIREIMMUNE, tag.getBoolean("fireImmune"));
+		this.dataTracker.set(DATA_ID_IMMUNE, tag.getBoolean("Immune"));
 	}
 
 	/** /~*~//~*VARIANTS*~//~*~/ **/
@@ -165,6 +168,34 @@ public abstract class PlantEntity extends GolemEntity {
 
 	public void setFireImmune(PlantEntity.FireImmune fireImmune) {
 		this.dataTracker.set(DATA_ID_FIREIMMUNE, fireImmune.getId());
+	}
+
+	// Immune
+
+	protected static final TrackedData<Boolean> DATA_ID_IMMUNE =
+			DataTracker.registerData(PlantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+	public enum Immune {
+		FALSE(false),
+		TRUE(true);
+
+		Immune(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getImmune() {
+		return this.dataTracker.get(DATA_ID_IMMUNE);
+	}
+
+	public void setImmune(PlantEntity.Immune immune) {
+		this.dataTracker.set(DATA_ID_IMMUNE, immune.getId());
 	}
 
 
@@ -255,7 +286,7 @@ public abstract class PlantEntity extends GolemEntity {
 		LivingEntity prioritizedTarget = null;
 		if (!this.world.isClient()) {
 			for (LivingEntity hostileEntity : list) {
-				if (hostileEntity.isAlive()) {
+				if (hostileEntity.isAlive() && this.getVisibilityCache().canSee(hostileEntity)) {
 					if (hostileEntity instanceof Monster && !(hostileEntity instanceof GraveEntity graveEntity && graveEntity.decorative)) {
 						if (illuminate && hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isStealth() && hostileEntity.squaredDistanceTo(this) < 36) {
 							if (PLANT_TYPE.get(this.getType()).orElse("appease").equals("pepper") && this.isWet()) {

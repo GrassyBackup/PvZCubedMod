@@ -216,6 +216,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float gatlingpeaS = 35.0f;
 		@RestartRequired
+		public float ghostpepperS = 30.0f;
+		@RestartRequired
 		public float gloomshroomS = 35.0f;
 		@RestartRequired
 		public float goldleafS = 20.0f;

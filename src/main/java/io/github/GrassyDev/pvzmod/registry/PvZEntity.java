@@ -64,6 +64,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.farfut
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.frostbitecaves.pepperpult.PepperpultEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.electropea.ElectropeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.flamingpea.FlamingpeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper.GhostpepperEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper.GhostpepperEntityModel;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntity;
@@ -263,6 +265,7 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.ICEBERGLETTUCE);
 		PLANT_LIST.add(PvZEntity.MISSILETOE);
 		PLANT_LIST.add(PvZEntity.ELECTROPEA);
+		PLANT_LIST.add(PvZEntity.GHOSTPEPPER);
 		PLANT_LIST.add(PvZEntity.OLIVEPIT);
 		PLANT_LIST.add(PvZEntity.MAGICSHROOM);
 		PLANT_LIST.add(PvZEntity.LOQUAT);
@@ -669,6 +672,12 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "electropea"),
 			QuiltEntityTypeBuilder.<ElectropeaEntity>create(SpawnGroup.CREATURE, ElectropeaEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.8f)).build()
+	);
+
+	public static final EntityType<GhostpepperEntity> GHOSTPEPPER = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "ghostpepper"),
+			QuiltEntityTypeBuilder.<GhostpepperEntity>create(SpawnGroup.CREATURE, GhostpepperEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.8f)).build()
 	);
 
 	public static final EntityType<OlivePitEntity> OLIVEPIT = Registry.register(
@@ -2190,6 +2199,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MISSILETOE, MissileToeEntity.createMissileToeAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ELECTROPEA, ElectropeaEntity.createElectropeaAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GHOSTPEPPER, GhostpepperEntity.createGhostPepperAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.OLIVEPIT, OlivePitEntity.createOlivePitAttributes().build());
 

@@ -156,7 +156,7 @@ public class ZPGEntity extends PvZProjectileEntity implements IAnimatable {
 
 				entity = (Entity) var9.next();
 			} while (entity == this.getOwner());
-			if (!world.isClient && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity && (plantEntity.getLowProfile() || PLANT_LOCATION.get(plantEntity.getType()).orElse("normal").equals("flying"))) && !(entity.getVehicle() instanceof BubblePadEntity)) {
+			if (!world.isClient && !(entity instanceof PlantEntity plantEntity && plantEntity.getImmune()) && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity2 && (plantEntity2.getLowProfile() || PLANT_LOCATION.get(plantEntity2.getType()).orElse("normal").equals("flying"))) && !(entity.getVehicle() instanceof BubblePadEntity)) {
 				entity.playSound(PvZSounds.CHERRYBOMBEXPLOSIONEVENT, 0.2F, 1F);
 				float damage = PVZCONFIG.nestedProjDMG.zpgDMG();
 				entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);

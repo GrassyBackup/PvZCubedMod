@@ -8,14 +8,15 @@
       "type": "text",
       "text": [
         "$(#ff0000)The Conceal family is composed of shadow plants.",
-        "$(br2)$()$(#bd951a)They are affected by moonlight in varied ways."
+        "$(br2)$()$(#bd951a)They are affected by moonlight in varied ways and have shadow forms."
         ]
     },
     {
       "type": "relations",
       "entries": [
+        "pvzmod:plants/ghostpepper_entry"
       ],
-      "title": "\uD800\uDF48 Conceal Plants:"
+      "title": "☁ Conceal Plants:"
     }
   ]
 }

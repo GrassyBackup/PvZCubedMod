@@ -44,6 +44,10 @@ public class PvZSounds {
 	public static final Identifier BASSPLAY = new Identifier("pvzmod:bass.play");
 	public static SoundEvent BASSPLAYEVENT = new SoundEvent(BASSPLAY);
 
+
+	public static final Identifier GHOSTPEPPERPLANT = new Identifier("pvzmod:ghostpepper.plant");
+	public static SoundEvent GHOSTPEPPERPLANTEVENT = new SoundEvent(GHOSTPEPPERPLANT);
+
 	public static final Identifier MAGNETATTRACT = new Identifier("pvzmod:magnet.attract");
 	public static SoundEvent MAGNETATTRACTEVENT = new SoundEvent(MAGNETATTRACT);
 

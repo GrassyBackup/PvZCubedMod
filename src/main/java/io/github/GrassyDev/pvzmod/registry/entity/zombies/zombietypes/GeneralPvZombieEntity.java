@@ -522,6 +522,8 @@ public class GeneralPvZombieEntity extends HostileEntity {
 					setPlant = plantEntity;
 				} else if (PLANT_LOCATION.get(plantEntity.getType()).orElse("normal").equals("flying")) {
 					setPlant = null;
+				} else if (((PlantEntity) plantEntity).getImmune()) {
+					setPlant = null;
 				} else {
 					setPlant = plantEntity;
 				}
@@ -1109,7 +1111,8 @@ public class GeneralPvZombieEntity extends HostileEntity {
 					(((PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("ground") || (this.getTarget() instanceof PlantEntity plantEntity && plantEntity.getLowProfile())) &&
 							TARGET_GROUND.get(this.getType()).orElse(false).equals(true)) ||
 							(PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("flying") &&
-									TARGET_FLY.get(this.getType()).orElse(false).equals(true)))) {
+									TARGET_FLY.get(this.getType()).orElse(false).equals(true)) &&
+									!(target instanceof PlantEntity plantEntity && plantEntity.getImmune()))) {
 				if (!this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
 					float sound = 0.75f;
 					if (this.getHypno()) {
@@ -1128,7 +1131,8 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			} else if (this.getTarget() != null &&
 					!((PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("ground"))) &&
 					!(this.getTarget() instanceof PlantEntity plantEntity && plantEntity.getLowProfile()) &&
-					!((PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("flying")))) {
+					!((PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("flying"))) &&
+					!(target instanceof PlantEntity plantEntity2 && plantEntity2.getImmune())) {
 				if (!this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
 					float sound = 0.75f;
 					if (this.getHypno()) {

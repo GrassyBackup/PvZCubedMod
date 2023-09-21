@@ -87,6 +87,7 @@
     "pvzmod:beet": "enforce",
     "pvzmod:smooshroom": "enforce",
     "pvzmod:hammerflower": "enforce",
-    "pvzmod:meteorhammer": "enforce"
+    "pvzmod:meteorhammer": "enforce",
+    "pvzmod:ghostpepper": "conceal"
   }
 }

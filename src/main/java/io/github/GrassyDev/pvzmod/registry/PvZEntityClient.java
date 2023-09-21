@@ -64,6 +64,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.farfut
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.frostbitecaves.pepperpult.PepperpultEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.electropea.ElectropeaEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.flamingpea.FlamingpeaEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper.GhostPepperEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntityRenderer;
@@ -335,6 +336,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.MISSILETOE, MissileToeEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.ELECTROPEA, ElectropeaEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.GHOSTPEPPER, GhostPepperEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.OLIVEPIT, OlivePitEntityRenderer::new);
 

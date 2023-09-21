@@ -94,6 +94,11 @@
       "pvzmod:bass_play"
     ]
   },
+  "ghostpepper.plant": {
+    "sounds": [
+      "pvzmod:ghostpepper_plant"
+    ]
+  },
   "magnet.attract": {
     "sounds": [
       "pvzmod:magnet_attract"

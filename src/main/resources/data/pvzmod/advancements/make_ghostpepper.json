@@ -1,16 +1,16 @@
 {
   "display": {
     "icon": {
-      "item": "pvzmod:spikeweed_seed_packet"
+      "item": "pvzmod:ghostpepper_seed_packet"
     },
-    "title": "Yes, it pricks the bucket...",
-    "description": "Craft a Spikeweed",
+    "title": "Pepper's Jumpscare Mansion",
+    "description": "Craft a Ghost Pepper",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
-  "parent": "pvzmod:make_beet",
+  "parent": "pvzmod:make_spikeweed",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",
@@ -18,7 +18,7 @@
         "items": [
           {
             "items": [
-              "pvzmod:spikeweed_seed_packet"
+              "pvzmod:ghostpepper_seed_packet"
             ],
             "count": {
               "min": 1,
@@ -31,8 +31,6 @@
   },
   "rewards": {
     "recipes": [
-      "pvzmod:plants/enforce/spikerock",
-      "pvzmod:plants/conceal/ghostpepper"
     ],
     "experience": 25
   }
