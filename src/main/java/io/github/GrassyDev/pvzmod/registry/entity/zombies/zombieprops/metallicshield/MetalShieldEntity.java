@@ -1,19 +1,28 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.gears.MetallicShieldVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -36,12 +45,22 @@ public class MetalShieldEntity extends ZombieShieldEntity implements IAnimatable
         this.experiencePoints = 3;
 	}
 
-	public MetalShieldEntity(World world) {
-		this(PvZEntity.SCREENDOORSHIELD, world);
+	protected void initDataTracker() {
+		super.initDataTracker();
+		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+	}
+
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
+		nbt.putInt("Variant", this.getTypeVariant());
+	}
+
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
+		this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
 	}
 
 	static {
-
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -49,6 +68,36 @@ public class MetalShieldEntity extends ZombieShieldEntity implements IAnimatable
 		if (status != 2 && status != 60){
 			super.handleStatus(status);
 		}
+	}
+
+
+	/** /~*~//~*VARIANTS*~//~*~/ **/
+
+	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
+			DataTracker.registerData(MetalShieldEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+								 SpawnReason spawnReason, @Nullable EntityData entityData,
+								 @Nullable NbtCompound entityNbt) {
+		if (this.getType().equals(PvZEntity.SERGEANTSHIELDGEAR)){
+			setVariant(MetallicShieldVariants.SERGEANT);
+		}
+		else {
+			setVariant(MetallicShieldVariants.SCREENDOOR);
+		}
+		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+	}
+
+	private int getTypeVariant() {
+		return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
+	}
+
+	public MetallicShieldVariants getVariant() {
+		return MetallicShieldVariants.byId(this.getTypeVariant() & 255);
+	}
+
+	public void setVariant(MetallicShieldVariants variant) {
+		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
 	}
 
 	/** /~*~//~*TICKING*~//~*~/ **/
@@ -90,6 +139,14 @@ public class MetalShieldEntity extends ZombieShieldEntity implements IAnimatable
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.screendoorShieldH());
     }
+	public static DefaultAttributeContainer.Builder createSergeantShieldAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.sergeantShieldH());
+	}
 
 	protected SoundEvent getAmbientSound() {
 		return PvZSounds.SILENCEVENET;
@@ -106,6 +163,13 @@ public class MetalShieldEntity extends ZombieShieldEntity implements IAnimatable
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.SCREENDOOREGG.getDefaultStack();
+		ItemStack itemStack;
+		if (this.getType().equals(PvZEntity.SERGEANTSHIELDGEAR)){
+			itemStack = ModItems.SARGEANTSHIELDEGG.getDefaultStack();
+		}
+		else{
+			itemStack = ModItems.SCREENDOOREGG.getDefaultStack();
+		}
+		return itemStack;
 	}
 }

@@ -311,19 +311,14 @@ public class PoleVaultingEntity extends PvZombieEntity implements IAnimatable {
 		super.mobTick();
 
 		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-		if (this.getPoleStage()){
-			if (this.speedSwitch) {
+		if (this.getPoleStage() &&
+				this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
+			assert maxSpeedAttribute != null;
+			maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
+		} else if (!this.getPoleStage()) {
+			if (!this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
 				assert maxSpeedAttribute != null;
-				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
-				this.speedSwitch = false;
-			}
-		}
-		else {
-			if (!this.speedSwitch){
-				assert maxSpeedAttribute != null;
-				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
-				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.08D));
-				this.speedSwitch = true;
+				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.08));
 			}
 		}
 	}

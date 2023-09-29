@@ -14,7 +14,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -160,9 +159,13 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 			} while (entity == this.getOwner());
 
 			ZombiePropEntity zombiePropEntity = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity == null) {
 					zombiePropEntity = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 			Entity et = null;
@@ -175,6 +178,7 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !hit) {
 				float damage = PVZCONFIG.nestedProjDMG.firepiercepeaDMG();
@@ -253,13 +257,21 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 									!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 											&& (generalPvZombieEntity.getHypno())) && !livingEntity.hasStatusEffect(PvZCubed.WET) && !livingEntity.isWet() && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.canBurn())) {
 								if (livingEntity != entity) {
-									ZombiePropEntity zombiePropEntity3 = null;
+									ZombiePropEntity zombiePropEntity4 = null;
 									for (Entity entity1 : livingEntity.getPassengerList()) {
 										if (entity1 instanceof ZombiePropEntity zpe) {
-											zombiePropEntity3 = zpe;
+											zombiePropEntity4 = zpe;
 										}
 									}
-									if (!(zombiePropEntity3 instanceof ZombieShieldEntity)) {
+									ZombiePropEntity zombiePropEntity6 = null;
+									if (livingEntity.hasVehicle()) {
+										for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+											if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+												zombiePropEntity6 = zpe;
+											}
+										}
+									}
+									if (!(zombiePropEntity4 instanceof ZombieShieldEntity)&& zombiePropEntity6 == null) {
 										float damageSplash = PVZCONFIG.nestedProjDMG.firepiercepeaSDMG();
 										String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 										if ("paper".equals(zombieMaterial2)) {
@@ -267,7 +279,7 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 										} else if ("plant".equals(zombieMaterial2)) {
 											damageSplash = damageSplash * 2;
 										}
-										if (zombiePropEntity3 == null) {
+										if (zombiePropEntity4 == null) {
 											if (damageSplash > livingEntity.getHealth() &&
 													!(livingEntity instanceof ZombieShieldEntity) &&
 													livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {

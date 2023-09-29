@@ -17,7 +17,8 @@ public enum MetalHelmetVariants {
 	MEDALLION(10),
 	SERGEANTHELMET(11),
 	SOLDIERHELMET(12),
-	BASSPROP(13);
+	BASSPROP(13),
+	SARGEAMTSHIELD(14);
 
 	private static final MetalHelmetVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(MetalHelmetVariants::getId)).toArray(MetalHelmetVariants[]::new);

@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
@@ -60,6 +61,7 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 		amphibiousRaycastDelay = 1;
 
 		this.targetHelmet = true;
+		this.targetNotObstacle = true;
 		this.setNoGravity(true);
 		this.setImmune(Immune.TRUE);
     }
@@ -306,7 +308,8 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity)) &&
-					!(livingEntity instanceof ZombiePropEntity)) {
+					!(livingEntity instanceof ZombiePropEntity) &&
+					!(livingEntity instanceof GraveEntity)) {
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
 					damage = damage * 2;
@@ -342,7 +345,7 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 
 	@Override
 	protected void applyDamage(DamageSource source, float amount) {
-		if (source.getAttacker() instanceof PlayerEntity) {
+		if (source.getSource() instanceof PlayerEntity) {
 			super.applyDamage(source, amount);
 		}
 	}
@@ -355,7 +358,7 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 	public void tick() {
 		super.tick();
 		if (this.getLiftime() <= 0){
-			this.kill();
+			this.discard();
 		}
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {
@@ -439,7 +442,8 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
+				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 3D);
     }
 
 	protected boolean canClimb() {
@@ -483,14 +487,6 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

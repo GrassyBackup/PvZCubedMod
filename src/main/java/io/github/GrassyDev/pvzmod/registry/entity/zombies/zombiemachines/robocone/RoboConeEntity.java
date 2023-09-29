@@ -1,9 +1,9 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.robocone;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
@@ -20,7 +20,6 @@ import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -71,6 +70,7 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
         super(entityType, world);
 
         this.experiencePoints = 3;
+		this.doesntBite = true;
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -260,7 +260,7 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 	public static DefaultAttributeContainer.Builder createRoboconeAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
 				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.11D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.10D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.roboconeH());

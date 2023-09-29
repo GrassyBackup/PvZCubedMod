@@ -22,7 +22,7 @@
       "images": [
         "pvzmod:textures/gui/entries/hawkercart.png"
       ],
-      "title": "Hard Dark Ages Zombie",
+      "title": "Hard Mausoleum Zombie",
       "border": "true",
       "text": "$(#25228d)Pushes a cart with Zombie Piggies."
     },

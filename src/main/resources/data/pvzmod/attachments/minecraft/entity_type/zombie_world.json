@@ -63,6 +63,8 @@
     "pvzmod:hawkercart": "darkages",
     "pvzmod:sergeant": "mausoleum",
     "pvzmod:sergeantcone": "mausoleum",
-    "pvzmod:sergeantbucket": "mausoleum"
+    "pvzmod:sergeantbucket": "mausoleum",
+    "pvzmod:flagsergeant": "mausoleum",
+    "pvzmod:sergeantshield": "mausoleum"
   }
 }

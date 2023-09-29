@@ -148,14 +148,19 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) {
 				ZombiePropEntity zombiePropEntity2 = null;
+				ZombiePropEntity zombiePropEntity3 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 						zombiePropEntity2 = zpe;
+					}
+					else if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity3 = zpe;
 					}
 				}
 				if (livingEntity.getY() < (this.getY() + 1.5) && livingEntity.getY() > (this.getY() - 1.5)) {
 					if (!world.isClient &&
 							!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 							!(livingEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
 							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
 						float damage = 180;

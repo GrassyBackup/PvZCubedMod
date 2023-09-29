@@ -5,7 +5,6 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -24,11 +23,11 @@ import java.util.Objects;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.ZOMBIE_MATERIAL;
 
-public abstract class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
+public class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 
 	public boolean isHeavy = false;
 
-	protected ZombiePropEntity(EntityType<? extends HostileEntity> entityType, World world) {
+	public ZombiePropEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		this.noClip = true;
 	}
@@ -64,7 +63,8 @@ public abstract class ZombiePropEntity extends GeneralPvZombieEntity implements 
 		if (this instanceof ZombieObstacleEntity ||
 				this.getType().equals(PvZEntity.DEFENSIVEENDGEAR) ||
 				this.getType().equals(PvZEntity.PYRAMIDGEAR) ||
-				this.getType().equals(PvZEntity.SARCOPHAGUS)){
+				this.getType().equals(PvZEntity.SARCOPHAGUS) ||
+				this.getType().equals(PvZEntity.SERGEANTSHIELDGEAR)){
 			isHeavy = true;
 		}
 		if (this.getVehicle() != null){

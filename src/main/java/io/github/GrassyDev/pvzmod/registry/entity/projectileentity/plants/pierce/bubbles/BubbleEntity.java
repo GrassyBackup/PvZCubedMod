@@ -11,7 +11,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShie
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -127,9 +126,13 @@ public class BubbleEntity extends PvZProjectileEntity implements IAnimatable {
 			} while (entity == this.getOwner());
 
 			ZombiePropEntity zombiePropEntity = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity == null) {
 					zombiePropEntity = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 			Entity et = null;
@@ -142,6 +145,7 @@ public class BubbleEntity extends PvZProjectileEntity implements IAnimatable {
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
 				float damage = PVZCONFIG.nestedProjDMG.bubblesDMG();

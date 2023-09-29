@@ -14,7 +14,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -175,14 +174,19 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 				entity = (Entity) var9.next();
 			} while (entity == this.getOwner());
 			ZombiePropEntity zombiePropEntity2 = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 					zombiePropEntity2 = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity2 instanceof ZombiePropEntity && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.hasVehicle()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) && !hit) {
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
@@ -233,25 +237,35 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 										&& (generalPvZombieEntity.getHypno()))) {
 							if (livingEntity != entity) {
 								float damage3 = PVZCONFIG.nestedProjDMG.icebergSDMG();
-								ZombiePropEntity zombiePropEntity3 = null;
+								ZombiePropEntity zombiePropEntity4 = null;
 								for (Entity entity1 : livingEntity.getPassengerList()) {
-									if (entity1 instanceof ZombiePropEntity zpe) {
-										zombiePropEntity3 = zpe;
+									if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity4 == null) {
+										zombiePropEntity4 = zpe;
 									}
 								}
-								if (!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity))) {
-									if (damage3 > livingEntity.getHealth() &&
-											!(livingEntity instanceof ZombieShieldEntity) &&
-											livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-										float damage2 = damage3 - livingEntity.getHealth();
-										livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
-										generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
-									} else {
-										livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+								ZombiePropEntity zombiePropEntity6 = null;
+								if (livingEntity.hasVehicle()) {
+									for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+										if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+											zombiePropEntity6 = zpe;
+										}
 									}
-									if (!livingEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-										if (!(livingEntity instanceof ZombieShieldEntity)) {
-											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
+								}
+								if (!(zombiePropEntity4 instanceof ZombieShieldEntity)) {
+									if (zombiePropEntity4 == null && zombiePropEntity6 == null) {
+										if (damage3 > livingEntity.getHealth() &&
+												!(livingEntity instanceof ZombieShieldEntity) &&
+												livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+											float damage2 = damage3 - livingEntity.getHealth();
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+											generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
+										} else {
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+										}
+										if (!livingEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
+											if (!(livingEntity instanceof ZombieShieldEntity)) {
+												livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
+											}
 										}
 									}
 								}

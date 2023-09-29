@@ -6,7 +6,9 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -14,7 +16,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -186,9 +187,13 @@ public class ShootingIcespikeEntity extends PvZProjectileEntity implements IAnim
 			} while (entity == this.getOwner());
 
 			ZombiePropEntity zombiePropEntity = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity == null) {
 					zombiePropEntity = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 			Entity et = null;
@@ -201,6 +206,7 @@ public class ShootingIcespikeEntity extends PvZProjectileEntity implements IAnim
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
 				float damage = PVZCONFIG.nestedProjDMG.icespikeDMGv2();

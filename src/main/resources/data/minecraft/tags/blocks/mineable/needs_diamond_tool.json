@@ -29,6 +29,8 @@
     "pvzmod:skycity_tile",
     "pvzmod:dark_skycity_tile",
     "pvzmod:fairy_tile",
-    "pvzmod:dark_fairy_tile"
+    "pvzmod:dark_fairy_tile",
+    "pvzmod:mausoleum_tile",
+    "pvzmod:dark_mausoleum_tile"
   ]
 }

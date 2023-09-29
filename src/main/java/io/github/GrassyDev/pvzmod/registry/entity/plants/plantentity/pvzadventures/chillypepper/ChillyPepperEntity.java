@@ -204,7 +204,6 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 			if (livingEntity instanceof ScorchedTile) {
 				livingEntity.discard();
 			}
-
 			if (((livingEntity instanceof Monster &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
@@ -217,21 +216,16 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 					}
 				}
 				if (damage > livingEntity.getHealth() &&
-						(livingEntity instanceof ZombieShieldEntity) &&
+						!(livingEntity instanceof ZombieShieldEntity) &&
 						livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
 					float damage2 = damage - livingEntity.getHealth();
 					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 					generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
 					checkList.add(livingEntity);
 					checkList.add(generalPvZombieEntity);
-				} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
-					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-					checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
-					checkList.add(zombieShieldEntity);
-				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
-					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+				} else if (zombiePropEntity2 instanceof ZombieShieldEntity) {
+					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 					checkList.add(livingEntity);
-					checkList.add(zombieShieldEntity);
 				} else {
 					if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
 						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);

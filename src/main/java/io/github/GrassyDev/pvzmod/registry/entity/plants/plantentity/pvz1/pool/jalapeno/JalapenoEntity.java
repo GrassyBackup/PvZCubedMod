@@ -213,7 +213,7 @@ public class JalapenoEntity extends PlantEntity implements IAnimatable {
 					damage = 180;
 				}
 
-				if (((livingEntity instanceof Monster &&
+			if (((livingEntity instanceof Monster &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
@@ -243,9 +243,6 @@ public class JalapenoEntity extends PlantEntity implements IAnimatable {
 						if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
 							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 							checkList.add(livingEntity);
-							if ((livingEntity instanceof ZombieShieldEntity)) {
-								checkList.add(generalPvZombieEntity);
-							}
 						} else if ((zombiePropEntity2 == null)
 								&& !checkList.contains(livingEntity)) {
 							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);

@@ -462,19 +462,14 @@ public class FootballEntity extends PvZombieEntity implements IAnimatable {
 		if (this.getVariant().equals(FootballVariants.BERSERKER) ||
 				this.getVariant().equals(FootballVariants.BERSERKERHYPNO) ) {
 			EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-			if (this.getTackleStage()) {
-				if (this.speedSwitch) {
+			if (this.getTackleStage() &&
+					this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
+				assert maxSpeedAttribute != null;
+				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
+			} else if (!this.getTackleStage()) {
+				if (!this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
 					assert maxSpeedAttribute != null;
-					maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
-					this.speedSwitch = false;
-				}
-			}
-			else {
-				if (!this.speedSwitch){
-					assert maxSpeedAttribute != null;
-					maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
-					maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.09D));
-					this.speedSwitch = true;
+					maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.09));
 				}
 			}
 		}

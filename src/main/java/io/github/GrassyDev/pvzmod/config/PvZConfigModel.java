@@ -65,6 +65,12 @@ public class PvZConfigModel {
 		public int darkagesGmin = 1;
 		@RestartRequired
 		public int darkagesGmax = 1;
+		@RestartRequired
+		public int mausoleumG = 4;
+		@RestartRequired
+		public int mausoleumGmin = 1;
+		@RestartRequired
+		public int mausoleumGmax = 1;
 	}
 	public static class PvZSpawnNestPlant {
 		@RestartRequired
@@ -431,6 +437,8 @@ public class PvZConfigModel {
 		public double futureGraveH = 240D;
 		@RestartRequired
 		public double darkAgesGraveH = 170D;
+		@RestartRequired
+		public double mausoleumGraveH = 300D;
 
 		@RestartRequired
 		public double backupH = 27D;
@@ -464,6 +472,8 @@ public class PvZConfigModel {
 		public double flagMummyH = 50D;
 		@RestartRequired
 		public double flagPeasantH = 50D;
+		@RestartRequired
+		public double flagSargeantH = 75D;
 		@RestartRequired
 		public double footballH = 27D;
 		@RestartRequired
@@ -555,6 +565,9 @@ public class PvZConfigModel {
 
 		@RestartRequired
 		public double screendoorShieldH = 153D;
+
+		@RestartRequired
+		public double sergeantShieldH = 180D;
 
 		@RestartRequired
 		public double newspaperShieldH = 15D;

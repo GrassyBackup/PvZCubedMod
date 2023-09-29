@@ -189,7 +189,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 
 			ZombiePropEntity zombiePropEntity2 = null;
 			for (Entity entity1 : livingEntity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 					zombiePropEntity2 = zpe;
 				}
 			}

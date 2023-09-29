@@ -224,12 +224,14 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 								float damageFar = PVZCONFIG.nestedProjDMG.missileToeDMGFar();
 								float rangeNear = PVZCONFIG.nestedProjDMG.missileToeDMGRangeNear();
 								float rangeFar = PVZCONFIG.nestedProjDMG.missileToeDMGRangeFar();
-								float positionFromCenter = (float) Math.sqrt(livingEntity.squaredDistanceTo(entity));
+								float positionFromCenter = (float) Math.sqrt(entity.squaredDistanceTo(livingEntity));
 								float n = (positionFromCenter - rangeNear) / (rangeFar - rangeNear);
+								n = MathHelper.clamp(n, 0, 1);
 								float damage = n * damageFar + (1 - n) * damageNear;
+								System.out.println(positionFromCenter);
 								ZombiePropEntity zombiePropEntity3 = null;
 								for (Entity entity1 : livingEntity.getPassengerList()) {
-									if (entity1 instanceof ZombiePropEntity zpe) {
+									if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity3 == null) {
 										zombiePropEntity3 = zpe;
 									}
 								}

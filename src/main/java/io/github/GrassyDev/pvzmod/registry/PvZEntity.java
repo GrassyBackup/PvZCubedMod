@@ -16,6 +16,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.basicgrave.BasicGr
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone.EgyptGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.futuregrave.FutureGraveEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.gravestones.mausoleum.MausoleumGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.nightgrave.NightGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.poolgrave.PoolGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.roofgrave.RoofGraveEntity;
@@ -65,7 +66,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.frostb
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.electropea.ElectropeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.flamingpea.FlamingpeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper.GhostpepperEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper.GhostpepperEntityModel;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntity;
@@ -183,9 +183,10 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.jetp
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.pharaoh.PharaohEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.browncoat.sargeant.SargeantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.hawker.piggy.PiggyEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.hawker.zombie.HawkerZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.browncoat.sargeant.SargeantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.flagzombie.sargeant.FlagSargeantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.piggy.PiggyEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.zombie.HawkerZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.pumpkinzombie.PumpkinZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.scientist.ScientistEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.soldier.SoldierEntity;
@@ -1332,6 +1333,26 @@ public class PvZEntity implements ModInitializer {
 			new Identifier(ModID, "sergeantbucket_hypnotized"),
 			QuiltEntityTypeBuilder.<SargeantEntity>create(SpawnGroup.MONSTER, SargeantEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
 	);
+	public static final EntityType<SargeantEntity> SARGEANTSHIELD = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "sergeantshield"),
+			QuiltEntityTypeBuilder.<SargeantEntity>create(SpawnGroup.MONSTER, SargeantEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<SargeantEntity> SARGEANTSHIELDHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "sergeantshield_hypnotized"),
+			QuiltEntityTypeBuilder.<SargeantEntity>create(SpawnGroup.MONSTER, SargeantEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<FlagSargeantEntity> FLAGSARGEANT = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "flagsergeant"),
+			QuiltEntityTypeBuilder.<FlagSargeantEntity>create(SpawnGroup.MONSTER, FlagSargeantEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<FlagSargeantEntity> FLAGSARGEANTHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "flagsergeant_hypnotized"),
+			QuiltEntityTypeBuilder.<FlagSargeantEntity>create(SpawnGroup.MONSTER, FlagSargeantEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
 
 	public static final EntityType<PumpkinZombieEntity> PUMPKINZOMBIE = Registry.register(
 			Registry.ENTITY_TYPE,
@@ -1357,7 +1378,7 @@ public class PvZEntity implements ModInitializer {
 	public static final EntityType<MetalHelmetEntity> HELMETGEAR = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "helmetgear"),
-			QuiltEntityTypeBuilder.<MetalHelmetEntity>create(SpawnGroup.MONSTER, MetalHelmetEntity::new).setDimensions(EntityDimensions.fixed(0.8f, 1.95f)).build()
+			QuiltEntityTypeBuilder.<MetalHelmetEntity>create(SpawnGroup.MONSTER, MetalHelmetEntity::new).setDimensions(EntityDimensions.fixed(0.7f, 1.95f)).build()
 	);
 	public static final EntityType<MetalHelmetEntity> KNIGHTGEAR = Registry.register(
 			Registry.ENTITY_TYPE,
@@ -1418,6 +1439,11 @@ public class PvZEntity implements ModInitializer {
 	public static final EntityType<MetalShieldEntity> SCREENDOORSHIELD = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "screendoorshield"),
+			QuiltEntityTypeBuilder.<MetalShieldEntity>create(SpawnGroup.MONSTER, MetalShieldEntity::new).setDimensions(EntityDimensions.fixed(0.85f, 1.8f)).build()
+	);
+	public static final EntityType<MetalShieldEntity> SERGEANTSHIELDGEAR = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "sergeantshieldgear"),
 			QuiltEntityTypeBuilder.<MetalShieldEntity>create(SpawnGroup.MONSTER, MetalShieldEntity::new).setDimensions(EntityDimensions.fixed(0.85f, 1.8f)).build()
 	);
 	public static final EntityType<MetalHelmetEntity> BLASTRONAUTGEAR = Registry.register(
@@ -2078,6 +2104,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<DarkAgesGraveEntity>create(SpawnGroup.MONSTER, DarkAgesGraveEntity::new).setDimensions(EntityDimensions.fixed(0.5f, 1f)).build()
 	);
 
+	public static final EntityType<MausoleumGraveEntity> MAUSOLEUMGRAVESTONE = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "mausoleumgrave"),
+			QuiltEntityTypeBuilder.<MausoleumGraveEntity>create(SpawnGroup.MONSTER, MausoleumGraveEntity::new).setDimensions(EntityDimensions.fixed(0.5f, 1f)).build()
+	);
+
 	@Override
 	public void onInitialize(ModContainer mod) {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GARDEN, GardenEntity.createGardenAttributes().build());
@@ -2335,6 +2367,8 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SCREENDOORSHIELD, MetalShieldEntity.createScreendoorShieldAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SERGEANTSHIELDGEAR, MetalShieldEntity.createSergeantShieldAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FOOTBALL, FootballEntity.createFootballAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FOOTBALLHYPNO, FootballEntity.createFootballAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BERSERKER, FootballEntity.createBerserkerAttributes().build());
@@ -2449,17 +2483,25 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.PEASANTKNIGHTHYPNO, PeasantEntity.createPeasantAttributes().build());
 
-		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANT, SargeantEntity.createSeargeantAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANT, SargeantEntity.createSergeantAttributes().build());
 
-		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTHYPNO, SargeantEntity.createSeargeantAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTHYPNO, SargeantEntity.createSergeantAttributes().build());
 
-		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTBOWL, SargeantEntity.createSeargeantAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTBOWL, SargeantEntity.createSergeantAttributes().build());
 
-		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTBOWLHYPNO, SargeantEntity.createSeargeantAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTBOWLHYPNO, SargeantEntity.createSergeantAttributes().build());
 
-		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTHELMET, SargeantEntity.createSeargeantAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTHELMET, SargeantEntity.createSergeantAttributes().build());
 
-		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTHELMETHYPNO, SargeantEntity.createSeargeantAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTHELMETHYPNO, SargeantEntity.createSergeantAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTSHIELD, SargeantEntity.createSergeantAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARGEANTSHIELDHYPNO, SargeantEntity.createSergeantAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FLAGSARGEANT, FlagSargeantEntity.createFlagSargeantAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FLAGSARGEANTHYPNO, FlagSargeantEntity.createFlagSargeantAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.PUMPKINZOMBIE, PumpkinZombieEntity.createPumpkinAttributes().build());
 
@@ -2543,6 +2585,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FUTUREGRAVESTONE, FutureGraveEntity.createFutureGraveAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DARKAGESGRAVESTONE, DarkAgesGraveEntity.createDarkAgesGraveAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MAUSOLEUMGRAVESTONE, MausoleumGraveEntity.createMausoleumGraveAttributes().build());
 
 
     }

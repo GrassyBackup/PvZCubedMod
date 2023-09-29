@@ -220,7 +220,21 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 					livingEntity = (LivingEntity) var9.next();
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 12.25);
+			ZombiePropEntity zombiePropEntity4 = null;
+			if (livingEntity.hasVehicle()) {
+				for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+					if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+						zombiePropEntity4 = zpe;
+					}
+				}
+			}
+			for (Entity entity1 : livingEntity.getPassengerList()) {
+				if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+					zombiePropEntity4 = zpe;
+				}
+			}
 			if (((livingEntity instanceof Monster &&
+					zombiePropEntity4 == null &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
@@ -241,9 +255,13 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 					damage = damage * 2;
 				}
 				ZombiePropEntity zombiePropEntity2 = null;
+				ZombiePropEntity zombiePropEntity3 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 						zombiePropEntity2 = zpe;
+					}
+					else if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity3 = zpe;
 					}
 				}
 				if (damage > livingEntity.getHealth() &&

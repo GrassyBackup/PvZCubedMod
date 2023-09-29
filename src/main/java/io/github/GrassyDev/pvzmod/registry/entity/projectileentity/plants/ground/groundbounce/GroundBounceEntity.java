@@ -154,14 +154,19 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 				entity = (Entity) var9.next();
 			} while (entity == this.getOwner());
 			ZombiePropEntity zombiePropEntity2 = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 					zombiePropEntity2 = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) && this.canBounce && !hit) {
 				splashDamage();
@@ -195,14 +200,19 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) {
 				ZombiePropEntity zombiePropEntity2 = null;
+				ZombiePropEntity zombiePropEntity3 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 						zombiePropEntity2 = zpe;
+					}
+					else if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity3 = zpe;
 					}
 				}
 				if (livingEntity.getY() < (this.getY() + 1.5) && livingEntity.getY() > (this.getY() - 1.5)) {
 					if (!world.isClient &&
 							!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 							!(livingEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
 							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
 						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");

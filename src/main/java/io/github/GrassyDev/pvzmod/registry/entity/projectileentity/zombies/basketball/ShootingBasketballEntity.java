@@ -159,9 +159,13 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 				entity = (Entity) var9.next();
 			} while (entity == this.getOwner());
 			ZombiePropEntity zombiePropEntity2 = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 					zombiePropEntity2 = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 			if (entity instanceof LivingEntity livingEntity) {

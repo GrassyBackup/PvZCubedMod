@@ -14,7 +14,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -134,14 +133,19 @@ public class CoconutEntity extends PvZProjectileEntity implements IAnimatable {
 				entity = (Entity) var9.next();
 			} while (entity == this.getOwner());
 			ZombiePropEntity zombiePropEntity2 = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 					zombiePropEntity2 = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !hit) {
 				entity.playSound(PvZSounds.POTATOMINEEXPLOSIONEVENT, 0.8F, 1F);
@@ -159,51 +163,60 @@ public class CoconutEntity extends PvZProjectileEntity implements IAnimatable {
 				this.world.sendEntityStatus(this, (byte) 3);
 				this.remove(RemovalReason.DISCARDED);
 				Vec3d vec3d = this.getPos();
-				List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
-				Iterator var10 = list.iterator();
-				while (true) {
-					LivingEntity livingEntity;
-					do {
+				if (!(entity instanceof ZombieShieldEntity)) {
+					List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+					Iterator var10 = list.iterator();
+					while (true) {
+						LivingEntity livingEntity;
 						do {
-							if (!var10.hasNext()) {
-								return;
-							}
-
-							livingEntity = (LivingEntity) var10.next();
-						} while (livingEntity == this.getOwner());
-					} while (this.squaredDistanceTo(livingEntity) > 6);
-
-					if (livingEntity instanceof OilTile oilTile) {
-						oilTile.makeFireTrail(oilTile.getBlockPos());
-					}
-					if (livingEntity instanceof Monster &&
-							!(livingEntity instanceof ZombieShieldEntity) &&
-							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-									&& (generalPvZombieEntity.getHypno()))) {
-						if (livingEntity != entity) {
-							float damage3 = PVZCONFIG.nestedProjDMG.coconutSDMG();
-							ZombiePropEntity zombiePropEntity3 = null;
-							for (Entity entity1 : livingEntity.getPassengerList()) {
-								if (entity1 instanceof ZombiePropEntity zpe) {
-									zombiePropEntity3 = zpe;
+							do {
+								if (!var10.hasNext()) {
+									return;
 								}
-							}
-							if (!(zombiePropEntity3 instanceof ZombieShieldEntity)) {
-								if (zombiePropEntity3 == null) {
-									if (damage3 > livingEntity.getHealth() &&
-											!(livingEntity instanceof ZombieShieldEntity) &&
-											livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-										float damage2 = damage3 - livingEntity.getHealth();
-										livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
-										generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
-									} else {
-										livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+
+								livingEntity = (LivingEntity) var10.next();
+							} while (livingEntity == this.getOwner());
+						} while (this.squaredDistanceTo(livingEntity) > 6);
+
+						if (livingEntity instanceof OilTile oilTile) {
+							oilTile.makeFireTrail(oilTile.getBlockPos());
+						}
+						if (livingEntity instanceof Monster &&
+								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+										&& (generalPvZombieEntity.getHypno()))) {
+							if (livingEntity != entity) {
+								float damage3 = PVZCONFIG.nestedProjDMG.coconutSDMG();
+								ZombiePropEntity zombiePropEntity4 = null;
+								for (Entity entity1 : livingEntity.getPassengerList()) {
+									if (entity1 instanceof ZombiePropEntity zpe) {
+										zombiePropEntity4 = zpe;
+									}
+								}
+								ZombiePropEntity zombiePropEntity6 = null;
+								if (livingEntity.hasVehicle()) {
+									for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+										if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+											zombiePropEntity6 = zpe;
+										}
+									}
+								}
+								if (!(zombiePropEntity4 instanceof ZombieShieldEntity)) {
+									if (zombiePropEntity4 == null && zombiePropEntity6 == null) {
+										if (damage3 > livingEntity.getHealth() &&
+												!(livingEntity instanceof ZombieShieldEntity) &&
+												livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+											float damage2 = damage3 - livingEntity.getHealth();
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+											generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
+										} else {
+											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+										}
 									}
 								}
 							}
+							this.world.sendEntityStatus(this, (byte) 3);
+							this.remove(RemovalReason.DISCARDED);
 						}
-						this.world.sendEntityStatus(this, (byte) 3);
-						this.remove(RemovalReason.DISCARDED);
 					}
 				}
 			}

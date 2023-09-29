@@ -432,6 +432,11 @@ public class ModItems {
 	public static final Item BASSEGG = new BassEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.EPIC));
 	public static final Item PUMPKINZOMBIEEGG = new PumpkinZombieEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
 	public static final Item NEWYEARIMPEGG = new NewYearImpEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.EPIC));
+	public static final Item SARGEANTEGG = new SargeantEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.COMMON));
+	public static final Item FLAGSARGEANTEGG = new FlagSargeantEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
+	public static final Item SARGEANTCONEEGG = new SargeantConeEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.UNCOMMON));
+	public static final Item SARGEANTBUCKETEGG = new SargeantBucketEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.UNCOMMON));
+	public static final Item SARGEANTSHIELDEGG = new SargeantShieldEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
 	public static final Item PIGGYEGG = new ZombiePiggyEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.UNCOMMON));
 	public static final Item HAWKEREGG = new HawkerCartEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.UNCOMMON));
 	public static final Item SOLDIEREGG = new SoldierEgg(new Item.Settings().group(PvZCubed.PVZZOMBIES).rarity(Rarity.RARE));
@@ -465,6 +470,7 @@ public class ModItems {
 	public static final Item EGYPTGRAVESPAWN = new EgyptGraveSpawn(new Item.Settings().group(PvZCubed.PVZGRAVES).rarity(Rarity.UNCOMMON));
 	public static final Item FUTUREGRAVESPAWN = new FutureGraveSpawn(new Item.Settings().group(PvZCubed.PVZGRAVES).rarity(Rarity.EPIC));
 	public static final Item DARKAGESGRAVESPAWN = new DarkAgesGraveSpawn(new Item.Settings().group(PvZCubed.PVZGRAVES).rarity(Rarity.UNCOMMON));
+	public static final Item MAUSOLEUMGRAVESPAWN = new MausoleumGraveSpawn(new Item.Settings().group(PvZCubed.PVZGRAVES).rarity(Rarity.EPIC));
 
     //Blocks
     public static final BlockItem GRASS_TILE = new BlockItem(ModBlocks.GRASS_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
@@ -497,6 +503,8 @@ public class ModItems {
 	public static final BlockItem DARK_SKYCITY_TILE = new BlockItem(ModBlocks.DARK_SKYCITY_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem FAIRY_TILE = new BlockItem(ModBlocks.FAIRY_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem DARK_FAIRY_TILE = new BlockItem(ModBlocks.DARK_FAIRY_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
+	public static final BlockItem MAUSOLEUM_TILE = new BlockItem(ModBlocks.MAUSOLEUM_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
+	public static final BlockItem DARK_MAUSOLEUM_TILE = new BlockItem(ModBlocks.DARK_MAUSOLEUM_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 	public static final BlockItem LEGENDARY_TILE = new BlockItem(ModBlocks.LEGENDARY_TILE, new Item.Settings().group(PvZCubed.PVZBLOCKS));
 
     //Tools
@@ -609,6 +617,8 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dark_skycity_tile"), DARK_SKYCITY_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"fairy_tile"), FAIRY_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dark_fairy_tile"), DARK_FAIRY_TILE);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"mausoleum_tile"), MAUSOLEUM_TILE);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"dark_mausoleum_tile"), DARK_MAUSOLEUM_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"legendary_tile"), LEGENDARY_TILE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"gardeningglove"), GARDENINGGLOVE);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"fertilizer"), FERTILIZER);
@@ -744,6 +754,11 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"bass_egg"), BASSEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"pumpkinzombie_egg"), PUMPKINZOMBIEEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"newyearimp_egg"), NEWYEARIMPEGG);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"sargeant_egg"), SARGEANTEGG);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"flagsargeant_egg"), FLAGSARGEANTEGG);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"sargeantcone_egg"), SARGEANTCONEEGG);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"sargeantbucket_egg"), SARGEANTBUCKETEGG);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"sargeantshield_egg"), SARGEANTSHIELDEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"zombiepiggy_egg"), PIGGYEGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"hawkercart_egg"), HAWKEREGG);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"soldier_egg"), SOLDIEREGG);
@@ -775,6 +790,7 @@ public class ModItems {
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"egyptgrave_spawn"), EGYPTGRAVESPAWN);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"futuregrave_spawn"), FUTUREGRAVESPAWN);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"darkagesgrave_spawn"), DARKAGESGRAVESPAWN);
+		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"mausoleumgrave_spawn"), MAUSOLEUMGRAVESPAWN);
         Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"daves_shovel"), DAVES_SHOVEL);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"garden_spawn"), GARDEN_SPAWN);
 		Registry.register(Registry.ITEM, new Identifier(PvZCubed.MOD_ID,"gardenchallenge_spawn"), GARDENCHALLENGE_SPAWN);

@@ -206,13 +206,27 @@ public class CherrybombEntity extends PlantEntity implements IAnimatable {
 			if (livingEntity instanceof OilTile oilTile){
 				oilTile.makeFireTrail(oilTile.getBlockPos());
 			}
+			ZombiePropEntity zombiePropEntity4 = null;
+			if (livingEntity.hasVehicle()) {
+				for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+					if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+						zombiePropEntity4 = zpe;
+					}
+				}
+			}
+			for (Entity entity1 : livingEntity.getPassengerList()) {
+				if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+					zombiePropEntity4 = zpe;
+				}
+			}
 			if (((livingEntity instanceof Monster &&
+					zombiePropEntity4 == null &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
 				ZombiePropEntity zombiePropEntity2 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 						zombiePropEntity2 = zpe;
 					}
 				}
@@ -241,7 +255,7 @@ public class CherrybombEntity extends PlantEntity implements IAnimatable {
 					} else if (zombiePropEntity2 == null && !checkList.contains(livingEntity)) {
 						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 						checkList.add(livingEntity);
-					} else if (livingEntity instanceof ZombieVehicleEntity && !checkList.contains(livingEntity)) {
+					}  else if (livingEntity instanceof ZombieVehicleEntity && !checkList.contains(livingEntity)) {
 						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 						checkList.add(livingEntity);
 					}

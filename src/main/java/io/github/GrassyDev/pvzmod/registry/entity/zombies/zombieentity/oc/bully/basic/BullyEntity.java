@@ -299,19 +299,14 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 				.findFirst();
 
 		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-		if (zombieObstacleEntity.isEmpty()) {
-			if (this.speedSwitch) {
+		if (zombieObstacleEntity.isEmpty() &&
+				this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
+			assert maxSpeedAttribute != null;
+			maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
+		} else if (zombieObstacleEntity.isPresent()) {
+			if (!this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
 				assert maxSpeedAttribute != null;
-				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
-				this.speedSwitch = false;
-			}
-		}
-		else {
-			if (!this.speedSwitch){
-				assert maxSpeedAttribute != null;
-				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
-				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.055D));
-				this.speedSwitch = true;
+				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.01));
 			}
 		}
 	}
@@ -372,7 +367,7 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 	public static DefaultAttributeContainer.Builder createBullyAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
 				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.11D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.10D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.bullyH());

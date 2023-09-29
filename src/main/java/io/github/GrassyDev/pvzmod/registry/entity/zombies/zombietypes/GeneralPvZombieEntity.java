@@ -9,6 +9,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.Scorc
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.hypnoshroom.HypnoshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
@@ -22,6 +23,7 @@ import net.minecraft.block.PowderSnowBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.ProjectileDamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -81,6 +83,9 @@ public class GeneralPvZombieEntity extends HostileEntity {
 
 	public boolean armless;
 	public boolean geardmg;
+	public boolean geardmg2;
+	public boolean gear1less;
+	public boolean gear2less;
 	public boolean gearless;
 	public boolean isFrozen;
 	public boolean isIced;
@@ -88,8 +93,11 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public boolean isStunned;
 	public int fireSplashTicks;
 
+	public boolean doesntBite;
+
 	public boolean inDyingAnimation;
 	public int deathTicks;
+
 
 	protected void initDataTracker() {
 		super.initDataTracker();
@@ -100,6 +108,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		this.dataTracker.startTracking(STEALTH_TAG, false);
 		this.dataTracker.startTracking(CHALLENGE_TAG, false);
 		this.dataTracker.startTracking(DATA_ID_HYPNOTIZED, false);
+		this.dataTracker.startTracking(ARMOR2_ID, 0);
 	}
 
 	@Override
@@ -112,6 +121,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		tag.putBoolean("isStealth", this.isStealth());
 		tag.putBoolean("isChallenge", this.isChallengeZombie());
 		tag.putBoolean("Hypnotized", this.getHypno());
+		tag.putInt("Armor2", this.hasArmor2());
 	}
 
 	public void readCustomDataFromNbt(NbtCompound tag) {
@@ -123,6 +133,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		this.dataTracker.set(STEALTH_TAG, tag.getBoolean("isStealth"));
 		this.dataTracker.set(CHALLENGE_TAG, tag.getBoolean("isChallenge"));
 		this.dataTracker.set(DATA_ID_HYPNOTIZED, tag.getBoolean("Hypnotized"));
+		this.dataTracker.set(ARMOR2_ID, tag.getInt("Armor2"));
 	}
 
 	static {
@@ -387,6 +398,27 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		this.dataTracker.set(CANBURN_TAG, canBurn.getId());
 	}
 
+
+	/** ----------------------------------------------------------------------- **/
+
+	// Armor 2
+
+	protected static final TrackedData<Integer> ARMOR2_ID =
+			DataTracker.registerData(GeneralPvZombieEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+	public void setArmor2(int entityId) {
+		this.dataTracker.set(ARMOR2_ID, entityId);
+	}
+
+	public int hasArmor2() {
+		return this.dataTracker.get(ARMOR2_ID);
+	}
+
+	@Nullable
+	public LivingEntity getArmor2() {
+		return (LivingEntity) this.world.getEntityById((Integer)this.dataTracker.get(ARMOR2_ID));
+	}
+
 	/** ----------------------------------------------------------------------- **/
 
 	public EntityType<? extends HostileEntity> entityBox = PvZEntity.BROWNCOAT;
@@ -454,10 +486,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 							case "beach" -> ModItems.BEACH_SEED_LIST.get(getRandom().nextInt(ModItems.BEACH_SEED_LIST.size()));
 							case "frostbite" -> ModItems.FROSTBITE_SEED_LIST.get(getRandom().nextInt(ModItems.FROSTBITE_SEED_LIST.size()));
 							case "lostcity" -> ModItems.LOSTCITY_SEED_LIST.get(getRandom().nextInt(ModItems.LOSTCITY_SEED_LIST.size()));
-							case "mixtape" -> ModItems.MIXTAPE_SEED_LIST.get(getRandom().nextInt(ModItems.MIXTAPE_SEED_LIST.size()));
-							case "jurassic" -> ModItems.JURASSIC_SEED_LIST.get(getRandom().nextInt(ModItems.JURASSIC_SEED_LIST.size()));
 							case "skycity" -> ModItems.SKYCITY_SEED_LIST.get(getRandom().nextInt(ModItems.SKYCITY_SEED_LIST.size()));
-							case "mausoleum" -> ModItems.MAUSOLEUM_SEED_LIST.get(getRandom().nextInt(ModItems.MAUSOLEUM_SEED_LIST.size()));
 							default -> ModItems.SEED_PACKET_LIST.get(getRandom().nextInt(ModItems.SEED_PACKET_LIST.size()));
 						};
 						if (item == null){
@@ -500,6 +529,11 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		if (this.world.getGameRules().getBoolean(PvZCubed.SHOULD_ZOMBIE_DROP)){
 			super.dropLoot(source, causedByPlayer);
 		}
+	}
+
+	@Override
+	protected boolean canAddPassenger(Entity passenger) {
+		return this.getPassengerList().size() < 2;
 	}
 
 	public LivingEntity CollidesWithPlant(Float colliderOffsetx, Float colliderOffsetz){
@@ -786,26 +820,26 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	private float lastHealth = this.getHealth();
 
 	public void tick() {
-		if (this.lastHealth < this.getHealth()){
+		if (this.lastHealth < this.getHealth()) {
 			this.world.sendEntityStatus(this, (byte) 69);
 		}
 		this.lastHealth = this.getHealth();
 		if (!this.world.isClient) {
-			if (this.hasStatusEffect(BARK)){
+			if (this.hasStatusEffect(BARK)) {
 				this.removeStatusEffect(CHEESE);
 				barkTicks = this.getStatusEffect(BARK).getDuration();
 			}
 			if (this.hasStatusEffect(ICE)) {
-				if (this.hasStatusEffect(BARK)){
+				if (this.hasStatusEffect(BARK)) {
 					this.removeStatusEffect(BARK);
 				}
-				if (this.hasStatusEffect(CHEESE)){
+				if (this.hasStatusEffect(CHEESE)) {
 					this.removeStatusEffect(CHEESE);
 				}
 				--barkTicks;
 				++chillTicks;
 			} else {
-				if (--chillTicks <= 0){
+				if (--chillTicks <= 0) {
 					chillTicks = 0;
 				}
 			}
@@ -816,38 +850,37 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			if (--chillCDTicks > 0) {
 				this.removeStatusEffect(ICE);
 			}
-			if (!this.hasStatusEffect(STUN)){
+			if (!this.hasStatusEffect(STUN)) {
 				this.canSlide = oilTicks <= 0;
 			}
-			if (--oilTicks <= 0){
+			if (--oilTicks <= 0) {
 				oilTicks = 0;
 			}
-			if (barkTicks > 0 && !this.hasStatusEffect(BARK)){
+			if (barkTicks > 0 && !this.hasStatusEffect(BARK)) {
 				this.addStatusEffect((new StatusEffectInstance(BARK, barkTicks, 1)));
-			}
-			else if (barkTicks <= 0){
+			} else if (barkTicks <= 0) {
 				this.removeStatusEffect(BARK);
 			}
 		}
-		if (this.getOwner() instanceof GraveEntity graveEntity && graveEntity.isChallengeGrave()){
+		if (this.getOwner() instanceof GraveEntity graveEntity && graveEntity.isChallengeGrave()) {
 			this.setChallengeZombie(Challenge.TRUE);
 		}
 		this.stepHeight = PVZCONFIG.nestedGeneralZombie.zombieStep();
-		if (this.isOnFire() || this.hasStatusEffect(WARM)){
+		if (this.isOnFire() || this.hasStatusEffect(WARM)) {
 			this.setStealthTag(Stealth.FALSE);
 		}
 		/**
-		if (canJump && !this.world.isClient() && !this.isFlying() && !this.isInsideWaterOrBubbleColumn() && --jumpDelay <= 0 && this.age > 40) {
-			jumpOverGap();
-			jumpDelay = 20;
-		}**/
+		 if (canJump && !this.world.isClient() && !this.isFlying() && !this.isInsideWaterOrBubbleColumn() && --jumpDelay <= 0 && this.age > 40) {
+		 jumpOverGap();
+		 jumpDelay = 20;
+		 }**/
 		/**
-		if (!(this instanceof ZombiePropEntity)) {
-			this.canJump = this.onGround;
-			if (!this.canJump && !this.isFlying() && !this.isInsideWaterOrBubbleColumn()) {
-				this.getNavigation().stop();
-			}
-		}**/
+		 if (!(this instanceof ZombiePropEntity)) {
+		 this.canJump = this.onGround;
+		 if (!this.canJump && !this.isFlying() && !this.isInsideWaterOrBubbleColumn()) {
+		 this.getNavigation().stop();
+		 }
+		 }**/
 		if (this.getTarget() != null) {
 			if (this.isAttacking() && this.squaredDistanceTo(this.getTarget()) < 1) {
 				attackingTick = 40;
@@ -864,39 +897,70 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				this.unstuckDelay = 20;
 			}
 		}
-		if (this.hasStatusEffect(PvZCubed.FROZEN)){
+		if (this.hasStatusEffect(PvZCubed.FROZEN)) {
 			this.removeStatusEffect(STUN);
 		}
-		// thanks to Pluiedev for this hipster code
-		var zombiePropEntity = this.getPassengerList()
-				.stream()
-				.filter(e -> e instanceof ZombiePropEntity)
-				.map(e -> (ZombiePropEntity) e)
-				.findFirst();
-		if (zombiePropEntity.isPresent()) {
-			var e = zombiePropEntity.get();
-			if (this.getType().equals(PvZEntity.PYRAMIDHEAD)){
+		ZombiePropEntity zombiePropEntity = null;
+		ZombiePropEntity zombiePropEntity2 = (ZombiePropEntity) getArmor2();
+		for (Entity entity : this.getPassengerList()) {
+			if (this.getArmor2() == entity) {
+				zombiePropEntity2 = (ZombiePropEntity) entity;
+			}
+			if (entity instanceof ZombiePropEntity && zombiePropEntity == null && getArmor2() != entity) {
+				zombiePropEntity = (ZombiePropEntity) entity;
+			}
+			if (entity instanceof ZombiePropEntity && entity != zombiePropEntity && zombiePropEntity2 == null && this.getArmor2() == null) {
+				zombiePropEntity2 = (ZombiePropEntity) entity;
+			}
+		}
+		if (zombiePropEntity != null) {
+			var e = zombiePropEntity;
+			if (this.getType().equals(PvZEntity.PYRAMIDHEAD)) {
 				e.setHypno(IsHypno.FALSE);
 			}
-			if (e.hasStatusEffect(FROZEN)){
+			if (e.hasStatusEffect(FROZEN)) {
 				e.removeStatusEffect(STUN);
 				this.removeStatusEffect(STUN);
 			}
-			if (e.isCovered()){
+			if (e.isCovered()) {
 				e.removeStatusEffect(STUN);
 				this.removeStatusEffect(STUN);
 			}
-			if (e.isCovered()){
+			if (e.isCovered()) {
 				this.removeStatusEffect(PVZPOISON);
 				this.removeStatusEffect(StatusEffects.POISON);
 			}
 		}
-		if (this.getAttacker() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()){
+		if (zombiePropEntity2 != null) {
+			var e = zombiePropEntity2;
+			if (this.getType().equals(PvZEntity.PYRAMIDHEAD)) {
+				e.setHypno(IsHypno.FALSE);
+			}
+			if (e.hasStatusEffect(FROZEN)) {
+				e.removeStatusEffect(STUN);
+				this.removeStatusEffect(STUN);
+			}
+			if (e.isCovered()) {
+				e.removeStatusEffect(STUN);
+				this.removeStatusEffect(STUN);
+			}
+			if (e.isCovered()) {
+				this.removeStatusEffect(PVZPOISON);
+				this.removeStatusEffect(StatusEffects.POISON);
+			}
+		}
+		if (this.getAttacker() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()) {
 			this.setTarget(generalPvZombieEntity);
 		}
-		if (zombiePropEntity.isPresent()) {
-			var e = zombiePropEntity.get();
-			if (e.getAttacker() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()){
+		if (zombiePropEntity != null) {
+			var e = zombiePropEntity;
+			if (e.getAttacker() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()) {
+				this.setTarget(generalPvZombieEntity);
+			}
+		}
+		if (zombiePropEntity2 != null) {
+			var e = zombiePropEntity2;
+			if (e.getAttacker() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()) {
 				this.setTarget(generalPvZombieEntity);
 			}
 		}
@@ -907,33 +971,32 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				this.setTarget(null);
 			}
 		}
-		if (IS_MACHINE.get(this.getType()).orElse(false).equals(false)){
+		if (IS_MACHINE.get(this.getType()).orElse(false).equals(false)) {
 			this.removeStatusEffect(DISABLE);
-		}
-		else {
+		} else {
 			this.removeStatusEffect(STUN);
 		}
-		if (this.isCovered()){
+		if (this.isCovered()) {
 			this.removeStatusEffect(STUN);
 		}
-		if (this.isCovered()){
+		if (this.isCovered()) {
 			this.removeStatusEffect(PVZPOISON);
 			this.removeStatusEffect(StatusEffects.POISON);
 		}
 		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("metallic")) &&
 				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("electronic")) &&
 				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) &&
-				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("paper")) && this.hasStatusEffect(ACID)){
+				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("paper")) && this.hasStatusEffect(ACID)) {
 			this.removeStatusEffect(ACID);
 		}
-		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("stone")){
+		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("stone")) {
 			this.removeStatusEffect(FROZEN);
 		}
 		LivingEntity target = this.getTarget();
-		if (this.getHypno() && (target instanceof PlayerEntity || target instanceof PassiveEntity || target instanceof GolemEntity)){
+		if (this.getHypno() && (target instanceof PlayerEntity || target instanceof PassiveEntity || target instanceof GolemEntity)) {
 			this.setTarget(null);
 		}
-		if (this.isInsideWall()){
+		if (this.isInsideWall()) {
 			this.setPosition(this.getX(), this.getY() + 1, this.getZ());
 		}
 		if (!this.hasNoGravity() && !this.isFlying()) {
@@ -943,25 +1006,49 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				}
 			}
 		}
-		if (this.hasStatusEffect(PvZCubed.FROZEN) && this.isInsideWaterOrBubbleColumn()){
+		if (this.hasStatusEffect(PvZCubed.FROZEN) && this.isInsideWaterOrBubbleColumn()) {
 			this.kill();
 		}
-		if (this.hasStatusEffect(BOUNCED) && ZOMBIE_SIZE.get(this.getType()).orElse("normal").equals("small") && this.isAlive()){
+		if (this.hasStatusEffect(BOUNCED) && ZOMBIE_SIZE.get(this.getType()).orElse("normal").equals("small") && this.isAlive()) {
 			this.addVelocity(0, 1, 0);
 			this.kill();
 		}
 
 		if (this.world.isClient) {
-			if (zombiePropEntity.isPresent()) {
-				var e = zombiePropEntity.get();
+			if (zombiePropEntity != null && zombiePropEntity != getArmor2()) {
+				var e = zombiePropEntity;
 				this.geardmg = e.getHealth() < e.getMaxHealth() / 2;
-				this.gearless = false;
 			} else {
-				this.gearless = true;
 				this.geardmg = false;
+			}
+			if (zombiePropEntity2 != null && getArmor2() == null) {
+				this.setArmor2(zombiePropEntity2.getId());
+				zombiePropEntity2 = (ZombiePropEntity) getArmor2();
+			}
+			if (zombiePropEntity2 != null) {
+				var e = zombiePropEntity2;
+				this.geardmg2 = e.getHealth() < e.getMaxHealth() / 2;
+			} else {
+				this.geardmg2 = false;
+			}
+
+			if (zombiePropEntity == getArmor2()){
+				zombiePropEntity = null;
+			}
+
+			if (zombiePropEntity2 != null && zombiePropEntity != null){
+				this.gearless = false;
+			}
+			else {
+				gear2less = getArmor2() == null;
+				gear1less = zombiePropEntity == null;
+				if (zombiePropEntity == null && zombiePropEntity2 == null) {
+					this.gearless = true;
+				}
 			}
 
 			this.armless = this.getHealth() < this.getMaxHealth() / 2;
+
 		}
 		if (this.getHealth() < this.getMaxHealth() / 2 && !(this instanceof ZombiePropEntity) &&
 				!ZOMBIE_SIZE.get(this.getType()).orElse("medium").equals("gargantuar") && !ZOMBIE_SIZE.get(this.getType()).orElse("medium").equals("small") &&
@@ -1120,11 +1207,30 @@ public class GeneralPvZombieEntity extends HostileEntity {
 					}
 					target.playSound(PvZSounds.ZOMBIEBITEEVENT, sound, 1f);
 					this.setStealthTag(Stealth.FALSE);
-					if (target instanceof HypnoshroomEntity hypnoshroomEntity && !hypnoshroomEntity.getIsAsleep() && !this.isCovered()){
+					if (!doesntBite && target instanceof HypnoshroomEntity hypnoshroomEntity && !hypnoshroomEntity.getIsAsleep() && !this.isCovered()){
 						if (!ZOMBIE_SIZE.get(this.getType()).orElse("medium").equals("small")) {
 							hypnoshroomEntity.damage(DamageSource.mob(this), hypnoshroomEntity.getMaxHealth() * 5);
 						}
 						this.damage(HYPNO_DAMAGE, 0);
+					}
+					if (!doesntBite && target instanceof GravebusterEntity && !this.isCovered()){
+						ZombiePropEntity zombiePropEntity2 = null;
+						for (Entity entity1 : this.getPassengerList()) {
+							if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null &&
+									!(entity1 instanceof ZombieShieldEntity)) {
+								zombiePropEntity2 = zpe;
+							}
+						}
+						float damage = 12;
+						if (zombiePropEntity2 != null && damage > zombiePropEntity2.getHealth()) {
+							float damage2 = damage - zombiePropEntity2.getHealth();
+							zombiePropEntity2.damage(ProjectileDamageSource.mob(this), damage);
+							this.damage(ProjectileDamageSource.mob(this), damage2);
+						} else if (zombiePropEntity2 != null) {
+							zombiePropEntity2.damage(ProjectileDamageSource.mob(this), damage);
+						} else {
+							this.damage(ProjectileDamageSource.mob(this), damage);
+						}
 					}
 				}
 				return super.tryAttack(target);
@@ -1140,11 +1246,30 @@ public class GeneralPvZombieEntity extends HostileEntity {
 					}
 					target.playSound(PvZSounds.ZOMBIEBITEEVENT, sound, 1f);
 					this.setStealthTag(Stealth.FALSE);
-					if (target instanceof HypnoshroomEntity hypnoshroomEntity && !hypnoshroomEntity.getIsAsleep() && !this.isCovered()){
+					if (!doesntBite && target instanceof HypnoshroomEntity hypnoshroomEntity && !hypnoshroomEntity.getIsAsleep() && !this.isCovered()){
 						if (!ZOMBIE_SIZE.get(this.getType()).orElse("medium").equals("small")) {
 							hypnoshroomEntity.damage(DamageSource.mob(this), hypnoshroomEntity.getMaxHealth() * 5);
 						}
 						this.damage(HYPNO_DAMAGE, 0);
+					}
+					if (!doesntBite && target instanceof GravebusterEntity && !this.isCovered()){
+						ZombiePropEntity zombiePropEntity2 = null;
+						for (Entity entity1 : this.getPassengerList()) {
+							if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null &&
+									!(entity1 instanceof ZombieShieldEntity)) {
+								zombiePropEntity2 = zpe;
+							}
+						}
+						float damage = 12;
+						if (zombiePropEntity2 != null && damage > zombiePropEntity2.getHealth()) {
+							float damage2 = damage - zombiePropEntity2.getHealth();
+							zombiePropEntity2.damage(ProjectileDamageSource.mob(this), damage);
+							this.damage(ProjectileDamageSource.mob(this), damage2);
+						} else if (zombiePropEntity2 != null) {
+							zombiePropEntity2.damage(ProjectileDamageSource.mob(this), damage);
+						} else {
+							this.damage(ProjectileDamageSource.mob(this), damage);
+						}
 					}
 				}
 				return super.tryAttack(target);

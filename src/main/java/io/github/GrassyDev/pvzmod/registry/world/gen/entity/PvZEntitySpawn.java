@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.basicgrave.BasicGr
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone.EgyptGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.futuregrave.FutureGraveEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.gravestones.mausoleum.MausoleumGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.nightgrave.NightGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.poolgrave.PoolGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.roofgrave.RoofGraveEntity;
@@ -54,6 +55,9 @@ public class PvZEntitySpawn {
 
 		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.DARKAGESGRAVESTONE, PVZCONFIG.nestedSpawns.nestedGraveSpawns.darkagesGv2(), PVZCONFIG.nestedSpawns.nestedGraveSpawns.darkagesGmin(), PVZCONFIG.nestedSpawns.nestedGraveSpawns.darkagesGmax());
 		SpawnRestriction.register(PvZEntity.DARKAGESGRAVESTONE, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DarkAgesGraveEntity::canDarkAgesGraveSpawn);
+
+		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.MAUSOLEUMGRAVESTONE, PVZCONFIG.nestedSpawns.nestedGraveSpawns.mausoleumG(), PVZCONFIG.nestedSpawns.nestedGraveSpawns.mausoleumGmin(), PVZCONFIG.nestedSpawns.nestedGraveSpawns.mausoleumGmax());
+		SpawnRestriction.register(PvZEntity.MAUSOLEUMGRAVESTONE, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MausoleumGraveEntity::canMausolemGraveSpawn);
 
 
 		//Plants

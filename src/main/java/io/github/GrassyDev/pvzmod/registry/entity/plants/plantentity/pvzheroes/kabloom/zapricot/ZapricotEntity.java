@@ -8,6 +8,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -458,16 +459,12 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 			LivingEntity livingEntity;
 			do {
 				do {
-					do {
-						do {
-							if (!var9.hasNext()) {
-								return;
-							}
+					if (!var9.hasNext()) {
+						return;
+					}
 
-							livingEntity = (LivingEntity) var9.next();
-						} while (livingEntity == origin);
-					} while (livingEntity.hasPassenger(origin));
-				} while (livingEntity.getVehicle() == origin);
+					livingEntity = (LivingEntity) var9.next();
+				} while (livingEntity == origin);
 			} while (origin.squaredDistanceTo(livingEntity) > 100);
 
 			if (lightningCounter > 0 && livingEntity instanceof Monster &&
@@ -475,7 +472,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 							&& (generalPvZombieEntity.getHypno())) && !(livingEntity instanceof GraveEntity graveEntity && graveEntity.decorative)) {
 				ZombiePropEntity passenger = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && !(entity1 instanceof ZombieShieldEntity)) {
 						passenger = zpe;
 					}
 				}

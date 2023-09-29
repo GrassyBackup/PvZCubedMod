@@ -98,9 +98,13 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
 							generalPvZombieEntity.isFlying()))) {
 				ZombiePropEntity zombiePropEntity2 = null;
+				ZombiePropEntity zombiePropEntity3 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 						zombiePropEntity2 = zpe;
+					}
+					else if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity3 = zpe;
 					}
 				}
 				if (zombiePropEntity2 == null ||

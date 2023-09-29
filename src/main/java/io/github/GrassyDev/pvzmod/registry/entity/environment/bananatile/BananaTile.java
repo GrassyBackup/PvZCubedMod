@@ -70,7 +70,9 @@ public class BananaTile extends TileEntity {
 					int damage = 4;
 					for (Entity entity1 : livingEntity.getPassengerList()) {
 						if (entity1 instanceof ZombiePropEntity zpe) {
-							zombiePropEntity2 = zpe;
+							if (zombiePropEntity2 == null) {
+								zombiePropEntity2 = zpe;
+							}
 							damage = damage + 8;
 							if (zpe.isHeavy) {
 								if (zpe instanceof ZombieObstacleEntity zombieObstacle){

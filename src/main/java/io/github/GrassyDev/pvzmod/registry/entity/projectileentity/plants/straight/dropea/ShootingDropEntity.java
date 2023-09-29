@@ -17,7 +17,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -181,14 +180,19 @@ public class ShootingDropEntity extends PvZProjectileEntity implements IAnimatab
 				entity = (Entity) var9.next();
 			} while (entity == this.getOwner());
 			ZombiePropEntity zombiePropEntity2 = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 					zombiePropEntity2 = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !hit) {
 				((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 100, 1)));
@@ -250,14 +254,22 @@ public class ShootingDropEntity extends PvZProjectileEntity implements IAnimatab
 								} else if ("plant".equals(zombieMaterial2)) {
 									damage3 = damage3 / 2;
 								}
-								ZombiePropEntity zombiePropEntity3 = null;
+								ZombiePropEntity zombiePropEntity4 = null;
 								for (Entity entity1 : livingEntity.getPassengerList()) {
 									if (entity1 instanceof ZombiePropEntity zpe) {
-										zombiePropEntity3 = zpe;
+										zombiePropEntity4 = zpe;
 									}
 								}
-								if (!(zombiePropEntity3 instanceof ZombieShieldEntity)) {
-									if (zombiePropEntity3 == null) {
+								ZombiePropEntity zombiePropEntity6 = null;
+								if (livingEntity.hasVehicle()) {
+									for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+										if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+											zombiePropEntity6 = zpe;
+										}
+									}
+								}
+								if (!(zombiePropEntity4 instanceof ZombieShieldEntity)) {
+									if (zombiePropEntity4 == null && zombiePropEntity6 == null) {
 										if (damage3 > livingEntity.getHealth() &&
 												!(livingEntity instanceof ZombieShieldEntity) &&
 												livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {

@@ -18,7 +18,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -216,15 +215,20 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 			} while (entity == this.getOwner());
 
 			ZombiePropEntity zombiePropEntity2 = null;
+			ZombiePropEntity zombiePropEntity3 = null;
 			for (Entity entity1 : entity.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 					zombiePropEntity2 = zpe;
+				}
+				if (entity1 instanceof ZombiePropEntity zpe) {
+					zombiePropEntity3 = zpe;
 				}
 			}
 
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) || this.canHitFlying) &&
 					(!(ZOMBIE_SIZE.get(entity.getType()).orElse("medium").equals("small") && this.canHitFlying))) {
@@ -254,46 +258,6 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 		}
 	}
 
-	/**
-	protected void onEntityHit(EntityHitResult entityHitResult) {
-		super.onEntityHit(entityHitResult);
-		Entity entity = entityHitResult.getEntity();
-		ZombiePropEntity zombiePropEntity2 = null;
-		for (Entity entity1 : entity.getPassengerList()) {
-			if (entity1 instanceof ZombiePropEntity zpe) {
-				zombiePropEntity2 = zpe;
-			}
-		}
-		if (!world.isClient && entity instanceof Monster monster &&
-				!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
-				!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
-				!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
-				(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) || this.canHitFlying) &&
-				(!(ZOMBIE_SIZE.get(entity.getType()).orElse("medium").equals("small") && this.canHitFlying))) {
-			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
-			SoundEvent sound;
-			sound = switch (zombieMaterial) {
-				case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
-				case "plastic" -> PvZSounds.CONEHITEVENT;
-				case "stone" -> PvZSounds.STONEHITEVENT;
-				default -> PvZSounds.PEAHITEVENT;
-			};
-			entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-			float damage = PVZCONFIG.nestedProjDMG.peaDMG();
-			if (damage > ((LivingEntity) entity).getHealth() &&
-					!(entity instanceof ZombieShieldEntity) &&
-					entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())){
-				float damage2 = damage - ((LivingEntity) entity).getHealth();
-				entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
-				generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
-			}
-			else {
-				entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
-			}
-			this.world.sendEntityStatus(this, (byte) 3);
-			this.remove(RemovalReason.DISCARDED);
-		}
-	}**/
 
     @Environment(EnvType.CLIENT)
     private ParticleEffect getParticleParameters() {

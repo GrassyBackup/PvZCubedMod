@@ -5,7 +5,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelmetVariants;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
@@ -26,6 +25,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/sargeant/sargeant.png"));
 				map.put(MetalHelmetVariants.SCREENDOOR,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat.png"));
+				map.put(MetalHelmetVariants.SARGEAMTSHIELD,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/sargeant/sargeant.png"));
 				map.put(MetalHelmetVariants.FOOTBALL,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/football/football.png"));
 				map.put(MetalHelmetVariants.BERSERKER,
@@ -58,6 +59,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/sargeant/sargeant_geardmg1.png"));
 				map.put(MetalHelmetVariants.SCREENDOOR,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat_geardmg1.png"));
+				map.put(MetalHelmetVariants.SARGEAMTSHIELD,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/sargeant/sargeant_geardmg1.png"));
 				map.put(MetalHelmetVariants.FOOTBALL,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/football/football_geardmg1.png"));
 				map.put(MetalHelmetVariants.BERSERKER,
@@ -88,6 +91,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "geo/helmetproj.geo.json"));
 				map.put(MetalHelmetVariants.SCREENDOOR,
 						new Identifier(PvZCubed.MOD_ID, "geo/screendoorproj.geo.json"));
+				map.put(MetalHelmetVariants.SARGEAMTSHIELD,
+						new Identifier(PvZCubed.MOD_ID, "geo/sargeantshieldproj.geo.json"));
 				map.put(MetalHelmetVariants.FOOTBALL,
 						new Identifier(PvZCubed.MOD_ID, "geo/footballproj.geo.json"));
 				map.put(MetalHelmetVariants.BERSERKER,

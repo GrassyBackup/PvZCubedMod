@@ -112,9 +112,13 @@ public class TorchwoodEntity extends PlantEntity implements IAnimatable {
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && (!livingEntity.isWet() && !livingEntity.hasStatusEffect(PvZCubed.WET))) && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) {
 				ZombiePropEntity zombiePropEntity2 = null;
+				ZombiePropEntity zombiePropEntity3 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 						zombiePropEntity2 = zpe;
+					}
+					else if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity3 = zpe;
 					}
 				}
 				float damage = 4;

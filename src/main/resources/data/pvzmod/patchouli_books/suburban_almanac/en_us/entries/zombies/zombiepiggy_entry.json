@@ -21,7 +21,7 @@
       "images": [
         "pvzmod:textures/gui/entries/zombiepiggy.png"
       ],
-      "title": "Hard Dark Ages Zombie",
+      "title": "Hard Mausoleum Zombie",
       "border": "true",
       "text": "$(#25228d)Runs and eats Spikeweeds."
     },

@@ -286,7 +286,8 @@ public abstract class PlantEntity extends GolemEntity {
 		LivingEntity prioritizedTarget = null;
 		if (!this.world.isClient()) {
 			for (LivingEntity hostileEntity : list) {
-				if (hostileEntity.isAlive() && this.getVisibilityCache().canSee(hostileEntity)) {
+				if (hostileEntity.isAlive() && this.getVisibilityCache().canSee(hostileEntity) &&
+						!(hostileEntity instanceof GraveEntity && targetNotObstacle)) {
 					if (hostileEntity instanceof Monster && !(hostileEntity instanceof GraveEntity graveEntity && graveEntity.decorative)) {
 						if (illuminate && hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isStealth() && hostileEntity.squaredDistanceTo(this) < 36) {
 							if (PLANT_TYPE.get(this.getType()).orElse("appease").equals("pepper") && this.isWet()) {
@@ -991,6 +992,8 @@ public abstract class PlantEntity extends GolemEntity {
 					}
 				} else if (entityType.equals(PvZEntity.SCREENDOORSHIELD)) {
 					helmetProj = MetalHelmetVariants.SCREENDOOR;
+				} else if (entityType.equals(PvZEntity.SERGEANTSHIELDGEAR)) {
+					helmetProj = MetalHelmetVariants.SARGEAMTSHIELD;
 				} else if (entityType.equals(PvZEntity.FOOTBALLGEAR)) {
 					helmetProj = MetalHelmetVariants.FOOTBALL;
 				} else if (entityType.equals(PvZEntity.BERSERKERGEAR)) {
@@ -1027,6 +1030,8 @@ public abstract class PlantEntity extends GolemEntity {
 							}
 						} else if (entityType2.equals(PvZEntity.SCREENDOORSHIELD)) {
 							helmetProj2 = MetalHelmetVariants.SCREENDOOR;
+						} else if (entityType2.equals(PvZEntity.SERGEANTSHIELDGEAR)) {
+							helmetProj2 = MetalHelmetVariants.SARGEAMTSHIELD;
 						} else if (entityType2.equals(PvZEntity.FOOTBALLGEAR)) {
 							helmetProj2 = MetalHelmetVariants.FOOTBALL;
 						} else if (entityType2.equals(PvZEntity.BERSERKERGEAR)) {
@@ -1063,6 +1068,8 @@ public abstract class PlantEntity extends GolemEntity {
 							}
 						} else if (entityType3.equals(PvZEntity.SCREENDOORSHIELD)) {
 							helmetProj3 = MetalHelmetVariants.SCREENDOOR;
+						}  else if (entityType3.equals(PvZEntity.SERGEANTSHIELDGEAR)) {
+							helmetProj3 = MetalHelmetVariants.SARGEAMTSHIELD;
 						} else if (entityType3.equals(PvZEntity.FOOTBALLGEAR)) {
 							helmetProj3 = MetalHelmetVariants.FOOTBALL;
 						} else if (entityType3.equals(PvZEntity.BERSERKERGEAR)) {
@@ -1088,7 +1095,7 @@ public abstract class PlantEntity extends GolemEntity {
 				}
 			}
 		}
-		if (setGear != null) {
+		if (setGear != null && !(this.magnetshroom && setGear.isHeavy)) {
 			playSound(PvZSounds.MAGNETATTRACTEVENT);
 			MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
 			helmetProjEntity.setOwner(this);

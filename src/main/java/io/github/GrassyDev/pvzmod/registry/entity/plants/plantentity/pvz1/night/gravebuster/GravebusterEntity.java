@@ -16,7 +16,6 @@ import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -41,8 +40,6 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.github.GrassyDev.pvzmod.PvZCubed.ZOMBIE_SIZE;
 
 public class GravebusterEntity extends PlantEntity implements IAnimatable {
 
@@ -274,17 +271,6 @@ public class GravebusterEntity extends PlantEntity implements IAnimatable {
 
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
-
-	public boolean damage(DamageSource source, float amount) {
-		if (!(source.getSource() instanceof PlayerEntity)) {
-			if (!source.isMagic() && source.getSource() instanceof HostileEntity hostileEntity && !(ZOMBIE_SIZE.get(hostileEntity.getType()).orElse("medium").equals("gargantuar"))) {
-				if (!source.isExplosive()) {
-					hostileEntity.damage(DamageSource.thrownProjectile(this, this), 12.0F);
-				}
-			}
-		}
-		return super.damage(source, amount);
-	}
 
 	public boolean handleAttack(Entity attacker) {
 		if (attacker instanceof PlayerEntity) {

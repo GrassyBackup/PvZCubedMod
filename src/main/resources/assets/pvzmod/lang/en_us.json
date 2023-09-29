@@ -39,6 +39,9 @@
   "text.config.pvz3-config.option.nestedSpawns.nestedGraveSpawns.darkagesGv2": "Dark Ages Grave Weight",
   "text.config.pvz3-config.option.nestedSpawns.nestedGraveSpawns.darkagesGmin": "Dark Ages Grave Group Min",
   "text.config.pvz3-config.option.nestedSpawns.nestedGraveSpawns.darkagesGmax": "Dark Ages Grave Group Max",
+  "text.config.pvz3-config.option.nestedSpawns.nestedGraveSpawns.mausoleumG": "Mausoleum Grave Weight",
+  "text.config.pvz3-config.option.nestedSpawns.nestedGraveSpawns.mausoleumGmin": "Mausoleum Grave Group Min",
+  "text.config.pvz3-config.option.nestedSpawns.nestedGraveSpawns.mausoleumGmax": "Mausoleum Grave Group Max",
 
   "text.config.pvz3-config.category.nestedSpawns.nestedPlantSpawns": "Plant Spawn Settings",
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.peashooterSP": "Peashooter Weight",
@@ -252,10 +255,12 @@
   "text.config.pvz3-config.option.nestedZombieHealth.egyptGraveH": "Egypt Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.futureGraveH": "Future Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.darkAgesGraveH": "Dark Ages Gravestone Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.mausoleumGraveH": "Mausoleum Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.backupH": "Backup Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.browncoatH": "Browncoat Health",
   "text.config.pvz3-config.option.nestedZombieHealth.mummyH": "Mummy Health",
   "text.config.pvz3-config.option.nestedZombieHealth.peasantH": "Peasant Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.sargeantH": "Sergeant Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bullyH": "Bully Health",
   "text.config.pvz3-config.option.nestedZombieHealth.basketballH": "Basketball Carrier Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bassH": "Bass Zombie Health",
@@ -266,6 +271,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.flagH": "Flag Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.flagMummyH": "Flag Mummy Health",
   "text.config.pvz3-config.option.nestedZombieHealth.flagPeasantH": "Flag Peasant Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.flagSargeantH": "Flag Sergeant Health",
   "text.config.pvz3-config.option.nestedZombieHealth.footballH": "Football Health",
   "text.config.pvz3-config.option.nestedZombieHealth.berserkerH": "Berserker Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bobsledH": "Bobsled Rider Health",
@@ -294,6 +300,7 @@
 
   "text.config.pvz3-config.option.nestedZombieHealth.coneH": "Cone Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bucketH": "Bucket Gear Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.sargeanthelmetH": "Sergeant Helmet Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.soldierhelmetH": "Soldier Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.medallionH": "Medallion Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.footballHelmH": "Football Gear Health",
@@ -302,11 +309,13 @@
   "text.config.pvz3-config.option.nestedZombieHealth.blastronautHelmH": "Blastronaut Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.knightHelmH": "Knight Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.coneTowerH": "Cone Tower Gear Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.bowlH": "Bowl Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.pyramidH": "Pyramid Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.sarcophagusH": "Sarcophagus Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.brickH": "Brick Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.pumpkinH": "Pumpkin Gear Health",
   "text.config.pvz3-config.option.nestedZombieHealth.screendoorShieldH": "Screendoor Shield Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.sergeantShieldH": "Sergeant Shield Health",
   "text.config.pvz3-config.option.nestedZombieHealth.newspaperShieldH": "Newspaper Shield Health",
   "text.config.pvz3-config.option.nestedZombieHealth.sundayShieldH": "Sunday Edition Shield Health",
   "text.config.pvz3-config.option.nestedZombieHealth.trashcanObstH": "Trash Can Obstacle Health",
@@ -1007,6 +1016,29 @@
   "item.pvzmod.newyearimp_egg": "New Years Imp",
   "entity.pvzmod.newyearimp_hypnotized": "Hypnotized New Years Imp",
 
+  "entity.pvzmod.sergeant": "Sergeant Zombie",
+  "item.pvzmod.sargeant_egg": "Sergeant Zombie",
+  "entity.pvzmod.sergeant_hypnotized": "Hypnotized Sergeant Zombie",
+
+  "entity.pvzmod.flagsergeant": "Flag Sergeant Zombie",
+  "item.pvzmod.flagsargeant_egg": "Flag Sergeant Zombie",
+  "entity.pvzmod.flagsergeant_hypnotized": "Hypnotized Flag Sergeant Zombie",
+
+  "entity.pvzmod.sergeantcone": "Bowl Sergeant Zombie",
+  "item.pvzmod.sargeantcone_egg": "Bowl Sergeant Zombie",
+  "entity.pvzmod.bowlgear": "Bowl",
+  "entity.pvzmod.sergeantcone_hypnotized": "Hypnotized Bowl Sergeant Zombie",
+
+  "entity.pvzmod.sergeantbucket": "Helmet Sergeant Zombie",
+  "item.pvzmod.sargeantbucket_egg": "Helmet Sergeant Zombie",
+  "entity.pvzmod.helmetgear": "Helmet",
+  "entity.pvzmod.sergeantbucket_hypnotized": "Hypnotized Helmet Sergeant Zombie",
+
+  "entity.pvzmod.sergeantshield": "Shield Sergeant Zombie",
+  "item.pvzmod.sargeantshield_egg": "Shield Sergeant Zombie",
+  "entity.pvzmod.sergeantshieldgear": "Shield",
+  "entity.pvzmod.sergeantshield_hypnotized": "Hypnotized Shield Sergeant Zombie",
+
   "entity.pvzmod.hawkerpusher": "Hawker Cart Zombie",
   "item.pvzmod.hawkercart_egg": "Hawker Cart",
   "entity.pvzmod.hawkerpusher_hypnotized": "Hypnotized Hawker Cart Zombie",
@@ -1118,6 +1150,9 @@
   "entity.pvzmod.darkagesgrave": "Dark Ages Gravestone",
   "item.pvzmod.darkagesgrave_spawn": "Dark Ages Gravestone",
 
+  "entity.pvzmod.mausoleumgrave": "Mausoleum Gravestone",
+  "item.pvzmod.mausoleumgrave_spawn": "Mausoleum Gravestone",
+
   "entity.pvzmod.solarwinds": "Solar Winds",
 
   "entity.pvzmod.scorchedtile": "Scorched Tile",
@@ -1157,5 +1192,7 @@
   "block.pvzmod.skycity_tile": "Sky City Tile",
   "block.pvzmod.dark_skycity_tile": "Dark Sky City Tile",
   "block.pvzmod.fairy_tile": "Fairy Tile",
-  "block.pvzmod.dark_fairy_tile": "Dark Fairy Tile"
+  "block.pvzmod.dark_fairy_tile": "Dark Fairy Tile",
+  "block.pvzmod.mausoleum_tile": "Mausoleum Tile",
+  "block.pvzmod.dark_mausoleum_tile": "Dark Mausoleum Tile"
 }

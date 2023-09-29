@@ -28,6 +28,7 @@
     "pvzmod:bobsledvehicle": "metallic",
     "pvzmod:sundayeditionshield": "paper",
     "pvzmod:screendoorshield": "metallic",
+    "pvzmod:sergeantshieldgear": "metallic",
     "pvzmod:trashcanbin": "metallic",
     "pvzmod:knightgear": "metallic",
     "pvzmod:pumpkingear": "plant",
@@ -45,6 +46,7 @@
     "pvzmod:egyptgrave": "stone",
     "pvzmod:roofgrave": "stone",
     "pvzmod:futuregrave": "stone",
-    "pvzmod:darkagesgrave": "stone"
+    "pvzmod:darkagesgrave": "stone",
+    "pvzmod:mausoleumgrave": "stone"
   }
 }

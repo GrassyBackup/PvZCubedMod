@@ -16,6 +16,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.basicgrave.BasicGr
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone.EgyptGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.futuregrave.FutureGraveRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.gravestones.mausoleum.MausoleumGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.nightgrave.NightGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.poolgrave.PoolGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.roofgrave.RoofGraveRenderer;
@@ -182,9 +183,10 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.jetp
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.pharaoh.PharaohEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntityRenderer;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.browncoat.sargeant.SargeantEntityRenderer;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.hawker.piggy.PiggyEntityRenderer;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.hawker.zombie.HawkerZombieEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.browncoat.sargeant.SargeantEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.flagzombie.sargeant.FlagSargeantEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.piggy.PiggyEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.zombie.HawkerZombieEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.pumpkinzombie.PumpkinZombieEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.scientist.ScientistEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.soldier.SoldierEntityRenderer;
@@ -535,6 +537,7 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.SUNDAYEDITIONSHIELD, NewspaperShieldEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.SCREENDOORSHIELD, MetalShieldEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SERGEANTSHIELDGEAR, MetalShieldEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.FOOTBALL, FootballEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.BERSERKER, FootballEntityRenderer::new);
@@ -628,6 +631,10 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.SARGEANTBOWLHYPNO, SargeantEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SARGEANTHELMET, SargeantEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SARGEANTHELMETHYPNO, SargeantEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SARGEANTSHIELD, SargeantEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SARGEANTSHIELDHYPNO, SargeantEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAGSARGEANT, FlagSargeantEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAGSARGEANTHYPNO, FlagSargeantEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.PUMPKINZOMBIE, PumpkinZombieEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.PUMPKINZOMBIEHYPNO, PumpkinZombieEntityRenderer::new);
@@ -734,6 +741,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.FUTUREGRAVESTONE, FutureGraveRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.DARKAGESGRAVESTONE, DarkAgesGraveRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.MAUSOLEUMGRAVESTONE, MausoleumGraveRenderer::new);
 
 
 	}

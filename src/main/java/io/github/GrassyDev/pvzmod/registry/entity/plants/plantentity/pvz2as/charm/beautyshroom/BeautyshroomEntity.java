@@ -190,7 +190,21 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 25);
 
+			ZombiePropEntity zombiePropEntity4 = null;
+			if (livingEntity.hasVehicle()) {
+				for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+					if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+						zombiePropEntity4 = zpe;
+					}
+				}
+			}
+			for (Entity entity1 : livingEntity.getPassengerList()) {
+				if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+					zombiePropEntity4 = zpe;
+				}
+			}
 			if (((livingEntity instanceof Monster &&
+					zombiePropEntity4 == null &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity

@@ -512,18 +512,14 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 		}
 
 		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-		if (sarcophagusEntity == null) {
-			if (this.speedSwitch) {
+		if (sarcophagusEntity == null &&
+				this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
+			assert maxSpeedAttribute != null;
+			maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
+		} else if (sarcophagusEntity != null) {
+			if (!this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
 				assert maxSpeedAttribute != null;
-				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
-				this.speedSwitch = false;
-			}
-		} else {
-			if (!this.speedSwitch) {
-				assert maxSpeedAttribute != null;
-				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
-				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.07));
-				this.speedSwitch = true;
+				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.08));
 			}
 		}
 	}

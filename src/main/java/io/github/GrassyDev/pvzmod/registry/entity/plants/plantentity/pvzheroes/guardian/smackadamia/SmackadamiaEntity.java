@@ -135,7 +135,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 		this.squaredDistanceTo(target) <= 1.5625) {
 			ZombiePropEntity passenger = null;
 			for (Entity entity1 : target.getPassengerList()) {
-				if (entity1 instanceof ZombiePropEntity zpe) {
+				if (entity1 instanceof ZombiePropEntity zpe && passenger == null) {
 					passenger = zpe;
 				}
 			}

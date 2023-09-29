@@ -203,6 +203,18 @@ public class ModBlocks {
 			.sounds(BlockSoundGroup.GRASS)
 			.strength(1.9f, 1200f));
 
+	public static final Block MAUSOLEUM_TILE = new Block(QuiltBlockSettings
+			.of(Material.STONE)
+			.requiresTool()
+			.sounds(BlockSoundGroup.STONE)
+			.strength(1.9f, 1200f));
+
+
+	public static final Block DARK_MAUSOLEUM_TILE = new Block(QuiltBlockSettings
+			.of(Material.STONE)
+			.requiresTool()
+			.sounds(BlockSoundGroup.STONE)
+			.strength(1.9f, 1200f));
 
 	public static final Block LEGENDARY_TILE = new Block(QuiltBlockSettings
 			.of(Material.AMETHYST)
@@ -245,6 +257,8 @@ public class ModBlocks {
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_skycity_tile"), DARK_SKYCITY_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"fairy_tile"), FAIRY_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_fairy_tile"), DARK_FAIRY_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"mausoleum_tile"), MAUSOLEUM_TILE);
+		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"dark_mausoleum_tile"), DARK_MAUSOLEUM_TILE);
 		Registry.register(Registry.BLOCK, new Identifier(PvZCubed.MOD_ID,"legendary_tile"), LEGENDARY_TILE);
 
     }

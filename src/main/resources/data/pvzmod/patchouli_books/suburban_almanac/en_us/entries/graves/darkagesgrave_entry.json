@@ -35,9 +35,7 @@
         "pvzmod:zombies/zombieking_entry",
         "pvzmod:zombies/impdragon_entry",
         "pvzmod:zombies/pumpkinzombie_entry",
-        "pvzmod:zombies/zomblob_entry",
-        "pvzmod:zombies/hawkercart_entry",
-        "pvzmod:zombies/zombiepiggy_entry"
+        "pvzmod:zombies/zomblob_entry"
       ],
       "title": "Spawnable Zombies"
     }

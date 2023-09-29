@@ -307,6 +307,11 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.BASSEGG));
 				stacks.add(new ItemStack(ModItems.PUMPKINZOMBIEEGG));
 				stacks.add(new ItemStack(ModItems.NEWYEARIMPEGG));
+				stacks.add(new ItemStack(ModItems.SARGEANTEGG));
+				stacks.add(new ItemStack(ModItems.FLAGSARGEANTEGG));
+				stacks.add(new ItemStack(ModItems.SARGEANTCONEEGG));
+				stacks.add(new ItemStack(ModItems.SARGEANTBUCKETEGG));
+				stacks.add(new ItemStack(ModItems.SARGEANTSHIELDEGG));
 				stacks.add(new ItemStack(ModItems.HAWKEREGG));
 				stacks.add(new ItemStack(ModItems.PIGGYEGG));
 				stacks.add(new ItemStack(ModItems.SOLDIEREGG));
@@ -343,6 +348,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.EGYPTGRAVESPAWN));
 				stacks.add(new ItemStack(ModItems.FUTUREGRAVESPAWN));
 				stacks.add(new ItemStack(ModItems.DARKAGESGRAVESPAWN));
+				stacks.add(new ItemStack(ModItems.MAUSOLEUMGRAVESPAWN));
 				stacks.add(new ItemStack(ModItems.GARDENCHALLENGE_SPAWN));
 				stacks.add(new ItemStack(ModItems.FERTILIZER));
 			}).build();
@@ -381,6 +387,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.DARK_SKYCITY_TILE));
 				stacks.add(new ItemStack(ModItems.FAIRY_TILE));
 				stacks.add(new ItemStack(ModItems.DARK_FAIRY_TILE));
+				stacks.add(new ItemStack(ModItems.MAUSOLEUM_TILE));
+				stacks.add(new ItemStack(ModItems.DARK_MAUSOLEUM_TILE));
 				stacks.add(new ItemStack(ModItems.LEGENDARY_TILE));
 			}).build();
 

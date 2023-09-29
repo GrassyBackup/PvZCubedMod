@@ -205,9 +205,13 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 					!(PvZCubed.ZOMBIE_SIZE.get(livingEntity.getType()).orElse("flesh").equals("big") ||
 							PvZCubed.ZOMBIE_SIZE.get(livingEntity.getType()).orElse("flesh").equals("gargantuar"))) {
 				ZombiePropEntity zombiePropEntity2 = null;
+				ZombiePropEntity zombiePropEntity3 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 						zombiePropEntity2 = zpe;
+					}
+					else if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity3 = zpe;
 					}
 				}
 				if (zombiePropEntity2 == null ||
