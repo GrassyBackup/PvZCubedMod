@@ -889,7 +889,7 @@ public abstract class PlantEntity extends GolemEntity {
 		if (vehicle instanceof LilyPadEntity || vehicle instanceof BubblePadEntity){
 			vehicle.setBodyYaw(this.bodyYaw);
 		}
-		if (PLANT_TYPE.get(this.getType()).orElse("appease").equals("pepper")){
+		if (PLANT_TYPE.get(this.getType()).orElse("appease").equals("pepper") && !this.isWet()){
 			if (--heatTicks <= 0) {
 				List<TileEntity> list = world.getNonSpectatingEntities(TileEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(1.5));
 				for (TileEntity tileEntity : list) {

@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.cattail.CattailEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.LilypadHats;
 import io.github.GrassyDev.pvzmod.registry.items.seedpackets.CattailSeeds;
 import net.fabricmc.api.EnvType;
@@ -227,6 +228,10 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
+		if (this.getVehicle() instanceof LilyPadEntity ||
+				this.getVehicle() instanceof BubblePadEntity){
+			this.getVehicle().discard();
+		}
 		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {
@@ -293,7 +298,7 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 				CattailEntity plantEntity = (CattailEntity) PvZEntity.CATTAIL.create(world);
 				plantEntity.setTarget(this.getTarget());
 				plantEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+				plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				plantEntity.setAiDisabled(this.isAiDisabled());
 				plantEntity.setPersistent();
 				if (this.hasCustomName()) {

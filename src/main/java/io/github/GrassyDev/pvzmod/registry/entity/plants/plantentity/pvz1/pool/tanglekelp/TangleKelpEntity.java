@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -177,6 +178,9 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
+		if (this.getVehicle() instanceof LilyPadEntity){
+			this.getVehicle().discard();
+		}
 		LivingEntity target = this.getTarget();
 		if (!this.hasStatusEffect(PvZCubed.FROZEN) && target != null) {
 			if (this.firstAttack && this.animationTicksLeft <= 0 && (target.isInsideWaterOrBubbleColumn() && !this.dryLand)) {

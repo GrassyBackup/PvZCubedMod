@@ -97,6 +97,18 @@ public class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 		else if (this.hasStatusEffect(PvZCubed.ICE) && vehicle != null && !vehicle.hasStatusEffect(PvZCubed.ICE) && !(this instanceof ZombieShieldEntity)){
 			this.removeStatusEffect(PvZCubed.ICE);
 		}
+		if (this.hasStatusEffect(PvZCubed.BARK) && vehicle != null && !(this instanceof ZombieShieldEntity)){
+			vehicle.addStatusEffect((new StatusEffectInstance(PvZCubed.BARK, Objects.requireNonNull(this.getStatusEffect(PvZCubed.BARK)).getDuration(), Objects.requireNonNull(this.getStatusEffect(PvZCubed.BARK)).getAmplifier())));
+		}
+		else if (this.hasStatusEffect(PvZCubed.BARK) && vehicle != null && !vehicle.hasStatusEffect(PvZCubed.BARK) && !(this instanceof ZombieShieldEntity)){
+			this.removeStatusEffect(PvZCubed.BARK);
+		}
+		if (this.hasStatusEffect(PvZCubed.CHEESE) && vehicle != null && !(this instanceof ZombieShieldEntity)){
+			vehicle.addStatusEffect((new StatusEffectInstance(PvZCubed.CHEESE, Objects.requireNonNull(this.getStatusEffect(PvZCubed.CHEESE)).getDuration(), Objects.requireNonNull(this.getStatusEffect(PvZCubed.CHEESE)).getAmplifier())));
+		}
+		else if (this.hasStatusEffect(PvZCubed.CHEESE) && vehicle != null && !vehicle.hasStatusEffect(PvZCubed.CHEESE) && !(this instanceof ZombieShieldEntity)){
+			this.removeStatusEffect(PvZCubed.CHEESE);
+		}
 		if (this.hasStatusEffect(PvZCubed.WET) && vehicle != null && !(this instanceof ZombieShieldEntity)){
 			vehicle.addStatusEffect((new StatusEffectInstance(PvZCubed.WET, Objects.requireNonNull(this.getStatusEffect(PvZCubed.WET)).getDuration(), Objects.requireNonNull(this.getStatusEffect(PvZCubed.WET)).getAmplifier())));
 		}

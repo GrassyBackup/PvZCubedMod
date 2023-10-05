@@ -117,6 +117,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dropeaS": "Dropea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.electropeaS": "Electro Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.empeachS": "E.M.Peach Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.endurianS": "Endurian Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.firepeaS": "Fire Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.fumeshroomS": "Fume-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gatlingpeaS": "Gatling Pea Seed",
@@ -569,6 +570,7 @@
   "item.pvzmod.powerbeespike": "Powered Bee Spike",
 
   "entity.pvzmod.snowqueenpea": "Snow Queen Pea",
+  "item.pvzmod.snowqueenpea.alt": "Ice Queen Pea",
   "item.pvzmod.snowqueenpea_seed_packet": "❄ Snow Queen Pea Seed Packet",
   "item.pvzmod.snowqueenpea_seed_packet.flavour": "\"Chill and let it go!\"",
   "item.pvzmod.snowqueenpeaproj": "Snow Queen Pea",
@@ -576,6 +578,7 @@
   "item.pvzmod.powericespike": "Powered Ice Spike",
 
   "entity.pvzmod.chester": "Cheetah Chomper",
+  "item.pvzmod.chester.alt": "Chester Chomper",
   "item.pvzmod.chester_seed_packet": "\uD83D\uDDE1 Cheetah Chomper Seed Packet",
   "item.pvzmod.chester_seed_packet.flavour": "™",
   "entity.pvzmod.cheesetile": "Cheese Tile",
@@ -588,12 +591,14 @@
   "item.pvzmod.firepiercepea": "Flaming Piercing Pea",
 
   "entity.pvzmod.acidshroom": "Acid Goop-shroom",
+  "item.pvzmod.acidshroom.alt": "Goop-shroom",
   "item.pvzmod.acidshroom_seed_packet": "\uD83E\uDDEA Acid Goop-shroom Seed Packet",
   "item.pvzmod.acidshroom_seed_packet.flavour": "\"Aaaa- Aaaaa- AAAAAA-\"",
   "item.pvzmod.acidshroom_seed_packet.flavour2": "\"tchoo.\"",
   "item.pvzmod.acidfume": "Acid Goop",
 
   "entity.pvzmod.oxygae": "Oxygae",
+  "item.pvzmod.oxygae.alt": "Oxygen Algae",
   "item.pvzmod.oxygae_seed_packet": "⛨ Oxygae Seed Packet",
   "item.pvzmod.oxygae_seed_packet.flavour": "Don't call him an oxymoron.",
   "entity.pvzmod.bubblepad": "Bubble",
@@ -663,6 +668,11 @@
   "item.pvzmod.missiletoe_seed_packet.flavour": "\"We wish you a merry chill\"",
   "item.pvzmod.missiletoetarget": "Missile Toe Target",
 
+  "entity.pvzmod.endurian": "Endurian",
+  "item.pvzmod.endurian_seed_packet": "⛨ Endurian Seed Packet",
+  "item.pvzmod.endurian_seed_packet.flavour": "It's fortunate that his body is spiky,",
+  "item.pvzmod.endurian_seed_packet.flavour2": "since he is autistic and hates touching.",
+
   "entity.pvzmod.goldleaf": "Gold Leaf",
   "item.pvzmod.goldleaf_seed_packet": "☀ Gold Leaf Seed Packet",
   "item.pvzmod.goldleaf_seed_packet.flavour": "\"All that glitters is sun",
@@ -708,6 +718,7 @@
   "item.pvzmod.oilyolive_seed_packet.flavour": "\"Careful! Oily floor!\"",
 
   "entity.pvzmod.springprincess": "Spring Princess",
+  "item.pvzmod.springprincess.alt": "Princess Spring Grass",
   "item.pvzmod.springprincess_seed_packet": "⏳ Spring Princess Seed Packet",
   "item.pvzmod.springprincess_seed_packet.flavour": "\"Climb the tower with my hair!\" *BOING*",
   "item.pvzmod.springhair": "Spring Hair",
@@ -719,6 +730,7 @@
   "item.pvzmod.pumpkinproj": "Pumpkin",
 
   "entity.pvzmod.tulimpeter": "Tulimpeter",
+  "item.pvzmod.tulimpeter.alt": "Tulip Trumpeter",
   "item.pvzmod.tulimpeter_seed_packet": "⭐ Tulimpeter Seed Packet",
   "item.pvzmod.tulimpeter_seed_packet.flavour": "Was a band kid.",
   "item.pvzmod.hypnoproj": "Hypno Projectile",
@@ -785,6 +797,7 @@
   "item.pvzmod.weeniebeanie_seed_packet.flavour": "I prefer to be called a \"Little Beanie.\"",
 
   "entity.pvzmod.smooshroom": "Smoo-shroom",
+  "item.pvzmod.smooshroom.alt": "Smoosh-Shroom",
   "item.pvzmod.smooshroom_seed_packet": "\uD83D\uDDE1 Smoo-shroom Seed Packet",
   "item.pvzmod.smooshroom_seed_packet.flavour": "\"If I had a hammer...",
   "item.pvzmod.smooshroom_seed_packet.flavour2": "Wait a sec...",

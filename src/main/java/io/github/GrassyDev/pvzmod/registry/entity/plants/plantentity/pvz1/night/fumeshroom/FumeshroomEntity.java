@@ -245,7 +245,7 @@ public class FumeshroomEntity extends PlantEntity implements IAnimatable, Ranged
 				GloomshroomEntity gloomshroomEntity = (GloomshroomEntity) PvZEntity.GLOOMSHROOM.create(world);
 				gloomshroomEntity.setTarget(this.getTarget());
 				gloomshroomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				gloomshroomEntity.initialize(serverWorld, world.getLocalDifficulty(gloomshroomEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+				gloomshroomEntity.initialize(serverWorld, world.getLocalDifficulty(gloomshroomEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				gloomshroomEntity.setAiDisabled(this.isAiDisabled());
 				gloomshroomEntity.setPersistent();
 				if (this.hasCustomName()) {

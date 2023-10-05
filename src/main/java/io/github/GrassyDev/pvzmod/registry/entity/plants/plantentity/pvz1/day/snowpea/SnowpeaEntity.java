@@ -229,7 +229,7 @@ public class SnowpeaEntity extends PlantEntity implements IAnimatable, RangedAtt
 				SnowqueenpeaEntity snowqueenpeaEntity = (SnowqueenpeaEntity) PvZEntity.SNOWQUEENPEA.create(world);
 				snowqueenpeaEntity.setTarget(this.getTarget());
 				snowqueenpeaEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				snowqueenpeaEntity.initialize(serverWorld, world.getLocalDifficulty(snowqueenpeaEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+				snowqueenpeaEntity.initialize(serverWorld, world.getLocalDifficulty(snowqueenpeaEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				snowqueenpeaEntity.setAiDisabled(this.isAiDisabled());
 				snowqueenpeaEntity.setPersistent();
 				if (this.hasCustomName()) {

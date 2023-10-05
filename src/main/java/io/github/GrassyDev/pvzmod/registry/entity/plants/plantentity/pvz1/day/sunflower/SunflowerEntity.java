@@ -291,7 +291,7 @@ public class SunflowerEntity extends PlantEntity implements IAnimatable {
 				TwinSunflowerEntity twinSunflowerEntity = (TwinSunflowerEntity) PvZEntity.TWINSUNFLOWER.create(world);
 				twinSunflowerEntity.setTarget(this.getTarget());
 				twinSunflowerEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				twinSunflowerEntity.initialize(serverWorld, world.getLocalDifficulty(twinSunflowerEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+				twinSunflowerEntity.initialize(serverWorld, world.getLocalDifficulty(twinSunflowerEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				twinSunflowerEntity.setAiDisabled(this.isAiDisabled());
 				twinSunflowerEntity.setPersistent();
 				if (this.hasCustomName()) {

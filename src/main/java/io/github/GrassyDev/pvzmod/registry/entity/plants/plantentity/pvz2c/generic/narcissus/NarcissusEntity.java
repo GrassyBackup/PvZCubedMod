@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.armorbubble.ArmorBubbleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.bubbles.BubbleEntity;
 import net.fabricmc.api.EnvType;
@@ -163,6 +164,9 @@ public class NarcissusEntity extends PlantEntity implements IAnimatable, RangedA
 
 	public void tick() {
 		super.tick();
+		if (this.getVehicle() instanceof LilyPadEntity){
+			this.getVehicle().discard();
+		}
 		this.targetZombies(this.getPos(), 5, false, false, true);
 		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {

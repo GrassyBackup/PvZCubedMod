@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.ground.groundbounce.GroundBounceEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -142,6 +143,9 @@ public class JumpingBeanEntity extends PlantEntity implements IAnimatable, Range
 
 	public void tick() {
 		super.tick();
+		if (this.getVehicle() instanceof LilyPadEntity){
+			this.getVehicle().discard();
+		}
 		if (!this.world.isClient()){
 			if (this.getIsAsleep()) {
 				--asleepTicks;

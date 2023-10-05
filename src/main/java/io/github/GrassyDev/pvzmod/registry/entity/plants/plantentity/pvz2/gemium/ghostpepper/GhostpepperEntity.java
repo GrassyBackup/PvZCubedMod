@@ -365,7 +365,7 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 				setPosition(this.getX(), this.getY(), this.getZ());
 			}
 		}
-		this.targetZombies(this.getPos(), 5, true, true, false);
+		this.targetZombies(this.getPos(), 5, true, false, true);
 		if (!this.world.isClient()) {
 			this.attacking = this.getTarget() != null && this.squaredDistanceTo(this.getTarget()) <= 9;
 		}

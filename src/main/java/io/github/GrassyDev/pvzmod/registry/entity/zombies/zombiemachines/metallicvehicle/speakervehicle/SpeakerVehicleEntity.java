@@ -128,6 +128,7 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 
 	public void tick() {
 		super.tick();
+		System.out.println(this.getFirstPassenger());
 		List<GravebusterEntity> list = world.getNonSpectatingEntities(GravebusterEntity.class, entityBox.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
 		this.beingEaten = !list.isEmpty();
 		if (age <= 60) {
@@ -254,10 +255,10 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 
 	public void createBassPassenger() {
 		if (world instanceof ServerWorld serverWorld) {
-			BassZombieEntity zomboniEntity = new BassZombieEntity(PvZEntity.BASS, this.world);
-			zomboniEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-			zomboniEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
-			zomboniEntity.startRiding(this);
+			BassZombieEntity zombie2 = new BassZombieEntity(PvZEntity.BASS, this.world);
+			zombie2.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			zombie2.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			zombie2.startRiding(this);
 		}
 	}
 

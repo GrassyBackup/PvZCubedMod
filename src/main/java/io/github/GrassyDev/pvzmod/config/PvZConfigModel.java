@@ -216,6 +216,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float empeachS = 25.0f;
 		@RestartRequired
+		public float endurianS = 30.0f;
+		@RestartRequired
 		public float firepeaS = 15.0f;
 		@RestartRequired
 		public float fumeshroomS = 7.5f;

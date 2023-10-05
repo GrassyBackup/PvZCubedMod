@@ -68,6 +68,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper.GhostpepperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.endurian.EndurianEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.coconutcannon.CoconutCannonEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.springbean.SpringbeanEntity;
@@ -264,6 +265,8 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.BREEZESHROOM);
 		PLANT_LIST.add(PvZEntity.BLOOMERANG);
 		PLANT_LIST.add(PvZEntity.ICEBERGLETTUCE);
+		PLANT_LIST.add(PvZEntity.GOLDLEAF);
+		PLANT_LIST.add(PvZEntity.ENDURIAN);
 		PLANT_LIST.add(PvZEntity.MISSILETOE);
 		PLANT_LIST.add(PvZEntity.ELECTROPEA);
 		PLANT_LIST.add(PvZEntity.GHOSTPEPPER);
@@ -656,6 +659,12 @@ public class PvZEntity implements ModInitializer {
             new Identifier(ModID, "flamingpea"),
             QuiltEntityTypeBuilder.<FlamingpeaEntity>create(SpawnGroup.CREATURE, FlamingpeaEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.8f)).build()
     );
+
+	public static final EntityType<EndurianEntity> ENDURIAN = Registry.register((
+					Registry.ENTITY_TYPE),
+			new Identifier(ModID, "endurian"),
+			QuiltEntityTypeBuilder.<EndurianEntity>create(SpawnGroup.CREATURE, EndurianEntity::new).setDimensions(EntityDimensions.fixed(0.99f,1.55f)).build()
+	);
 
 	public static final EntityType<GoldLeafEntity> GOLDLEAF = Registry.register((
 					Registry.ENTITY_TYPE),
@@ -2225,6 +2234,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.PEPPERPULT, PepperpultEntity.createPepperPultAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FLAMINGPEA, FlamingpeaEntity.createFlamingpeaAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ENDURIAN, EndurianEntity.createEndurianAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GOLDLEAF, GoldLeafEntity.createGoldLeafAttributes().build());
 

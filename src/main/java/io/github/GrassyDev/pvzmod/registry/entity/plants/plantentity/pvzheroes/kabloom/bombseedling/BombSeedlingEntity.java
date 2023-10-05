@@ -340,6 +340,11 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
 			plant.refreshPositionAndAngles(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), 0, 0);
 			plant.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 			plant.setYaw(this.getYaw());
+			if (this.getVehicle() != null){
+				Entity vehicle = this.getVehicle();
+				this.stopRiding();
+				plant.startRiding(vehicle);
+			}
 			serverWorld.spawnEntityAndPassengers(plant);
 		}
 		this.discard();

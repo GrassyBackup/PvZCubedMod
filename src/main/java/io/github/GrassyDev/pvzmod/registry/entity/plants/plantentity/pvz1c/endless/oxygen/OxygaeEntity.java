@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -175,6 +176,9 @@ public class OxygaeEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
+		if (this.getVehicle() instanceof LilyPadEntity){
+			this.getVehicle().discard();
+		}
 		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {
@@ -238,7 +242,7 @@ public class OxygaeEntity extends PlantEntity implements IAnimatable {
 			boolean bl = true;
 			List<PlantEntity> plantCheck = this.world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(blockPos.getX(), blockPos.getY(), blockPos.getZ()).expand(1));
 			for (PlantEntity plantEntity : plantCheck){
-				if (plantEntity instanceof BubblePadEntity && Vec3d.ofCenter(blockPos).squaredDistanceTo(plantEntity.getPos()) <= 0.5f) {
+				if ((plantEntity instanceof BubblePadEntity || plantEntity instanceof LilyPadEntity) && Vec3d.ofCenter(blockPos).squaredDistanceTo(plantEntity.getPos()) <= 0.5f) {
 					bl = false;
 					plantEntity.heal(plantEntity.getMaxHealth());
 					break;

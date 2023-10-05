@@ -272,6 +272,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 		} else {
 			if (inDyingAnimation){
 				event.getController().setAnimation(new AnimationBuilder().playOnce("gargantuar.death"));
+				event.getController().setAnimationSpeed(1);
 			}
 			else if (inLaunchAnimation) {
 				event.getController().setAnimation(new AnimationBuilder().playOnce("gargantuar.throw"));
@@ -430,7 +431,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 			if (this.getHypno()){
 				impEntity.setHypno(IsHypno.TRUE);
 			}
-			impEntity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(impEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData)null, (NbtCompound) null);
+			impEntity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(impEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData)null, (NbtCompound) null);
 			impEntity.setStealthTag(Stealth.TRUE);
 			this.world.spawnEntity(impEntity);
 		}
@@ -696,7 +697,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 				this.playSound(PvZSounds.HYPNOTIZINGEVENT, 1.5F, 1.0F);
 				GargantuarEntity hypnotizedZombie = (GargantuarEntity) hypnoType.create(world);
 				hypnotizedZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				hypnotizedZombie.initialize(serverWorld, world.getLocalDifficulty(hypnotizedZombie.getBlockPos()), SpawnReason.CONVERSION, (EntityData)null, (NbtCompound) null);
+				hypnotizedZombie.initialize(serverWorld, world.getLocalDifficulty(hypnotizedZombie.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData)null, (NbtCompound) null);
 				hypnotizedZombie.setAiDisabled(this.isAiDisabled());
 				hypnotizedZombie.setHealth(this.getHealth());
 				if (this.hasCustomName()) {

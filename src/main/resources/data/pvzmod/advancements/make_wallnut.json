@@ -32,6 +32,7 @@
   "rewards": {
     "recipes": [
       "pvzmod:plants/reinforce/tallnut",
+      "pvzmod:plants/reinforce/endurian",
       "pvzmod:plants/reinforce/smackadamia",
       "pvzmod:plants/reinforce/torchwood",
       "pvzmod:plants/contain/dogwood"

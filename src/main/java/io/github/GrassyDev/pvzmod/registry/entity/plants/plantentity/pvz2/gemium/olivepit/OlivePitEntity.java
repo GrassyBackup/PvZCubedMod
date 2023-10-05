@@ -9,7 +9,9 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.bananatile.BananaT
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.target.missiletoe.MissileToeTarget;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.spikerock.SpikerockEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
@@ -290,6 +292,10 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
+		if (this.getVehicle() instanceof LilyPadEntity ||
+				this.getVehicle() instanceof BubblePadEntity){
+			this.discard();
+		}
 		if (--spitTicks <= 0 && this.getOlivePit() && this.getTypeCount() <= 0){
 			this.spitTicks = this.world.random.range(20, 100);
 			BlockPos blockPos = new BlockPos(this.getBlockPos().getX() + this.world.random.range(-1, 1), this.getBlockPos().getY(), this.getBlockPos().getZ() + this.world.random.range(-1, 1));
@@ -391,7 +397,7 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 				SpikerockEntity upgradeEntity = (SpikerockEntity) PvZEntity.SPIKEROCK.create(world);
 				upgradeEntity.setTarget(this.getTarget());
 				upgradeEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				upgradeEntity.initialize(serverWorld, world.getLocalDifficulty(upgradeEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+				upgradeEntity.initialize(serverWorld, world.getLocalDifficulty(upgradeEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				upgradeEntity.setAiDisabled(this.isAiDisabled());
 				if (this.hasCustomName()) {
 					upgradeEntity.setCustomName(this.getCustomName());

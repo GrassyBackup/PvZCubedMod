@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -147,6 +148,10 @@ public class BubblePadEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
+		if (this.getVehicle() instanceof LilyPadEntity ||
+				this.getVehicle() instanceof BubblePadEntity){
+			this.getVehicle().discard();
+		}
 		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {
@@ -206,7 +211,7 @@ public class BubblePadEntity extends PlantEntity implements IAnimatable {
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.LILYPAD_SEED_PACKET.getDefaultStack();
+		return ModItems.OXYGAE_SEED_PACKET.getDefaultStack();
 	}
 
 	/** /~*~//~*ATTRIBUTES*~//~*~/ **/

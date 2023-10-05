@@ -14,6 +14,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.endurian.EndurianEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.football.FootballEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntity;
@@ -541,7 +542,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, entityBox.getDimensions().getBoxAt(this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z));
 		LivingEntity setPlant = null;
 		for (LivingEntity plantEntity : list) {
-			if (plantEntity instanceof PlantEntity) {
+			if (plantEntity instanceof PlantEntity plantEntity1 && !plantEntity1.getImmune()) {
 				if (plantEntity instanceof LilyPadEntity lilyPadEntity) {
 					if (!(lilyPadEntity.hasPassengers()) && (!lilyPadEntity.getLowProfile() || (lilyPadEntity.getLowProfile() && TARGET_GROUND.get(this.getType()).orElse(false).equals(true)))) {
 						setPlant = lilyPadEntity;
@@ -1213,7 +1214,13 @@ public class GeneralPvZombieEntity extends HostileEntity {
 						}
 						this.damage(HYPNO_DAMAGE, 0);
 					}
-					if (!doesntBite && target instanceof GravebusterEntity && !this.isCovered()){
+					float damage = 12;
+					if (target instanceof EndurianEntity) {
+						damage = 6;
+					}
+					if (!doesntBite && (target instanceof GravebusterEntity ||
+							target instanceof EndurianEntity) &&
+							!this.isCovered()){
 						ZombiePropEntity zombiePropEntity2 = null;
 						for (Entity entity1 : this.getPassengerList()) {
 							if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null &&
@@ -1221,7 +1228,6 @@ public class GeneralPvZombieEntity extends HostileEntity {
 								zombiePropEntity2 = zpe;
 							}
 						}
-						float damage = 12;
 						if (zombiePropEntity2 != null && damage > zombiePropEntity2.getHealth()) {
 							float damage2 = damage - zombiePropEntity2.getHealth();
 							zombiePropEntity2.damage(ProjectileDamageSource.mob(this), damage);
@@ -1231,6 +1237,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 						} else {
 							this.damage(ProjectileDamageSource.mob(this), damage);
 						}
+						this.playSound(PEAHITEVENT, 0.3f, 1f);
 					}
 				}
 				return super.tryAttack(target);
@@ -1252,7 +1259,13 @@ public class GeneralPvZombieEntity extends HostileEntity {
 						}
 						this.damage(HYPNO_DAMAGE, 0);
 					}
-					if (!doesntBite && target instanceof GravebusterEntity && !this.isCovered()){
+					float damage = 12;
+					if (target instanceof EndurianEntity) {
+						damage = 6;
+					}
+					if (!doesntBite && (target instanceof GravebusterEntity ||
+							target instanceof EndurianEntity) &&
+							!this.isCovered()){
 						ZombiePropEntity zombiePropEntity2 = null;
 						for (Entity entity1 : this.getPassengerList()) {
 							if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null &&
@@ -1260,7 +1273,6 @@ public class GeneralPvZombieEntity extends HostileEntity {
 								zombiePropEntity2 = zpe;
 							}
 						}
-						float damage = 12;
 						if (zombiePropEntity2 != null && damage > zombiePropEntity2.getHealth()) {
 							float damage2 = damage - zombiePropEntity2.getHealth();
 							zombiePropEntity2.damage(ProjectileDamageSource.mob(this), damage);
@@ -1270,6 +1282,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 						} else {
 							this.damage(ProjectileDamageSource.mob(this), damage);
 						}
+						this.playSound(PEAHITEVENT, 0.3f, 1f);
 					}
 				}
 				return super.tryAttack(target);

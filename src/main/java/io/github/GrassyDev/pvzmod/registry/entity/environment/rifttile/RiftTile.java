@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.RiftVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday.BrowncoatEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -49,9 +50,13 @@ public class RiftTile extends TileEntity {
 	public void createBass(){
 		if (world instanceof ServerWorld serverWorld) {
 			SpeakerVehicleEntity zombie = new SpeakerVehicleEntity(PvZEntity.SPEAKER, this.world);
-			zombie.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			zombie.refreshPositionAndAngles(this.getX(), this.getY() + 3, this.getZ(), this.getYaw(), 0.0F);
 			serverWorld.spawnEntityAndPassengers(zombie);
+			BassZombieEntity zombie2 = new BassZombieEntity(PvZEntity.BASS, this.world);
+			zombie2.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			zombie2.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			zombie2.startRiding(zombie);
+			serverWorld.spawnEntityAndPassengers(zombie2);
 		}
 	}
 

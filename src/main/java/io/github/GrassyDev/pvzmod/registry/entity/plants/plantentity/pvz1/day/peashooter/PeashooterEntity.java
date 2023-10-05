@@ -185,7 +185,7 @@ public class PeashooterEntity extends PlantEntity implements IAnimatable, Ranged
 				RetroGatlingEntity plantEntity = (RetroGatlingEntity) PvZEntity.RETROGATLING.create(world);
 				plantEntity.setTarget(this.getTarget());
 				plantEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+				plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				plantEntity.setAiDisabled(this.isAiDisabled());
 				if (this.hasCustomName()) {
 					plantEntity.setCustomName(this.getCustomName());

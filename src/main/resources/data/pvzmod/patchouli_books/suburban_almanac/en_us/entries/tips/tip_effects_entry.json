@@ -127,6 +127,14 @@
     {
       "type": "text",
       "text": [
+        "$(br2)Heavy",
+        "$(br2)Deals double the damage against Metal, Electronic, and Stone.",
+        "$(br2)Hits Stealthing Zombies."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
         "$(br2)Sound",
         "$(br2)Has a 25% chance to make the the projectile or other means of attack \"critical\", which increases the damage by 50%.",
         "$(br2)Hits Stealthing Zombies."

@@ -173,7 +173,7 @@ public class ShootingPumpkinEntity extends PvZProjectileEntity implements IAnima
 					this.playSound(PvZSounds.HYPNOTIZINGEVENT, 1.5F, 1.0F);
 					PumpkinZombieEntity hypnotizedZombie = (PumpkinZombieEntity) PvZEntity.PUMPKINZOMBIEHYPNO.create(world);
 					hypnotizedZombie.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entity.getYaw(), entity.getPitch());
-					hypnotizedZombie.initialize(serverWorld, world.getLocalDifficulty(hypnotizedZombie.getBlockPos()), SpawnReason.CONVERSION, (EntityData) null, (NbtCompound) null);
+					hypnotizedZombie.initialize(serverWorld, world.getLocalDifficulty(hypnotizedZombie.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 					if (entity.hasCustomName()) {
 						hypnotizedZombie.setCustomName(entity.getCustomName());
 						hypnotizedZombie.setCustomNameVisible(entity.isCustomNameVisible());
