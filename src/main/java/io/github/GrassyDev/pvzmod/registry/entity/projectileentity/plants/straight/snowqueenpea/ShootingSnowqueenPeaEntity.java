@@ -278,7 +278,6 @@ public class ShootingSnowqueenPeaEntity extends PvZProjectileEntity implements I
 										if (!livingEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
 											if (!(livingEntity instanceof ZombieShieldEntity)) {
 												livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-											System.out.println(livingEntity);
 											}
 										}
 									}

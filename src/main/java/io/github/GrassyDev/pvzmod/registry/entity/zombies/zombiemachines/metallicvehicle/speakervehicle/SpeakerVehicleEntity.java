@@ -128,7 +128,6 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 
 	public void tick() {
 		super.tick();
-		System.out.println(this.getFirstPassenger());
 		List<GravebusterEntity> list = world.getNonSpectatingEntities(GravebusterEntity.class, entityBox.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
 		this.beingEaten = !list.isEmpty();
 		if (age <= 60) {

@@ -1006,7 +1006,6 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					if (currentTime.getTime().equals(ChallengeTime.DROUGHT)){
 						currentWeather.setWeatherType(ChallengeWeather.CLOUD);
 					}
-					System.out.println(random2);
 				}
 			}
 			this.setWave(0);
@@ -1396,7 +1395,6 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						serverWorld.isNight()){
 					long l = serverWorld.getLevelProperties().getTimeOfDay() + 24000L;
 					serverWorld.setTimeOfDay(l - l % 24000L);
-					System.out.println(l - l % 24000L);
 				}
 			}
 			if (currentWeather != null && this.world instanceof ServerWorld serverWorld){

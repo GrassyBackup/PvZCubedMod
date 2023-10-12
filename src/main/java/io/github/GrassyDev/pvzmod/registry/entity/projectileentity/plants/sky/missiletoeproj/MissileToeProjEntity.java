@@ -228,7 +228,6 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 								float n = (positionFromCenter - rangeNear) / (rangeFar - rangeNear);
 								n = MathHelper.clamp(n, 0, 1);
 								float damage = n * damageFar + (1 - n) * damageNear;
-								System.out.println(positionFromCenter);
 								ZombiePropEntity zombiePropEntity3 = null;
 								for (Entity entity1 : livingEntity.getPassengerList()) {
 									if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity3 == null) {
