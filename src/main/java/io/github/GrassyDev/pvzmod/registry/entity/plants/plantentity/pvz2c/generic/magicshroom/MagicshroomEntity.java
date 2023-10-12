@@ -61,6 +61,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
     public MagicshroomEntity(EntityType<? extends MagicshroomEntity> entityType, World world) {
         super(entityType, world);
 
+		this.nocturnal = true;
     }
 
 	protected void initDataTracker() {
@@ -152,7 +153,10 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if (this.isHatFiring) {
+		if (this.getIsAsleep()) {
+			event.getController().setAnimation(new AnimationBuilder().loop("magicshroom.asleep"));
+		}
+		else if (this.isHatFiring) {
 			event.getController().setAnimation(new AnimationBuilder().playOnce("magicshroom.hat"));
 		}
 		else if (this.isFiring) {
@@ -225,7 +229,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 
 
 	public void tick() {
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

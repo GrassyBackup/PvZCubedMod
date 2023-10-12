@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.ChomperVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
@@ -171,7 +172,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
         int i = this.getTypeCount();
 		if (this.notEating) {
-			event.getController().setAnimation(new AnimationBuilder().playOnce("chomper.chomp2"));
+			event.getController().setAnimation(new AnimationBuilder().loop("chomper.chomp2"));
 		}
 		else if (this.isFiring){
 			event.getController().setAnimation(new AnimationBuilder().playOnce("chomper.chomp4"));
@@ -225,7 +226,8 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 		if ((target instanceof GraveEntity ||
 				IS_MACHINE.get(target.getType()).orElse(false).equals(true) ||
 				zombieSize.equals("gargantuar") ||
-				zombieSize.equals("big")) && !hasShield){
+				zombieSize.equals("big") ||
+				target instanceof ZombieObstacleEntity) && !hasShield){
 			damage = 32;
 			this.attackTicksLeft = 25;
 			this.setCount(25);

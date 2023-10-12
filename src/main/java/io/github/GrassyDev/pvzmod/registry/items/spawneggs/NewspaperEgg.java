@@ -7,13 +7,11 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.news
 import io.github.GrassyDev.pvzmod.registry.items.seedpackets.SeedItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
@@ -58,7 +56,6 @@ public class NewspaperEgg extends SeedItem {
 
                     float f = (float) MathHelper.floor((MathHelper.wrapDegrees(context.getPlayerYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
                     newspaperEntity.refreshPositionAndAngles(newspaperEntity.getX(), newspaperEntity.getY(), newspaperEntity.getZ(), f, 0.0F);
-					newspaperEntity.createShield();
 					newspaperEntity.setPersistent();
                     ((ServerWorld) world).spawnEntityAndPassengers(newspaperEntity);
                     world.playSound((PlayerEntity) null, newspaperEntity.getX(), newspaperEntity.getY(), newspaperEntity.getZ(), PvZSounds.ENTITYRISINGEVENT, SoundCategory.BLOCKS, 0.75F, 0.8F);

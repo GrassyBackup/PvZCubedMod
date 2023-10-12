@@ -2,7 +2,7 @@
   "name": "Bloomerang",
   "icon": "pvzmod:bloomerang_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 49,
+  "sortnum": 55,
   "advancement": "pvzmod:make_bellflower",
   "pages": [
     {

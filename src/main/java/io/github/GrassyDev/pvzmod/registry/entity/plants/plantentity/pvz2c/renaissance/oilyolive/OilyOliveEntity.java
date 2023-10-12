@@ -384,6 +384,12 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 			}
 			this.targetZombies(this.getPos(), 3, true, true, true);
 		}
+		if (this.getFuseSpeed() > 0){
+			this.setImmune(Immune.TRUE);
+		}
+		else {
+			this.setImmune(Immune.FALSE);
+		}
 		if (this.isAlive()) {
 			if (this.getIgnited()) {
 				this.setFuseSpeed(1);

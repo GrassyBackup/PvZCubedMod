@@ -16,7 +16,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -51,6 +50,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import java.util.Iterator;
 import java.util.List;
 
+import static io.github.GrassyDev.pvzmod.PvZCubed.DISABLE;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 public class SunflowerEntity extends PlantEntity implements IAnimatable {
@@ -229,7 +229,7 @@ public class SunflowerEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn()) {
+		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && !this.hasStatusEffect(DISABLE)) {
 			if (--raycastDelay >= 0){
 				this.produceSun();
 				raycastDelay = 60;

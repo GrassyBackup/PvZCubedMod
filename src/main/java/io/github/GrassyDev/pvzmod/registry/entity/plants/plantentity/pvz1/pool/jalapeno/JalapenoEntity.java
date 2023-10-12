@@ -7,6 +7,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
@@ -205,7 +206,7 @@ public class JalapenoEntity extends PlantEntity implements IAnimatable {
 					oilTile.makeFireTrail(oilTile.getBlockPos());
 				}
 
-				if (livingEntity instanceof IceTile || livingEntity instanceof SnowTile){
+				if (livingEntity instanceof IceTile || livingEntity instanceof SnowTile || livingEntity instanceof WaterTile){
 					livingEntity.discard();
 				}
 
@@ -318,6 +319,12 @@ public class JalapenoEntity extends PlantEntity implements IAnimatable {
 			if (!this.isAiDisabled() && this.isAlive()) {
 				setPosition(this.getX(), this.getY(), this.getZ());
 			}
+		}
+		if (!this.isWet()){
+			this.setImmune(Immune.TRUE);
+		}
+		else {
+			this.setImmune(Immune.FALSE);
 		}
 		if (this.isAlive()) {
 			if (this.getIgnited()) {

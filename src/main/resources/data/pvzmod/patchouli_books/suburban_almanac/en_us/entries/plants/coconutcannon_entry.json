@@ -2,7 +2,7 @@
   "name": "Coconut Cannon",
   "icon": "pvzmod:coconutcannon_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 52,
+  "sortnum": 58,
   "advancement": "pvzmod:make_cherrybomb",
   "pages": [
     {

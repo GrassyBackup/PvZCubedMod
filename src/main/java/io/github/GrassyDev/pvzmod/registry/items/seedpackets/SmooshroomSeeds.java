@@ -89,7 +89,7 @@ public class SmooshroomSeeds extends SeedItem implements FabricItem {
 				.formatted(Formatting.DARK_GRAY));
 
 		tooltip.add(Text.translatable("item.pvzmod.smooshroom.alt")
-				.formatted(Formatting.DARK_GRAY));
+				.formatted(Formatting.GRAY));
 	}
 
 	public ActionResult useOnBlock(ItemUsageContext context) {

@@ -65,6 +65,17 @@
     {
       "type": "text",
       "text": [
+        "$(br)Water Tile",
+        "$(br)Allows Aquatic Plants to be planted on them, and gives Amphibious Plants their underwater attributes.",
+        "$(br)They apply Wet to non-flying Zombies that are close to them.",
+        "$(br)They are destroyed by fire attacks that damage the field (e.g. Cherry Bomb, Jalapeno, etc.).",
+        "$(br)Planting Pepper family Plants on top of them instantly destroys them. Pepper Plants emit heat around them that destroys the tiles.",
+        "$(br)They last for 20 seconds, unless a Plant is on them."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
         "$(br)Oil Tile",
         "$(br)When a Zombie steps on it, it Stuns them for 5 seconds and slides them forward by about 2 blocks. Unless it's on fire.",
         "$(br)Covered and Machine Zombies don't slide.",

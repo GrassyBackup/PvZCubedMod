@@ -22,7 +22,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -90,6 +89,9 @@ public class PerfoomshroomSeeds extends SeedItem implements FabricItem {
 
 		tooltip.add(Text.translatable("item.pvzmod.perfoomshroom_seed_packet.flavour")
 				.formatted(Formatting.DARK_GRAY));
+
+		tooltip.add(Text.translatable("item.pvzmod.perfoomshroom.alt")
+				.formatted(Formatting.GRAY));
 	}
 
 

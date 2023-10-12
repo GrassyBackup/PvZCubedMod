@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.cratertile.CraterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.JalapenoEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
@@ -20,7 +21,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -166,7 +166,7 @@ public class JalapenoSeeds extends SeedItem implements FabricItem {
 				plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
 			plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				world.spawnEntity(plantEntity);
-				if (entity instanceof SnowTile){
+				if (entity instanceof SnowTile || entity instanceof WaterTile){
 					entity.playSound(PvZSounds.FIREPEAHITEVENT);
 					entity.discard();
 				}

@@ -254,7 +254,7 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
 		if (this.isInsideWaterOrBubbleColumn()) {
 			if (inLaunchAnimation) {
-				event.getController().setAnimation(new AnimationBuilder().loop("soldier.ducky.zpg"));
+				event.getController().setAnimation(new AnimationBuilder().loop("soldier.zpg.ducky"));
 			}
 			else {
 				event.getController().setAnimation(new AnimationBuilder().loop("headwear.ducky"));

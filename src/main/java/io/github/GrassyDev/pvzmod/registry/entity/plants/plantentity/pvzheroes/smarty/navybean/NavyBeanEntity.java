@@ -252,7 +252,7 @@ public class NavyBeanEntity extends PlantEntity implements IAnimatable, RangedAt
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));
-				if (!(fluidState.getFluid() == Fluids.WATER)) {
+				if (!(fluidState.getFluid() == Fluids.WATER) && !onWaterTile) {
 					this.dryLand = true;
 					onWater = false;
 				} else {

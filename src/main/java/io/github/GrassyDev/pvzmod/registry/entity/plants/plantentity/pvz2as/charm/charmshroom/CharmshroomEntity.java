@@ -61,6 +61,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 		this.targetStrength = true;
 		this.targetNotCovered = true;
 		this.isBurst = true;
+		this.nocturnal = true;
     }
 
 	protected void initDataTracker() {
@@ -195,7 +196,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 		if (this.getTypeCount() >= 2){
 			this.remove(RemovalReason.DISCARDED);
 		}
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

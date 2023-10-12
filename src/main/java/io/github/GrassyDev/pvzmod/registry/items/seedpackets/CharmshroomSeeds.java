@@ -22,7 +22,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -87,6 +86,9 @@ public class CharmshroomSeeds extends SeedItem implements FabricItem {
 
 		tooltip.add(Text.translatable("item.pvzmod.charmshroom_seed_packet.flavour2")
 				.formatted(Formatting.DARK_GRAY));
+
+		tooltip.add(Text.translatable("item.pvzmod.charmshroom.alt")
+				.formatted(Formatting.GRAY));
 	}
 
     public ActionResult useOnBlock(ItemUsageContext context) {

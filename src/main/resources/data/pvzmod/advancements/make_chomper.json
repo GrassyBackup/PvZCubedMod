@@ -32,7 +32,8 @@
   "rewards": {
     "recipes": [
       "pvzmod:plants/enforce/bananasaurus",
-      "pvzmod:plants/enforce/chester"
+      "pvzmod:plants/enforce/chester",
+      "pvzmod:plants/enforce/superchomper"
     ],
     "experience": 25
   }

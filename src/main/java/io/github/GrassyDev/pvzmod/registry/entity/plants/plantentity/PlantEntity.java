@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
@@ -54,6 +55,8 @@ public abstract class PlantEntity extends GolemEntity {
 
 	public boolean isBurst;
 
+	public boolean nocturnal;
+
 	protected boolean dryLand;
 
 	protected int tickDelay;
@@ -75,6 +78,7 @@ public abstract class PlantEntity extends GolemEntity {
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(DATA_ID_ASLEEP, false);
+		this.dataTracker.startTracking(COFFEE, false);
 		this.dataTracker.startTracking(DATA_ALTFIRE, false);
 		this.dataTracker.startTracking(DATA_ID_LOWPROF, false);
 		this.dataTracker.startTracking(DATA_ID_FIREIMMUNE, false);
@@ -85,6 +89,7 @@ public abstract class PlantEntity extends GolemEntity {
 	public void writeCustomDataToNbt(NbtCompound tag) {
 		super.writeCustomDataToNbt(tag);
 		tag.putBoolean("Asleep", this.getIsAsleep());
+		tag.putBoolean("Coffee", this.getCofee());
 		tag.putBoolean("AltFire", this.getIsAltFire());
 		tag.putBoolean("lowProf", this.getLowProfile());
 		tag.putBoolean("fireImmune", this.getFireImmune());
@@ -94,6 +99,7 @@ public abstract class PlantEntity extends GolemEntity {
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(DATA_ID_ASLEEP, tag.getBoolean("Asleep"));
+		this.dataTracker.set(COFFEE, tag.getBoolean("Coffee"));
 		this.dataTracker.set(DATA_ALTFIRE, tag.getBoolean("AltFire"));
 		this.dataTracker.set(DATA_ID_LOWPROF, tag.getBoolean("lowProf"));
 		this.dataTracker.set(DATA_ID_FIREIMMUNE, tag.getBoolean("fireImmune"));
@@ -225,6 +231,32 @@ public abstract class PlantEntity extends GolemEntity {
 		this.dataTracker.set(DATA_ID_ASLEEP, asleep.getId());
 	}
 
+	protected static final TrackedData<Boolean> COFFEE =
+			DataTracker.registerData(PlantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+	public enum Coffee {
+		FALSE(false),
+		TRUE(true);
+
+		Coffee(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getCofee() {
+		return this.dataTracker.get(COFFEE);
+	}
+
+	public void setCoffee(Coffee coffee) {
+		this.dataTracker.set(COFFEE, coffee.getId());
+	}
+
 
 	protected static final TrackedData<Boolean> DATA_ALTFIRE =
 			DataTracker.registerData(PlantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -284,7 +316,7 @@ public abstract class PlantEntity extends GolemEntity {
 		boolean tooHeavy = true;
 		LivingEntity targeted = null;
 		LivingEntity prioritizedTarget = null;
-		if (!this.world.isClient()) {
+		if (!this.world.isClient() && !this.hasStatusEffect(DISABLE)) {
 			for (LivingEntity hostileEntity : list) {
 				if (hostileEntity.isAlive() && this.getVisibilityCache().canSee(hostileEntity) &&
 						!(hostileEntity instanceof GraveEntity && targetNotObstacle)) {
@@ -877,6 +909,8 @@ public abstract class PlantEntity extends GolemEntity {
 
 	protected int heatTicks = 40;
 
+	protected boolean onWaterTile = false;
+
     public void tick() {
 		if (tickDelay <= -1){
 			tickDelay = 5;
@@ -884,7 +918,27 @@ public abstract class PlantEntity extends GolemEntity {
 		if (this.getFireImmune()){
 			this.setFireTicks(0);
 		}
+
+		List<WaterTile> waterTiles = world.getNonSpectatingEntities(WaterTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
+		for (WaterTile waterTile : waterTiles) {
+			this.onWaterTile = true;
+		}
+		if (this.hasStatusEffect(DISABLE)){
+			this.setTarget(null);
+		}
 		super.tick();
+		if (this.getCofee()){
+			this.setIsAsleep(IsAsleep.FALSE);
+			double random = Math.random();
+			if (random <= 0.05) {
+				for (int i = 0; i < 1; ++i) {
+					double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
+					double e = this.random.nextDouble() * this.random.range(0, 2);
+					double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
+					this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + e, this.getZ() + f, d, e + 0.1, f);
+				}
+			}
+		}
 		Entity vehicle = this.getVehicle();
 		if (vehicle instanceof LilyPadEntity || vehicle instanceof BubblePadEntity){
 			vehicle.setBodyYaw(this.bodyYaw);
@@ -894,6 +948,9 @@ public abstract class PlantEntity extends GolemEntity {
 				List<TileEntity> list = world.getNonSpectatingEntities(TileEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(1.5));
 				for (TileEntity tileEntity : list) {
 					if (tileEntity instanceof SnowTile) {
+						tileEntity.discard();
+					}
+					if (tileEntity instanceof WaterTile) {
 						tileEntity.discard();
 					}
 					if (tileEntity instanceof OilTile oilTile) {

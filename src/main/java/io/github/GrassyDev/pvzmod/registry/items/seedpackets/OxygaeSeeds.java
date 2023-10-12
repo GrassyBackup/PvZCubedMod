@@ -3,6 +3,7 @@ package io.github.GrassyDev.pvzmod.registry.items.seedpackets;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.OxygaeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
@@ -166,7 +167,7 @@ public class OxygaeSeeds extends SeedItem implements FabricItem {
 			plantEntity = PvZEntity.OXYGAE.create(serverWorld, stack.getNbt(), (Text) null, user, blockPos, SpawnReason.SPAWN_EGG, true, true);
 			list = world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.OXYGAE.getDimensions().getBoxAt(plantEntity.getPos()));
 		}
-		if (world instanceof ServerWorld serverWorld && (entity instanceof BubblePadEntity))  {
+		if (world instanceof ServerWorld serverWorld && (entity instanceof BubblePadEntity || entity instanceof WaterTile))  {
 			if (plantEntity == null) {
 				return ActionResult.FAIL;
 			}
@@ -175,7 +176,9 @@ public class OxygaeSeeds extends SeedItem implements FabricItem {
 			plantEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
 			plantEntity.initialize(serverWorld, world.getLocalDifficulty(plantEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 			((ServerWorld) world).spawnEntityAndPassengers(plantEntity);
-			plantEntity.rideLilyPad(entity);
+			if (entity instanceof BubblePadEntity) {
+				plantEntity.rideLilyPad(entity);
+			}
 			world.playSound((PlayerEntity) null, plantEntity.getX(), plantEntity.getY(), plantEntity.getZ(), sound, SoundCategory.BLOCKS, 0.6f, 0.8F);
 			if (!user.getAbilities().creativeMode) {
 				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {

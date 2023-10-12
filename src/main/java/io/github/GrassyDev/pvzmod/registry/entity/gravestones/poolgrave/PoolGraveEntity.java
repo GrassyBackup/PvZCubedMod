@@ -10,6 +10,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.brow
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.dolphinrider.DolphinRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.flagzombie.modernday.FlagzombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.octo.OctoEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.MetalVehicleEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -396,6 +397,7 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 			double probability7 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability8 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability9 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability10 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 
 			int zombiePos = -2 + PoolGraveEntity.this.random.nextInt(5);
 			int zombiePosZ = -2 + PoolGraveEntity.this.random.nextInt(5);
@@ -594,6 +596,29 @@ public class PoolGraveEntity extends GraveEntity implements IAnimatable {
 								zomboni.initialize(serverWorld, PoolGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								zomboni.setOwner(PoolGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(zomboni);
+								graveWeight += 1.25;
+							}
+						}
+					}
+				}
+				if (graveWeight <= 3) {
+					if (isUnlock() || isUnlockSpecial()) {
+						if (probability10 <= 0.15 / halfModifier * survChance) { // 15% x1 Octo
+							for (int h = 0; h < 1; ++h) {
+								if (!PoolGraveEntity.this.is1x1()) {
+									zombiePosZ = PoolGraveEntity.this.random.range(-1, 1);
+									zombiePos = PoolGraveEntity.this.random.range(-1, 1);
+								}
+								if (PoolGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = PoolGraveEntity.this.random.range(-3, 3);
+									zombiePos = PoolGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = PoolGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								OctoEntity octo = (OctoEntity) PvZEntity.OCTO.create(PoolGraveEntity.this.world);
+								octo.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								octo.initialize(serverWorld, PoolGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								octo.setOwner(PoolGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(octo);
 								graveWeight += 1.25;
 							}
 						}

@@ -22,7 +22,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -199,12 +198,6 @@ public class HammerFlowerSeeds extends SeedItem implements FabricItem {
 				if (!PVZCONFIG.nestedSeeds.instantRecharge() && !world.getGameRules().getBoolean(PvZCubed.INSTANT_RECHARGE)) {
 					user.getItemCooldownManager().set(this, cooldown);
 				}
-				/**if (world.getGameRules().getBoolean(PvZCubed.COSTS_SUN)) {
-					int slot = user.getInventory().getSlotWithStack(ModItems.SUN.getDefaultStack());
-					if (slot != -1 && user.getInventory().getStack(slot).getCount() >= 2) {
-						user.getInventory().removeStack(slot, 2);
-					}
-				}**/
 			}
 			return ActionResult.success(world.isClient);
 		} else {

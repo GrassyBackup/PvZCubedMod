@@ -63,6 +63,7 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
         super(entityType, world);
 
 		this.isBurst = true;
+		this.nocturnal = true;
     }
 
 	protected void initDataTracker() {
@@ -335,7 +336,7 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 	}
 
 	public void tick() {
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
@@ -360,6 +361,12 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 		}
 		if (this.getIsAsleep()){
 			this.setFuseSpeed(-1);
+		}
+		if (this.getFuseSpeed() > 0){
+			this.setImmune(Immune.TRUE);
+		}
+		else {
+			this.setImmune(Immune.FALSE);
 		}
 		if (this.isAlive() && !this.getIsAsleep()) {
 			this.lastFuseTime = this.currentFuseTime;

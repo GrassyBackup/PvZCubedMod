@@ -10,7 +10,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -43,8 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
-
+import static io.github.GrassyDev.pvzmod.PvZCubed.DISABLE;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 public class SunshroomEntity extends PlantEntity implements IAnimatable {
@@ -64,7 +62,7 @@ public class SunshroomEntity extends PlantEntity implements IAnimatable {
 	public SunshroomEntity(EntityType<? extends SunshroomEntity> entityType, World world) {
         super(entityType, world);
 
-
+		this.nocturnal = true;
     }
 
 	protected void initDataTracker() {
@@ -164,7 +162,7 @@ public class SunshroomEntity extends PlantEntity implements IAnimatable {
 	}
 
 	public void tick() {
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
@@ -213,7 +211,7 @@ public class SunshroomEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && !this.getIsAsleep()) {
+		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && !this.getIsAsleep() && !this.hasStatusEffect(DISABLE)) {
 			if (--raycastDelay >= 0){
 				this.produceSun();
 				raycastDelay = 60;

@@ -70,6 +70,7 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 
         this.animationScare = 30;
 		this.targetPoison = true;
+		this.nocturnal = true;
     }
 
 	protected void initDataTracker() {
@@ -231,7 +232,7 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 	/** /~*~//~**TICKING**~//~*~/ **/
 
 	public void tick() {
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

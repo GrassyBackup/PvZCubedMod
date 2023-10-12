@@ -7,7 +7,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
@@ -32,8 +31,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import java.util.Iterator;
 import java.util.List;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
+import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
 public class GoldTile extends TileEntity {
 	public GoldTile(EntityType<? extends TileEntity> entityType, World world) {
@@ -148,7 +146,7 @@ public class GoldTile extends TileEntity {
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && this.powered) {
+		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && this.powered && !this.hasStatusEffect(DISABLE)) {
 			if (--raycastDelay >= 0) {
 				this.produceSun();
 				raycastDelay = 60;

@@ -191,7 +191,9 @@ public class TorchwoodEntity extends PlantEntity implements IAnimatable {
 		}
 		if (!this.isWet()){
 			if (--tickDamage <= 0){
-				this.damageEntity();
+				if (!this.hasStatusEffect(PvZCubed.DISABLE)) {
+					this.damageEntity();
+				}
 				tickDamage = 10;
 			}
 		}

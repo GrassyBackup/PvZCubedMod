@@ -125,12 +125,19 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 			setVariant(BullyVariants.BASKET);
 			this.createObstacle();
 		}
+		else if (this.getType().equals(PvZEntity.OCTO)){
+			setVariant(BullyVariants.OCTO);
+		}
 		else if (this.getType().equals(PvZEntity.BASKETBALLCARRIERHYPNO)){
 			setVariant(BullyVariants.BASKETHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.BULLYHYPNO)){
 			setVariant(BullyVariants.BULLYHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.OCTOHYPNO)){
+			setVariant(BullyVariants.OCTOHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else {
@@ -212,8 +219,7 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 	protected void initGoals() {
 		if (this.getType().equals(PvZEntity.BULLYHYPNO) ||
 				this.getType().equals(PvZEntity.BASKETBALLCARRIERHYPNO) ||
-				this.getType().equals(PvZEntity.BUCKETHEADHYPNO) ||
-				this.getType().equals(PvZEntity.SCREENDOORHYPNO)) {
+				this.getType().equals(PvZEntity.OCTOHYPNO)) {
 			initHypnoGoals();
 		}
 		else {
@@ -309,7 +315,7 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 		} else if (zombieObstacleEntity.isPresent()) {
 			if (!this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
 				assert maxSpeedAttribute != null;
-				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.01));
+				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(-0.06));
 			}
 		}
 	}
@@ -405,14 +411,11 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 
 	protected EntityType<?> hypnoType;
 	protected void checkHypno(){
-		if (this.getType().equals(PvZEntity.CONEHEAD)){
-			hypnoType = PvZEntity.CONEHEADHYPNO;
-		}
-		else if (this.getType().equals(PvZEntity.BUCKETHEAD)){
-			hypnoType = PvZEntity.BUCKETHEADHYPNO;
-		}
-		else if (this.getType().equals(PvZEntity.BASKETBALLCARRIER)){
+		if (this.getType().equals(PvZEntity.BASKETBALLCARRIER)){
 			hypnoType = PvZEntity.BASKETBALLCARRIERHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.OCTO)){
+			hypnoType = PvZEntity.OCTOHYPNO;
 		}
 		else {
 			hypnoType = PvZEntity.BULLYHYPNO;

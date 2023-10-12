@@ -7,13 +7,17 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.chomper.ChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.hypnoshroom.HypnoshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.endurian.EndurianEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.football.FootballEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
@@ -515,10 +519,14 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				}
 			}
 		}
-		if (inDyingAnimation && deathTicks == 1){
+		if ((inDyingAnimation && deathTicks <= 1) || (source.getSource() instanceof SuperChomperEntity ||
+				source.getSource() instanceof ChomperEntity ||
+				source.getSource() instanceof OlivePitEntity)){
 			this.discard();
 		}
-		if (!inDyingAnimation) {
+		if ((!inDyingAnimation) || (source.getSource() instanceof SuperChomperEntity ||
+				source.getSource() instanceof ChomperEntity ||
+				source.getSource() instanceof OlivePitEntity)) {
 			super.onDeath(source);
 		}
 	}
@@ -820,7 +828,12 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	private int elecWetTicks;
 	private float lastHealth = this.getHealth();
 
+	public boolean dontWater = false;
+
 	public void tick() {
+		if (this.world.isRaining() && this.world.isSkyVisible(this.getBlockPos())){
+			this.addStatusEffect((new StatusEffectInstance(WET, 5, 1)));
+		}
 		if (this.lastHealth < this.getHealth()) {
 			this.world.sendEntityStatus(this, (byte) 69);
 		}
@@ -1121,6 +1134,10 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			frozenStart = true;
 		}
 		super.tick();
+		List<WaterTile> waterTiles = world.getNonSpectatingEntities(WaterTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
+		for (WaterTile waterTile : waterTiles) {
+			this.dontWater = true;
+		}
 		if (this.hasStatusEffect(FROZEN) || this.hasStatusEffect(DISABLE) || this.hasStatusEffect(STUN) || this.isFrozen || this.isStunned) {
 			this.setHeadYaw(frzHeadYaw);
 			this.setBodyYaw(frzBodyYaw);

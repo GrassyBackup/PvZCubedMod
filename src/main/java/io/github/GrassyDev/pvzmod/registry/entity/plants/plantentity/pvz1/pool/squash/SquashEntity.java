@@ -255,6 +255,12 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 		if (age <= 5){
 			this.originalVec3d = this.getPos();
 		}
+		if (animationTicksLeft > 0){
+			this.setImmune(Immune.TRUE);
+		}
+		else {
+			this.setImmune(Immune.FALSE);
+		}
 		if (this.animationTicksLeft > 0 && this.animationTicksLeft <= 25 && !this.attackLock) {
 			Entity entity = this.getTarget();
 			if (entity != null && !this.isInsideWaterOrBubbleColumn()){

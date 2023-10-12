@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
@@ -46,7 +45,7 @@ public class HypnoshroomEntity extends PlantEntity implements IAnimatable, Range
         super(entityType, world);
 
 		this.isBurst = true;
-
+		this.nocturnal = true;
     }
 
 	static {
@@ -134,7 +133,7 @@ public class HypnoshroomEntity extends PlantEntity implements IAnimatable, Range
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

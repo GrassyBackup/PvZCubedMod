@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -183,7 +184,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		}
 		LivingEntity target = this.getTarget();
 		if (!this.hasStatusEffect(PvZCubed.FROZEN) && target != null) {
-			if (this.firstAttack && this.animationTicksLeft <= 0 && (target.isInsideWaterOrBubbleColumn() && !this.dryLand)) {
+			if (this.firstAttack && this.animationTicksLeft <= 0 && ((target.isInsideWaterOrBubbleColumn() || !(target instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.dontWater)) && !this.dryLand)) {
 				this.animationTicksLeft = 65;
 				if (!attackLock){
 					this.playSound(SoundEvents.ENTITY_PLAYER_SPLASH);
@@ -196,7 +197,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		if (age <= 5){
 			this.originalVec3d = this.getPos();
 		}
-		if (this.animationTicksLeft > 0 && this.animationTicksLeft <= 35 && !this.attackLock) {
+		if (this.animationTicksLeft > 0 && this.animationTicksLeft <= 35 && !this.attackLock && !onWaterTile) {
 			Entity entity = this.getTarget();
 			if (entity != null && !this.isInsideWaterOrBubbleColumn()){
 				this.setPosition(entity.getX(), entity.getY(), entity.getZ());
@@ -229,7 +230,12 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		if (this.isInsideWaterOrBubbleColumn()){
 			kill();
 		}
-
+		if (animationTicksLeft > 0){
+			this.setImmune(Immune.TRUE);
+		}
+		else {
+			this.setImmune(Immune.FALSE);
+		}
 
 		if (--amphibiousRaycastDelay >= 0) {
 			amphibiousRaycastDelay = 60;
@@ -241,7 +247,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));
-				if (!(fluidState.getFluid() == Fluids.WATER)) {
+				if (!(fluidState.getFluid() == Fluids.WATER) && !onWaterTile) {
 					this.dryLand = true;
 					onWater = false;
 					this.discard();
@@ -265,7 +271,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 			this.discard();
 		}
 		LivingEntity livingEntity = this.getTarget();
-		if (livingEntity != null && livingEntity.isInsideWaterOrBubbleColumn()) {
+		if (livingEntity != null && (livingEntity.isInsideWaterOrBubbleColumn()|| !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.dontWater))) {
 			if (this.animationTicksLeft <= 43){
 				livingEntity.setVelocity(Vec3d.ZERO);
 			}

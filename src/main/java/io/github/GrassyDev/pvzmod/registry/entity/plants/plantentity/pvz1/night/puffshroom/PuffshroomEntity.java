@@ -62,6 +62,7 @@ public class PuffshroomEntity extends PlantEntity implements IAnimatable, Ranged
     public PuffshroomEntity(EntityType<? extends PuffshroomEntity> entityType, World world) {
         super(entityType, world);
 
+		this.nocturnal = true;
 		this.targetPoison = true;
     }
 
@@ -215,7 +216,7 @@ public class PuffshroomEntity extends PlantEntity implements IAnimatable, Ranged
 	boolean awakeSwitch = false;
 
 	public void tick() {
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

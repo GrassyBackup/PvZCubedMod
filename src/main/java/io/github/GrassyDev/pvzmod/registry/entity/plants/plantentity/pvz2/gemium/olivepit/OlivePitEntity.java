@@ -231,10 +231,10 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 					if (damage > livingEntity.getHealth() &&
 							!(livingEntity instanceof ZombieShieldEntity) &&
 							livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-						generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), Integer.MAX_VALUE);
+						livingEntity.damage(DamageSource.mob(this), damage);
+						generalPvZombieEntity.damage(DamageSource.mob(this), Integer.MAX_VALUE);
 					} else {
-						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						livingEntity.damage(DamageSource.mob(this), damage);
 					}
 					if (!PvZCubed.ZOMBIE_SIZE.get(livingEntity.getType()).orElse("flesh").equals("small")){
 						this.setCount(800);
@@ -335,7 +335,9 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 				this.reduceCount();
 			} else {
 				this.zombieList.clear();
-				this.damageEntity();
+				if (!this.hasStatusEffect(PvZCubed.DISABLE)) {
+					this.damageEntity();
+				}
 			}
 		}
 		if (this.getTypeCount() > prevCount){

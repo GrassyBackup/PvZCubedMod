@@ -4,9 +4,12 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.chomper.ChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.spikeweed.SpikeweedEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.spikerock.SpikerockEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.piggy.PiggyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
@@ -199,7 +202,9 @@ public class WoodObstacleEntity extends ZombieObstacleEntity implements IAnimata
 		if (this.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()){
 			type = PvZEntity.PIGGYHYPNO;
 		}
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.world instanceof ServerWorld serverWorld  && !(source.getSource() instanceof SuperChomperEntity) &&
+				!(source.getSource() instanceof ChomperEntity) &&
+				!(source.getSource() instanceof OlivePitEntity)) {
 			for (int x = -1; x <= 1; x += 2) {
 				Vec3d vec3d = new Vec3d((double) 0, 0, x).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				BlockPos blockPos = this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());

@@ -9,10 +9,13 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.chomper.ChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.sunflower.SunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.sunshroom.SunshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.spikerock.SpikerockEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.GargantuarVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
@@ -661,7 +664,9 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 
 	@Override
 	public void onDeath(DamageSource source) {
-		if (inDyingAnimation && deathTicks <= 1) {
+		if ((inDyingAnimation && deathTicks <= 1) || (source.getSource() instanceof SuperChomperEntity ||
+				source.getSource() instanceof ChomperEntity ||
+				source.getSource() instanceof OlivePitEntity)) {
 			super.onDeath(source);
 		}
 	}

@@ -52,6 +52,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import static io.github.GrassyDev.pvzmod.PvZCubed.DISABLE;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 public class SunflowerSeedEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
@@ -311,7 +312,7 @@ public class SunflowerSeedEntity extends PlantEntity implements IAnimatable, Ran
 		}
 		--this.sunProducingTime;
 
-		if (!this.world.isClient && this.isAlive() && this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn()){
+		if (!this.world.isClient && this.isAlive() && this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && !this.hasStatusEffect(DISABLE)){
 			if (this.produceSun){
 				this.playSound(PvZSounds.SUNDROPEVENT, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) + 0.75F);
 				this.dropItem(ModItems.SMALLSUN);

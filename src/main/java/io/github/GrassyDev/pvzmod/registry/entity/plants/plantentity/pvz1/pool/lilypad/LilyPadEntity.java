@@ -186,7 +186,7 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
 		if (this.getHat().equals(LilypadHats.LILY)){
-			if (this.dryLand) {
+			if (this.dryLand || this.onWaterTile) {
 				event.getController().setAnimation(new AnimationBuilder().loop("lilypad.onground.lily"));
 			}
 			else {
@@ -194,7 +194,7 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 			}
 		}
 		else {
-			if (this.dryLand) {
+			if (this.dryLand || this.onWaterTile) {
 				event.getController().setAnimation(new AnimationBuilder().loop("lilypad.onground"));
 			}
 			else {
@@ -253,7 +253,7 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));
-				if (!(fluidState.getFluid() == Fluids.WATER)) {
+				if (!(fluidState.getFluid() == Fluids.WATER) && !onWaterTile) {
 					this.dryLand = true;
 					onWater = false;
 				} else {

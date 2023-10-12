@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.fabricmc.api.EnvType;
@@ -62,6 +63,7 @@ public class CherrybombEntity extends PlantEntity implements IAnimatable {
 		this.setFireImmune(FireImmune.TRUE);
 
 		this.isBurst = true;
+		this.setImmune(Immune.TRUE);
     }
 
 	protected void initDataTracker() {
@@ -199,7 +201,7 @@ public class CherrybombEntity extends PlantEntity implements IAnimatable {
 					livingEntity = (LivingEntity) var9.next();
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 16);
-			if (livingEntity instanceof IceTile || livingEntity instanceof SnowTile) {
+			if (livingEntity instanceof IceTile || livingEntity instanceof SnowTile || livingEntity instanceof WaterTile) {
 				livingEntity.discard();
 			}
 			float damage = 180;

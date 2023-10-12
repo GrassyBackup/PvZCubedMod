@@ -10,6 +10,7 @@
     "pvzmod:sunshroom": "maintarget",
     "pvzmod:garden": "maintarget",
     "pvzmod:chomper": "tall",
+    "pvzmod:superchomper": "tall",
     "pvzmod:chester": "tall",
     "pvzmod:coconutcannon": "tall",
     "pvzmod:gravebuster": "tall",
@@ -21,6 +22,7 @@
     "pvzmod:loquat": "flying",
     "pvzmod:saucer": "flying",
     "pvzmod:smackadamia": "flying",
-    "pvzmod:ghostpepper": "flying"
+    "pvzmod:ghostpepper": "flying",
+    "pvzmod:coffeebean": "flying"
   }
 }

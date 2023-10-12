@@ -43,6 +43,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import java.util.Iterator;
 import java.util.List;
 
+import static io.github.GrassyDev.pvzmod.PvZCubed.DISABLE;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 public class TwinSunflowerEntity extends PlantEntity implements IAnimatable {
@@ -230,7 +231,7 @@ public class TwinSunflowerEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn()) {
+		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && !this.hasStatusEffect(DISABLE)) {
 			if (--raycastDelay >= 0){
 				this.produceSun();
 				raycastDelay = 20;

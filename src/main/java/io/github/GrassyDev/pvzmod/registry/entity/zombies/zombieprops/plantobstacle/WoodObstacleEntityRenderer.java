@@ -10,7 +10,7 @@ public class WoodObstacleEntityRenderer extends GeoEntityRenderer<WoodObstacleEn
 
     public WoodObstacleEntityRenderer(EntityRendererFactory.Context ctx) {
 		super(ctx, new WoodObstacleEntityModel());
-        this.shadowRadius = 0F; //change 0.7 to the desired shadow size.
+        this.shadowRadius = 0.6F; //change 0.7 to the desired shadow size.
     }
 
 }

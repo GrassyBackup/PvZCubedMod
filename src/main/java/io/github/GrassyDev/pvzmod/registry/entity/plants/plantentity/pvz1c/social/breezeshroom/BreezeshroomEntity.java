@@ -55,6 +55,7 @@ public class BreezeshroomEntity extends PlantEntity implements IAnimatable, Rang
 		super(entityType, world);
 
 		this.targetIce = true;
+		this.nocturnal = true;
 	}
 
 	static {
@@ -141,7 +142,7 @@ public class BreezeshroomEntity extends PlantEntity implements IAnimatable, Rang
 		//ambient darkness: daytime = 0, rain = 2, thunder/night > 2
 		//skylight is the light of the sky hitting the block. Allows for mushrooms to stay awake underground while preventing light from torches making them asleep
 		//we need this switch to prevent high server lag because of the goals
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

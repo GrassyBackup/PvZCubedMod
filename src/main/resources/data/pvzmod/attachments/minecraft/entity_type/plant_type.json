@@ -3,6 +3,7 @@
   "values": {
     "pvzmod:cherrybomb": "bombard",
     "pvzmod:chomper": "enforce",
+    "pvzmod:superchomper": "enforce",
     "pvzmod:chester": "enforce",
     "pvzmod:peashooter": "appease",
     "pvzmod:potatomine": "bombard",
@@ -31,6 +32,7 @@
     "pvzmod:tulimpeter": "enchant",
     "pvzmod:magicshroom": "enchant",
     "pvzmod:pumpkinwitch": "enchant",
+    "pvzmod:coffeebean": "enchant",
     "pvzmod:iceshroom": "winter",
     "pvzmod:puffshroom": "ailment",
     "pvzmod:seashroom": "ailment",

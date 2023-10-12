@@ -89,6 +89,74 @@
 				}
 			}
 		},
+		"magicshroom.asleep": {
+			"loop": true,
+			"animation_length": 3,
+			"bones": {
+				"card1": {
+					"rotation": {
+						"vector": [36.55173, 7.36876, 96.67978]
+					},
+					"position": {
+						"vector": [0, -12.8, 0]
+					}
+				},
+				"card2": {
+					"rotation": {
+						"vector": [0, 10, 90]
+					},
+					"position": {
+						"vector": [0, -14, 0]
+					}
+				},
+				"body": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"1.5": {
+							"vector": [1.1, 0.9, 1.1],
+							"easing": "easeInBack"
+						},
+						"3.0": {
+							"vector": [1, 1, 1],
+							"easing": "easeInBack"
+						}
+					}
+				},
+				"card3": {
+					"rotation": {
+						"vector": [107.5, 0, 0]
+					},
+					"position": {
+						"vector": [-1, -17.8, -2]
+					}
+				},
+				"effect": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"effect3": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"effect2": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"hat": {
+					"rotation": {
+						"vector": [20, 0, 0]
+					},
+					"position": {
+						"vector": [0, -3, -1]
+					}
+				}
+			}
+		},
 		"magicshroom.shoot": {
 			"animation_length": 1.5,
 			"bones": {

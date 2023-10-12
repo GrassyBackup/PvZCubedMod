@@ -63,6 +63,7 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 		super(entityType, world);
 
 		this.isBurst = true;
+		this.setImmune(Immune.TRUE);
 	}
 
 	protected void initDataTracker() {

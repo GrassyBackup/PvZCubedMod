@@ -2,7 +2,7 @@
   "name": "Spring Bean",
   "icon": "pvzmod:springbean_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 51,
+  "sortnum": 57,
   "advancement": "pvzmod:start_pvz",
   "pages": [
     {

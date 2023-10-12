@@ -192,6 +192,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float cattailS = 35.0f;
 		@RestartRequired
+		public float coffeeBeanS = 7.5f;
+		@RestartRequired
 		public float charmshroomS = 25.0f;
 		@RestartRequired
 		public float cherrybombS = 35.0f;
@@ -209,6 +211,8 @@ public class PvZConfigModel {
 		public float dogwoodS = 15f;
 		@RestartRequired
 		public float doomshroomS = 25.0f;
+		@RestartRequired
+		public float dripphylleiaS = 15f;
 		@RestartRequired
 		public float dropeaS = 10f;
 		@RestartRequired
@@ -291,6 +295,8 @@ public class PvZConfigModel {
 		public float retrogatlingS = 35.0f;
 		@RestartRequired
 		public float saucerS = 30f;
+		@RestartRequired
+		public float superchomperS = 30.0f;
 		@RestartRequired
 		public float scaredyshroomS = 5.0f;
 		@RestartRequired
@@ -501,6 +507,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double newspaperH = 27D;
 		@RestartRequired
+		public double octoH = 91D;
+		@RestartRequired
 		public double scientistH = 27D;
 		@RestartRequired
 		public double sundayH = 50D;
@@ -585,6 +593,9 @@ public class PvZConfigModel {
 
 		@RestartRequired
 		public double hawkerObstH = 90D;
+
+		@RestartRequired
+		public double octoObstH = 65;
 
 		@RestartRequired
 		public double zomboniVH = 135D;

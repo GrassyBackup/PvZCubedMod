@@ -158,6 +158,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.SEASHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.MAGNETSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.CABBAGEPULT_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.COFFEEBEAN_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.GATLINGPEA_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.TWINSUNFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.GLOOMSHROOM_SEED_PACKET));
@@ -171,6 +172,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.SNOW_QUEENPEA_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.OXYGAE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BREEZESHROOM_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.SUPERCHOMPER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BLOOMERANG_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ICEBERGLETTUCE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SPRINGBEAN_SEED_PACKET));
@@ -191,6 +193,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.SAUCER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.OILYOLIVE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SPRINGPRINCESS_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.DRIPPHYLLEIA_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.PUMPKINWITCH_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.TULIMPETER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.NARCISSUS_SEED_PACKET));
@@ -302,6 +305,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.ANNOUNCERIMPEGG));
 				stacks.add(new ItemStack(ModItems.ZOMBIEKINGEGG));
 				stacks.add(new ItemStack(ModItems.IMPDRAGONEGG));
+				stacks.add(new ItemStack(ModItems.OCTOEGG));
 				stacks.add(new ItemStack(ModItems.BRICKHEADEGG));
 				stacks.add(new ItemStack(ModItems.SUNDAYEDITIONEGG));
 				stacks.add(new ItemStack(ModItems.SUPERFANIMPEGG));
@@ -342,6 +346,12 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.UNLOCK));
 				stacks.add(new ItemStack(ModItems.ONEBYONE));
 				stacks.add(new ItemStack(ModItems.HALF));
+				stacks.add(new ItemStack(ModItems.DAY));
+				stacks.add(new ItemStack(ModItems.NIGHT));
+				stacks.add(new ItemStack(ModItems.DROUGHT));
+				stacks.add(new ItemStack(ModItems.CLEAR));
+				stacks.add(new ItemStack(ModItems.RAIN));
+				stacks.add(new ItemStack(ModItems.THUNDER));
 				stacks.add(new ItemStack(ModItems.BASICGRAVESPAWN));
 				stacks.add(new ItemStack(ModItems.NIGHTGRAVESPAWN));
 				stacks.add(new ItemStack(ModItems.POOLGRAVESPAWN));

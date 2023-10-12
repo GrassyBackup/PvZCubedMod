@@ -105,6 +105,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.buttonshroomS": "Button-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cabbagepultS": "Cabbage-pult Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cattailS": "Cattail Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.coffeeBeanS": "Coffee Bean Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.charmshroomS": "Charm-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cherrybombS": "Cherry Bomb Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.chesterS": "Cheetah Chomper Seed",
@@ -114,6 +115,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dandelionweedS": "Dandelion Weed Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dogwoodS": "Dogwood Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.doomshroomS": "Doom-shroom Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dripphylleia": "Dripphylleia Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dropeaS": "Dropea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.electropeaS": "Electro Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.empeachS": "E.M.Peach Seed",
@@ -135,6 +137,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.lilypadS": "Lily Pad Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.loquatS": "Loquat Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.saucerS": "Saucer Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.superchomperS": "Super Chomper Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.magicshroomS": "Magic-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.narcissusS": "Narcissus Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.navybeanS": "Navy Bean Seed",
@@ -264,6 +267,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.sargeantH": "Sergeant Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bullyH": "Bully Health",
   "text.config.pvz3-config.option.nestedZombieHealth.basketballH": "Basketball Carrier Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.octoH": "Octo Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bassH": "Bass Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.dancingH": "Dancing Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.dolphinH": "Dolphin Rider Health",
@@ -322,6 +326,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.trashcanObstH": "Trash Can Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.basketballObstH": "Basketball Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.healstationObstH": "Heal Station Obstacle Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.octoObstH": "Octo Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bobsledVH": "Bobsled Vehicle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.speakerVH": "Speaker Vehicle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.zomboniVH": "Zomboni Vehicle Health",
@@ -518,6 +523,10 @@
   "item.pvzmod.cabbagepult_seed_packet.flavour": "\"Coleslaw from above!\"",
   "item.pvzmod.cabbage": "Cabbage",
 
+  "entity.pvzmod.coffeebean": "Coffee Bean",
+  "item.pvzmod.coffeebean_seed_packet": "⭐ Coffee Bean Seed Packet",
+  "item.pvzmod.coffeebean_seed_packet.flavour": "\"Wake up sleepyhead!\"",
+
   "entity.pvzmod.gatlingpea": "Gatling Pea",
   "item.pvzmod.gatlingpea_seed_packet": "⭘ Gatling Pea Seed Packet",
   "item.pvzmod.gatlingpea_seed_packet.flavour": "There is no problem that cannot",
@@ -608,11 +617,16 @@
   "item.pvzmod.breezeshroom_seed_packet.flavour": "Bless you.",
   "item.pvzmod.breeze": "Breeze",
 
+  "entity.pvzmod.superchomper": "Super Chomper",
+  "item.pvzmod.superchomper_seed_packet": "\uD83D\uDDE1 Super Chomper Seed Packet",
+  "item.pvzmod.superchomper_seed_packet.flavour": "Played the T-Rex in Jurassic Garden.",
+
   "entity.pvzmod.dandelionweed": "Dandelion Weed",
   "item.pvzmod.dandelionweed_seed_packet": "\uD83D\uDDE1 Dandelion Weed Seed Packet",
   "item.pvzmod.dandelionweed_seed_packet.flavour": "\"OH MY GOSH! A PEASHOOTER! OH MY GOSH! OH MY GOSH!\"",
 
   "entity.pvzmod.perfoomshroom": "Perfoom-shroom",
+  "item.pvzmod.perfoomshroom.alt": "Perfume Shroom",
   "item.pvzmod.perfoomshroom_seed_packet": "⭐ Perfoom-shroom Seed Packet",
   "item.pvzmod.perfoomshroom_seed_packet.flavour": "\"My glamour is enchanting.\"",
 
@@ -723,6 +737,11 @@
   "item.pvzmod.springprincess_seed_packet.flavour": "\"Climb the tower with my hair!\" *BOING*",
   "item.pvzmod.springhair": "Spring Hair",
 
+  "entity.pvzmod.dripphylleia": "Dripphylleia",
+  "item.pvzmod.dripphylleia.alt": "Dripping Diphylleia",
+  "item.pvzmod.dripphylleia_seed_packet": "⏳ Dripphylleia Seed Packet",
+  "item.pvzmod.dripphylleia_seed_packet.flavour": "Has a bad habit of wetting the bed.",
+
   "entity.pvzmod.pumpkinwitch": "Pumpkin Witch",
   "item.pvzmod.pumpkinwitch_seed_packet": "⭐ Pumpkin Witch Seed Packet",
   "item.pvzmod.pumpkinwitch_seed_packet.flavour": "One Imp's leg, one Gargantuar's teeth and a ",
@@ -751,6 +770,7 @@
   "item.pvzmod.armorbubbleitem": "Armor Bubble",
 
   "entity.pvzmod.dropea": "Dropea",
+  "item.pvzmod.dropea.alt": "Drop Shooter",
   "item.pvzmod.dropea_seed_packet": "⭘ Dropea Seed Packet",
   "item.pvzmod.dropea_seed_packet.flavour": "Has a bubbly personality",
   "item.pvzmod.drop": "Drop",
@@ -760,6 +780,7 @@
   "item.pvzmod.beautyshroom_seed_packet.flavour": "Aspires to be as fab as Perfoom-shroom.",
 
   "entity.pvzmod.charmshroom": "Charm-shroom",
+  "item.pvzmod.charmshroom.alt": "Talisman Mushroom",
   "item.pvzmod.charmshroom_seed_packet": "⭐ Charm-shroom Seed Packet",
   "item.pvzmod.charmshroom_seed_packet.flavour": "\"Lucky charm? How about a love charm?\"",
   "item.pvzmod.charmshroom_seed_packet.flavour2": "[You feel dizzy as you are losing consciousness...]",
@@ -1006,6 +1027,11 @@
   "item.pvzmod.impdragon_egg": "Imp Dragon Zombie",
   "entity.pvzmod.impdragon_hypnotized": "Hypnotized Dragon Zombie",
 
+  "entity.pvzmod.octo": "Octo Zombie",
+  "item.pvzmod.octo_egg": "Octo Zombie",
+  "entity.pvzmod.octo_hypnotized": "Hypnotized Octo Zombie",
+  "entity.pvzmod.octoobst": "Octopus",
+
   "entity.pvzmod.brickhead": "Brickhead Zombie",
   "item.pvzmod.brickhead_egg": "Brickhead Zombie",
   "entity.pvzmod.brickgear": "Brick",
@@ -1124,6 +1150,15 @@
   "item.pvzmod.unlock": "Unlock All Zombies",
   "item.pvzmod.unlockspecial": "Unlock Special Zombies",
 
+  "item.pvzmod.day": "Day Challenge",
+  "item.pvzmod.night": "Night Challenge",
+  "item.pvzmod.bomb": "Bomb Challenge",
+  "item.pvzmod.drought": "Drought Challenge",
+
+  "item.pvzmod.clear": "Clear Challenge",
+  "item.pvzmod.rain": "Rain Challenge",
+  "item.pvzmod.thunder": "Thunder Challenge",
+
   "entity.pvzmod.garden": "Garden",
   "item.pvzmod.garden_spawn": "Garden",
   "item.pvzmod.garden_spawn.flavour": "Attracts Zombies and Gravestones",
@@ -1170,6 +1205,8 @@
 
   "entity.pvzmod.scorchedtile": "Scorched Tile",
   "entity.pvzmod.icetile": "Ice Tile",
+  "entity.pvzmod.snowtile": "Snow Tile",
+  "entity.pvzmod.watertile": "Water Tile",
   "entity.pvzmod.cratertile": "Crater Tile",
   "entity.pvzmod.goldtile": "Gold Tile",
 

@@ -59,6 +59,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 		this.targetHelmet = true;
 		this.magnetshroom = true;
+		this.nocturnal = true;
 	}
 
 	static {
@@ -156,7 +157,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tick() {
 		--this.attractTicks;
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

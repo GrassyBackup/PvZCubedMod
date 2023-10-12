@@ -61,6 +61,7 @@ public class AcidshroomEntity extends PlantEntity implements IAnimatable, Ranged
 		super(entityType, world);
 
 		this.setNoGravity(true);
+		this.nocturnal = true;
 	}
 
 	public AcidshroomEntity(World world, double x, double y, double z) {
@@ -151,7 +152,7 @@ public class AcidshroomEntity extends PlantEntity implements IAnimatable, Ranged
 		if (this.getVehicle() instanceof LilyPadEntity){
 			this.getVehicle().discard();
 		}
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
@@ -191,7 +192,7 @@ public class AcidshroomEntity extends PlantEntity implements IAnimatable, Ranged
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));
-				if (!(fluidState.getFluid() == Fluids.WATER)) {
+				if (!(fluidState.getFluid() == Fluids.WATER) && !onWaterTile) {
 					this.dryLand = true;
 					onWater = false;
 					this.discard();

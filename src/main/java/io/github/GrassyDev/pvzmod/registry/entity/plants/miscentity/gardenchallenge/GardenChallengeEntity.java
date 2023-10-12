@@ -1,10 +1,12 @@
 package io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge;
 
+import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModBlocks;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.rifttile.RiftTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone.EgyptGraveEntity;
@@ -13,8 +15,12 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.mausoleum.Mausoleu
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.nightgrave.NightGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.poolgrave.PoolGraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.roofgrave.RoofGraveEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.timetile.TimeTile;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.weathertile.WeatherTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.challenge.ChallengeTiers;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.challenge.ChallengeTime;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.challenge.ChallengeWeather;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.challenge.TypeOfWorld;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.RiftVariants;
@@ -32,6 +38,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -534,6 +541,14 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				graveEntity.discard();
 			}
 		}
+		List<WeatherTile> weatherTiles = this.world.getNonSpectatingEntities(WeatherTile.class, this.getBoundingBox().expand(25, 5, 25));
+		List<TimeTile> timeTiles = this.world.getNonSpectatingEntities(TimeTile.class, this.getBoundingBox().expand(25, 5, 25));
+		for (WeatherTile weatherTile : weatherTiles){
+			weatherTile.discard();
+		}
+		for (TimeTile tile : timeTiles){
+			tile.discard();
+		}
 		if (source.getAttacker() instanceof GeneralPvZombieEntity || source.getAttacker() == this) {
 			for (int i = 0; i < this.getTierCount() - 1; ++i) {
 				this.dropItem(Items.DIAMOND);
@@ -606,6 +621,17 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			}
 		}
 		super.tick();
+		if (this.currentTime != null && this.currentTime.getTime().equals(ChallengeTime.DROUGHT)){
+			List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
+			for (HostileEntity hostileEntity : list){
+				if (!hostileEntity.isWet()) {
+					hostileEntity.removeStatusEffect(PvZCubed.WET);
+					hostileEntity.removeStatusEffect(PvZCubed.ICE);
+					hostileEntity.removeStatusEffect(PvZCubed.FROZEN);
+					hostileEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 5, 1)));
+				}
+			}
+		}
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {
 				setPosition(this.getX(), this.getY(), this.getZ());
@@ -657,8 +683,11 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 	}
 
 	protected List<GraveEntity> currentWorlds = new ArrayList<>();
+	protected TimeTile currentTime = null;
+	protected WeatherTile currentWeather = null;
 	protected List<GraveEntity> firsWorldCheck = new ArrayList<>();
 	protected List<BlockPos> spawnableSpots = new ArrayList<>();
+	protected List<BlockPos> waterSpots = new ArrayList<>();
 	protected List<BlockPos> rift1Spots = new ArrayList<>();
 	protected List<BlockPos> rift2Spots = new ArrayList<>();
 	protected List<BlockPos> rift3Spots = new ArrayList<>();
@@ -675,6 +704,15 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 	public void checkEntities(){
 		List<Entity> check2Remove = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().expand(25, 5, 25));
 		firsWorldCheck = this.world.getNonSpectatingEntities(GraveEntity.class, this.getBoundingBox());
+		List<Entity> check = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox());
+		for (Entity entity : check){
+			if (entity instanceof WeatherTile weatherTile){
+				currentWeather = weatherTile;
+			}
+			if (entity instanceof TimeTile timeTile){
+				currentTime = timeTile;
+			}
+		}
 		currentWorlds.clear();
 		for (int u = 0; u < 8; ++u){
 			currentWorlds.add(null);
@@ -721,6 +759,14 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				graveEntity.decorative = true;
 				graveEntity.setAiDisabled(true);
 				graveEntity.setPersistent();
+			}
+		}
+		for (Entity entity : checkEntities){
+			if (entity instanceof TimeTile timeTile){
+				currentTime = timeTile;
+			}
+			if (entity instanceof WeatherTile weatherTile){
+				currentWeather = weatherTile;
 			}
 		}
 		Iterator var9 = checkEntities.iterator();
@@ -878,6 +924,90 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					this.nextGrave = null;
 				}
 				this.addWorld(entityType);
+
+				if (this.world instanceof ServerWorld) {
+					double nightChance = 0;
+					double bombChance = 0;
+					double droughtChance = 0;
+
+					double rainChance = 0;
+					double thunderChance = 0;
+
+					if (addedWorld == TypeOfWorld.BASIC){
+						nightChance = 0;
+						rainChance = 0.25;
+						thunderChance = 0;
+					}
+					if (addedWorld == TypeOfWorld.NIGHT){
+						nightChance = 1;
+						rainChance = 0.3;
+						thunderChance = 0.125;
+					}
+					if (addedWorld == TypeOfWorld.POOL){
+						nightChance = 0;
+						droughtChance = 0.3;
+						rainChance = 0.2;
+						thunderChance = 0;
+					}
+					if (addedWorld == TypeOfWorld.ROOF){
+						nightChance = 0.25;
+						rainChance = 0.35;
+						thunderChance = 0.2;
+					}
+					if (addedWorld == TypeOfWorld.EGYPT){
+						nightChance = 0.25;
+						droughtChance = 0.4;
+						rainChance = 0;
+						thunderChance = 0;
+					}
+					if (addedWorld == TypeOfWorld.DARKAGES){
+						nightChance = 1;
+						rainChance = 0.5;
+						thunderChance = 0.4;
+					}
+					if (addedWorld == TypeOfWorld.FUTURE){
+						nightChance = 0.3;
+						//bombChance = 0.25;
+						rainChance = 0;
+						thunderChance = 0;
+					}
+					if (addedWorld == TypeOfWorld.MAUSOLEUM){
+						nightChance = 1;
+						rainChance = 0;
+						thunderChance = 0.3;
+					}
+
+					double random = this.random.nextDouble();
+					currentTime.setTimeType(ChallengeTime.DAY);
+					if (random <= nightChance && nightChance > 0) {
+						if (this.getWorld().getMoonPhase() == 1) {
+							currentTime.setTimeType(ChallengeTime.NEWMOON);
+						} else if (this.getWorld().getMoonPhase() == 0) {
+							currentTime.setTimeType(ChallengeTime.FULLMOON);
+						} else {
+							currentTime.setTimeType(ChallengeTime.HALFMOON);
+						}
+					}
+					if (random <= bombChance && bombChance > 0) {
+						currentTime.setTimeType(ChallengeTime.BOMB);
+					}
+					if (random <= droughtChance && droughtChance > 0) {
+						currentTime.setTimeType(ChallengeTime.DROUGHT);
+					}
+
+					double random2 = this.random.nextDouble();
+					currentWeather.setWeatherType(ChallengeWeather.CLOUD);
+					if (random2 <= rainChance && rainChance > 0) {
+						currentWeather.setWeatherType(ChallengeWeather.RAIN);
+					}
+					if (random2 <= thunderChance && thunderChance > 0) {
+						currentWeather.setWeatherType(ChallengeWeather.THUNDER);
+					}
+					if (currentTime.getTime().equals(ChallengeTime.DROUGHT)){
+						currentWeather.setWeatherType(ChallengeWeather.CLOUD);
+					}
+					System.out.println(random2);
+				}
 			}
 			this.setWave(0);
 		}
@@ -1027,6 +1157,28 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						}
 					}
 				}
+				if (this.world instanceof ServerWorld serverWorld && this.currentWeather.getWeather().equals(ChallengeWeather.THUNDER)) {
+					if (this.currentWeather.getWeather().equals(ChallengeWeather.RAIN)) {
+						for (int x = 0; x <= 2; ++x) {
+							BlockPos waterPos = waterSpots.get(this.random.range(0, waterSpots.size() - 1));
+							WaterTile waterTile = (WaterTile) PvZEntity.WATERTILE.create(this.world);
+							waterTile.refreshPositionAndAngles(waterPos, 0.0F, 0.0F);
+							waterTile.initialize(serverWorld, this.world.getLocalDifficulty(waterPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							waterTile.setPersistent();
+							serverWorld.spawnEntityAndPassengers(waterTile);
+						}
+					}
+					if (this.currentWeather.getWeather().equals(ChallengeWeather.THUNDER)) {
+						for (int x = 0; x <= 3; ++x) {
+							BlockPos waterPos = waterSpots.get(this.random.range(0, waterSpots.size() - 1));
+							WaterTile waterTile = (WaterTile) PvZEntity.WATERTILE.create(this.world);
+							waterTile.refreshPositionAndAngles(waterPos, 0.0F, 0.0F);
+							waterTile.initialize(serverWorld, this.world.getLocalDifficulty(waterPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							waterTile.setPersistent();
+							serverWorld.spawnEntityAndPassengers(waterTile);
+						}
+					}
+				}
 				BlockPos getPos = spawnableSpots.get(this.random.range(0, spawnableSpots.size() -1));
 				if (this.world instanceof ServerWorld serverWorld) {
 					GraveEntity graveEntity = (GraveEntity) PvZEntity.BASICGRAVESTONE.create(this.world);
@@ -1156,8 +1308,65 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			nextGrave = PvZEntity.MAUSOLEUMGRAVESTONE;
 			return ActionResult.SUCCESS;
 		}
+		else if (itemStack.isOf(ModItems.DAY) && currentTime != null && currentWeather != null){
+			currentTime.setTimeType(ChallengeTime.DAY);
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.NIGHT) && currentTime != null && currentWeather != null){
+			if (this.getWorld().getMoonPhase() == 1) {
+				currentTime.setTimeType(ChallengeTime.NEWMOON);
+			} else if (this.getWorld().getMoonPhase() == 0) {
+				currentTime.setTimeType(ChallengeTime.FULLMOON);
+			} else {
+				currentTime.setTimeType(ChallengeTime.HALFMOON);
+			}
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.BOMB) && currentTime != null && currentWeather != null){
+			currentTime.setTimeType(ChallengeTime.BOMB);
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.DROUGHT) && currentTime != null && currentWeather != null){
+			currentTime.setTimeType(ChallengeTime.DROUGHT);
+			currentWeather.setWeatherType(ChallengeWeather.CLOUD);
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.CLEAR) && currentTime != null && currentWeather != null){
+			currentWeather.setWeatherType(ChallengeWeather.CLOUD);
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.RAIN) && currentTime != null && currentWeather != null){
+			currentWeather.setWeatherType(ChallengeWeather.RAIN);
+			if (currentTime.getTime().equals(ChallengeTime.DROUGHT)){
+				currentTime.setTimeType(ChallengeTime.DAY);
+			}
+			return ActionResult.SUCCESS;
+		}
+		else if (itemStack.isOf(ModItems.THUNDER) && currentTime != null){
+			currentWeather.setWeatherType(ChallengeWeather.THUNDER);
+			if (currentTime.getTime().equals(ChallengeTime.DROUGHT)){
+				currentTime.setTimeType(ChallengeTime.DAY);
+			}
+			return ActionResult.SUCCESS;
+		}
 		else if (currentWorlds.get(0)== null) {
 			this.addWorld(PvZEntity.BASICGRAVESTONE);
+			TimeTile timeTile = (TimeTile) PvZEntity.TIMETILE.create(world);
+			timeTile.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
+			timeTile.setPersistent();
+			timeTile.setHeadYaw(0);
+			WeatherTile weatherTile = (WeatherTile) PvZEntity.WEATHERTILE.create(world);
+			weatherTile.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
+			weatherTile.setPersistent();
+			weatherTile.setHeadYaw(0);
+			if (this.world instanceof ServerWorld serverWorld) {
+				timeTile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+				weatherTile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+				serverWorld.spawnEntityAndPassengers(timeTile);
+				serverWorld.spawnEntityAndPassengers(weatherTile);
+			}
+			timeTile.setTimeType(ChallengeTime.DAY);
+			weatherTile.setWeatherType(ChallengeWeather.CLOUD);
 			return ActionResult.SUCCESS;
 		}
 		else if (itemStack.isOf(ModItems.FERTILIZER) && this.getWaveInProgress().equals(Boolean.FALSE)) {
@@ -1169,6 +1378,38 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			this.cooldown = 10;
 			this.addWave();
 			this.setWaveinprogress(WaveInProgress.TRUE);
+			if (currentTime != null && this.world instanceof ServerWorld serverWorld){
+				if ((currentTime.getTime().equals(ChallengeTime.FULLMOON) || currentTime.getTime().equals(ChallengeTime.NEWMOON) || currentTime.getTime().equals(ChallengeTime.HALFMOON)) &&
+						serverWorld.isDay()){
+					long l = serverWorld.getLevelProperties().getTimeOfDay() + 24000L;
+					serverWorld.setTimeOfDay((l - l % 24000L) + 18000L);
+					if (this.getWorld().getMoonPhase() == 1) {
+						currentTime.setTimeType(ChallengeTime.NEWMOON);
+					} else if (this.getWorld().getMoonPhase() == 0) {
+						currentTime.setTimeType(ChallengeTime.FULLMOON);
+					} else {
+						currentTime.setTimeType(ChallengeTime.HALFMOON);
+					}
+
+				}
+				if ((currentTime.getTime().equals(ChallengeTime.DAY) || currentTime.getTime().equals(ChallengeTime.DROUGHT) || currentTime.getTime().equals(ChallengeTime.BOMB)) &&
+						serverWorld.isNight()){
+					long l = serverWorld.getLevelProperties().getTimeOfDay() + 24000L;
+					serverWorld.setTimeOfDay(l - l % 24000L);
+					System.out.println(l - l % 24000L);
+				}
+			}
+			if (currentWeather != null && this.world instanceof ServerWorld serverWorld){
+				if (currentWeather.getWeather().equals(ChallengeWeather.CLOUD)) {
+					serverWorld.setWeather(0, 0, false, false);
+				}
+				if (currentWeather.getWeather().equals(ChallengeWeather.RAIN)){
+					serverWorld.setWeather(0, 0, true, false);
+				}
+				if (currentWeather.getWeather().equals(ChallengeWeather.THUNDER)){
+					serverWorld.setWeather(0, 0, true, true);
+				}
+			}
 			return ActionResult.SUCCESS;
 		}
 		return super.interactMob(player, hand);
@@ -1250,6 +1491,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			world2BlockDark = ModBlocks.DARK_EGYPT_TILE;
 		}
 		if (this.getWorld2().equals(TypeOfWorld.DARKAGES)){
+			world2Block = ModBlocks.DARKAGES_TILE;
+			world2BlockDark = ModBlocks.DARK_DARKAGES_TILE;
+		}
+		if (this.getWorld2().equals(TypeOfWorld.NIGHT)){
 			world2Block = ModBlocks.NIGHT_TILE;
 			world2BlockDark = ModBlocks.DARK_NIGHT_TILE;
 		}
@@ -1272,6 +1517,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			world3BlockDark = ModBlocks.DARK_EGYPT_TILE;
 		}
 		if (this.getWorld3().equals(TypeOfWorld.DARKAGES)){
+			world3Block = ModBlocks.DARKAGES_TILE;
+			world3BlockDark = ModBlocks.DARK_DARKAGES_TILE;
+		}
+		if (this.getWorld3().equals(TypeOfWorld.NIGHT)){
 			world3Block = ModBlocks.NIGHT_TILE;
 			world3BlockDark = ModBlocks.DARK_NIGHT_TILE;
 		}
@@ -1294,6 +1543,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			world4BlockDark = ModBlocks.DARK_EGYPT_TILE;
 		}
 		if (this.getWorld4().equals(TypeOfWorld.DARKAGES)){
+			world4Block = ModBlocks.DARKAGES_TILE;
+			world4BlockDark = ModBlocks.DARK_DARKAGES_TILE;
+		}
+		if (this.getWorld4().equals(TypeOfWorld.NIGHT)){
 			world4Block = ModBlocks.NIGHT_TILE;
 			world4BlockDark = ModBlocks.DARK_NIGHT_TILE;
 		}
@@ -1316,6 +1569,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			world5BlockDark = ModBlocks.DARK_EGYPT_TILE;
 		}
 		if (this.getWorld5().equals(TypeOfWorld.DARKAGES)){
+			world5Block = ModBlocks.DARKAGES_TILE;
+			world5BlockDark = ModBlocks.DARK_DARKAGES_TILE;
+		}
+		if (this.getWorld5().equals(TypeOfWorld.NIGHT)){
 			world5Block = ModBlocks.NIGHT_TILE;
 			world5BlockDark = ModBlocks.DARK_NIGHT_TILE;
 		}
@@ -1338,6 +1595,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			world6BlockDark = ModBlocks.DARK_EGYPT_TILE;
 		}
 		if (this.getWorld6().equals(TypeOfWorld.DARKAGES)){
+			world6Block = ModBlocks.DARKAGES_TILE;
+			world6BlockDark = ModBlocks.DARK_DARKAGES_TILE;
+		}
+		if (this.getWorld6().equals(TypeOfWorld.NIGHT)){
 			world6Block = ModBlocks.NIGHT_TILE;
 			world6BlockDark = ModBlocks.DARK_NIGHT_TILE;
 		}
@@ -1360,6 +1621,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			world7BlockDark = ModBlocks.DARK_EGYPT_TILE;
 		}
 		if (this.getWorld7().equals(TypeOfWorld.DARKAGES)){
+			world7Block = ModBlocks.DARKAGES_TILE;
+			world7BlockDark = ModBlocks.DARK_DARKAGES_TILE;
+		}
+		if (this.getWorld7().equals(TypeOfWorld.NIGHT)){
 			world7Block = ModBlocks.NIGHT_TILE;
 			world7BlockDark = ModBlocks.DARK_NIGHT_TILE;
 		}
@@ -1382,6 +1647,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			world8BlockDark = ModBlocks.DARK_EGYPT_TILE;
 		}
 		if (this.getWorld8().equals(TypeOfWorld.DARKAGES)){
+			world8Block = ModBlocks.DARKAGES_TILE;
+			world8BlockDark = ModBlocks.DARK_DARKAGES_TILE;
+		}
+		if (this.getWorld8().equals(TypeOfWorld.NIGHT)){
 			world8Block = ModBlocks.NIGHT_TILE;
 			world8BlockDark = ModBlocks.DARK_NIGHT_TILE;
 		}
@@ -2022,6 +2291,9 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					if (!rift1Spots.contains(testPos)) {
 						rift1Spots.add(testPos);
 					}
+					if (!waterSpots.contains(testPos)) {
+						waterSpots.add(testPos);
+					}
 				}
 				if ((x <= -13 || x >= 13 || z <= -13 || z >= 13)  &&
 						!(x <= -18 || x >= 18 || z <= -18 || z >= 18)) {
@@ -2029,12 +2301,18 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					if (!rift2Spots.contains(testPos)) {
 						rift2Spots.add(testPos);
 					}
+					if (!waterSpots.contains(testPos)) {
+						waterSpots.add(testPos);
+					}
 				}
 				if ((x <= -18 || x >= 18 || z <= -18 || z >= 18)  &&
 						!(x <= -23 || x >= 23 || z <= -23 || z >= 23)) {
 					BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
 					if (!rift3Spots.contains(testPos)) {
 						rift3Spots.add(testPos);
+					}
+					if (!waterSpots.contains(testPos)) {
+						waterSpots.add(testPos);
 					}
 				}
 			}

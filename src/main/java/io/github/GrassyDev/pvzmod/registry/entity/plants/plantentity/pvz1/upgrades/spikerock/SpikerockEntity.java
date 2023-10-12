@@ -259,7 +259,9 @@ public class SpikerockEntity extends PlantEntity implements IAnimatable {
 		}
 		if (--tickDamage <= 0){
 			this.zombieList.clear();
-			this.damageEntity();
+			if (!this.hasStatusEffect(PvZCubed.DISABLE)) {
+				this.damageEntity();
+			}
 			tickDamage = 20;
 		}
 	}

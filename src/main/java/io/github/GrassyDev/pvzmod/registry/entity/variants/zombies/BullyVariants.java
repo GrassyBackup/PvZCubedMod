@@ -7,7 +7,9 @@ public enum BullyVariants {
 	BULLY(0),
 	BULLYHYPNO(1),
 	BASKET(2),
-	BASKETHYPNO(3);
+	BASKETHYPNO(3),
+	OCTO(4),
+	OCTOHYPNO(5);
 
 	private static final BullyVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(BullyVariants::getId)).toArray(BullyVariants[]::new);

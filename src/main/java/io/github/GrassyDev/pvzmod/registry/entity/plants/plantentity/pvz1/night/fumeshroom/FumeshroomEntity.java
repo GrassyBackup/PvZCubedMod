@@ -63,6 +63,7 @@ public class FumeshroomEntity extends PlantEntity implements IAnimatable, Ranged
 	public FumeshroomEntity(EntityType<? extends FumeshroomEntity> entityType, World world) {
 		super(entityType, world);
 
+		this.nocturnal = true;
 	}
 
 	protected void initDataTracker() {
@@ -190,7 +191,7 @@ public class FumeshroomEntity extends PlantEntity implements IAnimatable, Ranged
 		//ambient darkness: daytime = 0, rain = 2, thunder/night > 2
 		//skylight is the light of the sky hitting the block. Allows for mushrooms to stay awake underground while preventing light from torches making them asleep
 		//we need this switch to prevent high server lag because of the goals
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

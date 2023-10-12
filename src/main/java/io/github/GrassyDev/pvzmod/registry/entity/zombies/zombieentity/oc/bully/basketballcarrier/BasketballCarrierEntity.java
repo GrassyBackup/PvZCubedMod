@@ -4,6 +4,9 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.basketball.ShootingBasketballEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.BullyVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.bully.basic.BullyEntity;
@@ -36,6 +39,8 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
+import java.util.List;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
@@ -227,6 +232,20 @@ public class BasketballCarrierEntity extends BullyEntity implements IAnimatable 
 	//Launch Basket
 	public void tryLaunch(Entity target) {
 		ShootingBasketballEntity basketballEntity = new ShootingBasketballEntity(PvZEntity.BASKETBALLPROJ, this.world);
+		List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(this.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) + 1));
+		double targetDist = 0;
+		for (LivingEntity livingEntity : list){
+			if (livingEntity instanceof PlantEntity plantEntity && !(plantEntity instanceof GardenChallengeEntity) && !(plantEntity instanceof GardenEntity) && !plantEntity.getImmune()){
+				if (targetDist == 0){
+					targetDist = this.squaredDistanceTo(plantEntity);
+					target = plantEntity;
+				}
+				else if (this.squaredDistanceTo(plantEntity) >= targetDist){
+					targetDist = this.squaredDistanceTo(plantEntity);
+					target = plantEntity;
+				}
+			}
+		}
 		if (launchAnimation == 29 * animationMultiplier && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
 			if (this.getTarget() instanceof ZombiePropEntity zombiePropEntity && zombiePropEntity.hasVehicle()){
 				target = zombiePropEntity.getVehicle();
@@ -278,7 +297,7 @@ public class BasketballCarrierEntity extends BullyEntity implements IAnimatable 
 		if (zombieObstacleEntity.isEmpty() && this.CollidesWithObstacle(1f) != null && this.CollidesWithObstacle(1f).getType().equals(PvZEntity.BASKETBALLBIN) && !this.CollidesWithObstacle(1f).hasVehicle() && !this.CollidesWithObstacle(1f).beingEaten && !this.isInsideWaterOrBubbleColumn()){
 			this.CollidesWithObstacle(1f).startRiding(this, true);
 		}
-		if (random <= 0.0075 && zombieObstacleEntity.isPresent() && getTarget() != null && this.squaredDistanceTo(this.getTarget()) <= 225 && !this.inLaunchAnimation) {
+		if (random <= 0.0075 && zombieObstacleEntity.isPresent() && getTarget() != null && this.squaredDistanceTo(this.getTarget()) <= 625 && !this.inLaunchAnimation) {
 			this.launchAnimation = 80 * animationMultiplier;
 			this.inLaunchAnimation = true;
 			this.world.sendEntityStatus(this, (byte) 104);

@@ -14,7 +14,6 @@ import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
@@ -67,6 +66,7 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 		this.magnetOffsetY = 0.75f;
 		this.magnetOffsetX = 0.4f;
 		this.isBurst = true;
+		this.nocturnal = true;
 	}
 
 	static {
@@ -173,7 +173,7 @@ public class MagnetoShroomEntity extends PlantEntity implements IAnimatable, Ran
 	public void tick() {
 		--this.attractTicks;
 		++this.untarget;
-		if (!this.world.isClient) {
+		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
 					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {

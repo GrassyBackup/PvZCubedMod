@@ -73,6 +73,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/jetpack/blastronaut_geardmg1.png"));
 				map.put(MetalHelmetVariants.KNIGHT,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant_geardmg1.png"));
+				map.put(MetalHelmetVariants.MEDALLION,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/dancingzombie/backupdancer_geardmg1.png"));
 				map.put(MetalHelmetVariants.SOLDIERHELMET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/soldier/soldier_geardmg1.png"));
 				map.put(MetalHelmetVariants.BASSPROP,
