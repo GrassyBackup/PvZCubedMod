@@ -361,10 +361,10 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 						};
 						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
 						float damageBase = damage + 6;
-						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial)) {
+						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
 							damageBase = damageBase * 2;
 						}
-						if ("paper".equals(zombieMaterial)) {
+						if ("paper".equals(zombieMaterial) || "rubber".equals(zombieMaterial)) {
 							damageBase = damageBase / 2;
 						}
 						if (damageBase > livingEntity.getHealth() &&

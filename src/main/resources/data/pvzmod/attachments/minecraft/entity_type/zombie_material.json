@@ -9,6 +9,7 @@
     "pvzmod:pyramidgear": "stone",
     "pvzmod:bucketheadgear": "metallic",
     "pvzmod:helmetgear": "metallic",
+    "pvzmod:hologear": "crystal",
     "pvzmod:coneheadgear": "plastic",
     "pvzmod:defensiveendgear": "metallic",
     "pvzmod:footballgear": "metallic",
@@ -47,6 +48,10 @@
     "pvzmod:roofgrave": "stone",
     "pvzmod:futuregrave": "stone",
     "pvzmod:darkagesgrave": "stone",
-    "pvzmod:mausoleumgrave": "stone"
+    "pvzmod:mausoleumgrave": "stone",
+    "pvzmod:futurezombie": "rubber",
+    "pvzmod:futurecone": "rubber",
+    "pvzmod:futurebucket": "rubber",
+    "pvzmod:holohead": "rubber"
   }
 }

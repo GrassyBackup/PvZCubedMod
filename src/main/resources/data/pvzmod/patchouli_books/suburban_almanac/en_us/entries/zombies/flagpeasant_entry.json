@@ -2,7 +2,7 @@
   "name": "Peasant Flag Zombie",
   "icon": "pvzmod:flagpeasant_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 87,
+  "sortnum": 92,
   "pages": [
     {
       "type": "text",

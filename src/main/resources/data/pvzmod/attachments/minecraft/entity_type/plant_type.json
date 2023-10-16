@@ -91,6 +91,7 @@
     "pvzmod:smooshroom": "enforce",
     "pvzmod:hammerflower": "enforce",
     "pvzmod:meteorhammer": "enforce",
-    "pvzmod:ghostpepper": "conceal"
+    "pvzmod:ghostpepper": "conceal",
+    "pvzmod:nightcap": "conceal"
   }
 }

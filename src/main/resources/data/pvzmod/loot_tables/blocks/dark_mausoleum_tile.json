@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pvzmod:dark_sergeant_tile",
+          "name": "pvzmod:dark_mausoleum_tile",
           "functions": [
             {
               "function": "minecraft:set_count",

@@ -213,6 +213,10 @@ public class IceshroomEntity extends PlantEntity implements IAnimatable {
 			if (livingEntity instanceof ScorchedTile) {
 				livingEntity.discard();
 			}
+			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+			if ("crystal".equals(zombieMaterial)) {
+				damage = damage / 2;
+			}
 			ZombiePropEntity zombiePropEntity4 = null;
 			if (livingEntity.hasVehicle()) {
 				for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {

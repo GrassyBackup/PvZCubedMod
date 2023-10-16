@@ -501,7 +501,10 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 				if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 					this.lightningCounter -= 2;
 				}
-				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic")){
+				else if (zombieMaterial.equals("rubber")){
+					this.lightningCounter = 0;
+				}
+				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic") && !zombieMaterial.equals("crystal")){
 					--this.lightningCounter;
 				}
 				if (getBeamTarget2() == null && getElectricBeamTarget2() == null){
@@ -990,16 +993,24 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 							};
 							this.plantEntity.playSound(PvZSounds.LIGHTNINGSHOOTEVENT, 0.75F, (float) (0.75F + (Math.random() / 2)));
 							damaged.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-							if (livingEntity.isWet() || livingEntity.hasStatusEffect(PvZCubed.WET)){
-								damaged.damage(PvZCubed.LIGHTNING_DAMAGE, 2);
+							float damage = 1;
+							if (livingEntity.isWet() || livingEntity.hasStatusEffect(PvZCubed.WET)) {
+								damage = damage * 2;
 							}
-							else {
-								damaged.damage(PvZCubed.LIGHTNING_DAMAGE, 1);
+							if ("electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
+								damage = damage / 2;
 							}
+							if ("rubber".equals(zombieMaterial)){
+								damage = 0;
+							}
+							damaged.damage(PvZCubed.LIGHTNING_DAMAGE, damage);
 							damaged.damage(DamageSource.thrownProjectile(this.plantEntity, this.plantEntity), 0);
 							this.plantEntity.lightningCounter = 3;
 							if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 								this.plantEntity.lightningCounter = 2;
+							}
+							else if (zombieMaterial.equals("rubber")){
+								this.plantEntity.lightningCounter = 0;
 							}
 							this.plantEntity.lightning(damaged);
 							this.plantEntity.lightningCounter = 3;

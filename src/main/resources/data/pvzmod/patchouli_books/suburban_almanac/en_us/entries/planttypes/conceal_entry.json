@@ -14,7 +14,8 @@
     {
       "type": "relations",
       "entries": [
-        "pvzmod:plants/ghostpepper_entry"
+        "pvzmod:plants/ghostpepper_entry",
+        "pvzmod:plants/nightcap_entry"
       ],
       "title": "☁ Conceal Plants:"
     }

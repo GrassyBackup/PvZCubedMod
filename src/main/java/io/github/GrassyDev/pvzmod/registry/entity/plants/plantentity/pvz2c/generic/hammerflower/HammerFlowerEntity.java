@@ -351,10 +351,10 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		}
 		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
 		float damage = this.getAttackDamage();
-		if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial)) {
+		if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
 			damage = damage * 2;
 		}
-		if ("paper".equals(zombieMaterial)) {
+		if ("paper".equals(zombieMaterial) || "rubber".equals(zombieMaterial)) {
 			damage = damage / 2;
 		}
 		boolean bl = damaged.damage(DamageSource.mob(this), damage);

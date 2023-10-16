@@ -16,6 +16,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.BrowncoatVari
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.browncoat.mummy.MummyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.browncoat.sargeant.SargeantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.crystalhelmet.CrystalHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallichelmet.MetalHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicobstacle.MetalObstacleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield.MetalShieldEntity;
@@ -112,7 +113,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 								 SpawnReason spawnReason, @Nullable EntityData entityData,
 								 @Nullable NbtCompound entityNbt) {
 		if (this.getType().equals(PvZEntity.CONEHEAD) ||
-				this.getType().equals(PvZEntity.MUMMYCONE)){
+				this.getType().equals(PvZEntity.MUMMYCONE) ||
+				this.getType().equals(PvZEntity.FUTURECONE)){
 			setVariant(BrowncoatVariants.CONEHEAD);
 			createConeheadProp();
 			this.initCustomGoals();
@@ -129,7 +131,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.BUCKETHEAD) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKET) ||
-				this.getType().equals(PvZEntity.PEASANTBUCKET)){
+				this.getType().equals(PvZEntity.PEASANTBUCKET) ||
+				this.getType().equals(PvZEntity.FUTUREBUCKET)){
 			setVariant(BrowncoatVariants.BUCKETHEAD);
 			createBucketProp();
 			this.initCustomGoals();
@@ -161,6 +164,11 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 			createBrickProp();
 			this.initCustomGoals();
 		}
+		else if (this.getType().equals(PvZEntity.HOLOHEAD)){
+			setVariant(BrowncoatVariants.HOLOHEAD);
+			createHoloProp();
+			this.initCustomGoals();
+		}
 		else if (this.getType().equals(PvZEntity.SCREENDOOR)){
 			createShield();
 			setVariant(BrowncoatVariants.SCREENDOOR);
@@ -174,21 +182,25 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.BROWNCOATHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTHYPNO) ||
-				this.getType().equals(PvZEntity.SARGEANTHYPNO)){
+				this.getType().equals(PvZEntity.SARGEANTHYPNO) ||
+				this.getType().equals(PvZEntity.FUTUREHYPNO)){
 			setVariant(BrowncoatVariants.BROWNCOATHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.CONEHEADHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYCONEHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTCONEHYPNO) ||
-				this.getType().equals(PvZEntity.SARGEANTBOWLHYPNO)){
+				this.getType().equals(PvZEntity.FUTURECONEHYPNO) ||
+				this.getType().equals(PvZEntity.SARGEANTBOWLHYPNO) ||
+				this.getType().equals(PvZEntity.FUTUREHYPNO)){
 			setVariant(BrowncoatVariants.CONEHEADHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.BUCKETHEADHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKETHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTBUCKETHYPNO) ||
-				this.getType().equals(PvZEntity.SARGEANTHELMETHYPNO)){
+				this.getType().equals(PvZEntity.SARGEANTHELMETHYPNO) ||
+				this.getType().equals(PvZEntity.FUTUREBUCKETHYPNO)){
 			setVariant(BrowncoatVariants.BUCKETHEADHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
@@ -202,6 +214,10 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.BRICKHEADHYPNO)){
 			setVariant(BrowncoatVariants.BRICKHEADHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.HOLOHEADHYPNO)){
+			setVariant(BrowncoatVariants.HOLOHEADHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.SCREENDOORHYPNO) ||
@@ -273,6 +289,15 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 	public void createBrickProp() {
 		if (world instanceof ServerWorld serverWorld) {
 			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.BRICKGEAR, this.world);
+			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			propentity.startRiding(this);
+		}
+	}
+
+	public void createHoloProp() {
+		if (world instanceof ServerWorld serverWorld) {
+			CrystalHelmetEntity propentity = new CrystalHelmetEntity(PvZEntity.HOLOGEAR, this.world);
 			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
@@ -419,6 +444,10 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.PEASANTCONEHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTBUCKETHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTKNIGHTHYPNO) ||
+				this.getType().equals(PvZEntity.FUTUREHYPNO) ||
+				this.getType().equals(PvZEntity.FUTURECONEHYPNO) ||
+				this.getType().equals(PvZEntity.FUTUREBUCKETHYPNO) ||
+				this.getType().equals(PvZEntity.HOLOHEADHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTBOWLHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTHELMETHYPNO) ||
@@ -547,7 +576,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		if (this instanceof MummyEntity) {
 			if (pyramidPropEntity == null &&this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
 					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
-					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) &&
+					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
 					!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
 				assert maxSpeedAttribute != null;
 				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
@@ -561,7 +590,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		else if (this instanceof SargeantEntity) {
 			if (sergeantShieldEntity == null && this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
 					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
-					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) &&
+					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
 					!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
 				assert maxSpeedAttribute != null;
 				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
@@ -576,7 +605,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 			if (zombieObstacleEntity.isEmpty() &&
 					this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
 					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
-					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) &&
+					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
 					!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
 				assert maxSpeedAttribute != null;
 				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
@@ -743,6 +772,18 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.PEASANTKNIGHT)){
 			hypnoType = PvZEntity.PEASANTKNIGHTHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.FUTUREZOMBIE)){
+			hypnoType = PvZEntity.FUTUREHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.FUTURECONE)){
+			hypnoType = PvZEntity.FUTURECONEHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.FUTUREBUCKET)){
+			hypnoType = PvZEntity.FUTUREBUCKETHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.HOLOHEAD)){
+			hypnoType = PvZEntity.HOLOHEADHYPNO;
 		}
 		else if (this.getType().equals(PvZEntity.SARGEANT)){
 			hypnoType = PvZEntity.SARGEANTHYPNO;

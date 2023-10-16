@@ -186,7 +186,10 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
 		if (this.getHat().equals(LilypadHats.LILY)){
-			if (this.dryLand || this.onWaterTile) {
+			if (this.onWaterTile) {
+				event.getController().setAnimation(new AnimationBuilder().loop("lilypad.onground.lily2"));
+			}
+			else if (this.dryLand) {
 				event.getController().setAnimation(new AnimationBuilder().loop("lilypad.onground.lily"));
 			}
 			else {
@@ -194,7 +197,10 @@ public class LilyPadEntity extends PlantEntity implements IAnimatable {
 			}
 		}
 		else {
-			if (this.dryLand || this.onWaterTile) {
+			if (this.onWaterTile) {
+				event.getController().setAnimation(new AnimationBuilder().loop("lilypad.onground2"));
+			}
+			else if (this.dryLand) {
 				event.getController().setAnimation(new AnimationBuilder().loop("lilypad.onground"));
 			}
 			else {

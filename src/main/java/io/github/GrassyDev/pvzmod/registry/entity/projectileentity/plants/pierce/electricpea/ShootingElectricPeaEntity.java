@@ -416,7 +416,10 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 				if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 					this.lightningCounter -= 2;
 				}
-				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic")){
+				else if (zombieMaterial.equals("rubber")){
+					this.lightningCounter = 0;
+				}
+				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic") && !zombieMaterial.equals("crystal")){
 					--this.lightningCounter;
 				}
 				if (getBeamTarget2() == null && getElectricBeamTarget2() == null){
@@ -484,37 +487,44 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 					this.setElectricBeamTargetId(this.getId());
 					this.setHypnoBeamTarget(entity.getId());
+					if (entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
+						damage = damage * 2;
+					}
+					if ("electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
+						damage = damage / 2;
+					}
+					if ("rubber".equals(zombieMaterial)){
+						damage = 0;
+					}
 					if (damage > ((LivingEntity) entity).getHealth() &&
 							!(entity instanceof ZombieShieldEntity) &&
 							entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
 						float damage2 = damage - ((LivingEntity) entity).getHealth();
-						if (entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)){
-							entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage2 * 2);
-						}
-						else {
-							entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage2);
-						}
-						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
 						this.lightningCounter = 3;
 						if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 							this.lightningCounter -= 2;
 						}
+						else if (zombieMaterial.equals("rubber")){
+							this.lightningCounter = 0;
+						}
 						this.lightning((LivingEntity) entity);
 						this.lightningCounter = 3;
+						entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage);
+						generalPvZombieEntity.damage(PvZCubed.LIGHTNING_DAMAGE, damage2);
+						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
+						generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
 					} else {
-						if (entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)){
-							entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage * 2);
-						}
-						else {
-							entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage);
-						}
-						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
 						this.lightningCounter = 3;
 						if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 							this.lightningCounter -= 2;
 						}
+						else if (zombieMaterial.equals("rubber")){
+							this.lightningCounter = 0;
+						}
 						this.lightning((LivingEntity) entity);
 						this.lightningCounter = 3;
+						entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage);
+						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
 					}
 					entityStore.add((LivingEntity) entity);
 				}

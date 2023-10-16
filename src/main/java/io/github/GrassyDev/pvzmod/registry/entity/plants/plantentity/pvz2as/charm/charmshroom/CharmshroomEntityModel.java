@@ -14,7 +14,12 @@ public class CharmshroomEntityModel extends AnimatedGeoModel<CharmshroomEntity> 
     @Override
     public Identifier getTextureResource(CharmshroomEntity object)
     {
-        return new Identifier("pvzmod", "textures/entity/hypnoshroom/charmshroom.png");
+		if (object.getMoonPowered()) {
+			return new Identifier("pvzmod", "textures/entity/hypnoshroom/charmshroom_shadow.png");
+		}
+		else {
+			return new Identifier("pvzmod", "textures/entity/hypnoshroom/charmshroom.png");
+		}
     }
 
     @Override

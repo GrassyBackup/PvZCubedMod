@@ -2,7 +2,7 @@
   "name": "Peasant Zombie",
   "icon": "pvzmod:peasant_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 83,
+  "sortnum": 90,
   "pages": [
     {
       "type": "text",

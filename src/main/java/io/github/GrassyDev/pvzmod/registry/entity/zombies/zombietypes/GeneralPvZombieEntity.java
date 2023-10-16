@@ -839,11 +839,18 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		}
 		this.lastHealth = this.getHealth();
 		if (!this.world.isClient) {
+			if (this.hasStatusEffect(SHADOW)) {
+				this.removeStatusEffect(CHEESE);
+				this.removeStatusEffect(BARK);
+			}
 			if (this.hasStatusEffect(BARK)) {
 				this.removeStatusEffect(CHEESE);
 				barkTicks = this.getStatusEffect(BARK).getDuration();
 			}
 			if (this.hasStatusEffect(ICE)) {
+				if (this.hasStatusEffect(SHADOW)) {
+					this.removeStatusEffect(SHADOW);
+				}
 				if (this.hasStatusEffect(BARK)) {
 					this.removeStatusEffect(BARK);
 				}
@@ -1003,7 +1010,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("paper")) && this.hasStatusEffect(ACID)) {
 			this.removeStatusEffect(ACID);
 		}
-		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("stone")) {
+		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("stone") || ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("crystal")) {
 			this.removeStatusEffect(FROZEN);
 		}
 		LivingEntity target = this.getTarget();

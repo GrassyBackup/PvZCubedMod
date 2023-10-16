@@ -17,7 +17,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -216,6 +215,9 @@ public class ShootingSnowPeaEntity extends PvZProjectileEntity implements IAnima
 					entity.playSound(PvZSounds.SNOWPEAHITEVENT, 0.2F, 1F);
 				}
 				float damage = PVZCONFIG.nestedProjDMG.snowPeaDMG();
+				if ("crystal".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
 				if (damage > ((LivingEntity) entity).getHealth() &&
 						!(entity instanceof ZombieShieldEntity) &&
 						entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {

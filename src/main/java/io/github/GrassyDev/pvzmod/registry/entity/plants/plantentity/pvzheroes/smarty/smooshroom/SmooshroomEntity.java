@@ -368,10 +368,10 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 							default -> PvZSounds.PEAHITEVENT;
 						};
 						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial)) {
+						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
 							damage = damage * 2;
 						}
-						if ("paper".equals(zombieMaterial)) {
+						if ("paper".equals(zombieMaterial) || "rubber".equals(zombieMaterial)) {
 							damage = damage / 2;
 						}
 						if (damage > livingEntity.getHealth() &&

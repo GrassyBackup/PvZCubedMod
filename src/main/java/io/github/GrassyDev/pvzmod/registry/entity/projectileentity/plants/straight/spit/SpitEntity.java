@@ -15,7 +15,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -161,7 +160,7 @@ public class SpitEntity extends PvZProjectileEntity implements IAnimatable {
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				if ("paper".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
 					damage = damage * 2;
-				} else if ("plant".equals(zombieMaterial)) {
+				} else if ("plant".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
 					damage = damage / 2;
 				}
 				SoundEvent sound;

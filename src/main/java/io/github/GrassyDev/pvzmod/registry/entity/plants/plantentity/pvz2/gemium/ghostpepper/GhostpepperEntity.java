@@ -4,10 +4,16 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieVehicleEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -26,6 +32,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -122,62 +129,95 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 			this.attacking = false;
 		}
 		if (status == 106) {
+			double shadow = 1;
+			if (this.getShadowPowered()){
+				shadow = 2;
+			}
 			for(int i = 0; i < 3; ++i) {
 				RandomGenerator randomGenerator = this.getRandom();
 				double d = 0;
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 				double f = 0;
-				this.world.addParticle(ParticleTypes.SOUL, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SCULK_SOUL, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SCULK_SOUL, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
 			}
 			for(int i = 0; i < 4; ++i) {
 				RandomGenerator randomGenerator = this.getRandom();
 				double e = this.random.nextDouble() / 6 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow,
 						this.getY() + (this.random.range(-1, 1)),
 						this.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
 			}
 		}
 		if (status == 107) {
+			double shadow = 1;
+			if (this.getShadowPowered()){
+				shadow = 2;
+			}
 			for(int i = 0; i < 3; ++i) {
 				RandomGenerator randomGenerator = this.getRandom();
 				double d = 0;
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 				double f = 0;
-				this.world.addParticle(ParticleTypes.SOUL, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getFZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getFZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SCULK_SOUL, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getFZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getFZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getFZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getFZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SCULK_SOUL, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getFZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getFZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
 			}
 			for(int i = 0; i < 4; ++i) {
 				RandomGenerator randomGenerator = this.getRandom();
 				double e = this.random.nextDouble() / 6 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getFX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow,
 						this.getY() + (this.random.range(-1, 1)),
 						this.getFZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
 			}
 		}
 		if (status == 108) {
+			double shadow = 1;
+			if (this.getShadowPowered()){
+				shadow = 2;
+			}
 			for(int i = 0; i < 3; ++i) {
 				RandomGenerator randomGenerator = this.getRandom();
 				double d = 0;
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 				double f = 0;
-				this.world.addParticle(ParticleTypes.SOUL, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getBZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getBZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SCULK_SOUL, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getBZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), this.getY() + (this.random.range(-1, 1)), this.getBZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F), d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getBZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getBZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SCULK_SOUL, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getBZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, this.getY() + (this.random.range(-1, 1)), this.getBZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow, d, e, f);
 			}
 			for(int i = 0; i < 4; ++i) {
 				RandomGenerator randomGenerator = this.getRandom();
 				double e = this.random.nextDouble() / 6 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getBX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F) * shadow,
 						this.getY() + (this.random.range(-1, 1)),
 						this.getBZ()  + (double)MathHelper.nextBetween(randomGenerator,
+								-0.5F, 0.5F), 0, e, 0);
+			}
+		}
+
+		if (status == 109) {
+			for(int i = 0; i < 6; ++i) {
+				RandomGenerator randomGenerator = this.getRandom();
+				double d = 0;
+				double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
+				double f = 0;
+				this.world.addParticle(ParticleTypes.SOUL, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F), this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F), d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F), this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F), d, e, f);
+				this.world.addParticle(ParticleTypes.SCULK_SOUL, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F), this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F), d, e, f);
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F), this.getY() + (this.random.range(-1, 1)), this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F), d, e, f);
+			}
+			for(int i = 0; i < 6; ++i) {
+				RandomGenerator randomGenerator = this.getRandom();
+				double e = this.random.nextDouble() / 6 * (this.random.range(0, 1));
+				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -3F, 3F),
+						this.getY() + (this.random.range(-1, 1)),
+						this.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
 			}
 		}
@@ -258,7 +298,10 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 	}
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if (this.attacking && this.transTick > 0){
+		if (this.exploding) {
+			event.getController().setAnimation(new AnimationBuilder().playAndHold("ghostpepper.explode"));
+		}
+		else if (this.attacking && this.transTick > 0){
 			event.getController().setAnimation(new AnimationBuilder().loop("ghostpepper.transform"));
 		}
 		else if (this.attacking){
@@ -273,11 +316,10 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 	/** /~*~//~*AI*~//~*~/ **/
 
 	protected boolean attacking = false;
-	private float boxOffset;
 	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
-	private void raycastExplode() {
-		Vec3d vec3d2 = new Vec3d((double) boxOffset, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+	private void raycastExplode(float boxOffset, float zOffset) {
+		Vec3d vec3d2 = new Vec3d((double) boxOffset, 0.0, zOffset).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1, 4, 1).offset(vec3d2).offset(0, -1.5, 0));
 		Vec3d vec3d3 = this.getBoundingBox().offset(vec3d2).getCenter();
 		if (boxOffset < 0){
@@ -314,10 +356,93 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
 					damage = damage * 2;
 				}
+				if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)){
+					damage = damage / 2;
+				}
 				if (!checkList.contains(livingEntity)) {
 					this.playSound(PvZSounds.PEAHITEVENT, 1, 1);
 					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 					checkList.add(livingEntity);
+				}
+			}
+		}
+	}
+
+	private void raycastExplode2() {
+		Vec3d vec3d = this.getPos();
+		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
+		Iterator var9 = list.iterator();
+		while (true) {
+			LivingEntity livingEntity;
+			do {
+				do {
+					if (!var9.hasNext()) {
+						return;
+					}
+
+					livingEntity = (LivingEntity) var9.next();
+				} while (livingEntity == this);
+			} while (this.squaredDistanceTo(livingEntity) > 16);
+			if (livingEntity instanceof IceTile || livingEntity instanceof SnowTile || livingEntity instanceof WaterTile) {
+				livingEntity.discard();
+			}
+			float damage = 90;
+			if (livingEntity instanceof OilTile oilTile){
+				oilTile.makeFireTrail(oilTile.getBlockPos());
+			}
+			ZombiePropEntity zombiePropEntity4 = null;
+			if (livingEntity.hasVehicle()) {
+				for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+					if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+						zombiePropEntity4 = zpe;
+					}
+				}
+			}
+			for (Entity entity1 : livingEntity.getPassengerList()) {
+				if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+					zombiePropEntity4 = zpe;
+				}
+			}
+			if (((livingEntity instanceof Monster &&
+					zombiePropEntity4 == null &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
+				ZombiePropEntity zombiePropEntity2 = null;
+				for (Entity entity1 : livingEntity.getPassengerList()) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
+						zombiePropEntity2 = zpe;
+					}
+				}
+				if (damage > livingEntity.getHealth() &&
+						!(livingEntity instanceof ZombieShieldEntity) &&
+						livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+					float damage2 = damage - livingEntity.getHealth();
+					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
+					checkList.add(livingEntity);
+					checkList.add(generalPvZombieEntity);
+				} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
+					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
+					checkList.add(zombieShieldEntity);
+				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
+
+					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					checkList.add(livingEntity);
+					checkList.add(zombieShieldEntity);
+				} else {
+					if (livingEntity instanceof ZombiePropEntity zombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						checkList.add(livingEntity);
+						checkList.add(generalPvZombieEntity);
+					} else if (zombiePropEntity2 == null && !checkList.contains(livingEntity)) {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						checkList.add(livingEntity);
+					}  else if (livingEntity instanceof ZombieVehicleEntity && !checkList.contains(livingEntity)) {
+						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						checkList.add(livingEntity);
+					}
 				}
 			}
 		}
@@ -355,10 +480,42 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 	private int tickDamage = 20;
 	private int transTick = 12;
 
+	private int explodeTick = 15;
+
+	private boolean exploding = false;
+
 	public void tick() {
+		if (this.world instanceof ServerWorld serverWorld) {
+			if (this.getWorld().getMoonSize() < 0.1 && this.world.isSkyVisible(this.getBlockPos())) {
+				if (serverWorld.isNight()){
+					this.setShadowPowered(Shadow.TRUE);
+				}
+			} else {
+				this.setShadowPowered(Shadow.FALSE);
+			}
+			if (this.getWorld().getMoonSize() > 0.9 && this.world.isSkyVisible(this.getBlockPos())) {
+				if (serverWorld.isNight()){
+					this.setMoonPowered(Moon.TRUE);
+				}
+			} else {
+				this.setMoonPowered(Moon.FALSE);
+			}
+		}
 		super.tick();
 		if (this.getLiftime() <= 0){
-			this.discard();
+			if (this.getMoonPowered()){
+				this.exploding = true;
+				this.world.sendEntityStatus(this, (byte) 109);
+				if (--explodeTick <= 0){
+					this.checkList.clear();
+					this.raycastExplode2();
+					this.playSound(PvZSounds.POTATOMINEEXPLOSIONEVENT, 0.5f, 1);
+					this.discard();
+				}
+			}
+			else {
+				this.discard();
+			}
 		}
 		if (tickDelay <= 1) {
 			if (!this.isAiDisabled() && this.isAlive()) {
@@ -382,12 +539,23 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 			this.world.sendEntityStatus(this, (byte) 101);
 			if (--tickDamage <= 0){
 				this.checkList.clear();
-				for (int u = -2; u <= 2; ++u) {
-					this.boxOffset = (float) u;
-					this.raycastExplode();
-					this.world.sendEntityStatus(this, (byte) 106);
-					this.world.sendEntityStatus(this, (byte) 107);
-					this.world.sendEntityStatus(this, (byte) 108);
+				if (this.getShadowPowered()) {
+					for (int u = -2; u <= 2; ++u) {
+						this.raycastExplode(u, -1);
+						this.raycastExplode(u, 1);
+						this.raycastExplode(u, 0);
+						this.world.sendEntityStatus(this, (byte) 106);
+						this.world.sendEntityStatus(this, (byte) 107);
+						this.world.sendEntityStatus(this, (byte) 108);
+					}
+				}
+				else {
+					for (int u = -2; u <= 2; ++u) {
+						this.raycastExplode(u, 0);
+						this.world.sendEntityStatus(this, (byte) 106);
+						this.world.sendEntityStatus(this, (byte) 107);
+						this.world.sendEntityStatus(this, (byte) 108);
+					}
 				}
 				tickDamage = 20;
 			}

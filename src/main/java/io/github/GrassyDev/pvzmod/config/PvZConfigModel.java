@@ -14,6 +14,7 @@ public class PvZConfigModel {
 	public static class PvZSpawnNest {
 		@RestartRequired
 		public boolean spawnPlants = true;
+		public boolean specialZombieSpawn = false;
 		public boolean hoeAlternative = false;
 		public int hoeBreak = 25;
 		@Nest
@@ -270,6 +271,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float navybeanS = 5.0f;
 		@RestartRequired
+		public float nightcapS = 15.0f;
+		@RestartRequired
 		public float oilyOliveS = 2.5f;
 		@RestartRequired
 		public float olivepitS = 12.5f;
@@ -377,7 +380,7 @@ public class PvZConfigModel {
 		public float boomerangDMG = 3.5f;
 		public float bubblesDMG = 2f;
 		public float cabbageDMG = 4f;
-		public float cardDMG = 1f;
+		public float cardDMGv2 = 0.5f;
 		public float coconutDMGv2 = 180f;
 		public float coconutSDMG = 100f;
 		public float dropDMGv2 = 2.5f;
@@ -388,7 +391,7 @@ public class PvZConfigModel {
 		public float flamingPeaDMGv2 = 8f;
 		public float flamingPeaSDMG = 4f;
 		public float fumeDMG = 2.5f;
-		public float hypnoprojDMG = 16f;
+		public float hypnoprojDMGv2 = 8f;
 		public float icebergDMGv2 = 3f;
 		public float icebergSDMG = 1f;
 		public float icespikeDMGv2 = 2f;
@@ -402,6 +405,7 @@ public class PvZConfigModel {
 		public float pepperDMGv2 = 7f;
 		public float pepperSDMG = 2.5f;
 		public float piercepeaDMG = 3f;
+		public float piercesporeDMG = 6f;
 		public float plasmaPeaDMG = 12f;
 		public float rainbowBulletDMG = 4f;
 		public float snowPeaDMG = 4f;
@@ -455,11 +459,13 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double browncoatH = 27D;
 		@RestartRequired
-		public double bobsledH = 65D;
-		@RestartRequired
 		public double peasantH = 27D;
 		@RestartRequired
 		public double mummyH = 27D;
+		@RestartRequired
+		public double futureH = 27D;
+		@RestartRequired
+		public double bobsledH = 65D;
 		@RestartRequired
 		public double sargeantH = 27D;
 		@RestartRequired
@@ -569,6 +575,9 @@ public class PvZConfigModel {
 		public double sarcophagusH = 212D;
 		@RestartRequired
 		public double bowlH = 27D;
+
+		@RestartRequired
+		public double holoHelmetH = 190D;
 
 		@RestartRequired
 		public double pumpkinH = 84D;

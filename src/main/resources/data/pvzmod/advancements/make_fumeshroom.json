@@ -32,7 +32,8 @@
   "rewards": {
     "recipes": [
       "pvzmod:plants/ailment/gloomshroom",
-      "pvzmod:plants/winter/breezeshroom"
+      "pvzmod:plants/winter/breezeshroom",
+      "pvzmod:plants/conceal/nightcap"
     ],
     "experience": 25
   }

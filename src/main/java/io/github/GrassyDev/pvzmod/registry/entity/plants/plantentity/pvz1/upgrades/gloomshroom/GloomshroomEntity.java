@@ -265,9 +265,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 						} else {
 							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 						}
-						if (!(livingEntity instanceof ZombieShieldEntity)) {
-							livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
-						}
+						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
 					}
 				}
 			}

@@ -147,7 +147,7 @@ public class HypnoProjEntity extends PvZProjectileEntity implements IAnimatable 
 			boolean hasHelmet = false;
 			ZombiePropEntity zombiePropEntity2 = null;
 			ZombiePropEntity zombiePropEntity3 = null;
-			float damage = PVZCONFIG.nestedProjDMG.hypnoprojDMG();
+			float damage = PVZCONFIG.nestedProjDMG.hypnoprojDMGv2();
 			for (Entity entity1 : entity.getPassengerList()) {
 				if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 					zombiePropEntity2 = zpe;
@@ -162,8 +162,12 @@ public class HypnoProjEntity extends PvZProjectileEntity implements IAnimatable 
 			if (entity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
 				hasHelmet = true;
 			}
-			if (hasHelmet || (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
-				damage = damage / 2;
+			if (!hasHelmet && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+				damage = damage * 2;
+			}
+			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+			if ("crystal".equals(zombieMaterial)) {
+				damage = damage * 2;
 			}
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
@@ -172,7 +176,6 @@ public class HypnoProjEntity extends PvZProjectileEntity implements IAnimatable 
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
 				double random = Math.random();
-				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;

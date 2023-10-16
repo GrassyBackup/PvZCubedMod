@@ -26,12 +26,12 @@
     {
       "type": "relations",
       "entries": [
-        "pvzmod:zombies/browncoat_entry",
-        "pvzmod:zombies/flagzombie_entry",
-        "pvzmod:zombies/conehead_entry",
-        "pvzmod:zombies/buckethead_entry",
+        "pvzmod:zombies/futurezombie_entry",
+        "pvzmod:zombies/futurecone_entry",
+        "pvzmod:zombies/futurebucket_entry",
         "pvzmod:zombies/jetpack_entry",
-        "pvzmod:zombies/robocone_entry"
+        "pvzmod:zombies/robocone_entry",
+        "pvzmod:zombies/holohead_entry"
       ],
       "title": "Spawnable Zombies"
     }

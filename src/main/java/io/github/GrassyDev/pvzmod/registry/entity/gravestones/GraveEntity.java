@@ -38,8 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZPOISON;
-import static io.github.GrassyDev.pvzmod.PvZCubed.ZOMBIE_MATERIAL;
+import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
 public abstract class GraveEntity extends PathAwareEntity implements Monster {
 
@@ -138,6 +137,12 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 								 @Nullable NbtCompound entityNbt) {
 		if (this.isInfinite()){
 			this.setPersistent();
+		}
+		if (this.world.getGameRules().getBoolean(PvZCubed.SPECIAL_ZOMBIE) || PVZCONFIG.nestedSpawns.specialZombieSpawn()) {
+			double random = Math.random();
+			if (random <= 0.25) {
+				this.setUnlockSpecial(UnlockSpecial.TRUE);
+			}
 		}
 		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
 	}

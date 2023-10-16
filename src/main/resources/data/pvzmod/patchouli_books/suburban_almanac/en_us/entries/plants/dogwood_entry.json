@@ -2,7 +2,7 @@
   "name": "Dogwood",
   "icon": "pvzmod:dogwood_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 500,
+  "sortnum": 600,
   "advancement": "pvzmod:make_wallnut",
   "pages": [
     {

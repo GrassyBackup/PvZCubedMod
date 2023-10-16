@@ -97,6 +97,12 @@ public class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 		else if (this.hasStatusEffect(PvZCubed.ICE) && vehicle != null && !vehicle.hasStatusEffect(PvZCubed.ICE) && !(this instanceof ZombieShieldEntity)){
 			this.removeStatusEffect(PvZCubed.ICE);
 		}
+		if (this.hasStatusEffect(PvZCubed.SHADOW) && vehicle != null && !(this instanceof ZombieShieldEntity)){
+			vehicle.addStatusEffect((new StatusEffectInstance(PvZCubed.SHADOW, Objects.requireNonNull(this.getStatusEffect(PvZCubed.SHADOW)).getDuration(), Objects.requireNonNull(this.getStatusEffect(PvZCubed.SHADOW)).getAmplifier())));
+		}
+		else if (this.hasStatusEffect(PvZCubed.SHADOW) && vehicle != null && !vehicle.hasStatusEffect(PvZCubed.SHADOW) && !(this instanceof ZombieShieldEntity)){
+			this.removeStatusEffect(PvZCubed.SHADOW);
+		}
 		if (this.hasStatusEffect(PvZCubed.BARK) && vehicle != null && !(this instanceof ZombieShieldEntity)){
 			vehicle.addStatusEffect((new StatusEffectInstance(PvZCubed.BARK, Objects.requireNonNull(this.getStatusEffect(PvZCubed.BARK)).getDuration(), Objects.requireNonNull(this.getStatusEffect(PvZCubed.BARK)).getAmplifier())));
 		}

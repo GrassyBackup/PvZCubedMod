@@ -17,9 +17,10 @@
       "text": [
         "$(br2)Chill",
         "$(br2)Chill slows down Zombies for a total of 4 seconds, then they are immune to Chill for 4 seconds.",
-        "$(br2)Damage done by zombies is halved.",
-        "$(br2)Moves based on animation like Gargantuar's smash are slowed down by half.",
-        "$(br2)Machines can't be Chilled."
+        "$(br)Damage done by zombies is halved.",
+        "$(br)Moves based on animation like Gargantuar's smash are slowed down by half.",
+        "$(br2)Machines can't be Chilled.",
+        "$(br)Deals half the damage against Crystal."
       ]
     },
     {
@@ -28,9 +29,10 @@
         "$(br2)Frozen",
         "$(br2)Frozen completely stops Zombies in their tracks.",
         "$(br2)Frozen Zombies can't attack.",
-        "$(br2)Frozen Zombies can't do their abilities.",
-        "$(br)Frozen instantly kills zombies that swim and fly, and aren't Gargantuars ",
-        "$(br)Machines and Stone can't be Frozen."
+        "$(br)Frozen Zombies can't do their abilities.",
+        "$(br)Frozen instantly kills zombies that swim and fly, and aren't Gargantuars.",
+        "$(br)Deals half the damage against Crystal.",
+        "$(br)Machines, Stone, and Crystal can't be Frozen."
       ]
     },
     {
@@ -42,7 +44,7 @@
         "Zombies get Warm, which prevents Chill from being applied. ",
         "Thaws Chilled or Frozen Zombies. ",
         "Uncloaks Stealthing Zombies. ",
-        "$(br)Deals double the damage against Paper and Plant."
+        "$(br)Deals double against Paper and Plant, half Rubber and Crystal."
       ]
     },
     {
@@ -51,7 +53,7 @@
         "$(br2)Water",
         "$(br2)Wet Zombies, extinguishing and preventing Fire for a short time.",
         "$(br2)Deals 4 DMG/sec to Electronic Zombies.",
-        "$(br2)Deals double the damage against Paper and Stone, and half against Plant."
+        "$(br2)Deals double the damage against Paper and Stone, and half against Plant and Crystal."
       ]
     },
     {
@@ -59,17 +61,22 @@
       "text": [
         "$(br2)Wind",
         "$(br2)Knocks back Flying Zombies that don't have protection.",
-        "$(br2)Deals double the damage against Paper, and half against Stone."
+        "$(br2)Deals double the damage against Paper, and half against Stone and Crystal."
       ]
     },
     {
       "type": "text",
       "text": [
         "Electricity",
-        "$(br2)Chains damage between Zombies, the chain damage is the base damage. Chain's range is by the Electric Radius, that is based on the location of the hit Zombie.",
-        "$(br)Electricity chains by the number of Electric Chains. Metallic doesn't count towards the number. Plastic/Plant cost 2 Electric Chains when hit.",
-        "$(br)Electricity chains can hit Stealthing Zombies.",
-        "$(br)Electric damage doubles if the target is Wet."
+        "$(br2)Chains damage between Zombies, the chain damage is the base damage. Chain's range is by the Electric Radius, that is based on the location of the hit Zombie. ",
+        "$(br2)Electricity chains by the number of Electric Chains. Metallic, Electronic, and Crystal doesn't count towards the number. Plastic/Plant cost 2 Chains, Rubber zeroes."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br2)Electricity chains can hit Stealthing Zombies.",
+        "$(br2)Deals double the damage against Wet targets, half against Electronic and Crystal, and 0 against Rubber."
       ]
     },
     {
@@ -120,7 +127,7 @@
       "type": "text",
       "text": [
         "$(br2)Magic",
-        "$(br2)Deals double the damage against Zombies without headgear and aren't Covered",
+        "$(br2)Deals double the damage against Crystal and Zombies without headgear and aren't Covered.",
         "$(br2)Hits Stealthing Zombies."
       ]
     },
@@ -128,7 +135,7 @@
       "type": "text",
       "text": [
         "$(br2)Heavy",
-        "$(br2)Deals double the damage against Metal, Electronic, and Stone.",
+        "$(br2)Deals double the damage against Metal, Electronic, Stone, and Crystal.",
         "$(br2)Hits Stealthing Zombies."
       ]
     },

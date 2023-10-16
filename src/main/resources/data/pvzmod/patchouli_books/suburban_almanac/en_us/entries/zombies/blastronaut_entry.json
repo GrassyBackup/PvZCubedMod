@@ -2,7 +2,7 @@
   "name": "Blastronaut Zombie",
   "icon": "pvzmod:blastronaut_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 82,
+  "sortnum": 87,
   "advancement": "pvzmod:make_challenge",
   "pages": [
     {

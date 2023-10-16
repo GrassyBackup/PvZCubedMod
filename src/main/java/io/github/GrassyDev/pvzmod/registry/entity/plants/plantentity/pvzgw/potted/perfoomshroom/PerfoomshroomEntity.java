@@ -264,13 +264,17 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 					livingEntity = (LivingEntity) var9.next();
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 81);
-			float damage = 100;
+			float damage = 50;
 
 			ZombiePropEntity zombiePropEntity4 = null;
+			boolean hasHelmet = false;
 			if (livingEntity.hasVehicle()) {
 				for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
 					if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
 						zombiePropEntity4 = zpe;
+					}
+					if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+						hasHelmet = true;
 					}
 				}
 			}
@@ -278,6 +282,19 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 				if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
 					zombiePropEntity4 = zpe;
 				}
+				if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+					hasHelmet = true;
+				}
+			}
+			if (livingEntity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+				hasHelmet = true;
+			}
+			if (!hasHelmet && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+				damage = damage * 2;
+			}
+			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+			if ("crystal".equals(zombieMaterial)) {
+				damage = damage * 2;
 			}
 			if (((livingEntity instanceof Monster &&
 					zombiePropEntity4 == null &&

@@ -191,11 +191,16 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 				} while (livingEntity == this);
 			} while (this.squaredDistanceTo(livingEntity) > 25);
 
+			float damage = 10;
 			ZombiePropEntity zombiePropEntity4 = null;
+			boolean hasHelmet = false;
 			if (livingEntity.hasVehicle()) {
 				for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
 					if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
 						zombiePropEntity4 = zpe;
+					}
+					if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+						hasHelmet = true;
 					}
 				}
 			}
@@ -203,6 +208,19 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 				if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
 					zombiePropEntity4 = zpe;
 				}
+				if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+					hasHelmet = true;
+				}
+			}
+			if (livingEntity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+				hasHelmet = true;
+			}
+			if (!hasHelmet && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+				damage = damage * 2;
+			}
+			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+			if ("crystal".equals(zombieMaterial)) {
+				damage = damage * 2;
 			}
 			if (((livingEntity instanceof Monster &&
 					zombiePropEntity4 == null &&
@@ -210,23 +228,17 @@ public class BeautyshroomEntity extends PlantEntity implements IAnimatable {
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
-				float damage = 20;
-				boolean hasHelmet = false;
-				ZombiePropEntity zombiePropEntity2 = null;
 				double random = Math.random();
+
+				ZombiePropEntity zombiePropEntity2 = null;
+				ZombiePropEntity zombiePropEntity3 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
+					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
 						zombiePropEntity2 = zpe;
 					}
-					if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
-						hasHelmet = true;
+					else if (entity1 instanceof ZombiePropEntity zpe) {
+						zombiePropEntity3 = zpe;
 					}
-				}
-				if (livingEntity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
-					hasHelmet = true;
-				}
-				if (hasHelmet || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
-					damage = damage / 2;
 				}
 
 				if (damage > livingEntity.getHealth() &&

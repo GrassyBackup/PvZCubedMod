@@ -214,6 +214,9 @@ public class ShootingSnowqueenPeaEntity extends PvZProjectileEntity implements I
 				}
 				entity.playSound(PvZSounds.SNOWPEAHITEVENT, 0.2F, 1F);
 				float damage = PVZCONFIG.nestedProjDMG.snowQueenPeaDMGv2();
+				if ("crystal".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
 				if (damage > ((LivingEntity) entity).getHealth() &&
 						!(entity instanceof ZombieShieldEntity) &&
 						entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
@@ -249,7 +252,11 @@ public class ShootingSnowqueenPeaEntity extends PvZProjectileEntity implements I
 								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 										&& (generalPvZombieEntity.getHypno()))) {
 							if (livingEntity != entity) {
+								String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 								float damage3 = PVZCONFIG.nestedProjDMG.snowQueenPeaSDMG();
+								if ("crystal".equals(zombieMaterial2)) {
+									damage3 = damage3 / 2;
+								}
 								ZombiePropEntity zombiePropEntity4 = null;
 								for (Entity entity1 : livingEntity.getPassengerList()) {
 									if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity4 == null) {

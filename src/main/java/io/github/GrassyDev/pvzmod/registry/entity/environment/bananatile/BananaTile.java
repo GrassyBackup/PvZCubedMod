@@ -107,6 +107,7 @@ public class BananaTile extends TileEntity {
 						case "metallic", "electronic" -> damage + 8;
 						case "stone" -> damage + 16;
 						case "paper" -> damage - 8;
+						case "rubber" -> damage - 16;
 						default -> damage;
 					};
 					if (damage < 8){

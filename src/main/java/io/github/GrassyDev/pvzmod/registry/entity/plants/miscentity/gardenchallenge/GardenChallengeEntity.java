@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.rifttile.RiftTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.sunbomb.SunBombEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveEntity;
@@ -80,6 +81,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
     public GardenChallengeEntity(EntityType<? extends GardenChallengeEntity> entityType, World world) {
         super(entityType, world);
 
+		checkEntities();
     }
 
 	protected void initDataTracker() {
@@ -621,14 +623,39 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			}
 		}
 		super.tick();
-		if (this.currentTime != null && this.currentTime.getTime().equals(ChallengeTime.DROUGHT)){
-			List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
-			for (HostileEntity hostileEntity : list){
-				if (!hostileEntity.isWet()) {
-					hostileEntity.removeStatusEffect(PvZCubed.WET);
-					hostileEntity.removeStatusEffect(PvZCubed.ICE);
-					hostileEntity.removeStatusEffect(PvZCubed.FROZEN);
-					hostileEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 5, 1)));
+		this.checkEntities();
+		if (currentWeather == null){
+			WeatherTile weatherTile = (WeatherTile) PvZEntity.WEATHERTILE.create(world);
+			weatherTile.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
+			weatherTile.setPersistent();
+			weatherTile.setHeadYaw(0);
+			if (this.world instanceof ServerWorld serverWorld) {
+				weatherTile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+				serverWorld.spawnEntityAndPassengers(weatherTile);
+			}
+			weatherTile.setWeatherType(ChallengeWeather.CLOUD);
+		}
+		if (currentTime == null){
+			TimeTile timeTile = (TimeTile) PvZEntity.TIMETILE.create(world);
+			timeTile.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
+			timeTile.setPersistent();
+			timeTile.setHeadYaw(0);
+			if (this.world instanceof ServerWorld serverWorld) {
+				timeTile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+				serverWorld.spawnEntityAndPassengers(timeTile);
+			}
+			timeTile.setTimeType(ChallengeTime.DAY);
+		}
+		if (this.currentTime != null) {
+			if (this.currentTime.getTime().equals(ChallengeTime.DROUGHT)) {
+				List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
+				for (HostileEntity hostileEntity : list) {
+					if (!hostileEntity.isWet()) {
+						hostileEntity.removeStatusEffect(PvZCubed.WET);
+						hostileEntity.removeStatusEffect(PvZCubed.ICE);
+						hostileEntity.removeStatusEffect(PvZCubed.FROZEN);
+						hostileEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 5, 1)));
+					}
 				}
 			}
 		}
@@ -967,7 +994,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					}
 					if (addedWorld == TypeOfWorld.FUTURE){
 						nightChance = 0.3;
-						//bombChance = 0.25;
+						bombChance = 0.25;
 						rainChance = 0;
 						thunderChance = 0;
 					}
@@ -976,35 +1003,37 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						rainChance = 0;
 						thunderChance = 0.3;
 					}
-
-					double random = this.random.nextDouble();
-					currentTime.setTimeType(ChallengeTime.DAY);
-					if (random <= nightChance && nightChance > 0) {
-						if (this.getWorld().getMoonPhase() == 1) {
-							currentTime.setTimeType(ChallengeTime.NEWMOON);
-						} else if (this.getWorld().getMoonPhase() == 0) {
-							currentTime.setTimeType(ChallengeTime.FULLMOON);
-						} else {
-							currentTime.setTimeType(ChallengeTime.HALFMOON);
+;
+					if (currentTime != null && currentWeather != null) {
+						double random = this.random.nextDouble();
+						currentTime.setTimeType(ChallengeTime.DAY);
+						if (random <= nightChance && nightChance > 0) {
+							if (this.getWorld().getMoonSize() < 0.1F) {
+								currentTime.setTimeType(ChallengeTime.NEWMOON);
+							} else if (this.getWorld().getMoonSize() > 0.9F) {
+								currentTime.setTimeType(ChallengeTime.FULLMOON);
+							} else {
+								currentTime.setTimeType(ChallengeTime.HALFMOON);
+							}
 						}
-					}
-					if (random <= bombChance && bombChance > 0) {
-						currentTime.setTimeType(ChallengeTime.BOMB);
-					}
-					if (random <= droughtChance && droughtChance > 0) {
-						currentTime.setTimeType(ChallengeTime.DROUGHT);
-					}
+						if (random <= bombChance && bombChance > 0) {
+							currentTime.setTimeType(ChallengeTime.BOMB);
+						}
+						if (random <= droughtChance && droughtChance > 0) {
+							currentTime.setTimeType(ChallengeTime.DROUGHT);
+						}
 
-					double random2 = this.random.nextDouble();
-					currentWeather.setWeatherType(ChallengeWeather.CLOUD);
-					if (random2 <= rainChance && rainChance > 0) {
-						currentWeather.setWeatherType(ChallengeWeather.RAIN);
-					}
-					if (random2 <= thunderChance && thunderChance > 0) {
-						currentWeather.setWeatherType(ChallengeWeather.THUNDER);
-					}
-					if (currentTime.getTime().equals(ChallengeTime.DROUGHT)){
+						double random2 = this.random.nextDouble();
 						currentWeather.setWeatherType(ChallengeWeather.CLOUD);
+						if (random2 <= rainChance && rainChance > 0) {
+							currentWeather.setWeatherType(ChallengeWeather.RAIN);
+						}
+						if (random2 <= thunderChance && thunderChance > 0) {
+							currentWeather.setWeatherType(ChallengeWeather.THUNDER);
+						}
+						if (currentTime.getTime().equals(ChallengeTime.DROUGHT)) {
+							currentWeather.setWeatherType(ChallengeWeather.CLOUD);
+						}
 					}
 				}
 			}
@@ -1156,7 +1185,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						}
 					}
 				}
-				if (this.world instanceof ServerWorld serverWorld && this.currentWeather.getWeather().equals(ChallengeWeather.THUNDER)) {
+				if (this.world instanceof ServerWorld serverWorld && this.currentWeather != null && this.currentWeather.getWeather().equals(ChallengeWeather.THUNDER)) {
 					if (this.currentWeather.getWeather().equals(ChallengeWeather.RAIN)) {
 						for (int x = 0; x <= 2; ++x) {
 							BlockPos waterPos = waterSpots.get(this.random.range(0, waterSpots.size() - 1));
@@ -1177,6 +1206,32 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 							serverWorld.spawnEntityAndPassengers(waterTile);
 						}
 					}
+				}
+				if (this.world instanceof ServerWorld serverWorld && this.currentTime != null && this.currentTime.getTime().equals(ChallengeTime.BOMB)) {
+					for (int x = 0; x <= 3; ++x) {
+						BlockPos waterPos = waterSpots.get(this.random.range(0, waterSpots.size() - 1));
+						BlockPos sunPos = waterPos.add(0, 3, 0);
+						SunBombEntity sunBomb = (SunBombEntity) PvZEntity.SUNBOMB.create(this.world);
+						sunBomb.refreshPositionAndAngles(sunPos, 0.0F, 0.0F);
+						sunBomb.initialize(serverWorld, this.world.getLocalDifficulty(sunPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						sunBomb.setPersistent();
+						serverWorld.spawnEntityAndPassengers(sunBomb);
+					}
+					BlockPos getPos = spawnableSpots.get(this.random.range(0, spawnableSpots.size() -1));
+					FutureGraveEntity graveEntity = (FutureGraveEntity) PvZEntity.FUTUREGRAVESTONE.create(this.world);
+					graveEntity.refreshPositionAndAngles(getPos, 0.0F, 0.0F);
+					graveEntity.initialize(serverWorld, this.world.getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					if (this.getTierCount() >= 3){
+						graveEntity.setVariant(GraveDifficulty.HARD);
+						graveEntity.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
+					}
+					else {
+						graveEntity.setVariant(GraveDifficulty.MED);
+						graveEntity.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
+					}
+					graveEntity.setChallenge(GraveEntity.Challenge.TRUE);
+					graveEntity.setPersistent();
+					serverWorld.spawnEntityAndPassengers(graveEntity);
 				}
 				BlockPos getPos = spawnableSpots.get(this.random.range(0, spawnableSpots.size() -1));
 				if (this.world instanceof ServerWorld serverWorld) {
@@ -1350,22 +1405,6 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 		}
 		else if (currentWorlds.get(0)== null) {
 			this.addWorld(PvZEntity.BASICGRAVESTONE);
-			TimeTile timeTile = (TimeTile) PvZEntity.TIMETILE.create(world);
-			timeTile.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
-			timeTile.setPersistent();
-			timeTile.setHeadYaw(0);
-			WeatherTile weatherTile = (WeatherTile) PvZEntity.WEATHERTILE.create(world);
-			weatherTile.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
-			weatherTile.setPersistent();
-			weatherTile.setHeadYaw(0);
-			if (this.world instanceof ServerWorld serverWorld) {
-				timeTile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
-				weatherTile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
-				serverWorld.spawnEntityAndPassengers(timeTile);
-				serverWorld.spawnEntityAndPassengers(weatherTile);
-			}
-			timeTile.setTimeType(ChallengeTime.DAY);
-			weatherTile.setWeatherType(ChallengeWeather.CLOUD);
 			return ActionResult.SUCCESS;
 		}
 		else if (itemStack.isOf(ModItems.FERTILIZER) && this.getWaveInProgress().equals(Boolean.FALSE)) {

@@ -15,7 +15,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -199,9 +198,7 @@ public class SporeEntity extends PvZProjectileEntity implements IAnimatable {
 				} else {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 				}
-				if (!(entity instanceof ZombieShieldEntity)) {
-					((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
-				}
+				((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
 				this.world.sendEntityStatus(this, (byte) 3);
 				this.remove(RemovalReason.DISCARDED);
 				break;

@@ -1,6 +1,7 @@
 package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.util.math.BlockPos;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 /*
@@ -13,4 +14,12 @@ public class GhostPepperEntityRenderer extends GeoEntityRenderer<GhostpepperEnti
         this.shadowRadius = 0F; //change 0.7 to the desired shadow size.
     }
 
+	protected int getBlockLight(GhostpepperEntity plantEntity, BlockPos blockPos) {
+		if (plantEntity.getShadowPowered() || plantEntity.getMoonPowered()){
+			return 15;
+		}
+		else {
+			return Math.min(super.getBlockLight(plantEntity, blockPos) + 6, 15);
+		}
+	}
 }

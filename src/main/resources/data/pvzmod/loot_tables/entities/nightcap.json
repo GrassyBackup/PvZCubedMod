@@ -1,16 +1,22 @@
 {
-  "type": "minecraft:block",
+  "type": "minecraft:entity",
   "pools": [
     {
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pvzmod:egypt_tile",
+          "name": "minecraft:diamond",
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": 1
+            }
+          ],
+          "conditions": [
+            {
+              "condition": "minecraft:killed_by_player",
+              "inverse": false
             }
           ]
         }

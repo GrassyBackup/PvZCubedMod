@@ -2,7 +2,7 @@
   "name": "Robo-Cone Zombie",
   "icon": "pvzmod:robocone_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 81,
+  "sortnum": 85,
   "pages": [
     {
       "type": "text",

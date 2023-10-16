@@ -44,10 +44,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
@@ -185,21 +182,22 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 
 
 	protected List<HostileEntity> checkForZombies() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(5));
+		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
+		List<HostileEntity> list2 = new ArrayList<>();
 		Iterator var9 = list.iterator();
 		while (true) {
 			HostileEntity hostileEntity;
 			do {
 				if (!var9.hasNext()) {
-					return list;
+					return list2;
 				}
 				hostileEntity = (HostileEntity) var9.next();
-			} while (this.squaredDistanceTo(hostileEntity) > 49);
+			} while (this.squaredDistanceTo(hostileEntity) > 16);
 
 			if (!(hostileEntity instanceof ZombiePropEntity)) {
 				if (hostileEntity.getY() < (this.getY() + 2) && hostileEntity.getY() > (this.getY() - 2)) {
-					list.add(hostileEntity);
-					return list;
+					list2.add(hostileEntity);
+					return list2;
 				}
 			}
 		}

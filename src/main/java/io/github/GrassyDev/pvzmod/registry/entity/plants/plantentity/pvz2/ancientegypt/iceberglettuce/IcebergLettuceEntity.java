@@ -259,6 +259,10 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 			} while (this.squaredDistanceTo(livingEntity) > 4);
 
 			float damage = 4;
+			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+			if ("crystal".equals(zombieMaterial)) {
+				damage = damage / 2;
+			}
 			if (livingEntity instanceof ScorchedTile) {
 				livingEntity.discard();
 			}

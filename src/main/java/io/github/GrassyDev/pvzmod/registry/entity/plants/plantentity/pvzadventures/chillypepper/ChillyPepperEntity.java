@@ -202,6 +202,10 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 				livingEntity.discard();
 			}
 			float damage = 90;
+			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+			if ("crystal".equals(zombieMaterial)) {
+				damage = damage / 2;
+			}
 			if (livingEntity instanceof ScorchedTile) {
 				livingEntity.discard();
 			}

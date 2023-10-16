@@ -338,7 +338,7 @@ public class DolphinRiderEntity extends PvZombieEntity implements IAnimatable {
 		if (this.getDolphinStage() && this.isInsideWaterOrBubbleColumn() &&
 		this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
 					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
-					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) &&
+					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
 					!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
 			assert maxSpeedAttribute != null;
 			maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);

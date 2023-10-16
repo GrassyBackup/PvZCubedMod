@@ -154,7 +154,11 @@ public class BreezeEntity extends PvZProjectileEntity implements IAnimatable {
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				if ("paper".equals(zombieMaterial)) {
 					damage = damage * 2;
-				} else if ("stone".equals(zombieMaterial)) {
+				}
+				if ("crystal".equals(zombieMaterial)) {
+					damage = damage / 4;
+				}
+				if ("stone".equals(zombieMaterial)) {
 					damage = damage / 2;
 				}
 				SoundEvent sound;

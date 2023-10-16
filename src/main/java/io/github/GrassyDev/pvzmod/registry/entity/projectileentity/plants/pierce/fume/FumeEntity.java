@@ -235,9 +235,7 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 					}
 					entityStore.add((LivingEntity) entity);
 				}
-				if (!(entity instanceof ZombieShieldEntity)) {
-					((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
-				}
+				((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 6)));
 				entityStore.add((LivingEntity) entity);
 			}
 		}

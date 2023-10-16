@@ -207,6 +207,9 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 						}
 						damage = damage * 2;
 					}
+					if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)){
+						damage = damage / 2;
+					}
 					if (((LivingEntity) entity).hasStatusEffect(PvZCubed.WET) || entity.isWet() || (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())){
 						damage = damage / 2;
 					}

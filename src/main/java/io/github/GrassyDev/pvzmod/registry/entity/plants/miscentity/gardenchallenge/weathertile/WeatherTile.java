@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 public class WeatherTile extends TileEntity {
 	public WeatherTile(EntityType<? extends TileEntity> entityType, World world) {
 		super(entityType, world);
+		this.setNoGravity(true);
 	}
 
 

@@ -229,7 +229,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 			if (!world.isClient && this.getReturning()) {
 				if (entityStore.contains(entity) && this.retuningStart) {
 					boolean hasHelmet = false;
-					float damage = PVZCONFIG.nestedProjDMG.cardDMG();
+					float damage = PVZCONFIG.nestedProjDMG.cardDMGv2();
 					for (Entity entity1 : entity.getPassengerList()) {
 						if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
 							hasHelmet = true;
@@ -238,10 +238,13 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 					if (entity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
 						hasHelmet = true;
 					}
-					if (hasHelmet || (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
-						damage = damage / 2;
+					if (!hasHelmet && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+						damage = damage * 2;
 					}
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+					if ("crystal".equals(zombieMaterial)) {
+						damage = damage * 2;
+					}
 					SoundEvent sound;
 					sound = switch (zombieMaterial) {
 						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
@@ -274,7 +277,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
 					!this.getReturning() && !this.retuningStart && damageCounter <= 2 && !entityStore.contains(entity) && !entityStoreVehicle.contains(entity)) {
 				boolean hasHelmet = false;
-				float damage = PVZCONFIG.nestedProjDMG.cardDMG();
+				float damage = PVZCONFIG.nestedProjDMG.cardDMGv2();
 				for (Entity entity1 : entity.getPassengerList()) {
 					if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
 						hasHelmet = true;
@@ -283,10 +286,13 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 				if (entity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
 					hasHelmet = true;
 				}
-				if (hasHelmet || (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
-					damage = damage / 2;
+				if (!hasHelmet && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+					damage = damage * 2;
 				}
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+				if ("crystal".equals(zombieMaterial)) {
+					damage = damage * 2;
+				}
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;

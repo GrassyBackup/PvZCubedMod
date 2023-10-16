@@ -74,6 +74,7 @@ public class PvZCubed implements ModInitializer {
 	public static final StatusEffect PVZPOISON = new PvZPoison();
 	public static final StatusEffect BARK = new Bark();
 	public static final StatusEffect CHEESE = new Cheese();
+	public static final StatusEffect SHADOW = new Shadow();
 	public static final StatusEffect ACID = new Acid();
 
 	public static final GameRules.Key<GameRules.BooleanRule> SHOULD_PLANT_SPAWN =
@@ -98,6 +99,9 @@ public class PvZCubed implements ModInitializer {
 
 	public static final GameRules.Key<GameRules.BooleanRule> PLANTS_GLOW =
 			GameRuleRegistry.register("pvzplantsGlow", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(true));
+
+	public static final GameRules.Key<GameRules.BooleanRule> SPECIAL_ZOMBIE =
+			GameRuleRegistry.register("pvzspawnSpecialZombies", GameRules.Category.SPAWNING, GameRuleFactory.createBooleanRule(false));
 
 	public static final String MOD_ID = "pvzmod";
 
@@ -221,6 +225,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.JUMPINGBEAN_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BELLFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SUNFLOWERSEED_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.NIGHTCAP_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DOGWOOD_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.PEA));
 				stacks.add(new ItemStack(ModItems.SNOWPEAPROJ));
@@ -258,6 +263,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.SMOOSH));
 				stacks.add(new ItemStack(ModItems.SPIT));
 				stacks.add(new ItemStack(ModItems.JINGLE));
+				stacks.add(new ItemStack(ModItems.PIERCESPORE));
+				stacks.add(new ItemStack(ModItems.PIERCESPORESHADOW));
 				stacks.add(new ItemStack(ModItems.BARK));
 			}).build();
 
@@ -294,8 +301,12 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.PHARAOHEGG));
 				stacks.add(new ItemStack(ModItems.TORCHLIGHTEGG));
 				stacks.add(new ItemStack(ModItems.PYRAMIDHEADEGG));
+				stacks.add(new ItemStack(ModItems.FUTUREZOMBIEEGG));
+				stacks.add(new ItemStack(ModItems.FUTURECONEEGG));
+				stacks.add(new ItemStack(ModItems.FUTUREBUCKETEGG));
 				stacks.add(new ItemStack(ModItems.JETPACKEGG));
 				stacks.add(new ItemStack(ModItems.ROBOCONEEGG));
+				stacks.add(new ItemStack(ModItems.HOLOHEADEGG));
 				stacks.add(new ItemStack(ModItems.BLASTRONAUTEGG));
 				stacks.add(new ItemStack(ModItems.PEASANTEGG));
 				stacks.add(new ItemStack(ModItems.FLAGPEASANTEGG));
@@ -426,5 +437,6 @@ public class PvZCubed implements ModInitializer {
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "acid"), ACID);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "bark"), BARK);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "cheese"), CHEESE);
+		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "shadow"), SHADOW);
 	}
 }

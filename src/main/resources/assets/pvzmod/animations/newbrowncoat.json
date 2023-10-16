@@ -584,16 +584,6 @@
 							"easing": "easeInElastic"
 						}
 					}
-				},
-				"trash": {
-					"scale": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"healstation": {
-					"scale": {
-						"vector": [0.75, 0.75, 0.75]
-					}
 				}
 			}
 		},

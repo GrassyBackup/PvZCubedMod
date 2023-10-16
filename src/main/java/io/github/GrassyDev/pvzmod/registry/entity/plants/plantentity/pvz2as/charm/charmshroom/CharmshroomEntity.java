@@ -22,6 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -193,8 +194,24 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
-		if (this.getTypeCount() >= 2){
-			this.remove(RemovalReason.DISCARDED);
+		if (this.world instanceof ServerWorld serverWorld) {
+			if (this.getWorld().getMoonSize() > 0.9 && this.world.isSkyVisible(this.getBlockPos())) {
+				if (serverWorld.isNight()) {
+					this.setMoonPowered(Moon.TRUE);
+				}
+			} else {
+				this.setMoonPowered(Moon.FALSE);
+			}
+		}
+		if (this.getMoonPowered()){
+			if (this.getTypeCount() >= 4) {
+				this.remove(RemovalReason.DISCARDED);
+			}
+		}
+		else {
+			if (this.getTypeCount() >= 2) {
+				this.remove(RemovalReason.DISCARDED);
+			}
 		}
 		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
@@ -445,7 +462,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 							livingEntity.damage(PvZCubed.HYPNO_DAMAGE, 0);
 						}
 						this.plantEntity.setTarget((LivingEntity) null);
-						if (ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("gargantuar")){
+						if (ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("gargantuar") && !this.plantEntity.getMoonPowered()){
 							this.plantEntity.setCount(2);
 						}
 						else {

@@ -79,6 +79,8 @@ public abstract class PlantEntity extends GolemEntity {
 		super.initDataTracker();
 		this.dataTracker.startTracking(DATA_ID_ASLEEP, false);
 		this.dataTracker.startTracking(COFFEE, false);
+		this.dataTracker.startTracking(SHADOW, false);
+		this.dataTracker.startTracking(MOON, false);
 		this.dataTracker.startTracking(DATA_ALTFIRE, false);
 		this.dataTracker.startTracking(DATA_ID_LOWPROF, false);
 		this.dataTracker.startTracking(DATA_ID_FIREIMMUNE, false);
@@ -90,6 +92,8 @@ public abstract class PlantEntity extends GolemEntity {
 		super.writeCustomDataToNbt(tag);
 		tag.putBoolean("Asleep", this.getIsAsleep());
 		tag.putBoolean("Coffee", this.getCofee());
+		tag.putBoolean("Shadow", this.getShadowPowered());
+		tag.putBoolean("Moon", this.getMoonPowered());
 		tag.putBoolean("AltFire", this.getIsAltFire());
 		tag.putBoolean("lowProf", this.getLowProfile());
 		tag.putBoolean("fireImmune", this.getFireImmune());
@@ -100,6 +104,8 @@ public abstract class PlantEntity extends GolemEntity {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(DATA_ID_ASLEEP, tag.getBoolean("Asleep"));
 		this.dataTracker.set(COFFEE, tag.getBoolean("Coffee"));
+		this.dataTracker.set(SHADOW, tag.getBoolean("Shadow"));
+		this.dataTracker.set(MOON, tag.getBoolean("Moon"));
 		this.dataTracker.set(DATA_ALTFIRE, tag.getBoolean("AltFire"));
 		this.dataTracker.set(DATA_ID_LOWPROF, tag.getBoolean("lowProf"));
 		this.dataTracker.set(DATA_ID_FIREIMMUNE, tag.getBoolean("fireImmune"));
@@ -229,6 +235,58 @@ public abstract class PlantEntity extends GolemEntity {
 
 	public void setIsAsleep(PlantEntity.IsAsleep asleep) {
 		this.dataTracker.set(DATA_ID_ASLEEP, asleep.getId());
+	}
+
+	protected static final TrackedData<Boolean> SHADOW =
+			DataTracker.registerData(PlantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+	public enum Shadow {
+		FALSE(false),
+		TRUE(true);
+
+		Shadow(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getShadowPowered() {
+		return this.dataTracker.get(SHADOW);
+	}
+
+	public void setShadowPowered(Shadow shadowPowered) {
+		this.dataTracker.set(SHADOW, shadowPowered.getId());
+	}
+
+	protected static final TrackedData<Boolean> MOON =
+			DataTracker.registerData(PlantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+	public enum Moon {
+		FALSE(false),
+		TRUE(true);
+
+		Moon(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getMoonPowered() {
+		return this.dataTracker.get(MOON);
+	}
+
+	public void setMoonPowered(Moon shadowPowered) {
+		this.dataTracker.set(MOON, shadowPowered.getId());
 	}
 
 	protected static final TrackedData<Boolean> COFFEE =

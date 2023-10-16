@@ -202,6 +202,9 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 					}
 					entity.playSound(PvZSounds.SNOWPEAHITEVENT, 0.2F, 1F);
 					float damage = PVZCONFIG.nestedProjDMG.icebergDMGv2();
+					if ("crystal".equals(zombieMaterial)) {
+						damage = damage / 2;
+					}
 					if (damage > ((LivingEntity) entity).getHealth() &&
 							!(entity instanceof ZombieShieldEntity) &&
 							entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
@@ -237,6 +240,10 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 										&& (generalPvZombieEntity.getHypno()))) {
 							if (livingEntity != entity) {
 								float damage3 = PVZCONFIG.nestedProjDMG.icebergSDMG();
+								String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+								if ("crystal".equals(zombieMaterial2)) {
+									damage3 = damage3 / 2;
+								}
 								ZombiePropEntity zombiePropEntity4 = null;
 								for (Entity entity1 : livingEntity.getPassengerList()) {
 									if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity4 == null) {

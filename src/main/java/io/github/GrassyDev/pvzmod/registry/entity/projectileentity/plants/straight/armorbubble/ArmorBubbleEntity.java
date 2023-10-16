@@ -15,7 +15,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -170,7 +169,7 @@ public class ArmorBubbleEntity extends PvZProjectileEntity implements IAnimatabl
 				float damage = PVZCONFIG.nestedProjDMG.armorBubbleDMG();
 				if ("paper".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
 					damage = damage * 2;
-				} else if ("plant".equals(zombieMaterial)) {
+				} else if ("plant".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
 					damage = damage / 2;
 				}
 				if (entity instanceof ZombiePropEntity && !(entity instanceof ZombieShieldEntity)) {
