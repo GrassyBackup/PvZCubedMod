@@ -41,6 +41,12 @@ public class PvZSounds {
 	public static final Identifier FUMESHROOMSHOOT = new Identifier("pvzmod:fumeshroom.shoot");
 	public static SoundEvent FUMESHROOMSHOOTEVENT = new SoundEvent(FUMESHROOMSHOOT);
 
+	public static final Identifier MECHSHOOT = new Identifier("pvzmod:mech.shoot");
+	public static SoundEvent MECHSHOOTEVENT = new SoundEvent(MECHSHOOT);
+
+	public static final Identifier MECHWINDUP = new Identifier("pvzmod:mech.windup");
+	public static SoundEvent MECHWINDUPEVENT = new SoundEvent(MECHWINDUP);
+
 	public static final Identifier BASSPLAY = new Identifier("pvzmod:bass.play");
 	public static SoundEvent BASSPLAYEVENT = new SoundEvent(BASSPLAY);
 
@@ -81,6 +87,9 @@ public class PvZSounds {
 	public static SoundEvent ICEBERGEXPLOSIONEVENT = new SoundEvent(ICEBERGEXPLOSION);
 	public static final Identifier EMPEACHEXPLOSION = new Identifier("pvzmod:empeach.explosion");
 	public static SoundEvent EMPEACHEXPLOSIONEVENT = new SoundEvent(EMPEACHEXPLOSION);
+
+	public static final Identifier MECHALARM = new Identifier("pvzmod:mech.alarm");
+	public static SoundEvent MECHALARMEVENT = new SoundEvent(MECHALARM);
 
 	public static final Identifier SHROOMCHARGE = new Identifier("pvzmod:smoosh.charge");
 	public static SoundEvent SHROOMCHARGEEVENT = new SoundEvent(SHROOMCHARGE);
@@ -190,6 +199,8 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SNOWPEAHIT, SNOWPEAHITEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.MUSHROOMSHOOT, MUSHROOMSHOOTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.FUMESHROOMSHOOT, FUMESHROOMSHOOTEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.MECHSHOOT, MECHSHOOTEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.MECHWINDUP, MECHWINDUPEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.BASSPLAY, BASSPLAYEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.MAGNETATTRACT, MAGNETATTRACTEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.BLOOMERANGSHOOT, BLOOMERANGSHOOTEVENT);
@@ -204,6 +215,7 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.DOOMSHROOMEXPLOSION, DOOMSHROOMEXPLOSIONEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.ICEBERGEXPLOSION, ICEBERGEXPLOSIONEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.EMPEACHEXPLOSION, EMPEACHEXPLOSIONEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.MECHALARM, MECHALARMEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SHROOMHIT, SHROOMHITEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SHROOMCHARGE, SHROOMCHARGEEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SQUASHHUM, SQUASHHUMEVENT);

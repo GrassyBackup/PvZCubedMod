@@ -3,7 +3,7 @@
     "icon": {
       "item": "pvzmod:meteorhammer_seed_packet"
     },
-    "title": "I Can Fix It!",
+    "title": "I Can Break It!",
     "description": "Craft a Meteor Hammer",
     "frame": "task",
     "show_toast": true,

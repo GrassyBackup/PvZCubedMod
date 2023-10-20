@@ -17,9 +17,9 @@ public class FutureZombieEntityModel extends AnimatedGeoModel<FutureZombieEntity
 		identifier = new Identifier("pvzmod", "textures/entity/browncoat/future/future.png");
 		if (object.armless && object.geardmg) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/future/future_dmg1_geardmg1.png");
-		} else if (object.armless && object.gearless) {
+		} else if (object.armless && object.gear1less) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/future/future_gearless_dmg1.png");
-		} else if (object.gearless) {
+		} else if (object.gear1less) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/future/future_gearless.png");
 		} else if (object.geardmg) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/future/future_geardmg1.png");

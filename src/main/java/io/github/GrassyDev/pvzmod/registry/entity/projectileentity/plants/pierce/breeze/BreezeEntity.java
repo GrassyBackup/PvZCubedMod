@@ -189,10 +189,8 @@ public class BreezeEntity extends PvZProjectileEntity implements IAnimatable {
 					entityStore.add((LivingEntity) entity);
 				}
 				if (!((LivingEntity) entity).hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).isOnFire() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-					if (!(((LivingEntity) entity) instanceof ZombieShieldEntity)) {
-						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-						((LivingEntity) entity).playSound(PvZSounds.ICEBERGEXPLOSIONEVENT, 0.1f, 1);
-					}
+					((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
+					((LivingEntity) entity).playSound(PvZSounds.ICEBERGEXPLOSIONEVENT, 0.1f, 1);
 				}
 				entityStore.add((LivingEntity) entity);
 			}

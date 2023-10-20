@@ -9,6 +9,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
@@ -43,10 +44,18 @@ public class SargeantEntityRenderer extends GeoEntityRenderer<SargeantEntity> {
 						new Identifier("pvzmod", "geo/sargeantshield.geo.json"));
 				map.put(BrowncoatVariants.SCREENDOORHYPNO,
 						new Identifier("pvzmod", "geo/sargeantshield.geo.json"));
+				map.put(BrowncoatVariants.BOOKBURN,
+						new Identifier("pvzmod", "geo/bookburner.geo.json"));
+				map.put(BrowncoatVariants.BOOKBURNHYPNO,
+						new Identifier("pvzmod", "geo/bookburner.geo.json"));
 			});
 
 	public Identifier getModelResource(SargeantEntity object) {
 		return LOCATION_MODEL_BY_VARIANT.get(object.getVariant());
+	}
+
+	protected int getBlockLight(SargeantEntity zombie, BlockPos blockPos) {
+		return zombie.getFireStage() && (zombie.getVariant().equals(BrowncoatVariants.BOOKBURN) || zombie.getVariant().equals(BrowncoatVariants.BOOKBURNHYPNO))? 15 : super.getBlockLight(zombie, blockPos);
 	}
 
 	@Override

@@ -124,21 +124,21 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 
 	@Override
 	public void setBodyYaw(float bodyYaw) {
-		if (this.hasPassengers()) {
+		if (this.hasPassengers() && !this.isSliding()) {
 			super.setBodyYaw(bodyYaw);
 		}
 	}
 
 	@Override
 	public void setHeadYaw(float headYaw) {
-		if (this.hasPassengers()) {
+		if (this.hasPassengers() && !this.isSliding()) {
 			super.setHeadYaw(headYaw);
 		}
 	}
 
 	@Override
 	public void setYaw(float yaw) {
-		if (this.hasPassengers()) {
+		if (this.hasPassengers() && !this.isSliding()) {
 			super.setYaw(yaw);
 		}
 	}
@@ -263,7 +263,13 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 					}
 				}
 			}
+			Vec3d checkright = new Vec3d((double) 0.0, 0.0, +1).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+			Vec3d checkleft = new Vec3d((double) 0.0, 0.0, -1).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 			List<TileEntity> list = world.getNonSpectatingEntities(TileEntity.class, entityBox.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
+			List<TileEntity> list2 = world.getNonSpectatingEntities(TileEntity.class, entityBox.getDimensions().getBoxAt(this.getX() + checkleft.x, this.getY(), this.getZ() + checkleft.z));
+			List<TileEntity> list3 = world.getNonSpectatingEntities(TileEntity.class, entityBox.getDimensions().getBoxAt(this.getX() + checkright.x, this.getY(), this.getZ() + checkright.z));
+			list.addAll(list2);
+			list.addAll(list3);
 			for (TileEntity tileEntity : list) {
 				if (tileEntity instanceof SnowTile ||
 						tileEntity instanceof IceTile ||
@@ -358,6 +364,7 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 	public double getMountedHeightOffset() {
 		return 0.25f;
 	}
+
 
 	/** /~*~//~*GECKOLIB ANIMATION*~//~*~/ **/
 

@@ -5,7 +5,8 @@ import java.util.Comparator;
 
 public enum PapershieldVariants {
 	NEWSPAPERSHIELD(0),
-	SUNDAYEDITIONSHIELD(1);
+	SUNDAYEDITIONSHIELD(1),
+	BOOKSHIELD(2);
 
 	private static final PapershieldVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(PapershieldVariants::getId)).toArray(PapershieldVariants[]::new);

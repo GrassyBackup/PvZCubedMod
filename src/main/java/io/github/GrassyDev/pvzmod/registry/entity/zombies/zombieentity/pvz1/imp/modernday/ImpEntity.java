@@ -131,8 +131,16 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			this.initCustomGoals();
 			createRandomImp();
 		}
+		else if (this.getType().equals(PvZEntity.SCRAPIMP)){
+			setVariant(ImpVariants.SCRAP);
+			this.initCustomGoals();
+		}
 		else if (this.getType().equals(PvZEntity.IMPHYPNO)){
 			setVariant(ImpVariants.DEFAULTHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.SCRAPIMPHYPNO)){
+			setVariant(ImpVariants.SCRAPHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.IMPDRAGONHYPNO)){
@@ -183,6 +191,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		impListHypno.add(PvZEntity.NEWYEARIMPHYPNO);
 		impList.add(PvZEntity.ANNOUNCERIMP);
 		impListHypno.add(PvZEntity.ANNOUNCERIMPHYPNO);
+		impList.add(PvZEntity.SCRAPIMP);
+		impListHypno.add(PvZEntity.SCRAPIMPHYPNO);
 		EntityType<?> impEntity = impList.get(random.range(0, impList.size() - 1));
 		EntityType<?> impEntityHypno = impListHypno.get(random.range(0, impList.size() - 1));
 		if (world instanceof ServerWorld serverWorld) {
@@ -298,7 +308,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.SUPERFANIMPHYPNO) ||
 				this.getType().equals(PvZEntity.NEWYEARIMPHYPNO) ||
 				this.getType().equals(PvZEntity.IMPDRAGONHYPNO) ||
-				this.getType().equals(PvZEntity.IMPTHROWERHYPNO)) {
+				this.getType().equals(PvZEntity.IMPTHROWERHYPNO) ||
+				this.getType().equals(PvZEntity.SCRAPIMPHYPNO)) {
 			initHypnoGoals();
 		}
 		else {
@@ -490,7 +501,12 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.IMPEGG.getDefaultStack();
+		if (this.getVariant().equals(ImpVariants.SCRAP) || this.getVariant().equals(ImpVariants.SCRAPHYPNO)){
+			return ModItems.SCRAPIMPEGG.getDefaultStack();
+		}
+		else{
+			return ModItems.IMPEGG.getDefaultStack();
+		}
 	}
 
 
@@ -517,6 +533,15 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.impH());
     }
+
+	public static DefaultAttributeContainer.Builder createScrapImpAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.26D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.scrapimpH());
+	}
 
 	public static DefaultAttributeContainer.Builder createImpThrowAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
@@ -605,6 +630,9 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.IMPTHROWER)){
 			hypnoType = PvZEntity.IMPTHROWERHYPNO;
 		}
+		else if (this.getType().equals(PvZEntity.SCRAPIMP)){
+			hypnoType = PvZEntity.SCRAPIMPHYPNO;
+		}
 		else {
 			hypnoType = PvZEntity.IMPHYPNO;
 		}
@@ -621,6 +649,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 					hypnoType2 = PvZEntity.NEWYEARIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.IMPTHROWER)) {
 					hypnoType2 = PvZEntity.IMPTHROWERHYPNO;
+				} else if (entity.getType().equals(PvZEntity.SCRAPIMP)) {
+					hypnoType2 = PvZEntity.SCRAPIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.ANNOUNCERIMP)) {
 					hypnoType2 = PvZEntity.ANNOUNCERIMPHYPNO;
 				} else {

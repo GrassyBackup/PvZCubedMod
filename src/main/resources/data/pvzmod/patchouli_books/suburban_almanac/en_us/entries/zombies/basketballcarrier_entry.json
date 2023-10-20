@@ -10,7 +10,7 @@
         "$(#bd951a)Health: $()$(#ff0000)110 ",
         "$(#bd951a)Metal Basket Health: $()$(#ff0000)120 ",
         "$(#bd951a)Damage: $()$(#ff0000)4 (15%/second) ",
-        "$(#bd951a)Range: $()$(#ff0000)25 Blocks (Lobbed) ",
+        "$(#bd951a)Range: $()$(#ff0000)25 Blocks (From Garden, Lobbed) ",
         "$(#bd951a)Melee Damage: $()$(#ff0000)8",
         "$(br)$(#bd951a)Speed: $()$(#ff0000)Decent, Stiff (Pushing)",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Pushes a Basket around. Throws balls at the furthest Plant if pushing a Basket. The Basket stays if this is defeated. Can take Baskets.",

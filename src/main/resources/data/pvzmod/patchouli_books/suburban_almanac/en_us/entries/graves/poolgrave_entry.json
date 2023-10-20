@@ -10,6 +10,8 @@
         "$(#bd951a)Health: $()$(#ff0000)200",
         "$(br)$(#bd951a)Zombie Spawn Rate: $()$(#ff0000)15s",
         "$(br)$(#bd951a)Spawn Condition: $()$(#ff0000)Uncommon.",
+        "$(br)$(#bd951a)Time Chance: $()$(#ff0000)30% Drought.",
+        "$(br)$(#bd951a)Weather Chance: $()$(#ff0000)30% Rain. 12.5% Thunder.",
         "$(br2)$(#bd951a)This puddle may look shallow but it's surprisingly deep."
       ]
     },

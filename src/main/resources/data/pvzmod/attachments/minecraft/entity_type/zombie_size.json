@@ -12,6 +12,7 @@
     "pvzmod:bobsledvehicle": "big",
     "pvzmod:zombieking": "big",
     "pvzmod:imp": "small",
+    "pvzmod:scrapimp": "small",
     "pvzmod:superfanimp": "small",
     "pvzmod:newyearimp": "small",
     "pvzmod:announcerimp": "small",
@@ -19,6 +20,7 @@
     "pvzmod:impthrower": "small",
     "pvzmod:piggy": "small",
     "pvzmod:zomblobsmall": "small",
-    "pvzmod:zomblobbig": "big"
+    "pvzmod:zomblobbig": "big",
+    "pvzmod:scrapmech": "big"
   }
 }

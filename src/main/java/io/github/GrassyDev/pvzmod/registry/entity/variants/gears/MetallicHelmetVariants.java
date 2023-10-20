@@ -13,7 +13,9 @@ public enum MetallicHelmetVariants {
 	KNIGHT(6),
 	HELMET(7),
 	SOLDIER(8),
-	BASS(9);
+	BASS(9),
+	SCRAPIMP(10),
+	FUTUREBUCKET(11);
 
 	private static final MetallicHelmetVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(MetallicHelmetVariants::getId)).toArray(MetallicHelmetVariants[]::new);

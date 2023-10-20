@@ -184,10 +184,24 @@ public class ShootingOctoEntity extends PvZProjectileEntity implements IAnimatab
 							this.world.sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);
 						}
-						else if (!world.isClient && ((entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.getHypno()) || (entity instanceof GardenEntity) || (entity instanceof GardenChallengeEntity))){
-							entity.playSound(PvZSounds.PEAHITEVENT, 0.2F, (float) (0.5F + Math.random()));
+						else if (!world.isClient &&
+								(entity instanceof Monster monster &&
+										(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
+										!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+										!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
+										!(entity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.hasVehicle()))
+										|| (entity instanceof GardenEntity) || (entity instanceof GardenChallengeEntity)){
+							String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+							SoundEvent sound;
+							sound = switch (zombieMaterial) {
+								case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
+								case "plastic" -> PvZSounds.CONEHITEVENT;
+								case "stone" -> PvZSounds.STONEHITEVENT;
+								default -> PvZSounds.PEAHITEVENT;
+							};
+							entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
 							float damage = 12F;
-							if (damage > livingEntity.getHealth() &&
+							if (damage > ((LivingEntity) entity).getHealth() &&
 									!(entity instanceof ZombieShieldEntity) &&
 									entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
 								float damage2 = damage - ((LivingEntity) entity).getHealth();
@@ -200,9 +214,12 @@ public class ShootingOctoEntity extends PvZProjectileEntity implements IAnimatab
 							this.remove(RemovalReason.DISCARDED);
 						}
 					} else {
-						if (!world.isClient && entity instanceof Monster monster &&
-								!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
-								!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity))) {
+						if (!world.isClient &&
+								(entity instanceof Monster monster &&
+										!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
+										!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+										!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
+										!(entity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.hasVehicle()))) {
 							String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 							SoundEvent sound;
 							sound = switch (zombieMaterial) {

@@ -157,6 +157,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tick() {
 		--this.attractTicks;
+		System.out.println(this.getTarget());
 		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||

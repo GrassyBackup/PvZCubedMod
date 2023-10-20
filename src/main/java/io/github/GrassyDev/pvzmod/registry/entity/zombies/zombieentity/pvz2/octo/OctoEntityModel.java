@@ -17,9 +17,9 @@ public class OctoEntityModel extends AnimatedGeoModel<OctoEntity> {
 		identifier = new Identifier("pvzmod", "textures/entity/bully/octo.png");
 		if (object.armless && object.geardmg) {
 			identifier = new Identifier("pvzmod", "textures/entity/bully/octo_dmg1.png");
-		} else if (object.armless && object.gearless) {
+		} else if (object.armless && object.gear1less) {
 			identifier = new Identifier("pvzmod", "textures/entity/bully/octo_dmg1.png");
-		} else if (object.gearless) {
+		} else if (object.gear1less) {
 			identifier = new Identifier("pvzmod", "textures/entity/bully/octo.png");
 		} else if (object.geardmg) {
 			identifier = new Identifier("pvzmod", "textures/entity/bully/octo.png");

@@ -215,9 +215,7 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					}
 					if (!((LivingEntity) entity).hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-						if (!(entity instanceof ZombieShieldEntity)) {
-							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-						}
+						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
 					}
 					hit = true;
 					Vec3d vec3d = this.getPos();
@@ -270,9 +268,7 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
 										}
 										if (!livingEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-											if (!(livingEntity instanceof ZombieShieldEntity)) {
-												livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-											}
+											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
 										}
 									}
 								}

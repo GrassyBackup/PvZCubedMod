@@ -21,7 +21,9 @@ public enum BrowncoatVariants {
 	PYRAMIDHEAD(14),
 	PYRAMIDHEADHYPNO(15),
 	HOLOHEAD(16),
-	HOLOHEADHYPNO(17);
+	HOLOHEADHYPNO(17),
+	BOOKBURN(18),
+	BOOKBURNHYPNO(19);
 
 	private static final BrowncoatVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(BrowncoatVariants::getId)).toArray(BrowncoatVariants[]::new);

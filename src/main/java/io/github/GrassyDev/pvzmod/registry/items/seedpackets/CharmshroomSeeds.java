@@ -80,6 +80,8 @@ public class CharmshroomSeeds extends SeedItem implements FabricItem {
 
 		tooltip.add(Text.translatable("item.pvzmod.seed_packet.nocturnal.tooltip")
 				.formatted(Formatting.UNDERLINE));
+		tooltip.add(Text.translatable("item.pvzmod.seed_packet.fullmoon.tooltip")
+				.formatted(Formatting.UNDERLINE));
 
 		tooltip.add(Text.translatable("item.pvzmod.charmshroom_seed_packet.flavour")
 				.formatted(Formatting.DARK_GRAY));

@@ -89,6 +89,10 @@ public class GhostPepperSeeds extends SeedItem implements FabricItem {
 
 		tooltip.add(Text.translatable("item.pvzmod.seed_packet.fly.tooltip")
 				.formatted(Formatting.UNDERLINE));
+		tooltip.add(Text.translatable("item.pvzmod.seed_packet.fullmoon.tooltip")
+				.formatted(Formatting.UNDERLINE));
+		tooltip.add(Text.translatable("item.pvzmod.seed_packet.newmoon.tooltip")
+				.formatted(Formatting.UNDERLINE));
 
 		tooltip.add(Text.translatable("item.pvzmod.ghostpepper_seed_packet.flavour")
 				.formatted(Formatting.DARK_GRAY));

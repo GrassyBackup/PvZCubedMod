@@ -109,6 +109,9 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.BASSGEAR)){
 			setVariant(MetallicHelmetVariants.BASS);
 		}
+		else if (this.getType().equals(PvZEntity.SCRAPIMPGEAR)){
+			setVariant(MetallicHelmetVariants.SCRAPIMP);
+		}
 		else {
 			setVariant(MetallicHelmetVariants.BUCKET);
 		}
@@ -247,6 +250,15 @@ public class MetalHelmetEntity extends ZombiePropEntity implements IAnimatable {
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.bucketH());
+	}
+
+	public static DefaultAttributeContainer.Builder createScrapImpGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.scrapimpH());
 	}
 
 	protected SoundEvent getAmbientSound() {

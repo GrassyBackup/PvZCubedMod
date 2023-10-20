@@ -19,6 +19,14 @@ public class ImpEntityModel extends AnimatedGeoModel<ImpEntity> {
 		if (object.getVariant().equals(ImpVariants.IMPDRAGON) || object.getVariant().equals(ImpVariants.IMPDRAGONHYPNO)) {
 			identifier = new Identifier("pvzmod", "textures/entity/imp/impdragon.png");
 		}
+		else if (object.getVariant().equals(ImpVariants.SCRAP) || object.getVariant().equals(ImpVariants.SCRAPHYPNO)) {
+			if (object.getHealth() <= 0) {
+				identifier = new Identifier("pvzmod", "textures/entity/imp/scrapimp_headless.png");
+			}
+			else {
+				identifier = new Identifier("pvzmod", "textures/entity/imp/scrapimp.png");
+			}
+		}
 		else {
 			identifier = new Identifier("pvzmod", "textures/entity/imp/imp.png");
 		}

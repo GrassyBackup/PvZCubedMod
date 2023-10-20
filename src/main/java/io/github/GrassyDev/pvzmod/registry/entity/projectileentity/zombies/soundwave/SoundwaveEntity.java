@@ -188,6 +188,33 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 				}
 			}
 			else {
+				if (!world.isClient && entity instanceof Monster monster &&
+						(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
+						!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+						!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
+						!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(generalPvZombieEntity.isStealth()) &&
+						!(generalPvZombieEntity.isFlying())) {
+					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+					SoundEvent sound;
+					sound = switch (zombieMaterial) {
+						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
+						case "plastic" -> PvZSounds.CONEHITEVENT;
+						case "stone" -> PvZSounds.STONEHITEVENT;
+						default -> PvZSounds.PEAHITEVENT;
+					};
+					entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
+					if (damage > ((LivingEntity) entity).getHealth() &&
+							!(entity instanceof ZombieShieldEntity) &&
+							entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !(generalPvZombieEntity1.getHypno())) {
+						float damage2 = damage - ((LivingEntity) entity).getHealth();
+						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
+						generalPvZombieEntity1.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
+					} else {
+						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
+					}
+					this.world.sendEntityStatus(this, (byte) 3);
+					this.remove(RemovalReason.DISCARDED);
+				}
 				if (entity instanceof LilyPadEntity && entity.hasPassengers()) {
 
 				} else if (!world.isClient && !(entity instanceof PlantEntity plantEntity && plantEntity.getImmune()) && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity2 && PLANT_LOCATION.get(plantEntity2.getType()).orElse("normal").equals("flying")) && !(entity.getVehicle() instanceof BubblePadEntity)) {

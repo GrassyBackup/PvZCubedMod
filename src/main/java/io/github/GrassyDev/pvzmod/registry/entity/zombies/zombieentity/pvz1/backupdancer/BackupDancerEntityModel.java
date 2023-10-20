@@ -17,9 +17,9 @@ public class BackupDancerEntityModel extends AnimatedGeoModel<BackupDancerEntity
 		identifier = new Identifier("pvzmod", "textures/entity/dancingzombie/backupdancer.png");
 		if (object.armless && object.geardmg) {
 			identifier = new Identifier("pvzmod", "textures/entity/dancingzombie/backupdancer_dmg1_geardmg1.png");
-		} else if (object.armless && object.gearless) {
+		} else if (object.armless && object.gear1less) {
 			identifier = new Identifier("pvzmod", "textures/entity/dancingzombie/backupdancer_gearless_dmg1.png");
-		} else if (object.gearless) {
+		} else if (object.gear1less) {
 			identifier = new Identifier("pvzmod", "textures/entity/dancingzombie/backupdancer_gearless.png");
 		} else if (object.geardmg) {
 			identifier = new Identifier("pvzmod", "textures/entity/dancingzombie/backupdancer_geardmg1.png");

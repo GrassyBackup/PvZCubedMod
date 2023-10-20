@@ -612,7 +612,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 		};
 		this.waveBar.setPercent(this.getWaveCount() / maxWaves);
 		if (this.getY() <= this.world.getBottomY() + 10){
-			this.discard();
+			this.kill();
 		}
 		if (this.age > 1) {
 			checkEntities();

@@ -302,6 +302,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.TORCHLIGHTEGG));
 				stacks.add(new ItemStack(ModItems.PYRAMIDHEADEGG));
 				stacks.add(new ItemStack(ModItems.FUTUREZOMBIEEGG));
+				stacks.add(new ItemStack(ModItems.FLAGFUTUREEGG));
 				stacks.add(new ItemStack(ModItems.FUTURECONEEGG));
 				stacks.add(new ItemStack(ModItems.FUTUREBUCKETEGG));
 				stacks.add(new ItemStack(ModItems.JETPACKEGG));
@@ -335,8 +336,11 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.ZOMBLOBEGG));
 				stacks.add(new ItemStack(ModItems.DEFENSIVEENDEGG));
 				stacks.add(new ItemStack(ModItems.IMPTHROWEGG));
+				stacks.add(new ItemStack(ModItems.SCRAPMECHEGG));
 				stacks.add(new ItemStack(ModItems.BULLYEGG));
 				stacks.add(new ItemStack(ModItems.BASKETBALLCARRIEREGG));
+				stacks.add(new ItemStack(ModItems.BOOKBURNEREGG));
+				stacks.add(new ItemStack(ModItems.SCRAPIMPEGG));
 			}).build();
 
 	public static final ItemGroup PVZGRAVES = FabricItemGroupBuilder.create(

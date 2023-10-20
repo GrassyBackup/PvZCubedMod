@@ -20,6 +20,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.crystalhel
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallichelmet.MetalHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicobstacle.MetalObstacleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield.MetalShieldEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.papershield.NewspaperShieldEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.plastichelmet.PlasticHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.stonehelmet.StoneHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
@@ -76,6 +77,9 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private String controllerName = "walkingcontroller";
 	public static final UUID MAX_SPEED_UUID = UUID.nameUUIDFromBytes(MOD_ID.getBytes(StandardCharsets.ISO_8859_1));
+
+	public int launchAnimation;
+	public boolean inLaunchAnimation;
 
 	public BrowncoatEntity(EntityType<? extends BrowncoatEntity> entityType, World world) {
         super(entityType, world);
@@ -174,6 +178,11 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 			setVariant(BrowncoatVariants.SCREENDOOR);
 			this.initCustomGoals();
 		}
+		else if (this.getType().equals(PvZEntity.BOOKBURNER)){
+			createPaperShield();
+			setVariant(BrowncoatVariants.BOOKBURN);
+			this.initCustomGoals();
+		}
 		else if (this.getType().equals(PvZEntity.TRASHCAN)){
 			createObstacle();
 			setVariant(BrowncoatVariants.TRASHCAN);
@@ -223,6 +232,10 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.SCREENDOORHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTSHIELDHYPNO)){
 			setVariant(BrowncoatVariants.SCREENDOORHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.BOOKBURNERHYPNO)){
+			setVariant(BrowncoatVariants.BOOKBURNHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.TRASHCANHYPNO)){
@@ -340,6 +353,15 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 	}
 
+	public void createPaperShield(){
+		if (world instanceof ServerWorld serverWorld) {
+			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.BOOKSHIELD, this.world);
+			newspaperShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			newspaperShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			newspaperShieldEntity.startRiding(this);
+		}
+	}
+
 	public void createSergeantShield() {
 		if (world instanceof ServerWorld serverWorld) {
 			MetalShieldEntity metalShieldEntity = new MetalShieldEntity(PvZEntity.SERGEANTSHIELDGEAR, this.world);
@@ -381,10 +403,20 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 			}
 		}
 		if (this.isInsideWaterOrBubbleColumn()) {
-			if (zombieShieldEntity != null){
+			if (inLaunchAnimation) {
+				event.getController().setAnimation(new AnimationBuilder().loop("screendoor.ducky.throw"));
+				if (this.isIced) {
+					event.getController().setAnimationSpeed(0.5);
+				}
+				else {
+					event.getController().setAnimationSpeed(1);
+				}
+			}
+			else if (zombieShieldEntity != null){
 				event.getController().setAnimation(new AnimationBuilder().loop("screendoor.ducky"));
 			}
 			else if (this.getVariant().equals(BrowncoatVariants.SCREENDOOR) || this.getVariant().equals(BrowncoatVariants.SCREENDOORHYPNO) ||
+					this.getVariant().equals(BrowncoatVariants.BOOKBURN) || this.getVariant().equals(BrowncoatVariants.BOOKBURNHYPNO) ||
 					this.getVariant().equals(BrowncoatVariants.TRASHCAN) || this.getVariant().equals(BrowncoatVariants.TRASHCANHYPNO) ) {
 				event.getController().setAnimation(new AnimationBuilder().loop("screendoor.ducky2"));
 			}
@@ -398,7 +430,15 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 				event.getController().setAnimationSpeed(1);
 			}
 		} else {
-			if (!(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F)) {
+			if (inLaunchAnimation) {
+				event.getController().setAnimation(new AnimationBuilder().loop("screendoor.throw"));
+				if (this.isIced) {
+					event.getController().setAnimationSpeed(0.5);
+				} else {
+					event.getController().setAnimationSpeed(1);
+				}
+			}
+			else if (!(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F)) {
 				if (zombieShieldEntity != null){
 					event.getController().setAnimation(new AnimationBuilder().loop("screendoor.walking"));
 				}
@@ -451,7 +491,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.SARGEANTHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTBOWLHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTHELMETHYPNO) ||
-				this.getType().equals(PvZEntity.SARGEANTSHIELDHYPNO)) {
+				this.getType().equals(PvZEntity.SARGEANTSHIELDHYPNO) ||
+				this.getType().equals(PvZEntity.BOOKBURNERHYPNO)) {
 			initHypnoGoals();
 		}
 		else {
@@ -552,11 +593,15 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 		ZombiePropEntity pyramidPropEntity = null;
 		ZombiePropEntity sergeantShieldEntity = null;
+		ZombiePropEntity burningBooks = null;
 		for (Entity entity : this.getPassengerList()) {
 			if (entity.getType().equals(PvZEntity.PYRAMIDGEAR)) {
 				pyramidPropEntity = (ZombiePropEntity) entity;
 			}
 			if (entity.getType().equals(PvZEntity.SERGEANTSHIELDGEAR)) {
+				sergeantShieldEntity = (ZombiePropEntity) entity;
+			}
+			if (entity.getType().equals(PvZEntity.BOOKSHIELD)) {
 				sergeantShieldEntity = (ZombiePropEntity) entity;
 			}
 		}
@@ -587,7 +632,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 				}
 			}
 		}
-		else if (this instanceof SargeantEntity) {
+		else if (this instanceof SargeantEntity && !this.getVariant().equals(BrowncoatVariants.BOOKBURN) && !this.getVariant().equals(BrowncoatVariants.BOOKBURNHYPNO)) {
 			if (sergeantShieldEntity == null && this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
 					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
 					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
@@ -745,6 +790,9 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.SARGEANTSHIELD)){
 			hypnoType = PvZEntity.SARGEANTSHIELDHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.BOOKBURNER)){
+			hypnoType = PvZEntity.BOOKBURNERHYPNO;
 		}
 		else if (this.getType().equals(PvZEntity.TRASHCAN)){
 			hypnoType = PvZEntity.TRASHCANHYPNO;

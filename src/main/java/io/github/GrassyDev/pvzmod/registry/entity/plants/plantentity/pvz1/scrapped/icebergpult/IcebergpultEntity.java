@@ -54,6 +54,7 @@ public class IcebergpultEntity extends PlantEntity implements IAnimatable, Range
         super(entityType, world);
 
 		this.targetIce = true;
+		this.lobbedTarget = true;
     }
 
 	static {
@@ -271,7 +272,7 @@ public class IcebergpultEntity extends PlantEntity implements IAnimatable, Range
 
 		public void start() {
 			this.beamTicks = -16;
-			this.animationTicks = -32;
+			this.animationTicks = -25;
 			this.plantEntity.getNavigation().stop();
 			this.plantEntity.getLookControl().lookAt(this.plantEntity.getTarget(), 90.0F, 90.0F);
 			this.plantEntity.velocityDirty = true;
@@ -293,7 +294,7 @@ public class IcebergpultEntity extends PlantEntity implements IAnimatable, Range
 				this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 				++this.beamTicks;
 				++this.animationTicks;
-				if (this.beamTicks >= 0 && this.animationTicks <= -16) {
+				if (this.beamTicks >= 0) {
 					if (!this.plantEntity.isInsideWaterOrBubbleColumn()) {
 						ShootingIcebergEntity proj = new ShootingIcebergEntity(PvZEntity.ICEBERG, this.plantEntity.world);
 						double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
@@ -315,7 +316,7 @@ public class IcebergpultEntity extends PlantEntity implements IAnimatable, Range
 							proj.getTarget(plantEntity.getTarget());
 						}
 						if (livingEntity.isAlive()) {
-							this.beamTicks = -7;
+							this.beamTicks = -30;
 							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);
 							this.plantEntity.world.spawnEntity(proj);
@@ -326,7 +327,7 @@ public class IcebergpultEntity extends PlantEntity implements IAnimatable, Range
 				{
 					this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 110);
 					this.beamTicks = -16;
-					this.animationTicks = -32;
+					this.animationTicks = -25;
 				}
 				super.tick();
 			}

@@ -197,9 +197,7 @@ public class ShootingSnowqueenPeaEntity extends PvZProjectileEntity implements I
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())
 					&& !(entity instanceof ZombieShieldEntity && !entity.hasVehicle()) && !hit) {
 				if (!((LivingEntity) entity).hasStatusEffect(PvZCubed.WARM) && !entity.isOnFire() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-					if (!(entity instanceof ZombieShieldEntity)) {
-						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-					}
+					((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
 				}
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
@@ -283,9 +281,7 @@ public class ShootingSnowqueenPeaEntity extends PvZProjectileEntity implements I
 											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
 										}
 										if (!livingEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-											if (!(livingEntity instanceof ZombieShieldEntity)) {
-												livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-											}
+											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
 										}
 									}
 								}
@@ -294,13 +290,10 @@ public class ShootingSnowqueenPeaEntity extends PvZProjectileEntity implements I
 							this.remove(RemovalReason.DISCARDED);
 						}
 					}
-				} else if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity instanceof ZombieShieldEntity)) {
-					if (!generalPvZombieEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-						generalPvZombieEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-					}
-					this.world.sendEntityStatus(this, (byte) 3);
-					this.remove(RemovalReason.DISCARDED);
 				} else {
+					if (entity instanceof LivingEntity livingEntity){
+						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
+					}
 					this.world.sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 				}

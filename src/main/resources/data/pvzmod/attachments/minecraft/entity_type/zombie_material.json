@@ -15,6 +15,8 @@
     "pvzmod:footballgear": "metallic",
     "pvzmod:soldiergear": "metallic",
     "pvzmod:healstation": "metallic",
+    "pvzmod:scrapimp": "metallic",
+    "pvzmod:scrapmech": "electronic",
     "pvzmod:speaker": "electronic",
     "pvzmod:mummy": "paper",
     "pvzmod:mummycone": "paper",
@@ -50,8 +52,11 @@
     "pvzmod:darkagesgrave": "stone",
     "pvzmod:mausoleumgrave": "stone",
     "pvzmod:futurezombie": "rubber",
+    "pvzmod:flagfuture": "rubber",
     "pvzmod:futurecone": "rubber",
     "pvzmod:futurebucket": "rubber",
+    "pvzmod:jetpack": "rubber",
+    "pvzmod:blastronaut": "rubber",
     "pvzmod:holohead": "rubber"
   }
 }

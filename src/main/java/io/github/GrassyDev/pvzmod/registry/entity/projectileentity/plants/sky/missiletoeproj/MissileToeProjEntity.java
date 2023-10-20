@@ -249,9 +249,7 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 										livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 									}
 									if (!livingEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-										if (!(livingEntity instanceof ZombieShieldEntity)) {
-											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-										}
+										livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
 									}
 								}
 							}

@@ -196,7 +196,7 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 				proj.updatePosition(this.getX(), this.getY() + 0.5D, this.getZ());
 				proj.setOwner(this);
 				this.launchTicks = 60;
-				this.playSound(PvZSounds.BASSPLAYEVENT, 1F, 1f);
+				this.playSound(PvZSounds.BASSPLAYEVENT, 0.4F, 1f);
 				this.world.spawnEntity(proj);
 			}
 		}

@@ -12,6 +12,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.l
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelmetVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
@@ -374,10 +375,17 @@ public abstract class PlantEntity extends GolemEntity {
 		boolean tooHeavy = true;
 		LivingEntity targeted = null;
 		LivingEntity prioritizedTarget = null;
+		boolean hasZombie = false;
+		for (LivingEntity livingEntity : list){
+			if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity instanceof ZombiePropEntity)){
+				hasZombie = true;
+			}
+		}
 		if (!this.world.isClient() && !this.hasStatusEffect(DISABLE)) {
 			for (LivingEntity hostileEntity : list) {
 				if (hostileEntity.isAlive() && this.getVisibilityCache().canSee(hostileEntity) &&
-						!(hostileEntity instanceof GraveEntity && targetNotObstacle)) {
+						!(hostileEntity instanceof GraveEntity && targetNotObstacle) &&
+						!(hostileEntity instanceof ZombiePropEntity && lobbedTarget && hasZombie)) {
 					if (hostileEntity instanceof Monster && !(hostileEntity instanceof GraveEntity graveEntity && graveEntity.decorative)) {
 						if (illuminate && hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isStealth() && hostileEntity.squaredDistanceTo(this) < 36) {
 							if (PLANT_TYPE.get(this.getType()).orElse("appease").equals("pepper") && this.isWet()) {
@@ -439,6 +447,15 @@ public abstract class PlantEntity extends GolemEntity {
 										prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
 									}
 								}
+								if (hostileEntity instanceof ImpEntity impEntity && impEntity.getType().equals(PvZEntity.SCRAPIMP)){
+									int currentStrength = ZOMBIE_STRENGTH.get(impEntity.getType()).orElse(0);
+									if (zombieStrength < currentStrength) {
+										zombieStrength = currentStrength;
+										prevZombiePosition = hostileEntity.getPos();
+										targeted = hostileEntity;
+										prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+									}
+								}
 							} else if (magnetoshroom) {
 								for (Entity zombiePropEntity : hostileEntity.getPassengerList()) {
 									if ((zombiePropEntity instanceof MetalHelmetEntity || zombiePropEntity instanceof MetalShieldEntity)) {
@@ -459,6 +476,15 @@ public abstract class PlantEntity extends GolemEntity {
 								}
 								if (hostileEntity instanceof BassZombieEntity bassZombieEntity && bassZombieEntity.hasVehicle() && bassZombieEntity.getVehicle() instanceof SpeakerVehicleEntity){
 									int currentStrength = ZOMBIE_STRENGTH.get(bassZombieEntity.getType()).orElse(0);
+									if (zombieStrength < currentStrength) {
+										zombieStrength = currentStrength;
+										prevZombiePosition = hostileEntity.getPos();
+										targeted = hostileEntity;
+										prevIced = hostileEntity.hasStatusEffect(PvZCubed.ICE) || hostileEntity.hasStatusEffect(PvZCubed.FROZEN);
+									}
+								}
+								if (hostileEntity instanceof ImpEntity impEntity && impEntity.getType().equals(PvZEntity.SCRAPIMP)){
+									int currentStrength = ZOMBIE_STRENGTH.get(impEntity.getType()).orElse(0);
 									if (zombieStrength < currentStrength) {
 										zombieStrength = currentStrength;
 										prevZombiePosition = hostileEntity.getPos();
@@ -632,87 +658,6 @@ public abstract class PlantEntity extends GolemEntity {
 												}
 											}
 										}
-										if (prioritizedTarget != null && lobbedTarget && this.squaredDistanceTo(prioritizedTarget) > this.squaredDistanceTo(hostileEntity.getPos())) {
-											if (lobbedTarget && hasShield) {
-												if (canHitFlying && generalPvZombieEntity.hasPassengers() && generalPvZombieEntity.getFirstPassenger() instanceof ZombieRidersEntity zombieRiderEntity){
-													prioritizedTarget = zombieRiderEntity;
-												}
-												else if (canHitFlying && generalPvZombieEntity.isFlying()) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-													if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-															!(generalPvZombieEntity instanceof SnorkelEntity)) {
-														if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-																generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-															prioritizedTarget = hostileEntity;
-														} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														}
-													}
-												} else if (canHitFlying) {
-													if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-															!(generalPvZombieEntity instanceof SnorkelEntity)) {
-														if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-																generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-															prioritizedTarget = hostileEntity;
-														} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-															prioritizedTarget = hostileEntity;
-														}
-													}
-												}
-											}
-										} else if (lobbedTarget && hasShield) {
-											if (canHitFlying && generalPvZombieEntity.hasPassengers() && generalPvZombieEntity.getFirstPassenger() instanceof ZombieRidersEntity zombieRiderEntity){
-												prioritizedTarget = zombieRiderEntity;
-											}
-											else if (canHitFlying && generalPvZombieEntity.isFlying()) {
-												prioritizedTarget = hostileEntity;
-											} else if (!canHitFlying && !generalPvZombieEntity.isFlying()) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											} else if (canHitFlying) {
-												if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) {
-													prioritizedTarget = hostileEntity;
-												} else if (canHitSnorkel && generalPvZombieEntity instanceof SnorkelEntity snorkelEntity) {
-													prioritizedTarget = hostileEntity;
-												} else if (!canHitSnorkel && (generalPvZombieEntity instanceof SnorkelEntity snorkelEntity && !snorkelEntity.isInvisibleSnorkel()) ||
-														!(generalPvZombieEntity instanceof SnorkelEntity)) {
-													if ((canHitStealth && generalPvZombieEntity.isStealth()) ||
-															generalPvZombieEntity.isStealth() && this.squaredDistanceTo(generalPvZombieEntity) <= 4) {
-														prioritizedTarget = hostileEntity;
-													} else if (canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													} else if (!canHitStealth && !generalPvZombieEntity.isStealth()) {
-														prioritizedTarget = hostileEntity;
-													}
-												}
-											}
-										}
 										if (prioritizedTarget != null && targetIce && this.squaredDistanceTo(prioritizedTarget) > this.squaredDistanceTo(hostileEntity.getPos())) {
 											if (targetIce && !isIced) {
 												if (canHitFlying && generalPvZombieEntity.hasPassengers() && generalPvZombieEntity.getFirstPassenger() instanceof ZombieRidersEntity zombieRiderEntity){
@@ -754,7 +699,7 @@ public abstract class PlantEntity extends GolemEntity {
 													}
 												}
 											}
-										} else if (targetIce && !isIced) {
+										} else if (targetIce && !isIced && prioritizedTarget == null ) {
 											if (canHitFlying && generalPvZombieEntity.hasPassengers() && generalPvZombieEntity.getFirstPassenger() instanceof ZombieRidersEntity zombieRiderEntity){
 												prioritizedTarget = zombieRiderEntity;
 											}
@@ -837,7 +782,7 @@ public abstract class PlantEntity extends GolemEntity {
 										if (targetNoHelmet && hasHelmet && prioritizedTarget == hostileEntity) {
 											prioritizedTarget = null;
 										}
-										if (targetNoHelmet && !hasHelmet && prioritizedStrength < currentStrength) {
+										if (targetNoHelmet && !(generalPvZombieEntity instanceof ZombiePropEntity) && !hasHelmet && prioritizedStrength < currentStrength) {
 											if (canHitFlying && generalPvZombieEntity.hasPassengers() && generalPvZombieEntity.getFirstPassenger() instanceof ZombieRidersEntity zombieRiderEntity){
 												prioritizedStrength = currentStrength;
 												prioritizedTarget = zombieRiderEntity;
@@ -1070,6 +1015,10 @@ public abstract class PlantEntity extends GolemEntity {
 			if (livingEntity instanceof BassZombieEntity bassZombieEntity && bassZombieEntity.hasVehicle() && bassZombieEntity.getVehicle() instanceof SpeakerVehicleEntity){
 				setGear = new MetalHelmetEntity(PvZEntity.BASSGEAR, this.world);
 			}
+			if (livingEntity instanceof ImpEntity impEntity && impEntity.getType().equals(PvZEntity.SCRAPIMP)){
+				setGear = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.world);
+				setGear.setHealth(impEntity.getHealth());
+			}
 			if (magnetoshroom) {
 				for (Entity entity : magnetList) {
 					if (entity instanceof ZombiePropEntity zombiePropEntity && entity.squaredDistanceTo(livingEntity) <= 4 && entity != setGear) {
@@ -1093,6 +1042,17 @@ public abstract class PlantEntity extends GolemEntity {
 							livingEntity3 = (LivingEntity) entity;
 						}
 					}
+					if (entity.getType().equals(PvZEntity.SCRAPIMP) && entity.squaredDistanceTo(livingEntity) <= 4 && entity != livingEntity){
+						if (setGear2 == null) {
+							setGear2 = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.world);
+							livingEntity2 = (LivingEntity) entity;
+							setGear2.setHealth(livingEntity2.getHealth());
+						} else if (setGear3 == null) {
+							setGear3 = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.world);
+							livingEntity3 = (LivingEntity) entity;
+							setGear3.setHealth(livingEntity3.getHealth());
+						}
+					}
 				}
 			}
 			if (setGear != null) {
@@ -1102,6 +1062,8 @@ public abstract class PlantEntity extends GolemEntity {
 						helmetProj = MetalHelmetVariants.PEASANTBUCKET;
 					} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
 						helmetProj = MetalHelmetVariants.MUMMYBUCKET;
+					} else if (livingEntity.getType().equals(PvZEntity.FUTUREBUCKET)) {
+						helmetProj = MetalHelmetVariants.FUTUREBUCKET;
 					} else {
 						helmetProj = MetalHelmetVariants.BUCKET;
 					}
@@ -1129,6 +1091,8 @@ public abstract class PlantEntity extends GolemEntity {
 					helmetProj = MetalHelmetVariants.SOLDIERHELMET;
 				} else if (entityType.equals(PvZEntity.BASSGEAR)) {
 					helmetProj = MetalHelmetVariants.BASSPROP;
+				} else if (entityType.equals(PvZEntity.SCRAPIMPGEAR)) {
+					helmetProj = MetalHelmetVariants.SCRAPIMP;
 				}
 				if (magnetoshroom) {
 					if (setGear2 != null) {
@@ -1137,8 +1101,10 @@ public abstract class PlantEntity extends GolemEntity {
 							if (livingEntity2 != null) {
 								if (livingEntity2.getType().equals(PvZEntity.PEASANTBUCKET)) {
 									helmetProj2 = MetalHelmetVariants.PEASANTBUCKET;
-								} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
+								} else if (livingEntity2.getType().equals(PvZEntity.MUMMYBUCKET)) {
 									helmetProj2 = MetalHelmetVariants.MUMMYBUCKET;
+								} else if (livingEntity2.getType().equals(PvZEntity.FUTUREBUCKET)) {
+									helmetProj2 = MetalHelmetVariants.FUTUREBUCKET;
 								} else {
 									helmetProj2 = MetalHelmetVariants.BUCKET;
 								}
@@ -1167,6 +1133,8 @@ public abstract class PlantEntity extends GolemEntity {
 							helmetProj2 = MetalHelmetVariants.SOLDIERHELMET;
 						} else if (entityType2.equals(PvZEntity.BASSGEAR)) {
 							helmetProj2 = MetalHelmetVariants.BASSPROP;
+						} else if (entityType2.equals(PvZEntity.SCRAPIMPGEAR)) {
+							helmetProj2 = MetalHelmetVariants.SCRAPIMP;
 						}
 					}
 					if (setGear3 != null) {
@@ -1175,8 +1143,10 @@ public abstract class PlantEntity extends GolemEntity {
 							if (livingEntity3 != null) {
 								if (livingEntity3.getType().equals(PvZEntity.PEASANTBUCKET)) {
 									helmetProj3 = MetalHelmetVariants.PEASANTBUCKET;
-								} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
+								} else if (livingEntity3.getType().equals(PvZEntity.MUMMYBUCKET)) {
 									helmetProj3 = MetalHelmetVariants.MUMMYBUCKET;
+								} else if (livingEntity3.getType().equals(PvZEntity.FUTUREBUCKET)) {
+									helmetProj3 = MetalHelmetVariants.FUTUREBUCKET;
 								} else {
 									helmetProj3 = MetalHelmetVariants.BUCKET;
 								}
@@ -1205,6 +1175,8 @@ public abstract class PlantEntity extends GolemEntity {
 							helmetProj3 = MetalHelmetVariants.SOLDIERHELMET;
 						} else if (entityType3.equals(PvZEntity.BASSGEAR)) {
 							helmetProj3 = MetalHelmetVariants.BASSPROP;
+						} else if (entityType3.equals(PvZEntity.SCRAPIMPGEAR)) {
+							helmetProj3 = MetalHelmetVariants.SCRAPIMP;
 						}
 					}
 				}
@@ -1229,6 +1201,9 @@ public abstract class PlantEntity extends GolemEntity {
 			if (livingEntity instanceof BassZombieEntity){
 				livingEntity.dismountVehicle();
 			}
+			if (livingEntity.getType().equals(PvZEntity.SCRAPIMP)){
+				livingEntity.kill();
+			}
 			((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
 		}
 		if (magnetoshroom) {
@@ -1250,6 +1225,9 @@ public abstract class PlantEntity extends GolemEntity {
 				if (livingEntity2 instanceof BassZombieEntity){
 					livingEntity2.dismountVehicle();
 				}
+				if (livingEntity2.getType().equals(PvZEntity.SCRAPIMP)){
+					livingEntity2.kill();
+				}
 				((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
 			}
 			if (setGear3 != null) {
@@ -1269,6 +1247,9 @@ public abstract class PlantEntity extends GolemEntity {
 				setGear3.discard();
 				if (livingEntity3 instanceof BassZombieEntity){
 					livingEntity3.dismountVehicle();
+				}
+				if (livingEntity3.getType().equals(PvZEntity.SCRAPIMP)){
+					livingEntity3.kill();
 				}
 				((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
 			}

@@ -171,15 +171,28 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 			if (entity instanceof LivingEntity livingEntity) {
 				if (entity != this && !(entity instanceof PlantEntity plantEntity && plantEntity.getImmune())) {
 					if (!this.isHypno) {
-						if (!world.isClient && (!(entity instanceof Monster) || entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()) && !(entity.getVehicle() instanceof BubblePadEntity)) {
-							entity.playSound(PvZSounds.PEAHITEVENT, 0.2F, (float) (0.5F + Math.random()));
+						if (!world.isClient &&
+								((entity instanceof Monster monster &&
+										(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
+										!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+										!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
+										!(entity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.hasVehicle())) || entity instanceof PlantEntity) && !(entity.getVehicle() instanceof BubblePadEntity)) {
+							String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+							SoundEvent sound;
+							sound = switch (zombieMaterial) {
+								case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
+								case "plastic" -> PvZSounds.CONEHITEVENT;
+								case "stone" -> PvZSounds.STONEHITEVENT;
+								default -> PvZSounds.PEAHITEVENT;
+							};
+							entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
 							float damage = 4F;
-							if (damage > livingEntity.getHealth() &&
+							if (damage > ((LivingEntity) entity).getHealth() &&
 									!(entity instanceof ZombieShieldEntity) &&
-									entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+									entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !(generalPvZombieEntity1.getHypno())) {
 								float damage2 = damage - ((LivingEntity) entity).getHealth();
 								entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
-								generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
+								generalPvZombieEntity1.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
 							} else {
 								entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 							}
@@ -237,13 +250,6 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
             }
         }
 
-    }
-    protected void onBlockHit(BlockHitResult blockHitResult) {
-        super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
-			this.remove(RemovalReason.DISCARDED);
-        }
     }
 
     public boolean collides() {

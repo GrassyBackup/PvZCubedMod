@@ -32,7 +32,7 @@
         "$(br)$(#bd951a)Range: $()$(#ff0000)15 Blocks",
         "$(br)$(#bd951a)Cloud Damage: $()$(#ff0000)1 DMG/1s",
         "$(br)$(#bd951a)Cloud Range: $()$(#ff0000)3 Blocks",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)New Moon Powered Form. Poisons Zombies. Hides if a Zombie is 3 blocks near and becomes Low Profile. When hiding, releases a cloud that damages, Poisons, slows, and weakens Zombies."
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Nocturnal. New Moon Powered Form. Poisons Zombies. Hides if a Zombie is 3 blocks near and becomes Low Profile. When hiding, releases a cloud that damages, Poisons, slows, and weakens Zombies."
       ]
     },
     {

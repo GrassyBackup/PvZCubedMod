@@ -162,15 +162,21 @@ public class NewspaperEntity extends PvZombieEntity implements IAnimatable {
 	}
 
 	public void createShield(){
-		NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.NEWSPAPERSHIELD, this.world);
-		newspaperShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
-		newspaperShieldEntity.startRiding(this);
+		if (world instanceof ServerWorld serverWorld) {
+			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.NEWSPAPERSHIELD, this.world);
+			newspaperShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			newspaperShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			newspaperShieldEntity.startRiding(this);
+		}
 	}
 
 	public void createSundayShield(){
-		NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.SUNDAYEDITIONSHIELD, this.world);
-		newspaperShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
-		newspaperShieldEntity.startRiding(this);
+		if (world instanceof ServerWorld serverWorld) {
+			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.SUNDAYEDITIONSHIELD, this.world);
+			newspaperShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			newspaperShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			newspaperShieldEntity.startRiding(this);
+		}
 	}
 
 

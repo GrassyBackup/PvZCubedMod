@@ -89,6 +89,16 @@
       "pvzmod:snowpea_shoot"
     ]
   },
+  "mech.shoot": {
+    "sounds": [
+      "pvzmod:mech_shoot"
+    ]
+  },
+  "mech.windup": {
+    "sounds": [
+      "pvzmod:mech_windup"
+    ]
+  },
   "bass.play": {
     "sounds": [
       "pvzmod:bass_play"
@@ -152,6 +162,11 @@
   "empeach.explosion": {
     "sounds": [
       "pvzmod:empeach_explosion"
+    ]
+  },
+  "mech.alarm": {
+    "sounds": [
+      "pvzmod:mech_alarm"
     ]
   },
   "smoosh.smash": {

@@ -10,6 +10,8 @@
         "$(#bd951a)Health: $()$(#ff0000)300",
         "$(br)$(#bd951a)Zombie Spawn Rate: $()$(#ff0000)20s",
         "$(br)$(#bd951a)Spawn Condition: $()$(#ff0000)Rare. Nocturnal.",
+        "$(br)$(#bd951a)Time Chance: $()$(#ff0000)100% Night.",
+        "$(br)$(#bd951a)Weather Chance: $()$(#ff0000)30% Thunder.",
         "$(br2)$(#bd951a)Does not include book burnings."
       ]
     },
@@ -32,7 +34,8 @@
         "pvzmod:zombies/sergeanthelmet_entry",
         "pvzmod:zombies/sergeantshield_entry",
         "pvzmod:zombies/hawkercart_entry",
-        "pvzmod:zombies/zombiepiggy_entry"
+        "pvzmod:zombies/zombiepiggy_entry",
+        "pvzmod:zombies/bookburner_entry"
       ],
       "title": "Spawnable Zombies"
     }

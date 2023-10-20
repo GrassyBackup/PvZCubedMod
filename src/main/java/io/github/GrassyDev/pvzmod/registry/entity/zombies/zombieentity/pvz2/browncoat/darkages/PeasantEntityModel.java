@@ -17,9 +17,9 @@ public class PeasantEntityModel extends AnimatedGeoModel<PeasantEntity> {
 		identifier = new Identifier("pvzmod", "textures/entity/browncoat/peasant/peasant.png");
 		if (object.armless && object.geardmg) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/peasant/peasant_dmg1_geardmg1.png");
-		} else if (object.armless && object.gearless) {
+		} else if (object.armless && object.gear1less) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/peasant/peasant_gearless_dmg1.png");
-		} else if (object.gearless) {
+		} else if (object.gear1less) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/peasant/peasant_gearless.png");
 		} else if (object.geardmg) {
 			identifier = new Identifier("pvzmod", "textures/entity/browncoat/peasant/peasant_geardmg1.png");

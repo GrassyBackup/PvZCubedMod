@@ -19,6 +19,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat.png"));
 				map.put(MetalHelmetVariants.MUMMYBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/mummy/mummy.png"));
+				map.put(MetalHelmetVariants.FUTUREBUCKET,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/future/future.png"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant.png"));
 				map.put(MetalHelmetVariants.SERGEANTHELMET,
@@ -45,6 +47,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/soldier/soldier.png"));
 				map.put(MetalHelmetVariants.BASSPROP,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/bass/bass.png"));
+				map.put(MetalHelmetVariants.SCRAPIMP,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/imp/scrapimp.png"));
 			});
 
 	public static final Map<MetalHelmetVariants, Identifier> LOCATION_BY_VARIANT_DAMAGED =
@@ -53,6 +57,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat_geardmg1.png"));
 				map.put(MetalHelmetVariants.MUMMYBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/mummy/mummy_geardmg1.png"));
+				map.put(MetalHelmetVariants.FUTUREBUCKET,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/future/future_geardmg1.png"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant_geardmg1.png"));
 				map.put(MetalHelmetVariants.SERGEANTHELMET,
@@ -79,6 +85,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/soldier/soldier_geardmg1.png"));
 				map.put(MetalHelmetVariants.BASSPROP,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/bass/bass.png"));
+				map.put(MetalHelmetVariants.SCRAPIMP,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/imp/scrapimp.png"));
 			});
 
 	public static final Map<MetalHelmetVariants, Identifier> MODEL_LOCATION_BY_VARIANT =
@@ -87,6 +95,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "geo/bucketproj.geo.json"));
 				map.put(MetalHelmetVariants.MUMMYBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "geo/mummybucketproj.geo.json"));
+				map.put(MetalHelmetVariants.FUTUREBUCKET,
+						new Identifier(PvZCubed.MOD_ID, "geo/futurebucketproj.geo.json"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "geo/peasantbucketproj.geo.json"));
 				map.put(MetalHelmetVariants.SERGEANTHELMET,
@@ -113,6 +123,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "geo/soldierproj.geo.json"));
 				map.put(MetalHelmetVariants.BASSPROP,
 						new Identifier(PvZCubed.MOD_ID, "geo/guitarproj.geo.json"));
+				map.put(MetalHelmetVariants.SCRAPIMP,
+						new Identifier(PvZCubed.MOD_ID, "geo/scrapimpproj.geo.json"));
 			});
 
 	public MetalHelmetProjEntityRenderer(EntityRendererFactory.Context ctx) {

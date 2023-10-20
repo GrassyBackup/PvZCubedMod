@@ -164,6 +164,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.b
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.cheese.CheeseProjEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.springproj.SpringProjEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.basketball.ShootingBasketballEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.flamingbook.FlamingBookEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.laser.LaserRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.octo.ShootingOctoEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.soundwave.SoundwaveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.zpg.ZPGEntityRenderer;
@@ -188,6 +190,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.brow
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.browncoat.mummy.MummyEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.explorer.ExplorerEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.darkages.FlagPeasantEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.future.FlagFutureEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.mummy.FlagMummyEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntityRenderer;
@@ -201,6 +204,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.bro
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.flagzombie.sargeant.FlagSargeantEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.piggy.PiggyEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.zombie.HawkerZombieEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzbfn.zmech.ScrapMechEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.scientist.ScientistEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.soldier.SoldierEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzh.zomblob.ZomblobEntityRenderer;
@@ -547,6 +551,8 @@ public class PvZEntityClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(PvZEntity.BASSGEAR, MetalHelmetEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.SCRAPIMPGEAR, MetalHelmetEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.TOWERGEAR, StoneHelmetEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.BOWLGEAR, StoneHelmetEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.BRICKGEAR, StoneHelmetEntityRenderer::new);
@@ -564,6 +570,11 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.SUNDAYEDITION, NewspaperEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SUNDAYEDITIONHYPNO, NewspaperEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SUNDAYEDITIONSHIELD, NewspaperShieldEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.BOOKBURNER, SargeantEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.BOOKBURNERHYPNO, SargeantEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.BOOKSHIELD, NewspaperShieldEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAMINGBOOK, FlamingBookEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.SCREENDOORSHIELD, MetalShieldEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SERGEANTSHIELDGEAR, MetalShieldEntityRenderer::new);
@@ -605,8 +616,16 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.GARGANTUAR, GargantuarEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.GARGANTUARHYPNO, GargantuarEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.SCRAPMECH, ScrapMechEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SCRAPMECHHYPNO, ScrapMechEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.LASER, LaserRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.IMP, ImpEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.IMPHYPNO, ImpEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.SCRAPIMP, ImpEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SCRAPIMPHYPNO, ImpEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.IMPTHROWER, ImpEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.IMPTHROWERHYPNO, ImpEntityRenderer::new);
@@ -656,8 +675,8 @@ public class PvZEntityClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(PvZEntity.FUTUREZOMBIE, FutureZombieEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.FUTUREHYPNO, FutureZombieEntityRenderer::new);
-		EntityRendererRegistry.register(PvZEntity.FLAGFUTURE, FlagPeasantEntityRenderer::new);
-		EntityRendererRegistry.register(PvZEntity.FLAGFUTUREHYPNO, FlagPeasantEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAGFUTURE, FlagFutureEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAGFUTUREHYPNO, FlagFutureEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.FUTURECONE, FutureZombieEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.FUTURECONEHYPNO, FutureZombieEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.FUTUREBUCKET, FutureZombieEntityRenderer::new);

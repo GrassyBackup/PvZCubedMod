@@ -418,6 +418,7 @@ public class PvZConfigModel {
 		public float sporeDMG = 2f;
 
 		public float basketBallDMG = 4f;
+		public float laserDMG = 32f;
 		public float soundwaveDMG = 9f;
 		public float zpgDMG = 30f;
 	}
@@ -485,6 +486,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double flagMummyH = 50D;
 		@RestartRequired
+		public double flagFuturetH = 50D;
+		@RestartRequired
 		public double flagPeasantH = 50D;
 		@RestartRequired
 		public double flagSargeantH = 75D;
@@ -503,6 +506,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double impdragonH = 65D;
 		@RestartRequired
+		public double scrapimpH = 80D;
+		@RestartRequired
 		public double superFanH = 20D;
 		@RestartRequired
 		public double announcerH = 37D;
@@ -514,6 +519,8 @@ public class PvZConfigModel {
 		public double newspaperH = 27D;
 		@RestartRequired
 		public double octoH = 91D;
+		@RestartRequired
+		public double scrapmechH = 290D;
 		@RestartRequired
 		public double scientistH = 27D;
 		@RestartRequired
@@ -592,6 +599,8 @@ public class PvZConfigModel {
 		public double newspaperShieldH = 15D;
 		@RestartRequired
 		public double sundayShieldH = 115D;
+		@RestartRequired
+		public double bookShieldH = 65D;
 
 		@RestartRequired
 		public double trashcanObstH = 225D;

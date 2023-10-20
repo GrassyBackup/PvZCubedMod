@@ -21,13 +21,13 @@ public class GargantuarEntityModel extends AnimatedGeoModel<GargantuarEntity> {
 		Identifier identifier = new Identifier("pvzmod", "textures/entity/gargantuar/gargantuar.png");
 		if (object.getVariant().equals(GargantuarVariants.DEFENSIVEEND) || object.getVariant().equals(GargantuarVariants.DEFENSIVEENDHYPNO)){
 			identifier = new Identifier("pvzmod", "textures/entity/gargantuar/defensiveend.png");
-			if (object.gearless){
+			if (object.gear1less){
 				identifier = new Identifier("pvzmod", "textures/entity/gargantuar/defensiveend_gearless.png");
 			}
 		}
 		else if (object.getVariant().equals(GargantuarVariants.DEFENSIVEEND_NEWYEAR) || object.getVariant().equals(GargantuarVariants.DEFENSIVEEND_NEWYEARHYPNO)){
 			identifier = new Identifier("pvzmod", "textures/entity/gargantuar/defensiveend_newyear.png");
-			if (object.gearless){
+			if (object.gear1less){
 				identifier = new Identifier("pvzmod", "textures/entity/gargantuar/defensiveend_newyear_gearless.png");
 			}
 		}

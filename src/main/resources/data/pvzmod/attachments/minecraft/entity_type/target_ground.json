@@ -9,6 +9,7 @@
     "pvzmod:zombonivehicle": true,
     "pvzmod:bobsledvehicle": true,
     "pvzmod:speaker": true,
-    "pvzmod:piggy": true
+    "pvzmod:piggy": true,
+    "pvzmod:scrapmech": true
   }
 }

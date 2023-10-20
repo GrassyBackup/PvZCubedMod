@@ -39,6 +39,10 @@ public class ImpEntityRenderer extends GeoEntityRenderer<ImpEntity> {
 						new Identifier("pvzmod", "geo/imp.geo.json"));
 				map.put(ImpVariants.THROWERHYPNO,
 						new Identifier("pvzmod", "geo/imp.geo.json"));
+				map.put(ImpVariants.SCRAP,
+						new Identifier("pvzmod", "geo/scrapimp.geo.json"));
+				map.put(ImpVariants.SCRAPHYPNO,
+						new Identifier("pvzmod", "geo/scrapimp.geo.json"));
 			});
 
 	public Identifier getModelResource(ImpEntity object) {
