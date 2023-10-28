@@ -2,7 +2,9 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.cha
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowFullTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import net.fabricmc.api.EnvType;
@@ -28,6 +30,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
@@ -41,6 +44,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
@@ -176,18 +180,6 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 		} else {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.CHARMSHROOM_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -195,12 +187,19 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	public void tick() {
 		if (this.world instanceof ServerWorld serverWorld) {
-			if (this.getWorld().getMoonSize() > 0.9 && this.world.isSkyVisible(this.getBlockPos())) {
-				if (serverWorld.isNight()) {
-					this.setMoonPowered(Moon.TRUE);
+			Vec3d vec3d = Vec3d.ofCenter(this.getBlockPos()).add(0, -0.5, 0);
+			List<ShadowFullTile> fullCheck = world.getNonSpectatingEntities(ShadowFullTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
+			if (fullCheck.isEmpty()) {
+				if (this.getWorld().getMoonSize() > 0.9 && this.world.isSkyVisible(this.getBlockPos())) {
+					if (serverWorld.isNight()) {
+						this.setMoonPowered(Moon.TRUE);
+					}
+				} else {
+					this.setMoonPowered(Moon.FALSE);
 				}
-			} else {
-				this.setMoonPowered(Moon.FALSE);
+			}
+			if (!fullCheck.isEmpty()) {
+				this.setMoonPowered(Moon.TRUE);
 			}
 		}
 		if (this.getMoonPowered()){
@@ -231,9 +230,15 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 			this.targetZombies(this.getPos(), 5, true, true, true);
 		}
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.CHARMSHROOM_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 	}

@@ -143,18 +143,6 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.SMOOSHROOM_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -186,9 +174,15 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 				this.targetZombies(this.getPos(), 3, false, true, true);
 			}
 		}
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.SMOOSHROOM_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 		LivingEntity target = this.getTarget();
@@ -368,10 +362,10 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 							default -> PvZSounds.PEAHITEVENT;
 						};
 						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
+						if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 							damage = damage * 2;
 						}
-						if ("paper".equals(zombieMaterial) || "rubber".equals(zombieMaterial)) {
+						if ("paper".equals(zombieMaterial) || "rubber".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
 							damage = damage / 2;
 						}
 						if (damage > livingEntity.getHealth() &&

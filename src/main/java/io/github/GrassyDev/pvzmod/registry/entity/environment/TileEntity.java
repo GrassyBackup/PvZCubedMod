@@ -10,9 +10,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -44,6 +48,79 @@ public abstract class TileEntity extends PathAwareEntity implements IAnimatable 
 		if (status != 2 && status != 60){
 			super.handleStatus(status);
 		}
+	}
+
+	protected void initDataTracker() {
+		super.initDataTracker();
+		this.dataTracker.startTracking(SHADOW, false);
+		this.dataTracker.startTracking(MOON, false);
+	}
+
+	@Override
+	public void writeCustomDataToNbt(NbtCompound tag) {
+		super.writeCustomDataToNbt(tag);
+		tag.putBoolean("Shadow", this.getShadowPowered());
+		tag.putBoolean("Moon", this.getMoonPowered());
+	}
+
+	public void readCustomDataFromNbt(NbtCompound tag) {
+		super.readCustomDataFromNbt(tag);
+		this.dataTracker.set(SHADOW, tag.getBoolean("Shadow"));
+		this.dataTracker.set(MOON, tag.getBoolean("Moon"));
+	}
+
+	/** /~*~//~*VARIANTS*~//~*~/ **/
+
+	protected static final TrackedData<Boolean> SHADOW =
+			DataTracker.registerData(TileEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+	public enum Shadow {
+		FALSE(false),
+		TRUE(true);
+
+		Shadow(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getShadowPowered() {
+		return this.dataTracker.get(SHADOW);
+	}
+
+	public void setShadowPowered(Shadow shadowPowered) {
+		this.dataTracker.set(SHADOW, shadowPowered.getId());
+	}
+
+	protected static final TrackedData<Boolean> MOON =
+			DataTracker.registerData(TileEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+	public enum Moon {
+		FALSE(false),
+		TRUE(true);
+
+		Moon(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getMoonPowered() {
+		return this.dataTracker.get(MOON);
+	}
+
+	public void setMoonPowered(Moon shadowPowered) {
+		this.dataTracker.set(MOON, shadowPowered.getId());
 	}
 
 

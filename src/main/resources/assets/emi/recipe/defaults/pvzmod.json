@@ -63,6 +63,7 @@
     "pvzmod:plants/enchant/charmshroom",
     "pvzmod:plants/enchant/tulimpeter",
     "pvzmod:plants/enchant/magicshroom",
+    "pvzmod:plants/enchant/gambleshroom",
     "pvzmod:plants/enchant/pumpkinwitch",
     "pvzmod:plants/enchant/coffeebean",
     "pvzmod:tiles/tile_dark_underwater",
@@ -123,6 +124,7 @@
     "pvzmod:plants/filament/zapricot",
     "pvzmod:plants/filament/empeach",
     "pvzmod:plants/conceal/ghostpepper",
-    "pvzmod:plants/conceal/nightcap"
+    "pvzmod:plants/conceal/nightcap",
+    "pvzmod:plants/conceal/doomrose"
   ]
 }

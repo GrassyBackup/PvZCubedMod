@@ -31,7 +31,8 @@
   },
   "rewards": {
     "recipes": [
-      "pvzmod:plants/enchant/pumpkinwitch"
+      "pvzmod:plants/enchant/pumpkinwitch",
+      "pvzmod:plants/enchant/doomrose"
     ],
     "experience": 25
   }

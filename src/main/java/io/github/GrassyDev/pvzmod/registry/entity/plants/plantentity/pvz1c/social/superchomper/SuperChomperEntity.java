@@ -184,65 +184,6 @@ public class SuperChomperEntity extends PlantEntity implements IAnimatable, Rang
 	}
 
 
-
-	public void smack(Entity target) {
-		ZombiePropEntity passenger = null;
-		boolean hasHelmet = false;
-		boolean hasShield = false;
-		Entity damaged = target;
-		for (Entity entity1 : target.getPassengerList()) {
-			if (entity1 instanceof ZombiePropEntity zpe) {
-				passenger = zpe;
-				hasHelmet = !(entity1 instanceof ZombieShieldEntity);
-				hasShield = entity1 instanceof ZombieShieldEntity || passenger.isCovered();
-				if (hasShield){
-					damaged = passenger;
-				}
-			}
-		}
-		String zombieSize = PvZCubed.ZOMBIE_SIZE.get(damaged.getType()).orElse("medium");
-		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
-		float damage = Integer.MAX_VALUE;
-		if ((target instanceof GraveEntity ||
-				IS_MACHINE.get(target.getType()).orElse(false).equals(true) ||
-				zombieSize.equals("gargantuar") ||
-				zombieSize.equals("big")) && !hasShield){
-			damage = 32;
-			this.attackTicksLeft = 25;
-			this.setCount(25);
-			this.world.sendEntityStatus(this, (byte) 106);
-		}
-		else if (zombieSize.equals("small") && !hasShield){
-			this.attackTicksLeft = 25;
-			this.setCount(25);
-			this.world.sendEntityStatus(this, (byte) 106);
-		}
-		else if (hasShield) {
-			this.attackTicksLeft = 250;
-			this.setCount(250);
-			this.world.sendEntityStatus(this, (byte) 105);
-		}
-		else {
-			this.attackTicksLeft = 250;
-			this.setCount(250);
-			this.world.sendEntityStatus(this, (byte) 104);
-		}
-		boolean bl = damaged.damage(DamageSource.mob(this), damage);
-		if (bl) {
-			this.applyDamageEffects(this, target);
-		}
-		SoundEvent sound;
-		sound = switch (zombieMaterial) {
-			case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
-			case "plastic" -> PvZSounds.CONEHITEVENT;
-			case "stone" -> PvZSounds.STONEHITEVENT;
-			default -> PvZSounds.PEAHITEVENT;
-		};
-		target.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-		this.setTarget(null);
-	}
-
-
 	/** //~*~//~POSITION~//~*~// **/
 
 	public void setPosition(double x, double y, double z) {
@@ -251,18 +192,6 @@ public class SuperChomperEntity extends PlantEntity implements IAnimatable, Rang
 			super.setPosition(x, y, z);
 		} else {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
-		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.SUPERCHOMPER_SEED_PACKET);
-				}
-				this.discard();
-			}
-
 		}
 	}
 
@@ -276,12 +205,18 @@ public class SuperChomperEntity extends PlantEntity implements IAnimatable, Rang
 		if (!this.world.isClient()) {
 			this.FireBeamGoal();
 		}
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.SUPERCHOMPER_SEED_PACKET);
+				}
+				this.discard();
 			}
-			this.targetZombies(this.getPos(), 2, true, true, true);
 		}
+		this.targetZombies(this.getPos(), 2, true, true, true);
 	}
 
 	public void tickMovement() {
@@ -456,12 +391,21 @@ public class SuperChomperEntity extends PlantEntity implements IAnimatable, Rang
 				}
 
 				if (livingEntity.squaredDistanceTo(this) <= 2 && livingEntity.isAlive()){
+					if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity){
+						generalPvZombieEntity.swallowed = true;
+					}
 					livingEntity.damage(DamageSource.mob(this), Float.MAX_VALUE);
 					if (livingEntity.hasVehicle()){
+						if (livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity){
+							generalPvZombieEntity.swallowed = true;
+						}
 						livingEntity.getVehicle().damage(DamageSource.mob(this), Float.MAX_VALUE);
 					}
 					if (livingEntity.hasPassengers()){
 						for (Entity entity : livingEntity.getPassengerList()){
+							if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity){
+								generalPvZombieEntity.swallowed = true;
+							}
 							entity.damage(DamageSource.mob(this), Float.MAX_VALUE);
 						}
 					}

@@ -41,11 +41,9 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Objects;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
-
 ;
 
-public class BubblePadEntity extends PlantEntity implements IAnimatable {
+public class BubblePadEntity extends PlantEntity.VineEntity implements IAnimatable {
     private String controllerName = "wallcontroller";
 
 
@@ -133,14 +131,6 @@ public class BubblePadEntity extends PlantEntity implements IAnimatable {
 		} else {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			if (!blockPos2.equals(blockPos)) {
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -153,19 +143,15 @@ public class BubblePadEntity extends PlantEntity implements IAnimatable {
 			this.getVehicle().discard();
 		}
 		BlockPos blockPos = this.getBlockPos();
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-		}
+
 
 		if (this.isInsideWaterOrBubbleColumn()){
 			kill();
 		}
-		if (--amphibiousRaycastDelay >= 0) {
-			amphibiousRaycastDelay = 60;
+		if (--amphibiousRaycastDelay <= 0 && age > 5) {
+			amphibiousRaycastDelay = 20;
 			HitResult hitResult = amphibiousRaycast(0.25);
-			if (hitResult.getType() == HitResult.Type.MISS) {
+			if (hitResult.getType() == HitResult.Type.MISS && !this.hasVehicle()) {
 				kill();
 			}
 			if (this.age > 1) {
@@ -195,16 +181,6 @@ public class BubblePadEntity extends PlantEntity implements IAnimatable {
 
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		ItemStack itemStack = player.getStackInHand(hand);
-		if (itemStack.isOf(ModItems.GARDENINGGLOVE)) {
-			dropItem(ModItems.OXYGAE_SEED_PACKET);
-			if (!player.getAbilities().creativeMode) {
-				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
-					itemStack.decrement(1);
-				}
-			}
-			this.discard();
-			return ActionResult.SUCCESS;
-		}
 		return super.interactMob(player, hand);
 	}
 

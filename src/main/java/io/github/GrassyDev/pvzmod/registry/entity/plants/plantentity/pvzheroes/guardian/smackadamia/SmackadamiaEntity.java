@@ -176,14 +176,6 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 		} else {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			if (!blockPos2.equals(blockPos)) {
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -208,16 +200,11 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 		if (--this.chomperAudioDelay == 0){
 			this.playSound(PvZSounds.PEASHOOTEVENT, 1.0F, 1.0F);
 		}
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-		}
 		BlockPos blockPos = this.getBlockPos();
-		if (--amphibiousRaycastDelay >= 0) {
-			amphibiousRaycastDelay = 60;
+		if (--amphibiousRaycastDelay <= 0 && age > 1) {
+			amphibiousRaycastDelay = 20;
 			HitResult hitResult = amphibiousRaycast(0.25);
-			if (hitResult.getType() == HitResult.Type.MISS) {
+			if (hitResult.getType() == HitResult.Type.MISS && !this.hasVehicle()) {
 				kill();
 			}
 			if (this.age > 1) {

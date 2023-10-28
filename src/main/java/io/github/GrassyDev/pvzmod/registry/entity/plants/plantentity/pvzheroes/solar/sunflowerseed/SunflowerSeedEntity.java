@@ -269,18 +269,6 @@ public class SunflowerSeedEntity extends PlantEntity implements IAnimatable, Ran
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.SUNFLOWERSEED_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -288,12 +276,18 @@ public class SunflowerSeedEntity extends PlantEntity implements IAnimatable, Ran
 
 	public void tick() {
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.BELLFLOWER_SEED_PACKET);
+				}
+				this.discard();
 			}
-			this.targetZombies(this.getPos(), 3, false, false, true);
 		}
+		this.targetZombies(this.getPos(), 3, false, false, true);
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {
 			this.discard();
 		}

@@ -403,15 +403,9 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 	private float getAttackDamage(){
 		return (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 	}
-	int stealthTick = 0;
 
 	public void tick() {
 		super.tick();
-		if (this.isStealth()) {
-			if (++stealthTick > 20) {
-				this.setStealthTag(Stealth.FALSE);
-			}
-		}
 		if (this.isBeingRainedOn() || this.hasStatusEffect(PvZCubed.ICE) || this.hasStatusEffect(PvZCubed.FROZEN) || this.hasStatusEffect(PvZCubed.WET) || this.isSubmergedInWater()){
 			this.setFireStage(FireStage.EXTINGUISHED);
 		}

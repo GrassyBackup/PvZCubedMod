@@ -303,18 +303,6 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 		} else {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double) MathHelper.floor(y + 0.5), (double) MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead) {
-					this.dropItem(ModItems.ZAPRICOT_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -324,12 +312,18 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	public void tick() {
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.ZAPRICOT_SEED_PACKET);
+				}
+				this.discard();
 			}
-			this.targetZombies(this.getPos(), 3, true, true, false);
 		}
+		this.targetZombies(this.getPos(), 3, true, true, false);
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {
 			this.discard();
 		}
@@ -504,7 +498,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 				else if (zombieMaterial.equals("rubber")){
 					this.lightningCounter = 0;
 				}
-				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic") && !zombieMaterial.equals("crystal")){
+				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic") && !zombieMaterial.equals("gold") && !zombieMaterial.equals("crystal")){
 					--this.lightningCounter;
 				}
 				if (getBeamTarget2() == null && getElectricBeamTarget2() == null){

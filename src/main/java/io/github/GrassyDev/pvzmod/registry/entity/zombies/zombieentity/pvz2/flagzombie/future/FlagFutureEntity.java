@@ -519,7 +519,9 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 				float random = MathHelper.nextBetween(randomGenerator, -4, 4);
 				Vec3d vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.nextInt(10), 0.0, random).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
                 BlockPos blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
-				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
+				Vec3d vec3d2 = new Vec3d((double)-2 - FlagFutureEntity.this.random.nextInt(10), 1, random).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+				BlockPos blockPos2 = FlagFutureEntity.this.getBlockPos().add(vec3d2.getX(), 1, vec3d2.getZ());
+				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) && !world.getBlockState(blockPos2).isOf(Blocks.AIR) && !world.getBlockState(blockPos2).isOf(Blocks.CAVE_AIR)){
 					vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
@@ -537,7 +539,9 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 				float random = MathHelper.nextBetween(randomGenerator, -4, 4);
 				Vec3d vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.nextInt(10), 0.0, random).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
                 BlockPos blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
-				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
+				Vec3d vec3d2 = new Vec3d((double)-2 - FlagFutureEntity.this.random.nextInt(10), 1, random).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+				BlockPos blockPos2 = FlagFutureEntity.this.getBlockPos().add(vec3d2.getX(), 1, vec3d2.getZ());
+				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) && !world.getBlockState(blockPos2).isOf(Blocks.AIR) && !world.getBlockState(blockPos2).isOf(Blocks.CAVE_AIR)){
 					vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
@@ -555,7 +559,9 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 				float random = MathHelper.nextBetween(randomGenerator, -4, 4);
 				Vec3d vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.nextInt(10), 0.0, random).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
                 BlockPos blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
-				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
+				Vec3d vec3d2 = new Vec3d((double)-2 - FlagFutureEntity.this.random.nextInt(10), 1, random).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+				BlockPos blockPos2 = FlagFutureEntity.this.getBlockPos().add(vec3d2.getX(), 1, vec3d2.getZ());
+				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) && !world.getBlockState(blockPos2).isOf(Blocks.AIR) && !world.getBlockState(blockPos2).isOf(Blocks.CAVE_AIR)){
 					vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
@@ -573,7 +579,9 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 				float random = MathHelper.nextBetween(randomGenerator, -4, 4);
 				Vec3d vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.nextInt(10), 0.0, random).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
                 BlockPos blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
-				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
+				Vec3d vec3d2 = new Vec3d((double)-2 - FlagFutureEntity.this.random.nextInt(10), 1, random).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+				BlockPos blockPos2 = FlagFutureEntity.this.getBlockPos().add(vec3d2.getX(), 1, vec3d2.getZ());
+				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) && !world.getBlockState(blockPos2).isOf(Blocks.AIR) && !world.getBlockState(blockPos2).isOf(Blocks.CAVE_AIR)){
 					vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}

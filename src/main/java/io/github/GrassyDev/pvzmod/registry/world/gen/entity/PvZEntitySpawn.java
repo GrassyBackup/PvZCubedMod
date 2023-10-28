@@ -14,6 +14,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.pe
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.puffshroom.PuffshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.ancientegypt.iceberglettuce.IcebergLettuceEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.modernday.shadowshroom.ShadowShroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.renaissance.oilyolive.OilyOliveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.skycity.loquat.LoquatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.guardian.smallnut.SmallNutEntity;
@@ -70,6 +71,9 @@ public class PvZEntitySpawn {
 
 		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.PUFFSHROOM, PVZCONFIG.nestedSpawns.nestedPlantSpawns.puffshroomSP(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.puffshroomSPmin(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.puffshroomSPmax());
 		SpawnRestriction.register(PvZEntity.PUFFSHROOM, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PuffshroomEntity::canPuffshroomSpawn);
+
+		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.SHADOWSHROOM, PVZCONFIG.nestedSpawns.nestedPlantSpawns.shadowshroomSP(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.shadowshroomSPmin(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.shadowshroomSPmax());
+		SpawnRestriction.register(PvZEntity.SHADOWSHROOM, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShadowShroomEntity::canShadowShroomSpawn);
 
 		BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER, PvZEntity.WEENIEBEANIE, PVZCONFIG.nestedSpawns.nestedPlantSpawns.weeniebeanieSP(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.weeniebeanieSPmin(), PVZCONFIG.nestedSpawns.nestedPlantSpawns.weeniebeanieSPmax());
 		SpawnRestriction.register(PvZEntity.WEENIEBEANIE, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WeenieBeanieEntity::canWeenieBeanieSpawn);

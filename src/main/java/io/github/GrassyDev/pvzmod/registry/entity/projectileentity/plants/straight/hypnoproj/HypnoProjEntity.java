@@ -159,10 +159,7 @@ public class HypnoProjEntity extends PvZProjectileEntity implements IAnimatable 
 					hasHelmet = true;
 				}
 			}
-			if (entity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
-				hasHelmet = true;
-			}
-			if (!hasHelmet && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+			if (!hasHelmet && !(entity instanceof ZombiePropEntity) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
 				damage = damage * 2;
 			}
 			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");

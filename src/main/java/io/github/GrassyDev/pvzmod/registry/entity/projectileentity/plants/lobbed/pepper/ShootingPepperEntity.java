@@ -210,7 +210,7 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 						entity.playSound(PvZSounds.FIREPEAHITEVENT, 0.2F, 1F);
 					}
 					float damage = PVZCONFIG.nestedProjDMG.pepperDMGv2();
-					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 						if (!entity.isWet() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 							entity.setOnFireFor(4);

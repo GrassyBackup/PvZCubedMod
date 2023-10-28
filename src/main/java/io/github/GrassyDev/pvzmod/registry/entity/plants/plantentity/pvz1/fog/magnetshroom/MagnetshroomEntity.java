@@ -138,18 +138,6 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.MAGNETSHROOM_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -157,7 +145,6 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tick() {
 		--this.attractTicks;
-		System.out.println(this.getTarget());
 		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
@@ -176,9 +163,15 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 			this.targetZombies(this.getPos(), 5, true, true, true);
 		}
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.MAGNETSHROOM_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 		List<Entity> helmets = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, 0, 0));

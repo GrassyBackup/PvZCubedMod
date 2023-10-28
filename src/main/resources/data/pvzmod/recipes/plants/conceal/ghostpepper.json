@@ -2,10 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "pvzmod:plantfood"
-    },
-    {
-      "item": "pvzmod:sun"
+      "item": "pvzmod:plantfood_shadow"
     },
     {
       "item": "pvzmod:sun"

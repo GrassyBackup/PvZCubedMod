@@ -9,7 +9,9 @@ public enum GargantuarVariants {
 	DEFENSIVEEND(2),
 	DEFENSIVEENDHYPNO(3),
 	DEFENSIVEEND_NEWYEAR(4),
-	DEFENSIVEEND_NEWYEARHYPNO(5);
+	DEFENSIVEEND_NEWYEARHYPNO(5),
+	UNICORNGARGANTUAR(6),
+	UNICORNGARGANTUARHYPNO(7);
 
 	private static final GargantuarVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(GargantuarVariants::getId)).toArray(GargantuarVariants[]::new);

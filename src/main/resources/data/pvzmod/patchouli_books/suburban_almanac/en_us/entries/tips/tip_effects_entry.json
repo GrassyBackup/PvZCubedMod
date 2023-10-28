@@ -15,12 +15,12 @@
     {
       "type": "text",
       "text": [
-        "$(br2)Chill",
+        "$(br)Chill",
         "$(br2)Chill slows down Zombies for a total of 4 seconds, then they are immune to Chill for 4 seconds.",
         "$(br)Damage done by zombies is halved.",
         "$(br)Moves based on animation like Gargantuar's smash are slowed down by half.",
-        "$(br2)Machines can't be Chilled.",
-        "$(br)Deals half the damage against Crystal."
+        "$(br2)Machine and Cloth can't be Chilled.",
+        "$(br)Deals half the damage against Crystal and Cloth."
       ]
     },
     {
@@ -32,19 +32,19 @@
         "$(br)Frozen Zombies can't do their abilities.",
         "$(br)Frozen instantly kills zombies that swim and fly, and aren't Gargantuars.",
         "$(br)Deals half the damage against Crystal.",
-        "$(br)Machines, Stone, and Crystal can't be Frozen."
+        "$(br)Machine, Cloth, Stone, and Crystal can't be Frozen."
       ]
     },
     {
       "type": "text",
       "text": [
-        "$(br2)Fire",
+        "$(br)Fire",
         "$(br)Sets Zombies on fire, unless they are wet. Wet and Zombies immune to Fire prevent Fire Splash or don't take damage from it, halving direct damage as well. ",
         "Zombies on fire take 1 DMG/sec if they are not being attacked. ",
         "Zombies get Warm, which prevents Chill from being applied. ",
         "Thaws Chilled or Frozen Zombies. ",
         "Uncloaks Stealthing Zombies. ",
-        "$(br)Deals double against Paper and Plant, half Rubber and Crystal."
+        "$(br)Deals double against Paper, Plant and Cloth, half Rubber and Crystal."
       ]
     },
     {
@@ -61,7 +61,8 @@
       "text": [
         "$(br2)Wind",
         "$(br2)Knocks back Flying Zombies that don't have protection.",
-        "$(br2)Deals double the damage against Paper, and half against Stone and Crystal."
+        "$(br2)Instantly kills Small Cloth Zombies.",
+        "$(br2)Deals double the damage against Paper and Cloth, and half against Stone and Crystal."
       ]
     },
     {
@@ -104,7 +105,7 @@
         "$(br2)Acid",
         "$(br2)Deals continuous damage to Zombies.",
         "$(br2)Deals 8 DMG/0.5sec.",
-        "$(br2)Can only be applied to Metal, Electronic, Plant, or Paper."
+        "$(br2)Can only be applied to Metal, Electronic, Plant, Paper, and Acid."
       ]
     },
     {
@@ -136,7 +137,7 @@
       "text": [
         "$(br2)Heavy",
         "$(br2)Deals double the damage against Metal, Electronic, Stone, and Crystal.",
-        "$(br2)Hits Stealthing Zombies."
+        "$(br2)Deals half the damage against Rubber, Paper and Cloth."
       ]
     },
     {
@@ -145,6 +146,15 @@
         "$(br2)Sound",
         "$(br2)Has a 25% chance to make the the projectile or other means of attack \"critical\", which increases the damage by 50%.",
         "$(br2)Hits Stealthing Zombies."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br2)Invincibility",
+        "$(br2)Can't take damage, but can die to swallowing.",
+        "$(br2)Immune to most effects, except Hypnotizing, Bounce, and Doom Rose's Marigold effect.",
+        "$(br2)Disabled Machines can't be Invincible."
       ]
     },
     {

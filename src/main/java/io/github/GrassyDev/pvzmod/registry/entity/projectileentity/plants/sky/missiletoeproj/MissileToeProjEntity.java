@@ -229,7 +229,7 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 								n = MathHelper.clamp(n, 0, 1);
 								float damage = n * damageFar + (1 - n) * damageNear;
 								String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
-								if ("crystal".equals(zombieMaterial)) {
+								if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
 									damage = damage / 2;
 								}
 								ZombiePropEntity zombiePropEntity3 = null;

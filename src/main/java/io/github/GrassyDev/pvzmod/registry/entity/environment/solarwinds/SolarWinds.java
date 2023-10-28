@@ -156,6 +156,12 @@ public class SolarWinds extends TileEntity {
 				this.playSound(PvZSounds.SUNDROPEVENT, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) + 0.75F);
 				this.dropStack(ModItems.PLANTFOOD_FLOWER.getDefaultStack(), 3);
 			}
+			if (item.getStack().isItemEqual(ModItems.PLANTFOOD_SHADOW.getDefaultStack())) {
+				item.discard();
+				this.playSound(PvZSounds.SUNDROPEVENT, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) + 0.75F);
+				this.dropStack(ModItems.PLANTFOOD_FLOWER.getDefaultStack(), 3);
+				this.dropStack(ModItems.PLANTFOOD_FLOWER.getDefaultStack(), 3);
+			}
 		}
 
 		if (getAlive() >= 2400){

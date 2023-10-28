@@ -164,6 +164,11 @@
       "pvzmod:empeach_explosion"
     ]
   },
+  "poison.splash": {
+    "sounds": [
+      "pvzmod:poison_splash"
+    ]
+  },
   "mech.alarm": {
     "sounds": [
       "pvzmod:mech_alarm"

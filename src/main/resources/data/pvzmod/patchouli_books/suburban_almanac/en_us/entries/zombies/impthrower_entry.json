@@ -11,7 +11,7 @@
         "$(#bd951a)Health: $()$(#ff0000)20",
         "$(br)$(#bd951a)Damage: $()$(#ff0000)8",
         "$(br)$(#bd951a)Speed: $()$(#ff0000)Speedy",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)Small. Carries a random Imp and throws them with temporary Stealth when 6 blocks near a Plant, or a weaker throw when dying",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Small. Carries a random Imp and throws them with 0.5s of Invincibility when 6 blocks near a Plant, or a weaker throw when dying",
         "$(br2)$(#bd951a)But where is the Imp-Throwing-Imp-Throwing-Imp?? We have to go deeper..."
       ]
     },

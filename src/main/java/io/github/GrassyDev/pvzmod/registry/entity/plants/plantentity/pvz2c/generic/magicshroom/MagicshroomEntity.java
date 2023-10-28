@@ -5,8 +5,10 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.og.gambleshroom.GambleshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.card.ShootingCardEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.items.seedpackets.GambleshroomSeeds;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -22,6 +24,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -209,18 +212,6 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.MAGICSHROOM_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 	/** /~*~//~**TICKING**~//~*~/ **/
@@ -252,9 +243,15 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 			}
 		}
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.MAGICSHROOM_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 		if (this.hasHat()){
@@ -287,6 +284,37 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 				}
 			}
 			this.discard();
+			return ActionResult.SUCCESS;
+		}
+		Item item = itemStack.getItem();
+		if (itemStack.isOf(ModItems.GAMBLESHROOM_SEED_PACKET) && !player.getItemCooldownManager().isCoolingDown(item)) {
+			this.playSound(PvZSounds.PLANTPLANTEDEVENT);
+			if ((this.world instanceof ServerWorld)) {
+				ServerWorld serverWorld = (ServerWorld) this.world;
+				GambleshroomEntity gambleshroomEntity = (GambleshroomEntity) PvZEntity.GAMBLESHROOM.create(world);
+				gambleshroomEntity.setTarget(this.getTarget());
+				gambleshroomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+				gambleshroomEntity.initialize(serverWorld, world.getLocalDifficulty(gambleshroomEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+				gambleshroomEntity.setAiDisabled(this.isAiDisabled());
+				gambleshroomEntity.setPersistent();
+				if (this.hasCustomName()) {
+					gambleshroomEntity.setCustomName(this.getCustomName());
+					gambleshroomEntity.setCustomNameVisible(this.isCustomNameVisible());
+				}
+				if (this.hasVehicle()){
+					gambleshroomEntity.startRiding(this.getVehicle(), true);
+				}
+				serverWorld.spawnEntityAndPassengers(gambleshroomEntity);
+				this.remove(RemovalReason.DISCARDED);
+			}
+			if (!player.getAbilities().creativeMode) {
+				if (!PVZCONFIG.nestedSeeds.infiniteSeeds() && !world.getGameRules().getBoolean(PvZCubed.INFINITE_SEEDS)) {
+					itemStack.decrement(1);
+				}
+				if (!PVZCONFIG.nestedSeeds.instantRecharge() && !world.getGameRules().getBoolean(PvZCubed.INSTANT_RECHARGE)) {
+					player.getItemCooldownManager().set(ModItems.GAMBLESHROOM_SEED_PACKET, GambleshroomSeeds.cooldown);
+				}
+			}
 			return ActionResult.SUCCESS;
 		}
 		return super.interactMob(player, hand);

@@ -46,10 +46,10 @@
       "type": "text",
       "text": [
         "$(br2)$(#bd951a)Damage: $()$(#ff0000)12 DMG/1s",
-        "$(br)$(#bd951a)Damage Area: $()$(#ff0000)Low Profile. 2 Blocks in front and behind, 5 wide. ",
+        "$(br)$(#bd951a)Damage Area: $()$(#ff0000)Low Profile. 2 Blocks in front and behind, 3 wide. ",
         "$(br)$(#bd951a)Range: $()$(#ff0000)2 Blocks ",
         "$(br)$(#bd951a)Blast: $()$(#ff0000)90 DMG",
-        "$(br)$(#bd951a)Blast Radius: $()$(#ff0000)Blocks",
+        "$(br)$(#bd951a)Blast Radius: $()$(#ff0000)5 Blocks",
         "$(br)$(#bd951a)Fuse Time: $()$(#ff0000)0.5s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Flying. Immune to damage. Zombies ignore. Full Moon Powered Form. Deals damage directly to Zombies, can't hurt Obstacles. Dies after attacking for 8 seconds total, exploding in the process."
       ]

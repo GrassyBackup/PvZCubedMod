@@ -75,6 +75,7 @@ public class PvZCubed implements ModInitializer {
 	public static final StatusEffect BARK = new Bark();
 	public static final StatusEffect CHEESE = new Cheese();
 	public static final StatusEffect SHADOW = new Shadow();
+	public static final StatusEffect MARIGOLD = new Marigold();
 	public static final StatusEffect ACID = new Acid();
 
 	public static final GameRules.Key<GameRules.BooleanRule> SHOULD_PLANT_SPAWN =
@@ -188,10 +189,12 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.FIRE_PEA_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ENDURIAN_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.GOLDLEAF_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.SHADOWSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.MISSILETOE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ELECTROPEA_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.GHOSTPEPPER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.OLIVEPIT_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.GLOOMVINE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.MAGICSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.LOQUAT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SAUCER_SEED_PACKET));
@@ -226,7 +229,9 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.BELLFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SUNFLOWERSEED_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.NIGHTCAP_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.DOOMROSE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DOGWOOD_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.GAMBLESHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.PEA));
 				stacks.add(new ItemStack(ModItems.SNOWPEAPROJ));
 				stacks.add(new ItemStack(ModItems.SPORE));
@@ -321,6 +326,10 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.BRICKHEADEGG));
 				stacks.add(new ItemStack(ModItems.SUNDAYEDITIONEGG));
 				stacks.add(new ItemStack(ModItems.SUPERFANIMPEGG));
+				stacks.add(new ItemStack(ModItems.SUMMERBASICEGG));
+				stacks.add(new ItemStack(ModItems.FLAGSUMMEREGG));
+				stacks.add(new ItemStack(ModItems.SUMMERCONEEGG));
+				stacks.add(new ItemStack(ModItems.SUMMERBUCKETEGG));
 				stacks.add(new ItemStack(ModItems.BASSEGG));
 				stacks.add(new ItemStack(ModItems.PUMPKINZOMBIEEGG));
 				stacks.add(new ItemStack(ModItems.NEWYEARIMPEGG));
@@ -337,6 +346,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.DEFENSIVEENDEGG));
 				stacks.add(new ItemStack(ModItems.IMPTHROWEGG));
 				stacks.add(new ItemStack(ModItems.SCRAPMECHEGG));
+				stacks.add(new ItemStack(ModItems.UNICORNGARGANTUAREGG));
+				stacks.add(new ItemStack(ModItems.BASSIMPEGG));
 				stacks.add(new ItemStack(ModItems.BULLYEGG));
 				stacks.add(new ItemStack(ModItems.BASKETBALLCARRIEREGG));
 				stacks.add(new ItemStack(ModItems.BOOKBURNEREGG));
@@ -364,6 +375,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.DAY));
 				stacks.add(new ItemStack(ModItems.NIGHT));
 				stacks.add(new ItemStack(ModItems.DROUGHT));
+				stacks.add(new ItemStack(ModItems.BOMB));
 				stacks.add(new ItemStack(ModItems.CLEAR));
 				stacks.add(new ItemStack(ModItems.RAIN));
 				stacks.add(new ItemStack(ModItems.THUNDER));
@@ -442,5 +454,6 @@ public class PvZCubed implements ModInitializer {
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "bark"), BARK);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "cheese"), CHEESE);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "shadow"), SHADOW);
+		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "marigold"), MARIGOLD);
 	}
 }

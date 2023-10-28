@@ -186,7 +186,7 @@ public class ShootingPlasmaPeaEntity extends PvZProjectileEntity implements IAni
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
 				float damage = PVZCONFIG.nestedProjDMG.plasmaPeaDMG();
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
-				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 					damage = damage * 2;
 				}
 				if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)){

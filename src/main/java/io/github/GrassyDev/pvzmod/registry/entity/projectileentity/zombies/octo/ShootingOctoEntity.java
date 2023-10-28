@@ -180,6 +180,8 @@ public class ShootingOctoEntity extends PvZProjectileEntity implements IAnimatab
 						if (world instanceof ServerWorld serverWorld && (entity instanceof PlantEntity) && !(entity.hasPassengers()) && !(entity instanceof GardenEntity) && !(entity instanceof GardenChallengeEntity)) {
 							FleshObstacleEntity fleshObstacleEntity = new FleshObstacleEntity(PvZEntity.OCTOOBST, this.world);
 							fleshObstacleEntity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entity.getYaw(), 0.0F);
+							fleshObstacleEntity.setRainbowTag(GeneralPvZombieEntity.Rainbow.TRUE);
+							fleshObstacleEntity.rainbowTicks = 60;
 							serverWorld.spawnEntityAndPassengers(fleshObstacleEntity);
 							this.world.sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);

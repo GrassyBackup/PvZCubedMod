@@ -259,7 +259,7 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 								entity.playSound(PvZSounds.FIREPEAHITEVENT, 0.2F, 1F);
 							}
 							float damage = 16;
-							if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+							if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 								if (!entity.isWet() && this.getFireStage() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 									((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 									entity.setOnFireFor(4);
@@ -320,7 +320,7 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 								entity.playSound(PvZSounds.FIREPEAHITEVENT, 0.2F, 1F);
 							}
 							float damage = 16;
-							if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+							if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 								if (!entity.isWet() && this.getFireStage() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 									((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 									entity.setOnFireFor(4);

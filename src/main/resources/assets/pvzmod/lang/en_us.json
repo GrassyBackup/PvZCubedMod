@@ -55,6 +55,9 @@
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.puffshroomSP": "Puff-shroom Weight",
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.puffshroomSPmin": "Puff-shroom Group Min",
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.puffshroomSPmax": "Puff-shroom Group Max",
+  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.shadowshroomSP": "Shadow-shroom Weight",
+  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.shadowshroomSPmin": "Shadow-shroom Group Min",
+  "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.shadowshroomSPmax": "Shadow-shroom Group Max",
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.weeniebeanieSP": "Weenie Beanie Weight",
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.weeniebeanieSPmin": "Weenie Beanie Group Min",
   "text.config.pvz3-config.option.nestedSpawns.nestedPlantSpawns.weeniebeanieSPmax": "Weenie Beanie Group Max",
@@ -116,6 +119,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.coconutS": "Coconut Cannon Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dandelionweedS": "Dandelion Weed Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dogwoodS": "Dogwood Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.doomroseS": "Doom Rose Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.doomshroomS": "Doom-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dripphylleia": "Dripphylleia Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.dropeaS": "Dropea Seed",
@@ -124,6 +128,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.endurianS": "Endurian Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.firepeaS": "Fire Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.fumeshroomS": "Fume-shroom Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gambleshroomS": "Gamble-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gatlingpeaS": "Gatling Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.ghostpepperS": "Ghost Pepper Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gloomshroomS": "Gloom-shroom Seed",
@@ -164,6 +169,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.missileToeS": "Missile Toe Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.oxygaeS": "Oxygae Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.shamrockS": "Shamrock Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.shadowShroomS": "Shadow-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smackadamiaSv2": "Smackadamia Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smallnutS": "Small-nut Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.snowpeaS": "Snow Pea Seed",
@@ -220,6 +226,7 @@
   "text.config.pvz3-config.option.nestedProjDMG.flamingPeaDMGv2": "Flaming Pea Damage",
   "text.config.pvz3-config.option.nestedProjDMG.flamingPeaSDMG": "Flaming Pea Splash Damage",
   "text.config.pvz3-config.option.nestedProjDMG.fumeDMG": "Fume Damage",
+  "text.config.pvz3-config.option.nestedProjDMG.goldencardDMG": "Golden Card Damage",
   "text.config.pvz3-config.option.nestedProjDMG.missileToeDMGNear": "Missile Toe Near Damage",
   "text.config.pvz3-config.option.nestedProjDMG.missileToeDMGFar": "Missile Toe Far Damage",
   "text.config.pvz3-config.option.nestedProjDMG.missileToeDMGRangeNear": "Missile Toe Near Range",
@@ -267,6 +274,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.mausoleumGraveH": "Mausoleum Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.backupH": "Backup Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.browncoatH": "Browncoat Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.summerH": "Summer Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.mummyH": "Mummy Health",
   "text.config.pvz3-config.option.nestedZombieHealth.peasantH": "Future Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.futureH": "Peasant Health",
@@ -289,8 +297,10 @@
   "text.config.pvz3-config.option.nestedZombieHealth.bobsledH": "Bobsled Rider Health",
   "text.config.pvz3-config.option.nestedZombieHealth.gargantuarH": "Gargantuar Health",
   "text.config.pvz3-config.option.nestedZombieHealth.defensiveendH": "Defensive End Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.unicorngargantuarH": "Unicorn Gargantuar Health",
   "text.config.pvz3-config.option.nestedZombieHealth.impH": "Imp Health",
   "text.config.pvz3-config.option.nestedZombieHealth.impdragonH": "Imp Dragon Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.bassimpH": "Rainbow Bass Imp Health",
   "text.config.pvz3-config.option.nestedZombieHealth.scrapimpH": "Scrap Imp Health",
   "text.config.pvz3-config.option.nestedZombieHealth.superFanH": "Super-fan Imp Health",
   "text.config.pvz3-config.option.nestedZombieHealth.announcerH": "Announcer Imp Health",
@@ -357,6 +367,7 @@
   "item.pvzmod.plantfood_flower": "Petal Plant Food",
   "item.pvzmod.plantfood_tough": "Tough Plant Food",
   "item.pvzmod.plantfood_mushroom": "Mushroom Plant Food",
+  "item.pvzmod.plantfood_shadow": "Shadow Plant Food",
 
 
   "item.pvzmod.daves_shovel": "Dave's Shovel",
@@ -704,6 +715,11 @@
   "item.pvzmod.goldleaf_seed_packet.flavour": "\"All that glitters is sun",
   "item.pvzmod.goldleaf_seed_packet.flavour2": "Only gold shovels break the tile\"",
 
+  "entity.pvzmod.shadowshroom": "Shadow-shroom",
+  "item.pvzmod.shadowshroom_seed_packet": "☁ Shadow-shroom Seed Packet",
+  "item.pvzmod.shadowshroom_seed_packet.flavour": "It may look like it's being rude,",
+  "item.pvzmod.shadowshroom_seed_packet.flavour2": "but it just has a medical condition.",
+
   "entity.pvzmod.electropea": "Electro Pea",
   "item.pvzmod.electropea_seed_packet": "⚡ Electro Pea Seed Packet",
   "item.pvzmod.electropea_seed_packet.flavour": "\"Overpowered? Yes, I'm very powered.\"",
@@ -718,6 +734,12 @@
   "entity.pvzmod.olivepit": "Olive Pit",
   "item.pvzmod.olivepit_seed_packet": "⏳ Olive Pit Seed Packet",
   "item.pvzmod.olivepit_seed_packet.flavour": "\"Careful! Holey floor!\"",
+
+  "entity.pvzmod.gloomvine": "Gloom-vine",
+  "item.pvzmod.gloomvine_seed_packet": "☁Gloom-vine Seed Packet",
+  "item.pvzmod.gloomvine_seed_packet.flavour": "Any resemblance between plants, fungus,",
+  "item.pvzmod.gloomvine_seed_packet.flavour2": "or undead, is purely coincidental.",
+  "entity.pvzmod.shadowtile": "Shadow Tile",
 
   "entity.pvzmod.magicshroom": "Magic-shroom",
   "entity.pvzmod.magichat": "Magic Hat",
@@ -742,6 +764,7 @@
   "entity.pvzmod.oilyolive": "Oily Olive",
   "item.pvzmod.oilyolive_seed_packet": "⏳ Oily Olive Seed Packet",
   "item.pvzmod.oilyolive_seed_packet.flavour": "\"Careful! Oily floor!\"",
+  "entity.pvzmod.oiltile": "Oil Tile",
 
   "entity.pvzmod.springprincess": "Spring Princess",
   "item.pvzmod.springprincess.alt": "Princess Spring Grass",
@@ -868,10 +891,23 @@
   "item.pvzmod.piercespore": "Pierce Spore",
   "item.pvzmod.piercespore_shadow": "Shadow Pierce Spore",
 
+  "entity.pvzmod.doomrose": "Doom Rose",
+  "item.pvzmod.doomrose_seed_packet": "☁ Doom Rose Seed Packet",
+  "item.pvzmod.doomrose_seed_packet.flavour": "\"I'm guiding these lost",
+  "item.pvzmod.doomrose_seed_packet.flavour2": "souls to the right path.\"",
+  "entity.pvzmod.rosebuds": "Rose Buds",
+  "entity.pvzmod.maritile": "Marigold Pile",
+
   "entity.pvzmod.dogwood": "Dogwood",
   "item.pvzmod.dogwood_seed_packet": "⏳ Dogwood Seed Packet",
   "item.pvzmod.dogwood_seed_packet.flavour": "Zombie's worst friend.",
   "item.pvzmod.bark": "Bark",
+
+  "entity.pvzmod.gambleshroom": "Gamble-shroom",
+  "entity.pvzmod.gamblehat": "Gamble Hat",
+  "item.pvzmod.gambleshroom_seed_packet": "⭐ Gamble-shroom Seed Packet",
+  "item.pvzmod.gambleshroom_seed_packet.flavour": "The Plants vs. Zombies: Cubed team does not endorse gambling.",
+  "item.pvzmod.goldencardproj": "Golden Card",
 
 
   "itemGroup.pvzmod.zombies": "Zombies",
@@ -901,6 +937,22 @@
   "item.pvzmod.buckethead_egg": "Buckethead Zombie",
   "entity.pvzmod.bucketheadgear": "Bucket",
   "entity.pvzmod.buckethead_hypnotized": "Hypnotized Buckethead",
+
+  "entity.pvzmod.summerbasic": "Summer Zombie",
+  "item.pvzmod.summerbasic_egg": "Summer Zombie",
+  "entity.pvzmod.summerbasic_hypnotized": "Hypnotized Summer Zombie",
+
+  "entity.pvzmod.flagsummer": "Flag Summer Zombie",
+  "item.pvzmod.flagsummer_egg": "Flag Summer Zombie",
+  "entity.pvzmod.flagsummer_hypnotized": "Hypnotized Flag Summer Zombie",
+
+  "entity.pvzmod.summerconehead": "Summer Conehead",
+  "item.pvzmod.summercone_egg": "Summer Conehead",
+  "entity.pvzmod.summercone_hypnotized": "Hypnotized Summer Conehead",
+
+  "entity.pvzmod.summerbuckethead": "Summer Buckethead",
+  "item.pvzmod.summerbucket_egg": "Summer Buckethead",
+  "entity.pvzmod.summerbuckethead_hypnotized": "Hypnotized Summer Buckethead",
 
   "entity.pvzmod.screendoor": "Screen Door Zombie",
   "item.pvzmod.screendoor_egg": "Screen Door Zombie",
@@ -1160,6 +1212,14 @@
   "entity.pvzmod.impthrower": "Imp-Throwing Imp",
   "item.pvzmod.impthrow_egg": "Imp-Throwing Imp",
   "entity.pvzmod.impthrower_hypnotized": "Hypnotized Imp-Throwing Imp",
+
+  "entity.pvzmod.unicorngargantuar": "Unicorn Gargantuar",
+  "item.pvzmod.unicorngargantuar_egg": "Unicorn Gargantuar",
+  "entity.pvzmod.unicorngargantuar_hypnotized": "Hypnotized Unicorn Gargantuar",
+
+  "entity.pvzmod.bassimp": "Rainbow Bass Imp",
+  "item.pvzmod.rainbowbassimp_egg": "Rainbow Bass Imp",
+  "entity.pvzmod.bassimp_hypnotized": "Hypnotized Rainbow Bass Imp",
 
   "entity.pvzmod.scrapmech": "Scrap Mech",
   "item.pvzmod.scrapmech_egg": "Scrap Mech",

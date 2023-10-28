@@ -117,6 +117,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 								 SpawnReason spawnReason, @Nullable EntityData entityData,
 								 @Nullable NbtCompound entityNbt) {
 		if (this.getType().equals(PvZEntity.CONEHEAD) ||
+				this.getType().equals(PvZEntity.SUMMERCONEHEAD) ||
 				this.getType().equals(PvZEntity.MUMMYCONE) ||
 				this.getType().equals(PvZEntity.FUTURECONE)){
 			setVariant(BrowncoatVariants.CONEHEAD);
@@ -135,6 +136,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.BUCKETHEAD) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKET) ||
+				this.getType().equals(PvZEntity.SUMMERBUCKETHEAD) ||
 				this.getType().equals(PvZEntity.PEASANTBUCKET) ||
 				this.getType().equals(PvZEntity.FUTUREBUCKET)){
 			setVariant(BrowncoatVariants.BUCKETHEAD);
@@ -190,6 +192,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.BROWNCOATHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERBASICHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTHYPNO) ||
 				this.getType().equals(PvZEntity.FUTUREHYPNO)){
@@ -198,6 +201,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.CONEHEADHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYCONEHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERCONEHEADHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTCONEHYPNO) ||
 				this.getType().equals(PvZEntity.FUTURECONEHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTBOWLHYPNO) ||
@@ -207,6 +211,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.BUCKETHEADHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKETHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERBUCKETHEADHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTBUCKETHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTHELMETHYPNO) ||
 				this.getType().equals(PvZEntity.FUTUREBUCKETHYPNO)){
@@ -476,6 +481,9 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.BRICKHEADHYPNO) ||
 				this.getType().equals(PvZEntity.SCREENDOORHYPNO) ||
 				this.getType().equals(PvZEntity.TRASHCANHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERBASICHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERCONEHEADHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERBUCKETHEADHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYCONEHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKETHYPNO) ||
@@ -541,6 +549,14 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
+		if (this.getType().equals(PvZEntity.SUMMERBASIC) ||
+				this.getType().equals(PvZEntity.SUMMERBASICHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERCONEHEAD) ||
+				this.getType().equals(PvZEntity.SUMMERCONEHEADHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERBUCKETHEAD) ||
+				this.getType().equals(PvZEntity.SUMMERBUCKETHEADHYPNO)){
+			this.removeStatusEffect(ICE);
+		}
 		super.tick();
 		if (this.getAttacking() != null){
 			this.setVelocity(0, -0.3, 0);
@@ -692,23 +708,36 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 	@Override
 	public ItemStack getPickBlockStack() {
 		ItemStack itemStack;
-		if (this.getVariant().equals(BrowncoatVariants.CONEHEAD) || this.getVariant().equals(BrowncoatVariants.CONEHEADHYPNO)){
-			itemStack = ModItems.CONEHEADEGG.getDefaultStack();
+		if (this.getType().equals(PvZEntity.SUMMERBASIC) ||
+				this.getType().equals(PvZEntity.SUMMERBASICHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERCONEHEAD) ||
+				this.getType().equals(PvZEntity.SUMMERCONEHEADHYPNO) ||
+				this.getType().equals(PvZEntity.SUMMERBUCKETHEAD) ||
+				this.getType().equals(PvZEntity.SUMMERBUCKETHEADHYPNO)){
+			if (this.getVariant().equals(BrowncoatVariants.CONEHEAD) || this.getVariant().equals(BrowncoatVariants.CONEHEADHYPNO)){
+				itemStack = ModItems.SUMMERCONEEGG.getDefaultStack();
+			}
+			else if (this.getVariant().equals(BrowncoatVariants.BUCKETHEAD) || this.getVariant().equals(BrowncoatVariants.BUCKETHEADHYPNO)){
+				itemStack = ModItems.SUMMERBUCKETEGG.getDefaultStack();
+			}
+			else{
+				itemStack = ModItems.SUMMERBASICEGG.getDefaultStack();
+			}
 		}
-		else if (this.getVariant().equals(BrowncoatVariants.BUCKETHEAD) || this.getVariant().equals(BrowncoatVariants.BUCKETHEADHYPNO)){
-			itemStack = ModItems.BUCKETHEADEGG.getDefaultStack();
-		}
-		else if (this.getVariant().equals(BrowncoatVariants.BRICKHEAD) || this.getVariant().equals(BrowncoatVariants.BRICKHEADHYPNO)){
-			itemStack = ModItems.BRICKHEADEGG.getDefaultStack();
-		}
-		else if (this.getVariant().equals(BrowncoatVariants.SCREENDOOR) || this.getVariant().equals(BrowncoatVariants.SCREENDOORHYPNO)){
-			itemStack = ModItems.SCREENDOOREGG.getDefaultStack();
-		}
-		else if (this.getVariant().equals(BrowncoatVariants.TRASHCAN) || this.getVariant().equals(BrowncoatVariants.TRASHCANHYPNO)){
-			itemStack = ModItems.TRASHCANEGG.getDefaultStack();
-		}
-		else{
-			itemStack = ModItems.BROWNCOATEGG.getDefaultStack();
+		else {
+			if (this.getVariant().equals(BrowncoatVariants.CONEHEAD) || this.getVariant().equals(BrowncoatVariants.CONEHEADHYPNO)) {
+				itemStack = ModItems.CONEHEADEGG.getDefaultStack();
+			} else if (this.getVariant().equals(BrowncoatVariants.BUCKETHEAD) || this.getVariant().equals(BrowncoatVariants.BUCKETHEADHYPNO)) {
+				itemStack = ModItems.BUCKETHEADEGG.getDefaultStack();
+			} else if (this.getVariant().equals(BrowncoatVariants.BRICKHEAD) || this.getVariant().equals(BrowncoatVariants.BRICKHEADHYPNO)) {
+				itemStack = ModItems.BRICKHEADEGG.getDefaultStack();
+			} else if (this.getVariant().equals(BrowncoatVariants.SCREENDOOR) || this.getVariant().equals(BrowncoatVariants.SCREENDOORHYPNO)) {
+				itemStack = ModItems.SCREENDOOREGG.getDefaultStack();
+			} else if (this.getVariant().equals(BrowncoatVariants.TRASHCAN) || this.getVariant().equals(BrowncoatVariants.TRASHCANHYPNO)) {
+				itemStack = ModItems.TRASHCANEGG.getDefaultStack();
+			} else {
+				itemStack = ModItems.BROWNCOATEGG.getDefaultStack();
+			}
 		}
 		return itemStack;
 	}
@@ -746,6 +775,15 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.browncoatH());
     }
+
+	public static DefaultAttributeContainer.Builder createSummerAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.summerH());
+	}
 
 	protected SoundEvent getAmbientSound() {
 		if (!this.getHypno() && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.isFrozen && !this.isStunned && !this.hasStatusEffect(PvZCubed.DISABLE)) {
@@ -796,6 +834,15 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.TRASHCAN)){
 			hypnoType = PvZEntity.TRASHCANHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.SUMMERBASIC)){
+			hypnoType = PvZEntity.SUMMERBASICHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.SUMMERCONEHEAD)){
+			hypnoType = PvZEntity.SUMMERCONEHEADHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.SUMMERBUCKETHEAD)){
+			hypnoType = PvZEntity.SUMMERBUCKETHEADHYPNO;
 		}
 		else if (this.getType().equals(PvZEntity.MUMMY)){
 			hypnoType = PvZEntity.MUMMYHYPNO;

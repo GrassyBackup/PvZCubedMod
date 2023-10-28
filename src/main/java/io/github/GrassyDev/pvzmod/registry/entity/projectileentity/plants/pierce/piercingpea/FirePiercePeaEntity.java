@@ -193,11 +193,11 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 				if (et == null) {
 					++this.damageCounter;
 					if ((entity instanceof ZombieShieldEntity || entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET) ||
-							(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) && !"paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+							(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) && !"paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 						entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
 					}
 					entity.playSound(PvZSounds.FIREPEAHITEVENT, 0.2F, 1F);
-					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 						if (!entity.isWet() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 							entity.setOnFireFor(4);

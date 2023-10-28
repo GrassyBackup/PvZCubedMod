@@ -71,7 +71,6 @@ public class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 			this.setYaw(this.getVehicle().getYaw());
 			this.setHeadYaw(this.getVehicle().getHeadYaw());
 		}
-		super.tick();
 		LivingEntity vehicle = (LivingEntity) this.getVehicle();
 		if (vehicle instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying()){
 			this.setFlying(Flying.TRUE);
@@ -164,6 +163,7 @@ public class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 				this.removeStatusEffect(StatusEffects.POISON);
 			}
 		}
+		super.tick();
 		if (vehicle != null && vehicle.isOnFire() && !(this instanceof ZombieShieldEntity)){
 			vehicle.setOnFire(false);
 		}

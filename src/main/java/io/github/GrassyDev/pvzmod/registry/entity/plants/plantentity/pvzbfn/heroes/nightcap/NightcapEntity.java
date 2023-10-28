@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.piercespore.PierceSporeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.ShadowSporeVariants;
@@ -191,18 +192,6 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.SHAMROCK_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 	/** /~*~//~**TICKING**~//~*~/ **/
@@ -265,12 +254,19 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	public void tick() {
 		if (this.world instanceof ServerWorld serverWorld) {
-			if (this.getWorld().getMoonSize() < 0.1 && this.world.isSkyVisible(this.getBlockPos())) {
-				if (serverWorld.isNight()){
-					this.setShadowPowered(Shadow.TRUE);
+			Vec3d vec3d = Vec3d.ofCenter(this.getBlockPos()).add(0, -0.5, 0);
+			List<ShadowTile> tileCheck = world.getNonSpectatingEntities(ShadowTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
+			if (tileCheck.isEmpty()) {
+				if (this.getWorld().getMoonSize() < 0.1 && this.world.isSkyVisible(this.getBlockPos())) {
+					if (serverWorld.isNight()) {
+						this.setShadowPowered(Shadow.TRUE);
+					}
+				} else {
+					this.setShadowPowered(Shadow.FALSE);
 				}
-			} else {
-				this.setShadowPowered(Shadow.FALSE);
+			}
+			if (!tileCheck.isEmpty()) {
+				this.setShadowPowered(Shadow.TRUE);
 			}
 		}
 		if (!this.world.isClient && !this.getCofee()) {
@@ -302,9 +298,15 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 			this.isAfraid = false;
 			this.world.sendEntityStatus(this, (byte) 14);
 		}
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.NIGHTCAP_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 		super.tick();

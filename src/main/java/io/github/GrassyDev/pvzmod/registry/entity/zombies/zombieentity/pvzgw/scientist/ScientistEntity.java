@@ -15,6 +15,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.DefaultAndHypnoVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicobstacle.MetalObstacleEntity;
@@ -374,6 +375,7 @@ public class ScientistEntity extends PvZombieEntity implements IAnimatable {
 	public void onDeath(DamageSource source) {
 		if (this.world instanceof ServerWorld serverWorld && !(source.getSource() instanceof SuperChomperEntity) &&
 				!(source.getSource() instanceof ChomperEntity) &&
+				!(source.getSource() instanceof ChesterEntity) &&
 				!(source.getSource() instanceof OlivePitEntity)) {
 			MetalObstacleEntity healStation = (MetalObstacleEntity) PvZEntity.HEALSTATION.create(world);
 			healStation.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);

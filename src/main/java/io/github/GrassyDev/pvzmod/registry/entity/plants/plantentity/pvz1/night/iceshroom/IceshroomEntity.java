@@ -214,7 +214,7 @@ public class IceshroomEntity extends PlantEntity implements IAnimatable {
 				livingEntity.discard();
 			}
 			String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
-			if ("crystal".equals(zombieMaterial)) {
+			if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
 				damage = damage / 2;
 			}
 			ZombiePropEntity zombiePropEntity4 = null;
@@ -311,18 +311,6 @@ public class IceshroomEntity extends PlantEntity implements IAnimatable {
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.ICESHROOM_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 	@Override
@@ -354,9 +342,15 @@ public class IceshroomEntity extends PlantEntity implements IAnimatable {
 			this.targetZombies(this.getPos(), 10, true, true, true);
 		}
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.ICESHROOM_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 		if (this.getIsAsleep()){

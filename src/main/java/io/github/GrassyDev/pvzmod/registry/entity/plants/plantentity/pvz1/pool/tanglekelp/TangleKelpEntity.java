@@ -222,8 +222,13 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		}
 		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) && !this.hasVehicle())) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.TANGLEKELP_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 
@@ -237,10 +242,10 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 			this.setImmune(Immune.FALSE);
 		}
 
-		if (--amphibiousRaycastDelay >= 0) {
-			amphibiousRaycastDelay = 60;
+		if (--amphibiousRaycastDelay <= 0 && age > 5) {
+			amphibiousRaycastDelay = 20;
 			HitResult hitResult = amphibiousRaycast(0.25);
-			if (hitResult.getType() == HitResult.Type.MISS) {
+			if (hitResult.getType() == HitResult.Type.MISS && !this.hasVehicle()) {
 				kill();
 			}
 			if (this.age > 1) {

@@ -90,11 +90,6 @@ public class CoffeeBeanEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-		}
 		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox());
 		if (--turningTicks <=0 ){
 			for (LivingEntity livingEntity : list){

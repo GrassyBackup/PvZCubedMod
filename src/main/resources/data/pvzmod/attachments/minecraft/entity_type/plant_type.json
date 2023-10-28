@@ -31,6 +31,7 @@
     "pvzmod:charmshroom": "enchant",
     "pvzmod:tulimpeter": "enchant",
     "pvzmod:magicshroom": "enchant",
+    "pvzmod:gambleshroom": "enchant",
     "pvzmod:pumpkinwitch": "enchant",
     "pvzmod:coffeebean": "enchant",
     "pvzmod:iceshroom": "winter",
@@ -92,6 +93,8 @@
     "pvzmod:hammerflower": "enforce",
     "pvzmod:meteorhammer": "enforce",
     "pvzmod:ghostpepper": "conceal",
-    "pvzmod:nightcap": "conceal"
+    "pvzmod:shadowshroom": "conceal",
+    "pvzmod:nightcap": "conceal",
+    "pvzmod:doomrose": "conceal"
   }
 }

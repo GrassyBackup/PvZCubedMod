@@ -6,7 +6,10 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieVehicleEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -360,8 +363,15 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
+	}
 
-		if (this.age > 1) {
+
+	/** /~*~//~*TICKING*~//~*~/ **/
+
+	public void tick() {
+		super.tick();
+		BlockPos blockPos = this.getBlockPos();
+		if (tickDelay <= 1) {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
@@ -370,21 +380,8 @@ public class BombSeedlingEntity extends PlantEntity implements IAnimatable {
 				}
 				this.discard();
 			}
-
 		}
-	}
-
-
-	/** /~*~//~*TICKING*~//~*~/ **/
-
-	public void tick() {
-		super.tick();
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-			this.targetZombies(this.getPos(), 3, true, true, true);
-		}
+		this.targetZombies(this.getPos(), 3, true, true, true);
 		if (this.getFuseSpeed() > 0){
 			this.setImmune(Immune.TRUE);
 		}

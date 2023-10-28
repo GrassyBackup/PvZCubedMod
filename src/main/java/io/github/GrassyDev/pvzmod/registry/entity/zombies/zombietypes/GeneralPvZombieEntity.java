@@ -5,6 +5,8 @@ import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.maritile.MariTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.rosebuds.RoseBudTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
@@ -15,18 +17,21 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.hypnoshroom.HypnoshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.endurian.EndurianEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.card.ShootingCardEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.PeapodCountVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.football.FootballEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PowderSnowBlock;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.pathing.PathNodeType;
+import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.ProjectileDamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -39,15 +44,18 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -97,6 +105,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public boolean isPoisoned;
 	public boolean isStunned;
 	public int fireSplashTicks;
+	public boolean swallowed;
 
 	public boolean doesntBite;
 
@@ -111,6 +120,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		this.dataTracker.startTracking(CANBURN_TAG, true);
 		this.dataTracker.startTracking(COVERED_TAG, false);
 		this.dataTracker.startTracking(STEALTH_TAG, false);
+		this.dataTracker.startTracking(RAINBOW_TAG, false);
 		this.dataTracker.startTracking(CHALLENGE_TAG, false);
 		this.dataTracker.startTracking(DATA_ID_HYPNOTIZED, false);
 		this.dataTracker.startTracking(ARMOR2_ID, 0);
@@ -124,6 +134,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		tag.putBoolean("canBurn", this.canBurn());
 		tag.putBoolean("isCovered", this.isCovered());
 		tag.putBoolean("isStealth", this.isStealth());
+		tag.putBoolean("isRainbow", this.getRainbow());
 		tag.putBoolean("isChallenge", this.isChallengeZombie());
 		tag.putBoolean("Hypnotized", this.getHypno());
 		tag.putInt("Armor2", this.hasArmor2());
@@ -136,6 +147,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		this.dataTracker.set(CANBURN_TAG, tag.getBoolean("canBurn"));
 		this.dataTracker.set(COVERED_TAG, tag.getBoolean("isCovered"));
 		this.dataTracker.set(STEALTH_TAG, tag.getBoolean("isStealth"));
+		this.dataTracker.set(RAINBOW_TAG, tag.getBoolean("isRainbow"));
 		this.dataTracker.set(CHALLENGE_TAG, tag.getBoolean("isChallenge"));
 		this.dataTracker.set(DATA_ID_HYPNOTIZED, tag.getBoolean("Hypnotized"));
 		this.dataTracker.set(ARMOR2_ID, tag.getInt("Armor2"));
@@ -285,6 +297,36 @@ public class GeneralPvZombieEntity extends HostileEntity {
 
 	public void setStealthTag(GeneralPvZombieEntity.Stealth stealthTag) {
 		this.dataTracker.set(STEALTH_TAG, stealthTag.getId());
+	}
+
+
+	//Rainbow Tag
+
+	protected static final TrackedData<Boolean> RAINBOW_TAG =
+			DataTracker.registerData(GeneralPvZombieEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+
+	public enum Rainbow {
+		FALSE(false),
+		TRUE(true);
+
+		Rainbow(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getRainbow() {
+		return this.dataTracker.get(RAINBOW_TAG);
+	}
+
+	public void setRainbowTag(GeneralPvZombieEntity.Rainbow rainbowTag) {
+		this.dataTracker.set(RAINBOW_TAG, rainbowTag.getId());
 	}
 
 
@@ -453,6 +495,35 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	@Override
 	public void onDeath(DamageSource source) {
 		double randomChallenge = 0;
+		if (source.getSource() instanceof RoseBudTile roseBudTile && !(this instanceof ZombiePropEntity)){
+			if (this.world instanceof ServerWorld serverWorld) {
+				List<MariTile> tileCheck = world.getNonSpectatingEntities(MariTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()).expand(-0.5f, -0.5f, -0.5f));
+				if (tileCheck.isEmpty()) {
+					MariTile tile = (MariTile) PvZEntity.MARITILE.create(world);
+					tile.refreshPositionAndAngles(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), 0, 0);
+					tile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+					tile.setPersistent();
+					tile.setHeadYaw(0);
+					if (roseBudTile.getShadowPowered()){
+						tile.setShadowPowered(TileEntity.Shadow.TRUE);
+					}
+					if (roseBudTile.getMoonPowered()){
+						tile.setCount(PeapodCountVariants.THREE);
+					}
+					else {
+						if (ZOMBIE_STRENGTH.get(this.getType()).orElse(0) <= 3) {
+							tile.setCount(PeapodCountVariants.ONE);
+						} else if (ZOMBIE_STRENGTH.get(this.getType()).orElse(0) <= 4) {
+							tile.setCount(PeapodCountVariants.TWO);
+						} else {
+							tile.setCount(PeapodCountVariants.THREE);
+
+						}
+					}
+					serverWorld.spawnEntityAndPassengers(tile);
+				}
+			}
+		}
 		if (this.isChallengeZombie()){
 			randomChallenge = Math.random();
 		}
@@ -516,17 +587,32 @@ public class GeneralPvZombieEntity extends HostileEntity {
 						Item item2 = ModItems.PLANTFOOD_LIST.get(getRandom().nextInt(ModItems.PLANTFOOD_LIST.size()));
 						dropItem(item2);
 					}
+					if (source.getSource() instanceof ShootingCardEntity shootingCardEntity && shootingCardEntity.getGolden()) {
+						double random4 = Math.random();
+						if (random4 <= 0.1) {
+							this.playSound(PvZSounds.LOOTDIAMONDEVENT, 1f, 1);
+							this.dropItem(Items.DIAMOND);
+						} else if (random4 <= 0.4) {
+							this.playSound(PvZSounds.LOOTNUGGETEVENT, 0.5f, 1);
+							this.dropItem(Items.GOLD_NUGGET);
+						} else {
+							this.playSound(PvZSounds.LOOTNUGGETEVENT, 0.3f, 1);
+							this.dropItem(Items.IRON_NUGGET);
+						}
+					}
 				}
 			}
 		}
-		if ((inDyingAnimation && deathTicks <= 1) || (source.getSource() instanceof SuperChomperEntity ||
+		if ((inDyingAnimation && deathTicks <= 1) || ((source.getSource() instanceof SuperChomperEntity ||
 				source.getSource() instanceof ChomperEntity ||
-				source.getSource() instanceof OlivePitEntity)){
+				source.getSource() instanceof ChesterEntity ||
+				source.getSource() instanceof OlivePitEntity) && this.swallowed)){
 			this.discard();
 		}
-		if ((!inDyingAnimation) || (source.getSource() instanceof SuperChomperEntity ||
+		if ((!inDyingAnimation) || ((source.getSource() instanceof SuperChomperEntity ||
 				source.getSource() instanceof ChomperEntity ||
-				source.getSource() instanceof OlivePitEntity)) {
+				source.getSource() instanceof ChesterEntity ||
+				source.getSource() instanceof OlivePitEntity) && this.swallowed)) {
 			super.onDeath(source);
 		}
 	}
@@ -697,6 +783,37 @@ public class GeneralPvZombieEntity extends HostileEntity {
 
 	@Override
 	protected void mobTick() {
+		if (this.getRainbow()){
+			if (this.hasStatusEffect(DISABLE)){
+				this.setRainbowTag(Rainbow.FALSE);
+				this.rainbowTicks = 5;
+			}
+			this.removeStatusEffect(ICE);
+			this.removeStatusEffect(WARM);
+			this.removeStatusEffect(WET);
+			this.removeStatusEffect(BARK);
+			this.removeStatusEffect(CHEESE);
+			this.removeStatusEffect(SHADOW);
+			this.removeStatusEffect(STUN);
+			this.removeStatusEffect(FROZEN);
+			this.removeStatusEffect(PVZPOISON);
+			if (--rainbowTicks <= 0){
+				this.setRainbowTag(Rainbow.FALSE);
+				this.rainbowTicks = 5;
+			}
+			if (!(this instanceof ZombiePropEntity)) {
+				for (Entity entity : this.getPassengerList()) {
+					if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+						generalPvZombieEntity.setRainbowTag(Rainbow.TRUE);
+						generalPvZombieEntity.rainbowTicks = this.rainbowTicks;
+					}
+				}
+				if (this.hasVehicle() && this.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+					generalPvZombieEntity.setRainbowTag(Rainbow.TRUE);
+					generalPvZombieEntity.rainbowTicks = this.rainbowTicks;
+				}
+			}
+		}
 		if (this.hasStatusEffect(PvZCubed.FROZEN)){
 			this.world.sendEntityStatus(this, (byte) 70);
 		}
@@ -829,6 +946,10 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	private float lastHealth = this.getHealth();
 
 	public boolean dontWater = false;
+
+	private boolean poisonSound = false;
+
+	public int rainbowTicks = 5;
 
 	public void tick() {
 		if (this.world.isRaining() && this.world.isSkyVisible(this.getBlockPos())){
@@ -1007,11 +1128,20 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("metallic")) &&
 				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("electronic")) &&
 				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) &&
+				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("cloth")) &&
 				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("paper")) && this.hasStatusEffect(ACID)) {
 			this.removeStatusEffect(ACID);
 		}
-		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("stone") || ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("crystal")) {
+		if (!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("flesh")) &&
+				!(ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("plant")) &&
+				this.hasStatusEffect(PVZPOISON)) {
+			this.removeStatusEffect(PVZPOISON);
+		}
+		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("stone") || ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("crystal") || ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("cloth")) {
 			this.removeStatusEffect(FROZEN);
+		}
+		if (ZOMBIE_MATERIAL.get(this.getType()).orElse("flesh").equals("cloth")) {
+			this.removeStatusEffect(ICE);
 		}
 		LivingEntity target = this.getTarget();
 		if (this.getHypno() && (target instanceof PlayerEntity || target instanceof PassiveEntity || target instanceof GolemEntity)) {
@@ -1075,7 +1205,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				!ZOMBIE_SIZE.get(this.getType()).orElse("medium").equals("gargantuar") && !ZOMBIE_SIZE.get(this.getType()).orElse("medium").equals("small") &&
 				!(this instanceof ZombieKingEntity) && !(this instanceof ZombieVehicleEntity) && IS_MACHINE.get(this.getType()).orElse(false).equals(false)) {
 			if (this.pop && !this.dead) {
-				playSound(PvZSounds.POPLIMBEVENT, 0.75f, (float) (0.5F + Math.random()));
+				playSound(PvZSounds.POPLIMBEVENT, 1f, (float) (0.5F + Math.random()));
 				pop = false;
 			}
 		}
@@ -1161,6 +1291,14 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			damageTaken = 0;
 			damageCooldown = 30;
 		}
+		if (!this.world.isClient) {
+			if (this.hasStatusEffect(PVZPOISON) && !poisonSound) {
+				this.playSound(POISONSPLASHEVENT, 1f, 1);
+				poisonSound = true;
+			} else if (!this.hasStatusEffect(PVZPOISON)) {
+				poisonSound = false;
+			}
+		}
 	}
 
 	protected void jumpOverGap(){
@@ -1210,14 +1348,24 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			canTakeDmg = false;
 			super.applyDamage(source, 0);
 		}**/
-		super.applyDamage(source, amount);
+		if (!this.getRainbow()) {
+			super.applyDamage(source, amount);
+		}
+		else if (this.getRainbow() && (((source.getSource() instanceof SuperChomperEntity ||
+				source.getSource() instanceof ChomperEntity ||
+				source.getSource() instanceof ChesterEntity ||
+				source.getSource() instanceof OlivePitEntity) && this.swallowed) ||
+				source.getAttacker() == this ||
+				source.isOutOfWorld())){
+			super.applyDamage(source, amount);
+		}
 	}
 
 	@Override
 	public boolean tryAttack(Entity target) {
 		if (this.age > 1) {
-			if (target.getVehicle() instanceof BubblePadEntity bubblePadEntity){
-				target = bubblePadEntity;
+			if (target.getVehicle() instanceof PlantEntity.VineEntity vineEntity){
+				target = vineEntity;
 			}
 			if (this.getTarget() != null &&
 					(((PLANT_LOCATION.get(this.getTarget().getType()).orElse("normal").equals("ground") || (this.getTarget() instanceof PlantEntity plantEntity && plantEntity.getLowProfile())) &&
@@ -1316,6 +1464,70 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		}
 		else {
 			return false;
+		}
+	}
+
+	@Override
+	protected EntityNavigation createNavigation(World world) {
+		return new GeneralPvZombieEntity.SwimNavigation(this, world);
+	}
+
+	static class PathNodeMaker extends AmphibiousPathNodeMaker {
+		private final BlockPos.Mutable pos = new BlockPos.Mutable();
+
+		public PathNodeMaker(boolean bl) {
+			super(bl);
+		}
+
+		@Nullable
+		@Override
+		public PathNode getStart() {
+			return this.m_etdbalqp(
+					new BlockPos(
+							MathHelper.floor(this.entity.getBoundingBox().minX),
+							MathHelper.floor(this.entity.getBoundingBox().minY),
+							MathHelper.floor(this.entity.getBoundingBox().minZ)
+					)
+			);
+		}
+
+		@Override
+		public PathNodeType getNodeType(
+				BlockView world, int x, int y, int z, MobEntity mob, int sizeX, int sizeY, int sizeZ, boolean canOpenDoors, boolean canEnterOpenDoors
+		) {
+			BlockPos.Mutable mutable = new BlockPos.Mutable();
+
+			for(int i = x; i < x + sizeX; ++i) {
+				for(int j = y; j < y + sizeY; ++j) {
+					for(int k = z; k < z + sizeZ; ++k) {
+						FluidState fluidState = world.getFluidState(mutable.set(i, j, k));
+						BlockState blockState = world.getBlockState(mutable.set(i, j, k));
+						if (fluidState.isEmpty() && blockState.canPathfindThrough(world, mutable.down(), NavigationType.WATER) && blockState.isAir()) {
+							return PathNodeType.BREACH;
+						}
+
+						if (!fluidState.isIn(FluidTags.WATER)) {
+							return PathNodeType.BREACH;
+						}
+					}
+				}
+			}
+
+			BlockState blockState2 = world.getBlockState(mutable);
+			return blockState2.canPathfindThrough(world, mutable, NavigationType.WATER) ? PathNodeType.WATER : PathNodeType.OPEN;
+		}
+	}
+
+	static class SwimNavigation extends AmphibiousNavigation {
+		SwimNavigation(GeneralPvZombieEntity zombie, World world) {
+			super(zombie, world);
+		}
+
+		@Override
+		protected PathNodeNavigator createPathNodeNavigator(int range) {
+			this.nodeMaker = new GeneralPvZombieEntity.PathNodeMaker(true);
+			this.nodeMaker.setCanEnterOpenDoors(true);
+			return new PathNodeNavigator(this.nodeMaker, range);
 		}
 	}
 }

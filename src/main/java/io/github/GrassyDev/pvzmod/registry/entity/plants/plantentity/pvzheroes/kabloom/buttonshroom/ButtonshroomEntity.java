@@ -181,9 +181,15 @@ public class ButtonshroomEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.BUTTONSHROOM_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {

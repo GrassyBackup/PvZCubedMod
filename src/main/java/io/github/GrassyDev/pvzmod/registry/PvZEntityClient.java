@@ -5,9 +5,13 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.cheesetile.CheeseT
 import io.github.GrassyDev.pvzmod.registry.entity.environment.cratertile.CraterTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.goldtile.GoldTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTileRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.maritile.MariTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.rifttile.RiftTileRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.rosebuds.RoseBudEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTileRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowFullTileRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.solarwinds.SolarWindsTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.springtile.SpringTileRenderer;
@@ -26,6 +30,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.Garde
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.timetile.TimeTileRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.weathertile.WeatherTileRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.og.gambleshroom.GamblehatEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.og.gambleshroom.GambleshroomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.cherrybomb.CherrybombEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.chomper.ChomperEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.peashooter.PeashooterEntityRenderer;
@@ -72,10 +78,12 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.frostb
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.electropea.ElectropeaEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.flamingpea.FlamingpeaEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper.GhostPepperEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.gloomvine.GloomVineEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.endurian.EndurianEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.modernday.shadowshroom.ShadowShroomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.coconutcannon.CoconutCannonEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.springbean.SpringbeanEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.wildwest.lightningreed.LightningReedEntityRenderer;
@@ -102,6 +110,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventur
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.chillypepper.ChillyPepperEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.shamrock.ShamrockEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.snowqueenpea.SnowqueenpeaEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzbfn.heroes.doomrose.DoomRoseEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzbfn.heroes.nightcap.NightcapEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.retrogatling.RetroGatlingEntityRenderer;
@@ -192,6 +201,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.expl
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.darkages.FlagPeasantEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.future.FlagFutureEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.mummy.FlagMummyEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.summer.FlagSummerEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.jetpack.JetpackEntityRenderer;
@@ -360,6 +370,8 @@ public class PvZEntityClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(PvZEntity.GOLDLEAF, GoldLeafEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.SHADOWSHROOM, ShadowShroomEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.MISSILETOE, MissileToeEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.ELECTROPEA, ElectropeaEntityRenderer::new);
@@ -368,9 +380,15 @@ public class PvZEntityClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(PvZEntity.OLIVEPIT, OlivePitEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.GLOOMVINE, GloomVineEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.MAGICSHROOM, MagicshroomEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.MAGICHAT, MagichatEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.GAMBLESHROOM, GambleshroomEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.GAMBLEHAT, GamblehatEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.LOQUAT, LoquatEntityRenderer::new);
 
@@ -425,6 +443,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.BELLFLOWER, BellflowerEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.NIGHTCAP, NightcapEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.DOOMROSE, DoomRoseEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.DOGWOOD, DogwoodEntityRenderer::new);
 
@@ -527,6 +547,15 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.SCREENDOOR, BrowncoatEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SCREENDOORHYPNO, BrowncoatEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.SUMMERBASIC, BrowncoatEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SUMMERBASICHYPNO, BrowncoatEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAGSUMMER, FlagSummerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAGSUMMERHYPNO, FlagSummerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SUMMERCONEHEAD, BrowncoatEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SUMMERCONEHEADHYPNO, BrowncoatEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SUMMERBUCKETHEAD, BrowncoatEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.SUMMERBUCKETHEADHYPNO, BrowncoatEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.FLAGZOMBIE, FlagzombieEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.FLAGZOMBIEHYPNO, FlagzombieEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.FLAGZOMBIE_T, FlagzombieEntityRenderer::new);
@@ -616,6 +645,9 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.GARGANTUAR, GargantuarEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.GARGANTUARHYPNO, GargantuarEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.UNICORNGARGANTUAR, GargantuarEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.UNICORNGARGANTUARHYPNO, GargantuarEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.SCRAPMECH, ScrapMechEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SCRAPMECHHYPNO, ScrapMechEntityRenderer::new);
 
@@ -623,6 +655,9 @@ public class PvZEntityClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(PvZEntity.IMP, ImpEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.IMPHYPNO, ImpEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.BASSIMP, ImpEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.BASSIMPHYPNO, ImpEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.SCRAPIMP, ImpEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SCRAPIMPHYPNO, ImpEntityRenderer::new);
@@ -788,6 +823,10 @@ public class PvZEntityClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(PvZEntity.WATERTILE, WaterTileRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.SHADOWTILE, ShadowTileRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.SHADOWFULLTILE, ShadowFullTileRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.CRATERTILE, CraterTileRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.WEATHERTILE, WeatherTileRenderer::new);
@@ -796,6 +835,10 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.RIFTTILE, RiftTileRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.GOLDTILE, GoldTileRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.MARITILE, MariTileRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.ROSEBUDS, RoseBudEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.SUNBOMB, SunBombEntityRenderer::new);
 

@@ -1,7 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.doomshroom;
 
 import net.minecraft.entity.LivingEntity;
-import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import net.minecraft.entity.ai.goal.Goal;
 
 public class DoomIgniteGoal extends Goal {
@@ -14,7 +13,12 @@ public class DoomIgniteGoal extends Goal {
 
     public boolean canStart() {
         LivingEntity livingEntity = this.doom.getTarget();
-        return (this.doom.getFuseSpeed() > 0 || livingEntity != null && this.doom.squaredDistanceTo(livingEntity) < 25.0D) && !this.doom.getIsAsleep();
+		if (doom.getShadowPowered()){
+			return (this.doom.getFuseSpeed() > 0 || livingEntity != null && this.doom.squaredDistanceTo(livingEntity) < 9D) && !this.doom.getIsAsleep();
+		}
+		else {
+			return (this.doom.getFuseSpeed() > 0 || livingEntity != null && this.doom.squaredDistanceTo(livingEntity) < 25.0D) && !this.doom.getIsAsleep();
+		}
     }
 
     public void start() {
@@ -27,17 +31,31 @@ public class DoomIgniteGoal extends Goal {
     }
 
     public void tick() {
-		if (!doom.getIsAsleep()) {
-			if (this.target == null) {
-				this.doom.setFuseSpeed(-1);
-			} else if (this.doom.squaredDistanceTo(this.target) > 25.0D || this.doom.isInsideWaterOrBubbleColumn()) {
-				this.doom.setFuseSpeed(-1);
+		if (doom.getShadowPowered()) {
+			if (!doom.getIsAsleep()) {
+				if (this.target == null) {
+					this.doom.setFuseSpeed(-1);
+				} else if (this.doom.squaredDistanceTo(this.target) > 9.0D || this.doom.isInsideWaterOrBubbleColumn()) {
+					this.doom.setFuseSpeed(-1);
+				} else {
+					this.doom.setFuseSpeed(1);
+				}
 			} else {
-				this.doom.setFuseSpeed(1);
+				this.doom.setFuseSpeed(-1);
 			}
 		}
 		else {
-			this.doom.setFuseSpeed(-1);
+			if (!doom.getIsAsleep()) {
+				if (this.target == null) {
+					this.doom.setFuseSpeed(-1);
+				} else if (this.doom.squaredDistanceTo(this.target) > 25.0D || this.doom.isInsideWaterOrBubbleColumn()) {
+					this.doom.setFuseSpeed(-1);
+				} else {
+					this.doom.setFuseSpeed(1);
+				}
+			} else {
+				this.doom.setFuseSpeed(-1);
+			}
 		}
 	}
 }

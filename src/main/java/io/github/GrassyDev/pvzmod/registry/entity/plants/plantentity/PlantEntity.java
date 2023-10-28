@@ -8,8 +8,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelmetVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
@@ -19,6 +17,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metalli
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallichelmet.MetalHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield.MetalShieldEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -33,6 +33,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -42,6 +44,7 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -943,7 +946,7 @@ public abstract class PlantEntity extends GolemEntity {
 			}
 		}
 		Entity vehicle = this.getVehicle();
-		if (vehicle instanceof LilyPadEntity || vehicle instanceof BubblePadEntity){
+		if (vehicle instanceof PlantEntity){
 			vehicle.setBodyYaw(this.bodyYaw);
 		}
 		if (PLANT_TYPE.get(this.getType()).orElse("appease").equals("pepper") && !this.isWet()){
@@ -967,6 +970,14 @@ public abstract class PlantEntity extends GolemEntity {
 
 	@Override
 	public void onDeath(DamageSource source) {
+		for (Entity entity : this.getPassengerList()){
+			if (this.hasVehicle()){
+				entity.startRiding(this.getVehicle(), true);
+				if (entity instanceof PlantEntity plantEntity){
+					plantEntity.tickDelay = 20;
+				}
+			}
+		}
 		if (!PLANT_LOCATION.get(this.getType()).orElse("normal").equals("flying")){
 			RandomGenerator randomGenerator = this.getRandom();
 			BlockState blockState = this.getLandingBlockState();
@@ -1062,6 +1073,8 @@ public abstract class PlantEntity extends GolemEntity {
 						helmetProj = MetalHelmetVariants.PEASANTBUCKET;
 					} else if (livingEntity.getType().equals(PvZEntity.MUMMYBUCKET)) {
 						helmetProj = MetalHelmetVariants.MUMMYBUCKET;
+					} else if (livingEntity.getType().equals(PvZEntity.SUMMERBUCKETHEAD)) {
+						helmetProj = MetalHelmetVariants.SUMMERBUCKET;
 					} else if (livingEntity.getType().equals(PvZEntity.FUTUREBUCKET)) {
 						helmetProj = MetalHelmetVariants.FUTUREBUCKET;
 					} else {
@@ -1103,6 +1116,8 @@ public abstract class PlantEntity extends GolemEntity {
 									helmetProj2 = MetalHelmetVariants.PEASANTBUCKET;
 								} else if (livingEntity2.getType().equals(PvZEntity.MUMMYBUCKET)) {
 									helmetProj2 = MetalHelmetVariants.MUMMYBUCKET;
+								} else if (livingEntity2.getType().equals(PvZEntity.SUMMERBUCKETHEAD)) {
+									helmetProj2 = MetalHelmetVariants.SUMMERBUCKET;
 								} else if (livingEntity2.getType().equals(PvZEntity.FUTUREBUCKET)) {
 									helmetProj2 = MetalHelmetVariants.FUTUREBUCKET;
 								} else {
@@ -1145,6 +1160,8 @@ public abstract class PlantEntity extends GolemEntity {
 									helmetProj3 = MetalHelmetVariants.PEASANTBUCKET;
 								} else if (livingEntity3.getType().equals(PvZEntity.MUMMYBUCKET)) {
 									helmetProj3 = MetalHelmetVariants.MUMMYBUCKET;
+								} else if (livingEntity3.getType().equals(PvZEntity.SUMMERBUCKETHEAD)) {
+									helmetProj3 = MetalHelmetVariants.SUMMERBUCKET;
 								} else if (livingEntity3.getType().equals(PvZEntity.FUTUREBUCKET)) {
 									helmetProj3 = MetalHelmetVariants.FUTUREBUCKET;
 								} else {
@@ -1282,5 +1299,131 @@ public abstract class PlantEntity extends GolemEntity {
 		public PlantData(boolean tryLilyPad) {
 			this.tryLilyPad = tryLilyPad;
 		}
+	}
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public abstract static class VineEntity extends PlantEntity implements IAnimatable {
+
+		public VineEntity(EntityType<? extends VineEntity> entityType, World world) {
+			super(entityType, world);
+		}
+
+		static {
+		}
+
+		@Environment(EnvType.CLIENT)
+		public void handleStatus(byte status) {
+			if (status != 2 && status != 60){
+				super.handleStatus(status);
+			}
+		}
+
+		protected void initDataTracker() {
+			super.initDataTracker();
+
+		}
+		public void readCustomDataFromNbt(NbtCompound tag) {
+			super.readCustomDataFromNbt(tag);
+
+		}
+
+		public void writeCustomDataToNbt(NbtCompound tag) {
+			super.writeCustomDataToNbt(tag);
+
+		}
+
+		static {
+		}
+
+		/** /~*~//~*VARIANTS*~//~*~/ **/
+
+		public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+									 SpawnReason spawnReason, @Nullable EntityData entityData,
+									 @Nullable NbtCompound entityNbt) {
+			return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+		}
+
+
+		/** /~*~//~*TICKING*~//~*~/ **/
+
+		public void tick() {
+			super.tick();
+		}
+
+
+		/** /~*~//~*ATTRIBUTES*~//~*~/ **/
+
+		protected boolean canAddPassenger(Entity passenger) {
+			return this.getPassengerList().size() < this.getMaxPassengers() && !this.isSubmergedIn(FluidTags.WATER);
+		}
+
+		protected int getMaxPassengers() {
+			return 1;
+		}
+
+		protected boolean canClimb() {
+			return false;
+		}
+
+		public boolean collides() {
+			return !this.isRemoved();
+		}
+
+		protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+			return 0.075F;
+		}
+
+		@Nullable
+		protected SoundEvent getHurtSound(DamageSource source) {
+			return PvZSounds.SILENCEVENET;
+		}
+
+		@Nullable
+		protected SoundEvent getDeathSound() {
+			return PvZSounds.PLANTPLANTEDEVENT;
+		}
+
+		public boolean hurtByWater() {
+			return false;
+		}
+
+		public boolean isCollidable() {
+			return false;
+		}
+
+		public boolean isPushable() {
+			return false;
+		}
+
+		protected void pushAway(Entity entity) {
+		}
+
+		@Override
+		public double getMountedHeightOffset() {
+			return 0;
+		}
+
+		/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
+
+		public boolean handleAttack(Entity attacker) {
+			if (attacker instanceof PlayerEntity) {
+				PlayerEntity playerEntity = (PlayerEntity) attacker;
+				return this.damage(DamageSource.player(playerEntity), 9999.0F);
+			} else {
+				return false;
+			}
+		}
+
+		public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+			if (fallDistance > 0F) {
+				this.playSound(PvZSounds.PLANTPLANTEDEVENT, 0.4F, 1.0F);
+				this.discard();
+			}
+			this.playBlockFallSound();
+			return true;
+		}
+
 	}
 }

@@ -20,7 +20,8 @@ public enum MetalHelmetVariants {
 	BASSPROP(13),
 	SARGEAMTSHIELD(14),
 	SCRAPIMP(15),
-	FUTUREBUCKET(16);
+	FUTUREBUCKET(16),
+	SUMMERBUCKET(17);
 
 	private static final MetalHelmetVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(MetalHelmetVariants::getId)).toArray(MetalHelmetVariants[]::new);

@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.guardian.smackadamia.SmackadamiaEntity;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
@@ -190,7 +191,19 @@ public class SmackadamiaSeeds extends SeedItem implements FabricItem {
 			} else {
 				return ActionResult.FAIL;
 			}
-		} else if (world instanceof ServerWorld serverWorld && entity instanceof BubblePadEntity)  {
+		} else if (world instanceof ServerWorld serverWorld && (entity instanceof LilyPadEntity ||
+				entity instanceof BubblePadEntity ||
+				entity instanceof PlantEntity.VineEntity))  {
+			if (entity instanceof PlantEntity lilyPadEntity) {
+				if (lilyPadEntity.onWater) {
+					sound = SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED;
+				} else {
+					sound = PvZSounds.PLANTPLANTEDEVENT;
+				}
+				if (lilyPadEntity instanceof LilyPadEntity lilyPadEntity1) {
+					lilyPadEntity1.setPuffshroomPermanency(LilyPadEntity.PuffPermanency.PERMANENT);
+				}
+			}
 			if (plantEntity == null) {
 				return ActionResult.FAIL;
 			}

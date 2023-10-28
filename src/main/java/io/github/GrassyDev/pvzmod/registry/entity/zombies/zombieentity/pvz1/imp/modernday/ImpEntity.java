@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -14,17 +15,19 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.ImpVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -40,6 +43,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -47,6 +51,7 @@ import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -62,10 +67,10 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
+import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
 public class ImpEntity extends PvZombieEntity implements IAnimatable {
 
@@ -104,6 +109,26 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		super.setHypno(hypno);
 	}
 
+	@Environment(EnvType.CLIENT)
+	public void handleStatus(byte status) {
+		if (status != 2 && status != 60){
+			super.handleStatus(status);
+		}
+		if (status == 105) {
+			for(int i = 0; i < 32; ++i) {
+				RandomGenerator randomGenerator = this.getRandom();
+				double d = this.random.nextDouble() * this.random.range(-2, 2);
+				double e = this.random.nextDouble() * this.random.range(0, 2);
+				double f = this.random.nextDouble() * this.random.range(-2, 2);
+				// RAINBOW
+				double dx = (double) (this.random.range(0, 255) & 255) / 255.0;
+				double ex = (double) (this.random.range(0, 255) & 255) / 255.0;
+				double fx = (double) (this.random.range(0, 255) & 255) / 255.0;
+				this.world.addParticle(ParticleTypes.NOTE, this.getX() + d, this.getY() + e, this.getZ() + f, dx, ex, fx);
+			}
+		}
+	}
+
 
 	/** /~*~//~*VARIANTS*~//~*~/ **/
 
@@ -120,6 +145,10 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.IMPDRAGON)){
 			setVariant(ImpVariants.IMPDRAGON);
 			setCanBurn(CanBurn.FALSE);
+			this.initCustomGoals();
+		}
+		else if (this.getType().equals(PvZEntity.BASSIMP)){
+			setVariant(ImpVariants.BASSIMP);
 			this.initCustomGoals();
 		}
 		else if (this.getType().equals(PvZEntity.NEWYEARIMP)){
@@ -146,6 +175,10 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.IMPDRAGONHYPNO)){
 			setVariant(ImpVariants.IMPDRAGONHYPNO);
 			setCanBurn(CanBurn.FALSE);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.BASSIMPHYPNO)){
+			setVariant(ImpVariants.BASSIMPHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.SUPERFANIMPHYPNO)){
@@ -185,6 +218,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		impListHypno.add(PvZEntity.IMPHYPNO);
 		impList.add(PvZEntity.IMPDRAGON);
 		impListHypno.add(PvZEntity.IMPDRAGONHYPNO);
+		impList.add(PvZEntity.BASSIMP);
+		impListHypno.add(PvZEntity.BASSIMPHYPNO);
 		impList.add(PvZEntity.SUPERFANIMP);
 		impListHypno.add(PvZEntity.SUPERFANIMPHYPNO);
 		impList.add(PvZEntity.NEWYEARIMP);
@@ -308,6 +343,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.SUPERFANIMPHYPNO) ||
 				this.getType().equals(PvZEntity.NEWYEARIMPHYPNO) ||
 				this.getType().equals(PvZEntity.IMPDRAGONHYPNO) ||
+				this.getType().equals(PvZEntity.BASSIMPHYPNO) ||
 				this.getType().equals(PvZEntity.IMPTHROWERHYPNO) ||
 				this.getType().equals(PvZEntity.SCRAPIMPHYPNO)) {
 			initHypnoGoals();
@@ -357,7 +393,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 
 	@Override
 	public boolean tryAttack(Entity target) {
-		if (this.age > 40){
+		if (!(this.getVariant().equals(ImpVariants.BASSIMP) || this.getVariant().equals(ImpVariants.BASSIMPHYPNO))){
 			return super.tryAttack(target);
 		}
 		else {
@@ -365,16 +401,60 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		}
 	}
 
-	/** /~*~//~*TICKING*~//~*~/ **/
+	private void bassExplode() {
+		Vec3d vec3d = this.getPos();
+		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
+		Iterator var9 = list.iterator();
+		while (true) {
+			LivingEntity livingEntity;
+			do {
+				do {
+					if (!var9.hasNext()) {
+						return;
+					}
 
-	int stealthTick = 0;
+					livingEntity = (LivingEntity) var9.next();
+				} while (livingEntity == this);
+			} while (this.squaredDistanceTo(livingEntity) > 9);
+
+			if (this.getHypno()) {
+				if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+					if (livingEntity.getFirstPassenger() != null) {
+						livingEntity.getFirstPassenger().damage(DamageSource.explosion(this), 15);
+					} else {
+						livingEntity.damage(DamageSource.explosion(this), 15);
+					}
+				}
+			} else {
+				if (livingEntity instanceof PlantEntity || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno())) {
+					if (livingEntity.getFirstPassenger() != null && livingEntity instanceof GeneralPvZombieEntity) {
+						livingEntity.getFirstPassenger().damage(DamageSource.explosion(this), 15);
+					} else {
+						livingEntity.damage(DamageSource.explosion(this), 15);
+					}
+				}
+			}
+		}
+	}
+
+	protected int bassTime = 20;
+
+	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
 		super.tick();
-		if (this.isStealth()) {
-			if (++stealthTick > 30) {
-				this.setStealthTag(Stealth.FALSE);
+		if (!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(STUN)) {
+			if (age > 40 && this.isAlive() && this.getTarget() != null) {
+				if (--bassTime <= 0 && (this.getVariant().equals(ImpVariants.BASSIMP) || this.getVariant().equals(ImpVariants.BASSIMPHYPNO))) {
+					this.bassExplode();
+					this.bassTime = 20;
+					this.playSound(PvZSounds.BASSPLAYEVENT, 0.125f, (float) (0.5F + Math.random()));
+					this.world.sendEntityStatus(this, (byte) 105);
+				}
 			}
+		}
+		if (this.getTarget() == null){
+			this.bassTime = 20;
 		}
 		if (this.getAttacking() == null && !(this.getHypno())){
 			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
@@ -449,7 +529,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			if (this.getHypno()) {
 				impEntity.setHypno(IsHypno.TRUE);
 			}
-			impEntity.setStealthTag(Stealth.TRUE);
+			impEntity.setRainbowTag(Rainbow.TRUE);
+			impEntity.rainbowTicks = 10;
 			impEntity.setFlying(Flying.FALSE);
 		}
 		if (announcerImp != null) {
@@ -476,7 +557,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			if (this.getHypno()) {
 				announcerImp.setHypno(IsHypno.TRUE);
 			}
-			announcerImp.setStealthTag(Stealth.TRUE);
+			announcerImp.setRainbowTag(Rainbow.TRUE);
+			announcerImp.rainbowTicks = 30;
 			announcerImp.setFlying(Flying.FALSE);
 		}
 	}
@@ -485,6 +567,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 	public void onDeath(DamageSource source) {
 		if (!(source.getSource() instanceof SuperChomperEntity) &&
 				!(source.getSource() instanceof ChomperEntity) &&
+				!(source.getSource() instanceof ChesterEntity) &&
 				!(source.getSource() instanceof OlivePitEntity)) {
 			tryLaunch(this.getTarget());
 		}
@@ -503,6 +586,9 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 	public ItemStack getPickBlockStack() {
 		if (this.getVariant().equals(ImpVariants.SCRAP) || this.getVariant().equals(ImpVariants.SCRAPHYPNO)){
 			return ModItems.SCRAPIMPEGG.getDefaultStack();
+		}
+		else if (this.getVariant().equals(ImpVariants.BASSIMP) || this.getVariant().equals(ImpVariants.BASSIMPHYPNO)){
+			return ModItems.BASSIMPEGG.getDefaultStack();
 		}
 		else{
 			return ModItems.IMPEGG.getDefaultStack();
@@ -559,6 +645,15 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.impdragonH());
+	}
+
+	public static DefaultAttributeContainer.Builder createBassImpAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.18D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.bassimpH());
 	}
 
 	@Override
@@ -624,6 +719,9 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.IMPDRAGON)){
 			hypnoType = PvZEntity.IMPDRAGONHYPNO;
 		}
+		else if (this.getType().equals(PvZEntity.BASSIMP)){
+			hypnoType = PvZEntity.BASSIMPHYPNO;
+		}
 		else if (this.getType().equals(PvZEntity.NEWYEARIMP)){
 			hypnoType = PvZEntity.NEWYEARIMPHYPNO;
 		}
@@ -645,6 +743,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 					hypnoType2 = PvZEntity.SUPERFANIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.IMPDRAGON)) {
 					hypnoType2 = PvZEntity.IMPDRAGONHYPNO;
+				} else if (entity.getType().equals(PvZEntity.BASSIMP)) {
+					hypnoType2 = PvZEntity.BASSIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.NEWYEARIMP)) {
 					hypnoType2 = PvZEntity.NEWYEARIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.IMPTHROWER)) {

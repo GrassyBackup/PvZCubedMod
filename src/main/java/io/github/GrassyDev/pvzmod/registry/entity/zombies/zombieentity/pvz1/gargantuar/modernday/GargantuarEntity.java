@@ -16,6 +16,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrad
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.GargantuarVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
@@ -53,6 +54,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -67,7 +69,10 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
+import java.util.Iterator;
+import java.util.List;
+
+import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
 public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	private String controllerName = "walkingcontroller";
@@ -159,14 +164,22 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 								 SpawnReason spawnReason, @Nullable EntityData entityData,
 								 @Nullable NbtCompound entityNbt) {
 		setImpStage(ImpStage.IMP);
-		if (this.getType().equals(PvZEntity.GARGANTUARHYPNO)){
-			setVariant(GargantuarVariants.GARGANTUARHYPNO);
-			this.setHypno(IsHypno.TRUE);
+		if (this.getType().equals(PvZEntity.UNICORNGARGANTUAR)){
+			setVariant(GargantuarVariants.UNICORNGARGANTUAR);
+			this.initCustomGoals();
 		}
 		else if (this.getType().equals(PvZEntity.DEFENSIVEEND)){
 			setVariant(GargantuarVariants.DEFENSIVEEND);
 			this.initCustomGoals();
 			createProp();
+		}
+		else if (this.getType().equals(PvZEntity.GARGANTUARHYPNO)){
+			setVariant(GargantuarVariants.GARGANTUARHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.UNICORNGARGANTUARHYPNO)){
+			setVariant(GargantuarVariants.UNICORNGARGANTUARHYPNO);
+			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.DEFENSIVEENDHYPNO)){
 			setVariant(GargantuarVariants.DEFENSIVEENDHYPNO);
@@ -305,6 +318,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	protected void initGoals() {
 		if (this.getType().equals(PvZEntity.GARGANTUARHYPNO) ||
 				this.getType().equals(PvZEntity.DEFENSIVEENDHYPNO) ||
+				this.getType().equals(PvZEntity.UNICORNGARGANTUARHYPNO) ||
 				this.getType().equals(PvZEntity.DEFENSIVEEND_NEWYEARHYPNO)) {
 			initHypnoGoals();
 		}
@@ -393,6 +407,14 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 			this.impEntity = new SuperFanImpEntity(PvZEntity.SUPERFANIMP, this.world);
 			this.healthImp = this.getMaxHealth();
 		}
+		else if (this.getType().equals(PvZEntity.UNICORNGARGANTUAR)){
+			this.impEntity = new ImpEntity(PvZEntity.BASSIMP, this.world);
+			this.healthImp = this.getMaxHealth() / 2;
+		}
+		else if (this.getType().equals(PvZEntity.UNICORNGARGANTUARHYPNO)){
+			this.impEntity = new ImpEntity(PvZEntity.BASSIMPHYPNO, this.world);
+			this.healthImp = this.getMaxHealth() / 2;
+		}
 		else if (this.getType().equals(PvZEntity.DEFENSIVEENDHYPNO)){
 			this.impEntity = new SuperFanImpEntity(PvZEntity.SUPERFANIMPHYPNO, this.world);
 			this.healthImp = this.getMaxHealth();
@@ -435,7 +457,14 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 				impEntity.setHypno(IsHypno.TRUE);
 			}
 			impEntity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(impEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData)null, (NbtCompound) null);
-			impEntity.setStealthTag(Stealth.TRUE);
+			impEntity.setRainbowTag(Rainbow.TRUE);
+			impEntity.rainbowTicks = 40;
+			if (impEntity instanceof SuperFanImpEntity){
+				impEntity.rainbowTicks = 30;
+			}
+			if (impEntity.getType().equals(PvZEntity.BASSIMP) || impEntity.getType().equals(PvZEntity.BASSIMPHYPNO)){
+				impEntity.rainbowTicks = 10;
+			}
 			this.world.spawnEntity(impEntity);
 		}
 	}
@@ -447,9 +476,41 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 		}
 	}
 
+	private void rainbowZombies(int boxOffset) {
+		Vec3d vec3d2 = new Vec3d((double) boxOffset, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1, 4, 1).offset(vec3d2).offset(0, -1.5, 0));
+		Iterator var9 = list.iterator();
+		while (true) {
+			LivingEntity livingEntity;
+			do {
+				if (!var9.hasNext()) {
+					return;
+				}
+
+				livingEntity = (LivingEntity) var9.next();
+			} while (livingEntity == this);
+
+			if (this.getHypno() && livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()) {
+				generalPvZombieEntity.setRainbowTag(Rainbow.TRUE);
+				generalPvZombieEntity.rainbowTicks = 5;
+			}
+			else if (!this.getHypno() && livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.getHypno()) {
+				generalPvZombieEntity.setRainbowTag(Rainbow.TRUE);
+				generalPvZombieEntity.rainbowTicks = 5;
+			}
+		}
+	}
+
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
+		if (!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(STUN)) {
+			if (this.getVariant().equals(GargantuarVariants.UNICORNGARGANTUAR) || this.getVariant().equals(GargantuarVariants.UNICORNGARGANTUARHYPNO)) {
+				for (int x = -2; x >= -9; --x) {
+					rainbowZombies(x);
+				}
+			}
+		}
 		if (this.getHealth() <= 0 && !inDyingAnimation){
 			this.inDyingAnimation = true;
 			this.deathTicks = 80;
@@ -563,6 +624,9 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 		if (this.getType().equals(PvZEntity.GARGANTUAR) || this.getType().equals(PvZEntity.GARGANTUARHYPNO)){
 			return ModItems.GARGANTUAREGG.getDefaultStack();
 		}
+		else if (this.getType().equals(PvZEntity.UNICORNGARGANTUAR) || this.getType().equals(PvZEntity.UNICORNGARGANTUARHYPNO)){
+			return ModItems.UNICORNGARGANTUAREGG.getDefaultStack();
+		}
 		else if (this.getType().equals(PvZEntity.DEFENSIVEEND) ||
 				this.getType().equals(PvZEntity.DEFENSIVEENDHYPNO) ||
 				this.getType().equals(PvZEntity.DEFENSIVEEND_NEWYEAR) ||
@@ -637,6 +701,15 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.defensiveendH());
 	}
 
+	public static DefaultAttributeContainer.Builder createUnicornGargantuarAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 90.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.unicorngargantuarH());
+	}
+
 	protected SoundEvent getAmbientSound() {
 		if (!this.getHypno() && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.isFrozen && !this.isStunned && !this.hasStatusEffect(PvZCubed.DISABLE)) {
 			return PvZSounds.GARGANTUARMOANEVENT;
@@ -664,9 +737,10 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 
 	@Override
 	public void onDeath(DamageSource source) {
-		if ((inDyingAnimation && deathTicks <= 1) || (source.getSource() instanceof SuperChomperEntity ||
+		if ((inDyingAnimation && deathTicks <= 1) || ((source.getSource() instanceof SuperChomperEntity ||
 				source.getSource() instanceof ChomperEntity ||
-				source.getSource() instanceof OlivePitEntity)) {
+				source.getSource() instanceof ChesterEntity ||
+				source.getSource() instanceof OlivePitEntity) && this.swallowed)) {
 			super.onDeath(source);
 		}
 	}
@@ -676,6 +750,9 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	protected void checkHypno(){
 		if (this.getType().equals(PvZEntity.DEFENSIVEEND)){
 			hypnoType = PvZEntity.DEFENSIVEENDHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.UNICORNGARGANTUAR)){
+			hypnoType = PvZEntity.UNICORNGARGANTUARHYPNO;
 		}
 		else if (this.getType().equals(PvZEntity.DEFENSIVEEND_NEWYEAR)){
 			hypnoType = PvZEntity.DEFENSIVEEND_NEWYEARHYPNO;

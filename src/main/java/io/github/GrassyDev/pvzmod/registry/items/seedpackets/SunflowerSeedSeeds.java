@@ -22,7 +22,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -169,7 +168,8 @@ public class SunflowerSeedSeeds extends SeedItem implements FabricItem {
 				return ActionResult.FAIL;
 			}
 		} else if (world instanceof ServerWorld serverWorld && (entity instanceof LilyPadEntity ||
-				entity instanceof BubblePadEntity))  {
+				entity instanceof BubblePadEntity ||
+				entity instanceof PlantEntity.VineEntity))  {
 			if (entity instanceof PlantEntity lilyPadEntity) {
 				if (lilyPadEntity.onWater) {
 					sound = SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED;

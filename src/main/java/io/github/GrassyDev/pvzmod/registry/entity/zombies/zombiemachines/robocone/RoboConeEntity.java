@@ -3,6 +3,7 @@ package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.roboco
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -11,6 +12,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.su
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.sunshroom.SunshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.browncoat.future.FutureZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.MachinePvZombieEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -21,6 +23,7 @@ import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
@@ -71,6 +74,7 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 
         this.experiencePoints = 3;
 		this.doesntBite = true;
+		this.setCoveredTag(Covered.TRUE);
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -194,8 +198,18 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 
 	/** /~*~//~*TICKING*~//~*~/ **/
 
+	protected float prevHealth;
+	protected float currentHealth;
+
 	public void tick() {
+		currentHealth = this.getHealth();
 		super.tick();
+		if (currentHealth < this.getMaxHealth() / 2 && prevHealth >= this.getMaxHealth() / 2){
+			this.playSound(SoundEvents.BLOCK_BEACON_ACTIVATE);
+			this.setRainbowTag(Rainbow.TRUE);
+			this.rainbowTicks = 100;
+		}
+		prevHealth = this.getHealth();
 		if (this.isDisabled){
 			--disableTicks;
 		}
@@ -292,6 +306,24 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
+
+	@Override
+	public void onDeath(DamageSource source) {
+		EntityType<?> type = PvZEntity.FUTURECONE;
+		if (this.getHypno()) {
+			type = PvZEntity.FUTURECONEHYPNO;
+		}
+		if (this.world instanceof ServerWorld serverWorld) {
+			BlockPos blockPos = this.getBlockPos().add(this.getX(), 0, this.getZ());
+			FutureZombieEntity zombie = (FutureZombieEntity) type.create(world);
+			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
+			zombie.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
+			zombie.setOwner(this);
+			zombie.setRainbowTag(Rainbow.TRUE);
+			zombie.rainbowTicks = 60;
+			serverWorld.spawnEntityAndPassengers(zombie);
+		}
+	}
 
 	public boolean onKilledOther(ServerWorld serverWorld, LivingEntity livingEntity) {
 		super.onKilledOther(serverWorld, livingEntity);

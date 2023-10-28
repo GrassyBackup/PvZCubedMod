@@ -80,6 +80,8 @@ public class DoomshroomSeeds extends SeedItem implements FabricItem {
 
 		tooltip.add(Text.translatable("item.pvzmod.seed_packet.nocturnal.tooltip")
 				.formatted(Formatting.UNDERLINE));
+		tooltip.add(Text.translatable("item.pvzmod.seed_packet.newmoon.tooltip")
+				.formatted(Formatting.UNDERLINE));
 
 		tooltip.add(Text.translatable("item.pvzmod.seed_packet.instant.tooltip")
 				.formatted(Formatting.UNDERLINE));
@@ -176,7 +178,8 @@ public class DoomshroomSeeds extends SeedItem implements FabricItem {
 				return ActionResult.FAIL;
 			}
 		} else if (world instanceof ServerWorld serverWorld && (entity instanceof LilyPadEntity ||
-				entity instanceof BubblePadEntity))  {
+				entity instanceof BubblePadEntity ||
+				entity instanceof PlantEntity.VineEntity))  {
 			if (entity instanceof PlantEntity lilyPadEntity) {
 				if (lilyPadEntity.onWater) {
 					sound = SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED;

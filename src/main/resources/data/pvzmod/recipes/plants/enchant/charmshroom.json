@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "pvzmod:plantfood_mushroom"
+      "item": "pvzmod:plantfood_shadow"
     },
     {
       "item": "pvzmod:hypnoshroom_seed_packet"

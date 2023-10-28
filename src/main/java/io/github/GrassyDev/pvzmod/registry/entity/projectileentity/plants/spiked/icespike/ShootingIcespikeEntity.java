@@ -221,6 +221,9 @@ public class ShootingIcespikeEntity extends PvZProjectileEntity implements IAnim
 					case "stone" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
+				if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
 				if (et == null) {
 					if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered()) {
 						this.damageCounter = this.damageCounter + 2;

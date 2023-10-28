@@ -11,7 +11,7 @@
         "$(br)$(#bd951a)(Paper) Newspaper Health: $()$(#ff0000)15",
         "$(br)$(#bd951a)Damage: $()$(#ff0000)4, 8 (Angry)",
         "$(br)$(#bd951a)Speed: $()$(#ff0000)Basic, Speedy (Angry)",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)Becomes angry when the Newspaper is destroyed.",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Becomes angry when the Newspaper is destroyed and gets 2 seconds of Invincibility.",
         "$(br2)$(#bd951a)Newspaper Zombie was *this* close to finishing his Sudoku puzzle. No wonder he's freaking out. "
       ]
     },

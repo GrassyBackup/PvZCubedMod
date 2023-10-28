@@ -8,7 +8,12 @@ public class ShootingCardEntityModel extends AnimatedGeoModel<ShootingCardEntity
     @Override
     public Identifier getModelResource(ShootingCardEntity object)
     {
-        return new Identifier("pvzmod", "geo/card.geo.json");
+		if (object.getGolden()){
+			return new Identifier("pvzmod", "geo/goldencard.geo.json");
+		}
+		else{
+			return new Identifier("pvzmod", "geo/card.geo.json");
+		}
     }
 
     @Override

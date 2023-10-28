@@ -158,8 +158,18 @@ public class BreezeEntity extends PvZProjectileEntity implements IAnimatable {
 				if ("crystal".equals(zombieMaterial)) {
 					damage = damage / 4;
 				}
+				if ("gold".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
 				if ("stone".equals(zombieMaterial)) {
 					damage = damage / 2;
+				}
+				if ("cloth".equals(zombieMaterial)){
+					if (PvZCubed.ZOMBIE_SIZE.get(entity.getType()).orElse("medium").equals("small")) {
+						damage = Integer.MAX_VALUE;
+						Vec3d vec3d = new Vec3d((double) 0.03, 0.0, 0.0).rotateY(-this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+						entity.setVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
+					}
 				}
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {

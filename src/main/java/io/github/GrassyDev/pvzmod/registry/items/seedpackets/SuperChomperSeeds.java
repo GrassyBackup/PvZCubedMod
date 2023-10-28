@@ -8,11 +8,9 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.cratertile.CraterT
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.chomper.ChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.ChomperVariants;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -174,7 +172,8 @@ public class SuperChomperSeeds extends SeedItem implements FabricItem {
 				return ActionResult.FAIL;
 			}
 		} else if (world instanceof ServerWorld serverWorld && (entity instanceof LilyPadEntity ||
-				entity instanceof BubblePadEntity))  {
+				entity instanceof BubblePadEntity ||
+				entity instanceof PlantEntity.VineEntity))  {
 			if (entity instanceof PlantEntity lilyPadEntity) {
 				if (lilyPadEntity.onWater) {
 					sound = SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED;

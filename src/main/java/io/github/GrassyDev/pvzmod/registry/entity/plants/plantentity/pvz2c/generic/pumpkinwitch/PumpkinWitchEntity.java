@@ -181,18 +181,6 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.PUMPKINWITCH_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 	int recoverTicks = 500;
@@ -202,12 +190,18 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tick() {
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.PUMPKINWITCH_SEED_PACKET);
+				}
+				this.discard();
 			}
-			this.targetZombies(this.getPos(), 10, true, true, true);
 		}
+		this.targetZombies(this.getPos(), 10, true, true, true);
 		LivingEntity target = this.getTarget();
 		if (target != null){
 			if (target.getHealth() <= 0) {

@@ -111,7 +111,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 				zombiePropEntity2 instanceof ZombieShieldEntity) {
 					int damage = 2;
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
-					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 						damage = damage * 2;
 					}
 					if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)){

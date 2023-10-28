@@ -19,7 +19,10 @@ public class GargantuarEntityModel extends AnimatedGeoModel<GargantuarEntity> {
     public Identifier getTextureResource(GargantuarEntity object)
     {
 		Identifier identifier = new Identifier("pvzmod", "textures/entity/gargantuar/gargantuar.png");
-		if (object.getVariant().equals(GargantuarVariants.DEFENSIVEEND) || object.getVariant().equals(GargantuarVariants.DEFENSIVEENDHYPNO)){
+		if (object.getVariant().equals(GargantuarVariants.UNICORNGARGANTUAR) || object.getVariant().equals(GargantuarVariants.UNICORNGARGANTUARHYPNO)){
+			identifier = new Identifier("pvzmod", "textures/entity/gargantuar/unicorngargantuar.png");
+		}
+		else if (object.getVariant().equals(GargantuarVariants.DEFENSIVEEND) || object.getVariant().equals(GargantuarVariants.DEFENSIVEENDHYPNO)){
 			identifier = new Identifier("pvzmod", "textures/entity/gargantuar/defensiveend.png");
 			if (object.gear1less){
 				identifier = new Identifier("pvzmod", "textures/entity/gargantuar/defensiveend_gearless.png");

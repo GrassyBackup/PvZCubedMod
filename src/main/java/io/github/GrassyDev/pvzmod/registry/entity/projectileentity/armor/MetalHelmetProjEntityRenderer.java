@@ -17,6 +17,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 			Util.make(Maps.newEnumMap(MetalHelmetVariants.class), (map) -> {
 				map.put(MetalHelmetVariants.BUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat.png"));
+				map.put(MetalHelmetVariants.SUMMERBUCKET,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat.png"));
 				map.put(MetalHelmetVariants.MUMMYBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/mummy/mummy.png"));
 				map.put(MetalHelmetVariants.FUTUREBUCKET,
@@ -54,6 +56,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 	public static final Map<MetalHelmetVariants, Identifier> LOCATION_BY_VARIANT_DAMAGED =
 			Util.make(Maps.newEnumMap(MetalHelmetVariants.class), (map) -> {
 				map.put(MetalHelmetVariants.BUCKET,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat_geardmg1.png"));
+				map.put(MetalHelmetVariants.SUMMERBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/browncoat_geardmg1.png"));
 				map.put(MetalHelmetVariants.MUMMYBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/mummy/mummy_geardmg1.png"));
@@ -93,6 +97,8 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 			Util.make(Maps.newEnumMap(MetalHelmetVariants.class), (map) -> {
 				map.put(MetalHelmetVariants.BUCKET,
 						new Identifier(PvZCubed.MOD_ID, "geo/bucketproj.geo.json"));
+				map.put(MetalHelmetVariants.SUMMERBUCKET,
+						new Identifier(PvZCubed.MOD_ID, "geo/summerbucketproj.geo.json"));
 				map.put(MetalHelmetVariants.MUMMYBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "geo/mummybucketproj.geo.json"));
 				map.put(MetalHelmetVariants.FUTUREBUCKET,

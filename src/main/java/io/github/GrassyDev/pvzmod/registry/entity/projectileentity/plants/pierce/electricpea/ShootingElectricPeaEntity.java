@@ -419,7 +419,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 				else if (zombieMaterial.equals("rubber")){
 					this.lightningCounter = 0;
 				}
-				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic") && !zombieMaterial.equals("crystal")){
+				else if (!zombieMaterial.equals("metallic") && !zombieMaterial.equals("electronic") && !zombieMaterial.equals("gold") && !zombieMaterial.equals("crystal")){
 					--this.lightningCounter;
 				}
 				if (getBeamTarget2() == null && getElectricBeamTarget2() == null){

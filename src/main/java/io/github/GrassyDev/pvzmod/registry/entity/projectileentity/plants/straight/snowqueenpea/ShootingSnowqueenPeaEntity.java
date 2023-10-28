@@ -212,7 +212,7 @@ public class ShootingSnowqueenPeaEntity extends PvZProjectileEntity implements I
 				}
 				entity.playSound(PvZSounds.SNOWPEAHITEVENT, 0.2F, 1F);
 				float damage = PVZCONFIG.nestedProjDMG.snowQueenPeaDMGv2();
-				if ("crystal".equals(zombieMaterial)) {
+				if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
 					damage = damage / 2;
 				}
 				if (damage > ((LivingEntity) entity).getHealth() &&

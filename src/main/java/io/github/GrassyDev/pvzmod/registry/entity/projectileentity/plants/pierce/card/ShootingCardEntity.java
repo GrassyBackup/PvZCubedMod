@@ -64,17 +64,20 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(RETURNING_TAG, false);
+		this.dataTracker.startTracking(GOLDEN, false);
 	}
 
 	@Override
 	public void writeCustomDataToNbt(NbtCompound tag) {
 		super.writeCustomDataToNbt(tag);
 		tag.putBoolean("Returning", this.getReturning());
+		tag.putBoolean("Golden", this.getGolden());
 	}
 
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(RETURNING_TAG, tag.getBoolean("Returning"));
+		this.dataTracker.set(GOLDEN, tag.getBoolean("Golden"));
 	}
 
 	/** /~*~//~*VARIANTS*~//~*~/ **/
@@ -107,6 +110,33 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 	}
 
 	//
+
+	protected static final TrackedData<Boolean> GOLDEN =
+			DataTracker.registerData(ShootingCardEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+
+	public enum Golden {
+		FALSE(false),
+		TRUE(true);
+
+		Golden(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean getGolden() {
+		return this.dataTracker.get(GOLDEN);
+	}
+
+	public void setGolden(Golden golden) {
+		this.dataTracker.set(GOLDEN, golden.getId());
+	}
 
 	@Override
 	public void registerControllers(AnimationData animationData) {
@@ -235,10 +265,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 							hasHelmet = true;
 						}
 					}
-					if (entity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
-						hasHelmet = true;
-					}
-					if (!hasHelmet && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+					if (!hasHelmet && !(entity instanceof ZombiePropEntity) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
 						damage = damage * 2;
 					}
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
@@ -278,15 +305,15 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 					!this.getReturning() && !this.retuningStart && damageCounter <= 2 && !entityStore.contains(entity) && !entityStoreVehicle.contains(entity)) {
 				boolean hasHelmet = false;
 				float damage = PVZCONFIG.nestedProjDMG.cardDMGv2();
+				if (this.getGolden()){
+					damage = PVZCONFIG.nestedProjDMG.goldencardDMG();
+				}
 				for (Entity entity1 : entity.getPassengerList()) {
 					if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
 						hasHelmet = true;
 					}
 				}
-				if (entity instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
-					hasHelmet = true;
-				}
-				if (!hasHelmet && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+				if (!hasHelmet && !(entity instanceof ZombiePropEntity) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
 					damage = damage * 2;
 				}
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");

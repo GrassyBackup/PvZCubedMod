@@ -5,9 +5,13 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.cheesetile.CheeseT
 import io.github.GrassyDev.pvzmod.registry.entity.environment.cratertile.CraterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.goldtile.GoldTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.maritile.MariTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.rifttile.RiftTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.rosebuds.RoseBudTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowFullTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.solarwinds.SolarWinds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.springtile.SpringTile;
@@ -26,6 +30,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.Garde
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.timetile.TimeTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.weathertile.WeatherTile;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.og.gambleshroom.GamblehatEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.og.gambleshroom.GambleshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.cherrybomb.CherrybombEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.chomper.ChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.peashooter.PeashooterEntity;
@@ -72,10 +78,12 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.frostb
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.electropea.ElectropeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.flamingpea.FlamingpeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.ghostpepper.GhostpepperEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.gloomvine.GloomVineEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.endurian.EndurianEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.modernday.shadowshroom.ShadowShroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.coconutcannon.CoconutCannonEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.springbean.SpringbeanEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.wildwest.lightningreed.LightningReedEntity;
@@ -102,6 +110,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventur
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.chillypepper.ChillyPepperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.shamrock.ShamrockEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventures.snowqueenpea.SnowqueenpeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzbfn.heroes.doomrose.DoomRoseEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzbfn.heroes.nightcap.NightcapEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.retrogatling.RetroGatlingEntity;
@@ -192,6 +201,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.expl
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.darkages.FlagPeasantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.future.FlagFutureEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.mummy.FlagMummyEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.summer.FlagSummerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.jetpack.JetpackEntity;
@@ -286,6 +296,7 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.ICEBERGLETTUCE);
 		PLANT_LIST.add(PvZEntity.GOLDLEAF);
 		PLANT_LIST.add(PvZEntity.ENDURIAN);
+		PLANT_LIST.add(PvZEntity.SHADOWSHROOM);
 		PLANT_LIST.add(PvZEntity.MISSILETOE);
 		PLANT_LIST.add(PvZEntity.ELECTROPEA);
 		PLANT_LIST.add(PvZEntity.GHOSTPEPPER);
@@ -324,7 +335,9 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.BELLFLOWER);
 		PLANT_LIST.add(PvZEntity.SUNFLOWERSEED);
 		PLANT_LIST.add(PvZEntity.NIGHTCAP);
+		PLANT_LIST.add(PvZEntity.DOOMROSE);
 		PLANT_LIST.add(PvZEntity.DOGWOOD);
+		PLANT_LIST.add(PvZEntity.GAMBLESHROOM);
 	}
 
 	public static List<EntityType<?>> PLANT_LIST = new ArrayList<>();
@@ -427,7 +440,7 @@ public class PvZEntity implements ModInitializer {
 	public static final EntityType<BubblePadEntity> BUBBLEPAD = Registry.register((
 					Registry.ENTITY_TYPE),
 			new Identifier(ModID, "bubblepad"),
-			QuiltEntityTypeBuilder.<BubblePadEntity>create(SpawnGroup.CREATURE, BubblePadEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.1f)).build()
+			QuiltEntityTypeBuilder.<BubblePadEntity>create(SpawnGroup.CREATURE, BubblePadEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.5f)).build()
 	);
 
 	public static final EntityType <BreezeshroomEntity> BREEZESHROOM = Registry.register(
@@ -475,7 +488,7 @@ public class PvZEntity implements ModInitializer {
 	public static final EntityType<LilyPadEntity> LILYPAD = Registry.register((
 					Registry.ENTITY_TYPE),
 			new Identifier(ModID, "lilypad"),
-			QuiltEntityTypeBuilder.<LilyPadEntity>create(SpawnGroup.CREATURE, LilyPadEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.1f)).build()
+			QuiltEntityTypeBuilder.<LilyPadEntity>create(SpawnGroup.CREATURE, LilyPadEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.25f)).build()
 	);
 
 	public static final EntityType<SquashEntity> SQUASH = Registry.register((
@@ -705,6 +718,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<GoldLeafEntity>create(SpawnGroup.CREATURE, GoldLeafEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.8f)).build()
 	);
 
+	public static final EntityType<ShadowShroomEntity> SHADOWSHROOM = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "shadowshroom"),
+			QuiltEntityTypeBuilder.<ShadowShroomEntity>create(SpawnGroup.CREATURE, ShadowShroomEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.8f)).build()
+	);
+
 	public static final EntityType<MissileToeEntity> MISSILETOE = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "missiletoe"),
@@ -728,6 +747,11 @@ public class PvZEntity implements ModInitializer {
 			new Identifier(ModID, "olivepit"),
 			QuiltEntityTypeBuilder.<OlivePitEntity>create(SpawnGroup.CREATURE, OlivePitEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.125f)).build()
 	);
+	public static final EntityType<GloomVineEntity> GLOOMVINE = Registry.register((
+					Registry.ENTITY_TYPE),
+			new Identifier(ModID, "gloomvine"),
+			QuiltEntityTypeBuilder.<GloomVineEntity>create(SpawnGroup.CREATURE, GloomVineEntity::new).setDimensions(EntityDimensions.fixed(1f, 0.5f)).build()
+	);
 
 	public static final EntityType<MagicshroomEntity> MAGICSHROOM = Registry.register(
 			Registry.ENTITY_TYPE,
@@ -739,6 +763,18 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "magichat"),
 			QuiltEntityTypeBuilder.<MagichatEntity>create(SpawnGroup.CREATURE, MagichatEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 2.6f)).build()
+	);
+
+	public static final EntityType<GambleshroomEntity> GAMBLESHROOM = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "gambleshroom"),
+			QuiltEntityTypeBuilder.<GambleshroomEntity>create(SpawnGroup.CREATURE, GambleshroomEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 1f)).build()
+	);
+
+	public static final EntityType<GamblehatEntity> GAMBLEHAT = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "gamblehat"),
+			QuiltEntityTypeBuilder.<GamblehatEntity>create(SpawnGroup.CREATURE, GamblehatEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 2.6f)).build()
 	);
 
 	public static final EntityType<LoquatEntity> LOQUAT = Registry.register(
@@ -901,6 +937,12 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "nightcap"),
 			QuiltEntityTypeBuilder.<NightcapEntity>create(SpawnGroup.CREATURE, NightcapEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.8f)).build()
+	);
+
+	public static final EntityType<DoomRoseEntity> DOOMROSE = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "doomrose"),
+			QuiltEntityTypeBuilder.<DoomRoseEntity>create(SpawnGroup.CREATURE, DoomRoseEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 1.25f)).build()
 	);
 
 	public static final EntityType<DogwoodEntity> DOGWOOD = Registry.register(
@@ -1189,6 +1231,47 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "buckethead_hypnotized"),
 			QuiltEntityTypeBuilder.<BrowncoatEntity>create(SpawnGroup.MONSTER, BrowncoatEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+
+	public static final EntityType<BrowncoatEntity> SUMMERBASIC = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "summerbasic"),
+			QuiltEntityTypeBuilder.<BrowncoatEntity>create(SpawnGroup.MONSTER, BrowncoatEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<BrowncoatEntity> SUMMERBASICHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "summerbasic_hypnotized"),
+			QuiltEntityTypeBuilder.<BrowncoatEntity>create(SpawnGroup.MONSTER, BrowncoatEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<BrowncoatEntity> SUMMERCONEHEAD = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "summerconehead"),
+			QuiltEntityTypeBuilder.<BrowncoatEntity>create(SpawnGroup.MONSTER, BrowncoatEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<BrowncoatEntity> SUMMERCONEHEADHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "summerconehead_hypnotized"),
+			QuiltEntityTypeBuilder.<BrowncoatEntity>create(SpawnGroup.MONSTER, BrowncoatEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<BrowncoatEntity> SUMMERBUCKETHEAD = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "summerbuckethead"),
+			QuiltEntityTypeBuilder.<BrowncoatEntity>create(SpawnGroup.MONSTER, BrowncoatEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<BrowncoatEntity> SUMMERBUCKETHEADHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "summerbuckethead_hypnotized"),
+			QuiltEntityTypeBuilder.<BrowncoatEntity>create(SpawnGroup.MONSTER, BrowncoatEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.8f)).build()
+	);
+	public static final EntityType<FlagSummerEntity> FLAGSUMMER = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "flagsummer"),
+			QuiltEntityTypeBuilder.<FlagSummerEntity>create(SpawnGroup.MONSTER, FlagSummerEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.95f)).build()
+	);
+	public static final EntityType<FlagSummerEntity> FLAGSUMMERHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "flagsummer_hypnotized"),
+			QuiltEntityTypeBuilder.<FlagSummerEntity>create(SpawnGroup.CREATURE, FlagSummerEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1.95f)).build()
 	);
 	public static final EntityType<BrowncoatEntity> SCREENDOOR = Registry.register(
 			Registry.ENTITY_TYPE,
@@ -2176,6 +2259,30 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<PiggyEntity>create(SpawnGroup.CREATURE, PiggyEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1f)).build()
 	);
 
+	public static final EntityType<GargantuarEntity> UNICORNGARGANTUAR = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "unicorngargantuar"),
+			QuiltEntityTypeBuilder.<GargantuarEntity>create(SpawnGroup.MONSTER, GargantuarEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 3.95f)).build()
+	);
+
+	public static final EntityType<GargantuarEntity> UNICORNGARGANTUARHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "unicorngargantuar_hypnotized"),
+			QuiltEntityTypeBuilder.<GargantuarEntity>create(SpawnGroup.CREATURE, GargantuarEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 3.95f)).build()
+	);
+
+	public static final EntityType<ImpEntity> BASSIMP = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "bassimp"),
+			QuiltEntityTypeBuilder.<ImpEntity>create(SpawnGroup.MONSTER, ImpEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1f)).build()
+	);
+
+	public static final EntityType<ImpEntity> BASSIMPHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "bassimp_hypnotized"),
+			QuiltEntityTypeBuilder.<ImpEntity>create(SpawnGroup.CREATURE, ImpEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1f)).build()
+	);
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2239,6 +2346,18 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<WaterTile>create(SpawnGroup.MONSTER, WaterTile::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
 	);
 
+	public static final EntityType<ShadowTile> SHADOWTILE = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "shadowtile"),
+			QuiltEntityTypeBuilder.<ShadowTile>create(SpawnGroup.MONSTER, ShadowTile::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
+	);
+
+	public static final EntityType<ShadowFullTile> SHADOWFULLTILE = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "shadowfulltile"),
+			QuiltEntityTypeBuilder.<ShadowFullTile>create(SpawnGroup.MONSTER, ShadowFullTile::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
+	);
+
 
 	public static final EntityType<CraterTile> CRATERTILE = Registry.register(
 			Registry.ENTITY_TYPE,
@@ -2269,6 +2388,18 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "goldtile"),
 			QuiltEntityTypeBuilder.<GoldTile>create(SpawnGroup.MONSTER, GoldTile::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
+	);
+
+	public static final EntityType<MariTile> MARITILE = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "maritile"),
+			QuiltEntityTypeBuilder.<MariTile>create(SpawnGroup.MONSTER, MariTile::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
+	);
+
+	public static final EntityType<RoseBudTile> ROSEBUDS = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "rosebuds"),
+			QuiltEntityTypeBuilder.<RoseBudTile>create(SpawnGroup.MONSTER, RoseBudTile::new).setDimensions(EntityDimensions.fixed(1f, 0.05f)).build()
 	);
 
 	public static final EntityType<SunBombEntity> SUNBOMB = Registry.register(
@@ -2454,6 +2585,8 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GOLDLEAF, GoldLeafEntity.createGoldLeafAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SHADOWSHROOM, ShadowShroomEntity.createShadowShroomAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MISSILETOE, MissileToeEntity.createMissileToeAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ELECTROPEA, ElectropeaEntity.createElectropeaAttributes().build());
@@ -2462,9 +2595,15 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.OLIVEPIT, OlivePitEntity.createOlivePitAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GLOOMVINE, GloomVineEntity.createGloomVineAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MAGICSHROOM, MagicshroomEntity.createMagicshroomAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MAGICHAT, MagichatEntity.createMagicHatAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GAMBLESHROOM, GambleshroomEntity.createGambleshroomAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GAMBLEHAT, GamblehatEntity.createGambleHatAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.LOQUAT, LoquatEntity.createLoquatAttributes().build());
 
@@ -2520,6 +2659,8 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.NIGHTCAP, NightcapEntity.createNightcapAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DOOMROSE, DoomRoseEntity.createDoomRoseAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DOGWOOD, DogwoodEntity.createDogwoodAttributes().build());
 
 
@@ -2540,6 +2681,22 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BRICKHEAD, BrowncoatEntity.createBrowncoatAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BRICKHEADHYPNO, BrowncoatEntity.createBrowncoatAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUMMERBASIC, BrowncoatEntity.createSummerAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUMMERBASICHYPNO, BrowncoatEntity.createSummerAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FLAGSUMMER, FlagSummerEntity.createFlagSummerAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FLAGSUMMERHYPNO, FlagSummerEntity.createFlagSummerAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUMMERCONEHEAD, BrowncoatEntity.createSummerAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUMMERCONEHEADHYPNO, BrowncoatEntity.createSummerAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUMMERBUCKETHEAD, BrowncoatEntity.createSummerAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUMMERBUCKETHEADHYPNO, BrowncoatEntity.createSummerAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SCREENDOOR, BrowncoatEntity.createBrowncoatAttributes().build());
 
@@ -2644,6 +2801,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DEFENSIVEENDHYPNO, GargantuarEntity.createDefensiveendAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DEFENSIVEEND_NEWYEAR, GargantuarEntity.createDefensiveendAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DEFENSIVEEND_NEWYEARHYPNO, GargantuarEntity.createDefensiveendAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.UNICORNGARGANTUAR, GargantuarEntity.createUnicornGargantuarAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.UNICORNGARGANTUARHYPNO, GargantuarEntity.createUnicornGargantuarAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SCRAPMECH, ScrapMechEntity.createScrapMechAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SCRAPMECHHYPNO, ScrapMechEntity.createScrapMechAttributes().build());
@@ -2660,6 +2819,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUPERFANIMPHYPNO, SuperFanImpEntity.createSuperFanImpAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.NEWYEARIMP, SuperFanImpEntity.createSuperFanImpAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.NEWYEARIMPHYPNO, SuperFanImpEntity.createSuperFanImpAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASSIMP, ImpEntity.createBassImpAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASSIMPHYPNO, ImpEntity.createBassImpAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ANNOUNCERIMP, AnnouncerImpEntity.createAnnouncerImpAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ANNOUNCERIMPHYPNO, AnnouncerImpEntity.createAnnouncerImpAttributes().build());
@@ -2832,6 +2993,10 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.WATERTILE, WaterTile.createTileAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SHADOWTILE, ShadowTile.createTileAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SHADOWFULLTILE, ShadowFullTile.createTileAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.CRATERTILE, CraterTile.createTileAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.WEATHERTILE, CraterTile.createTileAttributes().build());
@@ -2840,6 +3005,10 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.RIFTTILE, RiftTile.createTileAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GOLDTILE, GoldTile.createTileAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.MARITILE, MariTile.createTileAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ROSEBUDS, RoseBudTile.createTileAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SUNBOMB, SunBombEntity.createSunBombAttributes().build());
 

@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.dolphinrider;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -24,7 +25,6 @@ import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -289,13 +289,30 @@ public class DolphinRiderEntity extends PvZombieEntity implements IAnimatable {
 	private boolean removeDolphin;
 	private int waitDolphinTick;
 
+	private boolean touchedWater;
+
 
 	/** /~*~//~*TICKING*~//~*~/ **/
 
+
 	public void tick() {
 		super.tick();
+		if (this.isInsideWaterOrBubbleColumn()){
+			this.touchedWater = true;
+		}
+		if (this.getDolphinStage() && this.isInsideWaterOrBubbleColumn()){
+			this.setRainbowTag(Rainbow.TRUE);
+			this.rainbowTicks = 5;
+		}
 		if (this.getAttacking() == null && !(this.getHypno()) && this.isAlive()){
 			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && !(this.CollidesWithPlant(1f, 0f) instanceof TangleKelpEntity) && this.getDolphinStage() && this.isInsideWaterOrBubbleColumn() && !removeDolphin){
+				Vec3d vec3d = new Vec3d(0.5, 0.8, 0.0).rotateY(-this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+				this.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
+				this.removeDolphin = true;
+				this.waitDolphinTick = 5;
+				this.playSound(DOLPHINJUMPEVENT, 0.75f, 1);
+			}
+			else if (!this.isInsideWaterOrBubbleColumn() && this.getDolphinStage() && !this.hasStatusEffect(PvZCubed.BOUNCED) && !removeDolphin && this.touchedWater){
 				Vec3d vec3d = new Vec3d(0.5, 0.8, 0.0).rotateY(-this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				this.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
 				this.removeDolphin = true;

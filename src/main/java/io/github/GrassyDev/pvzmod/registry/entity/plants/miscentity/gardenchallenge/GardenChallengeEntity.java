@@ -659,11 +659,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				}
 			}
 		}
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-		}
+		BlockPos blockPos = this.getBlockPos();
 		--cooldown;
 		if (getWaveInProgress()){
 			for (int j = 0; j < 3; ++j) {
@@ -1034,6 +1030,9 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if (currentTime.getTime().equals(ChallengeTime.DROUGHT)) {
 							currentWeather.setWeatherType(ChallengeWeather.CLOUD);
 						}
+						if (currentTime.getTime().equals(ChallengeTime.BOMB)) {
+							currentWeather.setWeatherType(ChallengeWeather.CLOUD);
+						}
 					}
 				}
 			}
@@ -1378,6 +1377,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 		}
 		else if (itemStack.isOf(ModItems.BOMB) && currentTime != null && currentWeather != null){
 			currentTime.setTimeType(ChallengeTime.BOMB);
+			currentWeather.setWeatherType(ChallengeWeather.CLOUD);
 			return ActionResult.SUCCESS;
 		}
 		else if (itemStack.isOf(ModItems.DROUGHT) && currentTime != null && currentWeather != null){

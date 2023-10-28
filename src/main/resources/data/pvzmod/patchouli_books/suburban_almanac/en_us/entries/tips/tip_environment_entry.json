@@ -107,7 +107,25 @@
         "$(br)When a Zombie steps on it, it Stuns them for 10 seconds, inflicts damage based on it's weight, and slides them forward by about 3 blocks.",
         "$(br)Covered Zombies aren't affected by the Stun and don't slide.",
         "$(br2)The weight depends on the Zombie's size, gear weight, and materials, and won't work on Machines.",
-        "$(br2)They last for 2 minutes or until a Zombie steps on it."
+        "$(br2)They last for 1 minute or until a Zombie steps on it."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br)Marigold Pile",
+        "$(br2)Can stack up to 3. When a Zombie steps on it, it loses a stack.",
+        "$(br2)When a Zombie steps on it, it will receive a status effect for 10 seconds, if it steps on another Marigold Pile with the effect, it gets hypnotized.",
+        "$(br2)They last for 1 minute or until they lose all stacks."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br)Withered Marigold Pile",
+        "$(br2)Can stack up to 3. When a Zombie steps on it, it loses a stack.",
+        "$(br2)When a Zombie steps on it, it will receive a status effect that slows and weakens it for 10 seconds.",
+        "$(br2)They last for 1 minute or until they lose all stacks."
       ]
     },
     {
@@ -128,7 +146,8 @@
         "pvzmod:plants/doomshroom_entry",
         "pvzmod:plants/smackadamia_entry",
         "pvzmod:plants/goldleaf_entry",
-        "pvzmod:plants/bananasaurus_entry"
+        "pvzmod:plants/bananasaurus_entry",
+        "pvzmod:plants/doomrose_entry"
       ]
     }
   ]

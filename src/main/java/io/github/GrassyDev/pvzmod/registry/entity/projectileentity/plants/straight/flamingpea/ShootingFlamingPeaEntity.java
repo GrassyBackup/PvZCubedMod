@@ -205,12 +205,12 @@ public class ShootingFlamingPeaEntity extends PvZProjectileEntity implements IAn
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				if ((entity instanceof ZombieShieldEntity || entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET) ||
-						(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) && !"paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+						(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) && !"paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 					entity.playSound(sound, 0.2F, 1F);
 				}
 				entity.playSound(PvZSounds.FIREPEAHITEVENT, 0.2F, 1F);
 				float damage = PVZCONFIG.nestedProjDMG.flamingPeaDMGv2();
-				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 					if (!entity.isWet() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 						entity.setOnFireFor(4);

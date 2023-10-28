@@ -231,9 +231,16 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 					if (damage > livingEntity.getHealth() &&
 							!(livingEntity instanceof ZombieShieldEntity) &&
 							livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+						if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1){
+							generalPvZombieEntity1.swallowed = true;
+						}
+						generalPvZombieEntity.swallowed = true;
 						livingEntity.damage(DamageSource.mob(this), damage);
 						generalPvZombieEntity.damage(DamageSource.mob(this), Integer.MAX_VALUE);
 					} else {
+						if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1){
+							generalPvZombieEntity1.swallowed = true;
+						}
 						livingEntity.damage(DamageSource.mob(this), damage);
 					}
 					if (!PvZCubed.ZOMBIE_SIZE.get(livingEntity.getType()).orElse("flesh").equals("small")){
@@ -265,18 +272,6 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 			super.setPosition(x, y, z);
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
-		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.OLIVEPIT_SEED_PACKET);
-				}
-				this.discard();
-			}
-
 		}
 	}
 
@@ -318,9 +313,15 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 				}
 			}
 		}
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.OLIVEPIT_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 		if (attacking){

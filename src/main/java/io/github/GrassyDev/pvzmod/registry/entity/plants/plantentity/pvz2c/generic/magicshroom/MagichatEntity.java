@@ -138,11 +138,7 @@ public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAt
 		if (this.age < 3){
 			this.world.sendEntityStatus(this, (byte) 116);
 		}
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-		}
+		BlockPos blockPos = this.getBlockPos();
 	}
 
 	public void tickMovement() {

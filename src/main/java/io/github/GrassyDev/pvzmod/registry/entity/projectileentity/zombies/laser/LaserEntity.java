@@ -5,7 +5,6 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -179,7 +178,7 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 						!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 						!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
-					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 						damage = damage * 2;
 					}
 					if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)){
@@ -225,7 +224,7 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 						!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(generalPvZombieEntity.isStealth()) &&
 						!(generalPvZombieEntity.isFlying())) {
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
-					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+					if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 						damage = damage * 2;
 					}
 					if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
@@ -259,7 +258,7 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 				}
 				else if (entity instanceof LilyPadEntity && entity.hasPassengers()) {
 
-				} else if (!world.isClient && !(entity instanceof PlantEntity plantEntity && plantEntity.getImmune()) && !(entity instanceof PlantEntity plantEntity1 && plantEntity1.getFireImmune()) && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity.getVehicle() instanceof BubblePadEntity)) {
+				} else if (!world.isClient && !(entity instanceof PlantEntity plantEntity && plantEntity.getImmune()) && !(entity instanceof PlantEntity plantEntity1 && plantEntity1.getFireImmune()) && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity.getVehicle() instanceof PlantEntity.VineEntity)) {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					this.world.sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);

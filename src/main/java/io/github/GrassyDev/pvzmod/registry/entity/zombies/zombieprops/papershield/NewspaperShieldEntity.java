@@ -170,7 +170,6 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 	}
 
 	public void tick() {
-		System.out.println(this.getVariant());
 		if (this.getVariant().equals(PapershieldVariants.BOOKSHIELD)) {
 			if (this.isBeingRainedOn() || this.hasStatusEffect(PvZCubed.ICE) || this.hasStatusEffect(PvZCubed.FROZEN) || this.hasStatusEffect(PvZCubed.WET) || this.isSubmergedInWater()) {
 				this.setFireStage(ExplorerEntity.FireStage.EXTINGUISHED);

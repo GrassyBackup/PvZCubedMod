@@ -191,8 +191,15 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
+	}
 
-		if (this.age > 1) {
+
+	/** /~*~//~*TICKING*~//~*~/ **/
+
+	public void tick() {
+		super.tick();
+		BlockPos blockPos = this.getBlockPos();
+		if (tickDelay <= 1) {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
@@ -201,21 +208,8 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 				}
 				this.discard();
 			}
-
 		}
-	}
-
-
-	/** /~*~//~*TICKING*~//~*~/ **/
-
-	public void tick() {
-		super.tick();
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-			this.targetZombies(this.getPos(), 3, false, true, true);
-		}
+		this.targetZombies(this.getPos(), 3, false, true, true);
 	}
 
 	public void tickMovement() {

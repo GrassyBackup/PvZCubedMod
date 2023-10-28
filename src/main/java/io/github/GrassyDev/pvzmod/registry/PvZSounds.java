@@ -88,6 +88,9 @@ public class PvZSounds {
 	public static final Identifier EMPEACHEXPLOSION = new Identifier("pvzmod:empeach.explosion");
 	public static SoundEvent EMPEACHEXPLOSIONEVENT = new SoundEvent(EMPEACHEXPLOSION);
 
+	public static final Identifier POISONSPLASH = new Identifier("pvzmod:poison.splash");
+	public static SoundEvent POISONSPLASHEVENT = new SoundEvent(POISONSPLASH);
+
 	public static final Identifier MECHALARM = new Identifier("pvzmod:mech.alarm");
 	public static SoundEvent MECHALARMEVENT = new SoundEvent(MECHALARM);
 
@@ -215,6 +218,7 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.DOOMSHROOMEXPLOSION, DOOMSHROOMEXPLOSIONEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.ICEBERGEXPLOSION, ICEBERGEXPLOSIONEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.EMPEACHEXPLOSION, EMPEACHEXPLOSIONEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.POISONSPLASH, POISONSPLASHEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.MECHALARM, MECHALARMEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SHROOMHIT, SHROOMHITEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SHROOMCHARGE, SHROOMCHARGEEVENT);

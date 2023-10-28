@@ -344,6 +344,8 @@ public class NewspaperEntity extends PvZombieEntity implements IAnimatable {
 			this.world.sendEntityStatus(this, (byte) 120);
 			if (this.speedSwitch) {
 				this.playSound(NEWSPAPERANGRYEVENT, 1, 1);
+				this.setRainbowTag(Rainbow.TRUE);
+				this.rainbowTicks = 40;
 				assert maxSpeedAttribute != null;
 				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
 				assert maxStrengthAttribute != null;

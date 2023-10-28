@@ -17,8 +17,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrad
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.laser.LaserEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.GargantuarVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallichelmet.MetalHelmetEntity;
@@ -33,9 +33,6 @@ import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
@@ -56,8 +53,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -91,33 +86,14 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
 	protected ImpEntity impEntity;
 
-	protected float healthImp;
-
 	public ScrapMechEntity(EntityType<? extends ScrapMechEntity> entityType, World world) {
         super(entityType, world);
 
         this.experiencePoints = 100;
         this.firstAttack = true;
-		this.entityBox = PvZEntity.GARGANTUAR;
-		this.impEntity = new ImpEntity(PvZEntity.IMP, this.world);
-		this.healthImp = 180;
+		this.setCoveredTag(Covered.TRUE);
     }
 
-	protected void initDataTracker() {
-		super.initDataTracker();
-		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
-	}
-
-	@Override
-	public void writeCustomDataToNbt(NbtCompound tag) {
-		super.writeCustomDataToNbt(tag);
-		tag.putInt("Variant", this.getTypeVariant());
-	}
-
-	public void readCustomDataFromNbt(NbtCompound tag) {
-		super.readCustomDataFromNbt(tag);
-		this.dataTracker.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
-	}
 
 	static {
 	}
@@ -180,62 +156,6 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 								-0.5F, 0.5F), 0, e, 0);
 			}
 		}
-	}
-
-	/** /~*~//~*VARIANTS*~//~*~/ **/
-
-	private static final TrackedData<Boolean> DATA_ID_TYPE_COUNT =
-			DataTracker.registerData(ScrapMechEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-								 SpawnReason spawnReason, @Nullable EntityData entityData,
-								 @Nullable NbtCompound entityNbt) {
-		if (this.getType().equals(PvZEntity.GARGANTUARHYPNO)){
-			setVariant(GargantuarVariants.GARGANTUARHYPNO);
-			this.setHypno(IsHypno.TRUE);
-		}
-		else if (this.getType().equals(PvZEntity.DEFENSIVEEND)){
-			setVariant(GargantuarVariants.DEFENSIVEEND);
-			this.initCustomGoals();
-			createProp();
-		}
-		else if (this.getType().equals(PvZEntity.DEFENSIVEENDHYPNO)){
-			setVariant(GargantuarVariants.DEFENSIVEENDHYPNO);
-			this.setHypno(IsHypno.TRUE);
-		}
-		else if (this.getType().equals(PvZEntity.DEFENSIVEEND_NEWYEAR)){
-			setVariant(GargantuarVariants.DEFENSIVEEND_NEWYEAR);
-			this.initCustomGoals();
-			createProp();
-		}
-		else if (this.getType().equals(PvZEntity.DEFENSIVEEND_NEWYEARHYPNO)){
-			setVariant(GargantuarVariants.DEFENSIVEEND_NEWYEARHYPNO);
-			this.setHypno(IsHypno.TRUE);
-		}
-		else {
-			setVariant(GargantuarVariants.GARGANTUAR);
-		}
-		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-	}
-
-	@Override
-	public void setHypno(IsHypno hypno) {
-		super.setHypno(hypno);
-	}
-
-	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
-			DataTracker.registerData(ScrapMechEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
-	private int getTypeVariant() {
-		return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
-	}
-
-	public GargantuarVariants getVariant() {
-		return GargantuarVariants.byId(this.getTypeVariant() & 255);
-	}
-
-	public void setVariant(GargantuarVariants variant) {
-		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
 	}
 
 
@@ -733,67 +653,11 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 				serverWorld.spawnEntityAndPassengers(imp);
 			}
 		}
-		if ((inDyingAnimation && deathTicks <= 1) || (source.getSource() instanceof SuperChomperEntity ||
+		if ((inDyingAnimation && deathTicks <= 1) || ((source.getSource() instanceof SuperChomperEntity ||
 				source.getSource() instanceof ChomperEntity ||
-				source.getSource() instanceof OlivePitEntity)) {
+				source.getSource() instanceof ChesterEntity ||
+				source.getSource() instanceof OlivePitEntity) && this.swallowed)) {
 			super.onDeath(source);
-		}
-	}
-
-	protected EntityType<?> hypnoType;
-
-	protected void checkHypno(){
-		if (this.getType().equals(PvZEntity.DEFENSIVEEND)){
-			hypnoType = PvZEntity.DEFENSIVEENDHYPNO;
-		}
-		else if (this.getType().equals(PvZEntity.DEFENSIVEEND_NEWYEAR)){
-			hypnoType = PvZEntity.DEFENSIVEEND_NEWYEARHYPNO;
-		}
-		else {
-			hypnoType = PvZEntity.GARGANTUARHYPNO;
-		}
-	}
-
-	public boolean damage(DamageSource source, float amount) {
-		if (!super.damage(source, amount)) {
-			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
-			return false;
-		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
-			LivingEntity livingEntity = this.getTarget();
-			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
-				livingEntity = (LivingEntity)source.getAttacker();
-			}
-
-			if (this.getRecentDamageSource() == PvZCubed.HYPNO_DAMAGE && !(this.getHypno())) {
-				checkHypno();
-				this.playSound(PvZSounds.HYPNOTIZINGEVENT, 1.5F, 1.0F);
-				ScrapMechEntity hypnotizedZombie = (ScrapMechEntity) hypnoType.create(world);
-				hypnotizedZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				hypnotizedZombie.initialize(serverWorld, world.getLocalDifficulty(hypnotizedZombie.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData)null, (NbtCompound) null);
-				hypnotizedZombie.setAiDisabled(this.isAiDisabled());
-				hypnotizedZombie.setHealth(this.getHealth());
-				if (this.hasCustomName()) {
-					hypnotizedZombie.setCustomName(this.getCustomName());
-					hypnotizedZombie.setCustomNameVisible(this.isCustomNameVisible());
-				}
-				for (Entity entity1 : this.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe) {
-						zpe.setHypno(IsHypno.TRUE);
-						zpe.startRiding(hypnotizedZombie);
-					}
-				}
-
-				hypnotizedZombie.setPersistent();
-
-
-				hypnotizedZombie.setHeadYaw(this.getHeadYaw());
-                serverWorld.spawnEntityAndPassengers(hypnotizedZombie);
-				this.remove(RemovalReason.DISCARDED);
-			}
-
-			return true;
 		}
 	}
 

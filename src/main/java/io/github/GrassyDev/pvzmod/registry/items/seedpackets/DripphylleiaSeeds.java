@@ -172,7 +172,8 @@ public class DripphylleiaSeeds extends SeedItem implements FabricItem {
 				return ActionResult.FAIL;
 			}
 		} else if (world instanceof ServerWorld serverWorld && (entity instanceof LilyPadEntity ||
-				entity instanceof BubblePadEntity))  {
+				entity instanceof BubblePadEntity ||
+				entity instanceof PlantEntity.VineEntity))  {
 			if (entity instanceof PlantEntity lilyPadEntity) {
 				if (lilyPadEntity.onWater) {
 					sound = SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED;

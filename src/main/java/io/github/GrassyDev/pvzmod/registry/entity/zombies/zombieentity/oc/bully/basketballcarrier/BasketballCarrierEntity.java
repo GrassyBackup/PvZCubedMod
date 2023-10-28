@@ -234,15 +234,33 @@ public class BasketballCarrierEntity extends BullyEntity implements IAnimatable 
 		ShootingBasketballEntity basketballEntity = new ShootingBasketballEntity(PvZEntity.BASKETBALLPROJ, this.world);
 		List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(this.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) + 1));
 		double targetDist = 0;
+		LivingEntity garden = null;
 		for (LivingEntity livingEntity : list){
-			if (livingEntity instanceof PlantEntity plantEntity && !(plantEntity instanceof GardenChallengeEntity) && !(plantEntity instanceof GardenEntity) && !plantEntity.getImmune()){
-				if (targetDist == 0){
-					targetDist = this.squaredDistanceTo(plantEntity);
-					target = plantEntity;
+			if (livingEntity instanceof GardenChallengeEntity){
+				garden = livingEntity;
+			}
+		}
+		for (LivingEntity livingEntity : list){
+			if (garden != null){
+				if (livingEntity instanceof PlantEntity plantEntity && !(plantEntity instanceof GardenChallengeEntity) && !(plantEntity instanceof GardenEntity) && !plantEntity.getImmune()) {
+					if (targetDist == 0) {
+						targetDist = this.squaredDistanceTo(plantEntity);
+						target = plantEntity;
+					} else if (garden.squaredDistanceTo(plantEntity) <= targetDist) {
+						targetDist = this.squaredDistanceTo(plantEntity);
+						target = plantEntity;
+					}
 				}
-				else if (this.squaredDistanceTo(plantEntity) >= targetDist){
-					targetDist = this.squaredDistanceTo(plantEntity);
-					target = plantEntity;
+			}
+			else {
+				if (livingEntity instanceof PlantEntity plantEntity && !(plantEntity instanceof GardenChallengeEntity) && !(plantEntity instanceof GardenEntity) && !plantEntity.getImmune()) {
+					if (targetDist == 0) {
+						targetDist = this.squaredDistanceTo(plantEntity);
+						target = plantEntity;
+					} else if (this.squaredDistanceTo(plantEntity) >= targetDist) {
+						targetDist = this.squaredDistanceTo(plantEntity);
+						target = plantEntity;
+					}
 				}
 			}
 		}
@@ -297,7 +315,7 @@ public class BasketballCarrierEntity extends BullyEntity implements IAnimatable 
 		if (zombieObstacleEntity.isEmpty() && this.CollidesWithObstacle(1f) != null && this.CollidesWithObstacle(1f).getType().equals(PvZEntity.BASKETBALLBIN) && !this.CollidesWithObstacle(1f).hasVehicle() && !this.CollidesWithObstacle(1f).beingEaten && !this.isInsideWaterOrBubbleColumn()){
 			this.CollidesWithObstacle(1f).startRiding(this, true);
 		}
-		if (random <= 0.0075 && zombieObstacleEntity.isPresent() && getTarget() != null && this.squaredDistanceTo(this.getTarget()) <= 625 && !this.inLaunchAnimation) {
+		if (random <= 0.0075 && zombieObstacleEntity.isPresent() && getTarget() != null && this.squaredDistanceTo(this.getTarget()) <= 225 && !this.inLaunchAnimation) {
 			this.launchAnimation = 80 * animationMultiplier;
 			this.inLaunchAnimation = true;
 			this.world.sendEntityStatus(this, (byte) 104);

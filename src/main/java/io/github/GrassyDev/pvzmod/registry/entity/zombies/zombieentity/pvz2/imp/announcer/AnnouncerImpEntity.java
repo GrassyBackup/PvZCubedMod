@@ -245,15 +245,9 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 
 
 	/** /~*~//~*TICKING*~//~*~/ **/
-	int stealthTick = 0;
 
 	public void tick() {
 		super.tick();
-		if (this.isStealth()) {
-			if (++stealthTick > 20){
-				this.setStealthTag(Stealth.FALSE);
-			}
-		}
 		if (this.isAggro && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 			this.setVelocity(0, -0.3, 0);
 		}

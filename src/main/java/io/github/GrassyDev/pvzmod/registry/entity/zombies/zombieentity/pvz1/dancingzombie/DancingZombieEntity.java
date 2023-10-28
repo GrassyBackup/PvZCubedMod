@@ -27,6 +27,8 @@ import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -63,8 +65,10 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
-import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+
+import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
 public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 
@@ -73,6 +77,8 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
 	private String controllerName = "walkingcontroller";
+
+	public static final UUID MAX_SPEED_UUID = UUID.nameUUIDFromBytes(MOD_ID.getBytes(StandardCharsets.UTF_8));
 
 
     public DancingZombieEntity(EntityType<? extends DancingZombieEntity> entityType, World world) {
@@ -268,14 +274,29 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				this.setStealthTag(Stealth.FALSE);
 			}
 		}
+		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+		if (this.dancing && this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
+				!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
+				!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
+				!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
+			assert maxSpeedAttribute != null;
+			maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
+		} else if (!this.dancing) {
+			if (!this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
+				assert maxSpeedAttribute != null;
+				maxSpeedAttribute.addPersistentModifier(createSpeedModifier(0.11));
+			}
+		}
 	}
 
 	protected void mobTick() {
 		if (this.isAggro) {
 			this.world.sendEntityStatus(this, (byte) 113);
+			this.dancing = true;
 		}
 		else {
 			this.world.sendEntityStatus(this, (byte) 112);
+			this.dancing = false;
 		}
 
 		super.mobTick();
@@ -304,6 +325,15 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 
 	protected boolean shouldSwimInFluids() {
 		return true;
+	}
+
+	public static EntityAttributeModifier createSpeedModifier(double amount) {
+		return new EntityAttributeModifier(
+				MAX_SPEED_UUID,
+				MOD_ID,
+				amount,
+				EntityAttributeModifier.Operation.ADDITION
+		);
 	}
 
 	public static DefaultAttributeContainer.Builder createDancingZombieAttributes() {
@@ -447,6 +477,9 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 			DancingZombieEntity.this.spellTicks = this.getSpellTicks();
 			this.startTime = DancingZombieEntity.this.age + this.startTimeDelay();
 			SoundEvent soundEvent = this.getSoundPrepare();
+			DancingZombieEntity.this.getNavigation().stop();
+			DancingZombieEntity.this.setRainbowTag(Rainbow.TRUE);
+			DancingZombieEntity.this.rainbowTicks = 20;
 			if (soundEvent != null) {
 				DancingZombieEntity.this.playSound(soundEvent, 0.5F, 1.0F);
 			}
@@ -456,6 +489,9 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 
 		public void tick() {
 			--this.spellCooldown;
+			if (this.spellCooldown > 0) {
+				DancingZombieEntity.this.getNavigation().stop();
+			}
 			if (this.spellCooldown == 0) {
 				this.castSpell();
 				DancingZombieEntity.this.addStatusEffect((new StatusEffectInstance(StatusEffects.GLOWING, 70, 1)));
@@ -526,6 +562,8 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				if (this.dancingZombieEntity.getHypno()){
 					backupDancerEntity.createProp();
 				}
+				backupDancerEntity.setRainbowTag(Rainbow.TRUE);
+				backupDancerEntity.rainbowTicks = 60;
                 serverWorld.spawnEntityAndPassengers(backupDancerEntity);
             }
             for(int p = 0; p < 1; ++p) { // 1 backup
@@ -540,6 +578,8 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				if (this.dancingZombieEntity.getHypno()){
 					backupDancerEntity.createProp();
 				}
+				backupDancerEntity.setRainbowTag(Rainbow.TRUE);
+				backupDancerEntity.rainbowTicks = 60;
                 serverWorld.spawnEntityAndPassengers(backupDancerEntity);
             }
             for(int d = 0; d < 1; ++d) { // 1 backup
@@ -554,6 +594,8 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				if (this.dancingZombieEntity.getHypno()){
 					backupDancerEntity.createProp();
 				}
+				backupDancerEntity.setRainbowTag(Rainbow.TRUE);
+				backupDancerEntity.rainbowTicks = 60;
                 serverWorld.spawnEntityAndPassengers(backupDancerEntity);
             }
             for(int t = 0; t < 1; ++t) { // 1 backup
@@ -568,6 +610,8 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				if (this.dancingZombieEntity.getHypno()){
 					backupDancerEntity.createProp();
 				}
+				backupDancerEntity.setRainbowTag(Rainbow.TRUE);
+				backupDancerEntity.rainbowTicks = 60;
                 serverWorld.spawnEntityAndPassengers(backupDancerEntity);
             }
 			DancingZombieEntity.this.addCount();

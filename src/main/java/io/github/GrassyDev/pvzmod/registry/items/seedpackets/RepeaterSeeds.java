@@ -23,7 +23,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -182,7 +181,8 @@ public class RepeaterSeeds extends SeedItem implements FabricItem {
 				return ActionResult.FAIL;
 			}
 		} else if (world instanceof ServerWorld serverWorld && (entity instanceof LilyPadEntity ||
-				entity instanceof BubblePadEntity))  {
+				entity instanceof BubblePadEntity ||
+				entity instanceof PlantEntity.VineEntity))  {
 			if (entity instanceof PlantEntity lilyPadEntity) {
 				if (lilyPadEntity.onWater) {
 					sound = SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED;

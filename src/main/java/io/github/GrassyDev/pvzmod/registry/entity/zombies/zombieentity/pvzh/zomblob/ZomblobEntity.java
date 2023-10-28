@@ -14,6 +14,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.ZomblobVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
@@ -457,6 +458,7 @@ public class ZomblobEntity extends PvZombieEntity implements IAnimatable {
 	public void onDeath(DamageSource source) {
 		if (!(source.getSource() instanceof SuperChomperEntity) &&
 				!(source.getSource() instanceof ChomperEntity) &&
+				!(source.getSource() instanceof ChesterEntity) &&
 				!(source.getSource() instanceof OlivePitEntity)) {
 			if (this.getType().equals(PvZEntity.ZOMBLOBBIGHYPNO) || this.getType().equals(PvZEntity.ZOMBLOBBIG)) {
 				EntityType<?> type = PvZEntity.ZOMBLOB;

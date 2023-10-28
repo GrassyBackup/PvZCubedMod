@@ -246,6 +246,8 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 			}
 
 			knightEntity.setPersistent();
+			knightEntity.setRainbowTag(Rainbow.TRUE);
+			knightEntity.rainbowTicks = 70;
 			serverWorld.spawnEntityAndPassengers(knightEntity);
 			knightEntity.setVelocity(livingEntity.getVelocity());
 			knightEntity.copyPositionAndRotation(livingEntity);

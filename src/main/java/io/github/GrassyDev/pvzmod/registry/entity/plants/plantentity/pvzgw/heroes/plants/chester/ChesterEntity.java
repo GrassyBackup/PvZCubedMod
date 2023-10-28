@@ -7,6 +7,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.cheese.CheeseProjEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;
@@ -256,16 +257,25 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			this.attackTicksLeft = 25;
 			this.setCount(25);
 			this.world.sendEntityStatus(this, (byte) 106);
+			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
+				generalPvZombieEntity.swallowed = true;
+			}
 		}
 		else if (hasShield) {
 			this.attackTicksLeft = 175;
 			this.setCount(175);
 			this.world.sendEntityStatus(this, (byte) 105);
+			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
+				generalPvZombieEntity.swallowed = true;
+			}
 		}
 		else {
 			this.attackTicksLeft = 175;
 			this.setCount(175);
 			this.world.sendEntityStatus(this, (byte) 104);
+			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
+				generalPvZombieEntity.swallowed = true;
+			}
 		}
 		boolean bl = damaged.damage(DamageSource.mob(this), damage);
 		if (bl) {
@@ -292,18 +302,6 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 		} else {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.CHESTER_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -314,12 +312,18 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 		if (!this.world.isClient()) {
 			this.FireBeamGoal();
 		}
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.CHESTER_SEED_PACKET);
+				}
+				this.discard();
 			}
-			this.targetZombies(this.getPos(), 2, false, true, true);
 		}
+		this.targetZombies(this.getPos(), 2, false, true, true);
 	}
 
 	public void tickMovement() {

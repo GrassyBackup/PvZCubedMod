@@ -6,6 +6,8 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowFullTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
@@ -353,7 +355,7 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 					!(livingEntity instanceof ZombiePropEntity) &&
 					!(livingEntity instanceof GraveEntity)) {
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
-				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial)) {
+				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 					damage = damage * 2;
 				}
 				if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)){
@@ -458,14 +460,6 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 		} else {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			if (!blockPos2.equals(blockPos)) {
-				this.discard();
-			}
-
-		}
 	}
 
 	@Override
@@ -486,19 +480,30 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		if (this.world instanceof ServerWorld serverWorld) {
-			if (this.getWorld().getMoonSize() < 0.1 && this.world.isSkyVisible(this.getBlockPos())) {
-				if (serverWorld.isNight()){
-					this.setShadowPowered(Shadow.TRUE);
+			Vec3d vec3d = Vec3d.ofCenter(this.getBlockPos()).add(0, -0.5, 0);
+			List<ShadowFullTile> fullCheck = world.getNonSpectatingEntities(ShadowFullTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
+			List<ShadowTile> tileCheck = world.getNonSpectatingEntities(ShadowTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
+			if (fullCheck.isEmpty() && tileCheck.isEmpty()) {
+				if (this.getWorld().getMoonSize() < 0.1 && this.world.isSkyVisible(this.getBlockPos())) {
+					if (serverWorld.isNight()) {
+						this.setShadowPowered(Shadow.TRUE);
+					}
+				} else {
+					this.setShadowPowered(Shadow.FALSE);
 				}
-			} else {
-				this.setShadowPowered(Shadow.FALSE);
+				if (this.getWorld().getMoonSize() > 0.9 && this.world.isSkyVisible(this.getBlockPos())) {
+					if (serverWorld.isNight()) {
+						this.setMoonPowered(Moon.TRUE);
+					}
+				} else {
+					this.setMoonPowered(Moon.FALSE);
+				}
 			}
-			if (this.getWorld().getMoonSize() > 0.9 && this.world.isSkyVisible(this.getBlockPos())) {
-				if (serverWorld.isNight()){
-					this.setMoonPowered(Moon.TRUE);
-				}
-			} else {
-				this.setMoonPowered(Moon.FALSE);
+			if (!fullCheck.isEmpty()) {
+				this.setMoonPowered(Moon.TRUE);
+			}
+			if (!tileCheck.isEmpty()) {
+				this.setShadowPowered(Shadow.TRUE);
 			}
 		}
 		super.tick();
@@ -517,11 +522,7 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 				this.discard();
 			}
 		}
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-		}
+		BlockPos blockPos = this.getBlockPos();
 		this.targetZombies(this.getPos(), 5, true, false, true);
 		if (!this.world.isClient()) {
 			this.attacking = this.getTarget() != null && this.squaredDistanceTo(this.getTarget()) <= 9;
@@ -565,11 +566,10 @@ public class GhostpepperEntity extends PlantEntity implements IAnimatable {
 			this.world.sendEntityStatus(this, (byte) 102);
 			transTick = 12;
 		}
-		BlockPos blockPos = this.getBlockPos();
-		if (--amphibiousRaycastDelay >= 0) {
-			amphibiousRaycastDelay = 60;
+		if (--amphibiousRaycastDelay <= 0 && age > 5) {
+			amphibiousRaycastDelay = 20;
 			HitResult hitResult = amphibiousRaycast(0.25);
-			if (hitResult.getType() == HitResult.Type.MISS) {
+			if (hitResult.getType() == HitResult.Type.MISS && !this.hasVehicle()) {
 				kill();
 			}
 			if (this.age > 1) {

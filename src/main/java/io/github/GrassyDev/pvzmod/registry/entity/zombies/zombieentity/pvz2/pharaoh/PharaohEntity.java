@@ -218,6 +218,8 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 			pharaohEntity.setPosition(vec3d3.getX(), this.getY(), vec3d3.getZ());
 			pharaohEntity.setHeadYaw(this.getHeadYaw());
 			pharaohEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			pharaohEntity.setRainbowTag(Rainbow.TRUE);
+			pharaohEntity.rainbowTicks = 40;
 			serverWorld.spawnEntityAndPassengers(pharaohEntity);
 		}
 	}
@@ -231,6 +233,8 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 			pharaohEntity.setPosition(vec3d3.getX(), this.getY(), vec3d3.getZ());
 			pharaohEntity.setHeadYaw(this.getHeadYaw());
 			pharaohEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			pharaohEntity.setRainbowTag(Rainbow.TRUE);
+			pharaohEntity.rainbowTicks = 30;
 			serverWorld.spawnEntityAndPassengers(pharaohEntity);
 		}
 	}
@@ -519,6 +523,8 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 					!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
 			assert maxSpeedAttribute != null;
 			maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
+			this.setRainbowTag(Rainbow.TRUE);
+			this.rainbowTicks = 30;
 		} else if (sarcophagusEntity != null) {
 			if (!this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID)) {
 				assert maxSpeedAttribute != null;
@@ -570,7 +576,7 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 	public static DefaultAttributeContainer.Builder createUndyingPharaohAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
 				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.18D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.21D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.undyingPharaohH());

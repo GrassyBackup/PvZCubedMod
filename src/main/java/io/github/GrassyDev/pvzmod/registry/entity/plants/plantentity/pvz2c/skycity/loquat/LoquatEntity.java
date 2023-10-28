@@ -12,7 +12,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -183,14 +182,6 @@ public class LoquatEntity extends PlantEntity implements IAnimatable {
 		} else {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			if (!blockPos2.equals(blockPos)) {
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -200,11 +191,7 @@ public class LoquatEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
-			}
-		}
+		BlockPos blockPos = this.getBlockPos();
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {
 			this.discard();
 		}
@@ -214,11 +201,10 @@ public class LoquatEntity extends PlantEntity implements IAnimatable {
 				this.addStatusEffect((new StatusEffectInstance(StatusEffects.GLOWING, (int) Math.floor(time), 1)));
 			}
 		}
-		BlockPos blockPos = this.getBlockPos();
-		if (--amphibiousRaycastDelay >= 0) {
-			amphibiousRaycastDelay = 60;
+		if (--amphibiousRaycastDelay <= 0 && age > 5) {
+			amphibiousRaycastDelay = 20;
 			HitResult hitResult = amphibiousRaycast(0.25);
-			if (hitResult.getType() == HitResult.Type.MISS) {
+			if (hitResult.getType() == HitResult.Type.MISS && !this.hasVehicle()) {
 				kill();
 			}
 			if (this.age > 1) {

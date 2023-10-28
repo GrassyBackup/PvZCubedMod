@@ -5,9 +5,13 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.cratertile.CraterTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
+import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieVehicleEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -267,7 +271,10 @@ public class DoomshroomEntity extends PlantEntity implements IAnimatable {
 			} while (this.squaredDistanceTo(livingEntity) > 81);
 
 			float damage = 180;
-			if (livingEntity instanceof OilTile oilTile){
+			if (this.getShadowPowered()){
+				damage = 360;
+			}
+			if (livingEntity instanceof OilTile oilTile) {
 				oilTile.makeFireTrail(oilTile.getBlockPos());
 			}
 			ZombiePropEntity zombiePropEntity4 = null;
@@ -283,49 +290,52 @@ public class DoomshroomEntity extends PlantEntity implements IAnimatable {
 					zombiePropEntity4 = zpe;
 				}
 			}
-			if (((livingEntity instanceof Monster &&
-					zombiePropEntity4 == null &&
-					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
-					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
-				ZombiePropEntity zombiePropEntity2 = null;
-				ZombiePropEntity zombiePropEntity3 = null;
-				for (Entity entity1 : livingEntity.getPassengerList()) {
-					if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
-						zombiePropEntity2 = zpe;
-					}
-					else if (entity1 instanceof ZombiePropEntity zpe) {
-						zombiePropEntity3 = zpe;
-					}
-				}
-				if (damage > livingEntity.getHealth() &&
-						!(livingEntity instanceof ZombieShieldEntity) &&
-						livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-					float damage2 = damage - livingEntity.getHealth();
-					livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-					generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
-					checkList.add(livingEntity);
-					checkList.add(generalPvZombieEntity);
-				} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
-					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-					checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
-					checkList.add(zombieShieldEntity);
-				} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
+			if (this.getShadowPowered() && livingEntity.squaredDistanceTo(this) > 16) {
 
-					zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-					checkList.add(livingEntity);
-					checkList.add(zombieShieldEntity);
-				} else {
-					if (livingEntity instanceof ZombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+			} else {
+				if (((livingEntity instanceof Monster &&
+						zombiePropEntity4 == null &&
+						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
+						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+								&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
+					ZombiePropEntity zombiePropEntity2 = null;
+					ZombiePropEntity zombiePropEntity3 = null;
+					for (Entity entity1 : livingEntity.getPassengerList()) {
+						if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity2 == null) {
+							zombiePropEntity2 = zpe;
+						} else if (entity1 instanceof ZombiePropEntity zpe) {
+							zombiePropEntity3 = zpe;
+						}
+					}
+					if (damage > livingEntity.getHealth() &&
+							!(livingEntity instanceof ZombieShieldEntity) &&
+							livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+						float damage2 = damage - livingEntity.getHealth();
 						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this), damage2);
 						checkList.add(livingEntity);
 						checkList.add(generalPvZombieEntity);
-					} else if (zombiePropEntity2 == null && !checkList.contains(livingEntity)) {
-						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+					} else if (livingEntity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.getVehicle() != null) {
+						zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+						checkList.add((LivingEntity) zombieShieldEntity.getVehicle());
+						checkList.add(zombieShieldEntity);
+					} else if (livingEntity.getVehicle() instanceof ZombieShieldEntity zombieShieldEntity) {
+
+						zombieShieldEntity.damage(DamageSource.thrownProjectile(this, this), damage);
 						checkList.add(livingEntity);
-					} else if (livingEntity instanceof ZombieVehicleEntity && !checkList.contains(livingEntity)) {
-						livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
-						checkList.add(livingEntity);
+						checkList.add(zombieShieldEntity);
+					} else {
+						if (livingEntity instanceof ZombiePropEntity && livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+							checkList.add(livingEntity);
+							checkList.add(generalPvZombieEntity);
+						} else if (zombiePropEntity2 == null && !checkList.contains(livingEntity)) {
+							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+							checkList.add(livingEntity);
+						} else if (livingEntity instanceof ZombieVehicleEntity && !checkList.contains(livingEntity)) {
+							livingEntity.damage(DamageSource.thrownProjectile(this, this), damage);
+							checkList.add(livingEntity);
+						}
 					}
 				}
 			}
@@ -333,22 +343,42 @@ public class DoomshroomEntity extends PlantEntity implements IAnimatable {
 	}
 
 	private void spawnEffectsCloud() {
-		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
-		areaEffectCloudEntity.setParticleType(ParticleTypes.SMOKE);
-		areaEffectCloudEntity.setRadius(8F);
-		areaEffectCloudEntity.setRadiusOnUse(-0.5F);
-		areaEffectCloudEntity.setWaitTime(4);
-		areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 3);
-		areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float)areaEffectCloudEntity.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity);
-		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
-		areaEffectCloudEntity2.setColor(0x5F316E);
-		areaEffectCloudEntity2.setRadius(6F);
-		areaEffectCloudEntity2.setRadiusOnUse(-0.5F);
-		areaEffectCloudEntity2.setWaitTime(5);
-		areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 6);
-		areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float)areaEffectCloudEntity2.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity2);
+		if (this.getShadowPowered()){
+			AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+			areaEffectCloudEntity.setParticleType(ParticleTypes.DRAGON_BREATH);
+			areaEffectCloudEntity.setRadius(3F);
+			areaEffectCloudEntity.setRadiusOnUse(-0.5F);
+			areaEffectCloudEntity.setWaitTime(4);
+			areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 3);
+			areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float) areaEffectCloudEntity.getDuration());
+			this.world.spawnEntity(areaEffectCloudEntity);
+			AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+			areaEffectCloudEntity2.setColor(0x5F316E);
+			areaEffectCloudEntity2.setRadius(2F);
+			areaEffectCloudEntity2.setRadiusOnUse(-0.5F);
+			areaEffectCloudEntity2.setWaitTime(5);
+			areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 6);
+			areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float) areaEffectCloudEntity2.getDuration());
+			this.world.spawnEntity(areaEffectCloudEntity2);
+		}
+		else {
+			AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+			areaEffectCloudEntity.setParticleType(ParticleTypes.SMOKE);
+			areaEffectCloudEntity.setRadius(8F);
+			areaEffectCloudEntity.setRadiusOnUse(-0.5F);
+			areaEffectCloudEntity.setWaitTime(4);
+			areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 3);
+			areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float) areaEffectCloudEntity.getDuration());
+			this.world.spawnEntity(areaEffectCloudEntity);
+			AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+			areaEffectCloudEntity2.setColor(0x5F316E);
+			areaEffectCloudEntity2.setRadius(6F);
+			areaEffectCloudEntity2.setRadiusOnUse(-0.5F);
+			areaEffectCloudEntity2.setWaitTime(5);
+			areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 6);
+			areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float) areaEffectCloudEntity2.getDuration());
+			this.world.spawnEntity(areaEffectCloudEntity2);
+		}
 	}
 
 
@@ -360,18 +390,6 @@ public class DoomshroomEntity extends PlantEntity implements IAnimatable {
 			super.setPosition(x, y, z);
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
-		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.DOOMSHROOM_SEED_PACKET);
-				}
-				this.discard();
-			}
-
 		}
 	}
 
@@ -402,6 +420,22 @@ public class DoomshroomEntity extends PlantEntity implements IAnimatable {
 	}
 
 	public void tick() {
+		if (this.world instanceof ServerWorld serverWorld) {
+			Vec3d vec3d = Vec3d.ofCenter(this.getBlockPos()).add(0, -0.5, 0);
+			List<ShadowTile> tileCheck = world.getNonSpectatingEntities(ShadowTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
+			if (tileCheck.isEmpty()) {
+				if (this.getWorld().getMoonSize() < 0.1 && this.world.isSkyVisible(this.getBlockPos())) {
+					if (serverWorld.isNight()) {
+						this.setShadowPowered(Shadow.TRUE);
+					}
+				} else {
+					this.setShadowPowered(Shadow.FALSE);
+				}
+			}
+			if (!tileCheck.isEmpty()) {
+				this.setShadowPowered(Shadow.TRUE);
+			}
+		}
 		if (!this.world.isClient && !this.getCofee()) {
 			if ((this.world.getAmbientDarkness() >= 2 ||
 					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
@@ -420,9 +454,15 @@ public class DoomshroomEntity extends PlantEntity implements IAnimatable {
 			this.targetZombies(this.getPos(), 10, true, true, true);
 		}
 		super.tick();
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.DOOMSHROOM_SEED_PACKET);
+				}
+				this.discard();
 			}
 		}
 		if (this.getIsAsleep()){

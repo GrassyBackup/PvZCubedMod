@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday;
 
+import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
@@ -8,7 +9,21 @@ public class BrowncoatEntityModel extends AnimatedGeoModel<BrowncoatEntity> {
     @Override
     public Identifier getModelResource(BrowncoatEntity object)
     {
-		return BrowncoatEntityRenderer.LOCATION_MODEL_BY_VARIANT.get(object.getVariant());
+		if (object.getType().equals(PvZEntity.SUMMERBASIC) ||
+				object.getType().equals(PvZEntity.SUMMERBASICHYPNO)){
+			return new Identifier("pvzmod", "geo/summerbasic.geo.json");
+		}
+		else if (object.getType().equals(PvZEntity.SUMMERCONEHEAD) ||
+				object.getType().equals(PvZEntity.SUMMERCONEHEADHYPNO)){
+			return new Identifier("pvzmod", "geo/summercone.geo.json");
+		}
+		else if (object.getType().equals(PvZEntity.SUMMERBUCKETHEAD) ||
+				object.getType().equals(PvZEntity.SUMMERBUCKETHEADHYPNO)){
+			return new Identifier("pvzmod", "geo/summerbucket.geo.json");
+		}
+		else {
+			return BrowncoatEntityRenderer.LOCATION_MODEL_BY_VARIANT.get(object.getVariant());
+		}
     }
 
     @Override

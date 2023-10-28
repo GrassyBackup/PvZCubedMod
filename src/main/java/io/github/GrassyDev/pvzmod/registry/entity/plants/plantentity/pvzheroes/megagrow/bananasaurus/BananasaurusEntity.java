@@ -195,18 +195,6 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 		} else {
 			super.setPosition((double)MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
-
-		if (this.age > 1) {
-			BlockPos blockPos2 = this.getBlockPos();
-			BlockState blockState = this.getLandingBlockState();
-			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
-					this.dropItem(ModItems.BANANASAURUS_SEED_PACKET);
-				}
-				this.discard();
-			}
-
-		}
 	}
 
 
@@ -221,12 +209,18 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 		if (--this.chomperAudioDelay == 0) {
 			this.playSound(SoundEvents.ENTITY_GENERIC_EAT, 0.3F, 1.0F);
 		}
+		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
-			if (!this.isAiDisabled() && this.isAlive()) {
-				setPosition(this.getX(), this.getY(), this.getZ());
+			BlockPos blockPos2 = this.getBlockPos();
+			BlockState blockState = this.getLandingBlockState();
+			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
+				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					this.dropItem(ModItems.BANANASAURUS_SEED_PACKET);
+				}
+				this.discard();
 			}
-			this.targetZombies(this.getPos(), 2, false, false, !checkForZombiesMelee().isEmpty());
 		}
+		this.targetZombies(this.getPos(), 2, false, false, !checkForZombiesMelee().isEmpty());
 		LivingEntity target = this.getTarget();
 		if (target != null && !this.world.isClient()) {
 			if (target.squaredDistanceTo(this) <= 25 && this.attackTicksLeft <= 0) {

@@ -9,11 +9,11 @@
       "type": "text",
       "text": [
         "$(#bd951a)Health: $()$(#ff0000)91 ",
-        "$(#bd951a)Damage: $()$(#ff0000)12 (if target can't be covered, 5%/second)",
-        "$(br)$(#bd951a)Range: $()$(#ff0000)25 Blocks (From Garden, Lobbed)",
-        "$(br)$(#bd951a)Melee Damage: $()$(#ff0000)8 ",
-        "$(#bd951a)Speed: $()$(#ff0000)Stiff",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)Throws 65HP Octopus Obstacle at the nearest non-flying Plant, covering and disabling them.",
+        "$(#bd951a)Damage: $()$(#ff0000)12 (if target can't be covered, 5%/second) ",
+        "$(#bd951a)Range: $()$(#ff0000)25 Blocks (From Garden, Lobbed) ",
+        "$(#bd951a)Melee Damage: $()$(#ff0000)8 ",
+        "$(#bd951a)Speed: $()$(#ff0000)Stiff ",
+        "$(#bd951a)Special: $()$(#ff0000)Throws 65HP Octopus Obstacle with 3s of Invincibility at the nearest non-flying Plant, covering and disabling them.",
         "$(br)$(#bd951a)It started innocently enough. One day, Octo Zombie decided to get a pet octopus. But he got another and another... and another..."
       ]
     },

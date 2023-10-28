@@ -14,7 +14,12 @@ public class DoomshroomEntityModel extends AnimatedGeoModel<DoomshroomEntity> {
     @Override
     public Identifier getTextureResource(DoomshroomEntity object)
     {
-        return new Identifier("pvzmod", "textures/entity/doomshroom/doomshroom.png");
+		if (object.getShadowPowered()) {
+			return new Identifier("pvzmod", "textures/entity/doomshroom/doomshroom_shadow.png");
+		}
+		else {
+			return new Identifier("pvzmod", "textures/entity/doomshroom/doomshroom.png");
+		}
     }
 
     @Override

@@ -93,6 +93,12 @@ public class PvZConfigModel {
 		@RestartRequired
 		public int puffshroomSPmax = 8;
 		@RestartRequired
+		public int shadowshroomSP = 25;
+		@RestartRequired
+		public int shadowshroomSPmin = 3;
+		@RestartRequired
+		public int shadowshroomSPmax = 6;
+		@RestartRequired
 		public int weeniebeanieSP = 19;
 		@RestartRequired
 		public int weeniebeanieSPmin = 3;
@@ -211,6 +217,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float dogwoodS = 15f;
 		@RestartRequired
+		public float doomroseS = 20.0f;
+		@RestartRequired
 		public float doomshroomS = 25.0f;
 		@RestartRequired
 		public float dripphylleiaS = 15f;
@@ -227,9 +235,13 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float fumeshroomS = 7.5f;
 		@RestartRequired
+		public float gambleshroomS = 25f;
+		@RestartRequired
 		public float gatlingpeaS = 35.0f;
 		@RestartRequired
 		public float ghostpepperS = 30.0f;
+		@RestartRequired
+		public float gloomvineS = 15.0f;
 		@RestartRequired
 		public float gloomshroomS = 35.0f;
 		@RestartRequired
@@ -298,6 +310,8 @@ public class PvZConfigModel {
 		public float retrogatlingS = 35.0f;
 		@RestartRequired
 		public float saucerS = 30f;
+		@RestartRequired
+		public float shadowShroomS = 5f;
 		@RestartRequired
 		public float superchomperS = 30.0f;
 		@RestartRequired
@@ -391,6 +405,7 @@ public class PvZConfigModel {
 		public float flamingPeaDMGv2 = 8f;
 		public float flamingPeaSDMG = 4f;
 		public float fumeDMG = 2.5f;
+		public float goldencardDMG = 1f;
 		public float hypnoprojDMGv2 = 8f;
 		public float icebergDMGv2 = 3f;
 		public float icebergSDMG = 1f;
@@ -460,11 +475,13 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double browncoatH = 27D;
 		@RestartRequired
-		public double peasantH = 27D;
+		public double summerH = 27D;
 		@RestartRequired
 		public double mummyH = 27D;
 		@RestartRequired
 		public double futureH = 27D;
+		@RestartRequired
+		public double peasantH = 27D;
 		@RestartRequired
 		public double bobsledH = 65D;
 		@RestartRequired
@@ -484,6 +501,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double flagH = 50D;
 		@RestartRequired
+		public double flagSummerH = 50D;
+		@RestartRequired
 		public double flagMummyH = 50D;
 		@RestartRequired
 		public double flagFuturetH = 50D;
@@ -500,11 +519,15 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double defensiveendH = 360D;
 		@RestartRequired
+		public double unicorngargantuarH = 360D;
+		@RestartRequired
 		public double hawkerpusherH = 50D;
 		@RestartRequired
 		public double impH = 20D;
 		@RestartRequired
 		public double impdragonH = 65D;
+		@RestartRequired
+		public double bassimpH = 65D;
 		@RestartRequired
 		public double scrapimpH = 80D;
 		@RestartRequired
