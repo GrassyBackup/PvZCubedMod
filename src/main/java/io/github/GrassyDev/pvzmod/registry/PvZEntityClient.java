@@ -88,6 +88,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirate
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.springbean.SpringbeanEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.wildwest.lightningreed.LightningReedEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.wildwest.peapod.PeapodEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.boomerang.frisbloom.FrisbloomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.charm.beautyshroom.BeautyshroomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.charm.charmshroom.CharmshroomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.icepea.dropea.DropeaEntityRenderer;
@@ -145,6 +146,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.bubbles.BubbleEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.card.ShootingCardEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.electricpea.ShootingElectricpeaEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.frisbee.ShootingFrisbeeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.fume.FumeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.jingle.JingleEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.piercespore.PierceSporeEntityRenderer;
@@ -412,6 +414,8 @@ public class PvZEntityClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(PvZEntity.DROPEA, DropeaEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.FRISBLOOM, FrisbloomEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.BEAUTYSHROOM, BeautyshroomEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.CHARMSHROOM, CharmshroomEntityRenderer::new);
@@ -524,6 +528,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.ARMORBUBBLE, ArmorBubbleEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.DROP, ShootingDropEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.FRISBEEPROJ, ShootingFrisbeeEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.GROUNDBOUNCE, GroundBounceEntityRenderer::new);
 

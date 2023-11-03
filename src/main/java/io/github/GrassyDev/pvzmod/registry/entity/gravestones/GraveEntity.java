@@ -52,6 +52,8 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 
 	public boolean beingEaten = false;
 	protected float graveWeight;
+	protected float extraGraveWeight = 0;
+	protected float specialGraveWeight = 0;
 
 	public boolean decorative;
 
@@ -475,7 +477,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 				!this.is1x1() &&
 				!this.isUnlock() &&
 				!this.isUnlockSpecial()){
-			survChance = 0.66f;
+			survChance = 0.75f;
 		}
 		else {
 			survChance = 1f;

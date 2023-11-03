@@ -106,7 +106,6 @@ public class PiggyEntity extends SmallAnimalEntity implements IAnimatable {
 								 @Nullable NbtCompound entityNbt) {
 		if (this.getType().equals(PvZEntity.PIGGYHYPNO)){
 			setVariant(DefaultAndHypnoVariants.HYPNO);
-			setCanBurn(CanBurn.FALSE);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else {

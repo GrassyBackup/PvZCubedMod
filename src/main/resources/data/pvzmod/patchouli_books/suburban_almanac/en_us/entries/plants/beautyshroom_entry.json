@@ -2,7 +2,7 @@
   "name": "Beauty-shroom",
   "icon": "pvzmod:beautyshroom_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 113,
+  "sortnum": 114,
   "advancement": "pvzmod:make_hypnoshroom",
   "pages": [
     {

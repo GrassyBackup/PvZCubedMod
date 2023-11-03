@@ -3,7 +3,7 @@
   "icon": "pvzmod:endurian_seed_packet",
   "category": "pvzmod:plant_category",
   "advancement": "pvzmod:make_wallnut",
-  "sortnum": 81,
+  "sortnum": 80,
   "pages": [
     {
       "type": "text",

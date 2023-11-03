@@ -95,6 +95,20 @@
     {
       "type": "text",
       "text": [
+        "$(br)Moonlight Tile",
+        "$(br2)Provides Full Moon power to plants inside it."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br)Shadow Tile",
+        "$(br2)Provides New Moon power to plants inside it."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
         "$(br)Spring Tile",
         "$(br2)When a Zombie steps on it, it slightly Bounces them back and it vanishes.",
         "$(br2)They last for a few seconds."

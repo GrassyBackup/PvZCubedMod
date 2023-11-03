@@ -113,6 +113,7 @@
     "pvzmod:plants/bombard/cherrybomb",
     "pvzmod:plants/spear/bellflower",
     "pvzmod:plants/spear/bloomerang",
+    "pvzmod:plants/spear/frisbloom",
     "pvzmod:tiles/tile_upgrade",
     "pvzmod:plants/spear/spikeweed",
     "pvzmod:plants/spear/spikerock",
@@ -125,6 +126,8 @@
     "pvzmod:plants/filament/empeach",
     "pvzmod:plants/conceal/ghostpepper",
     "pvzmod:plants/conceal/nightcap",
-    "pvzmod:plants/conceal/doomrose"
+    "pvzmod:plants/conceal/doomrose",
+    "pvzmod:plants/conceal/gloomvine",
+    "pvzmod:plants/conceal/shadowshroom"
   ]
 }

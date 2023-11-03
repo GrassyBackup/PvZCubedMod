@@ -334,6 +334,9 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 	protected int createTileTicks = 100;
 
 	public void tick() {
+		if (this.getType().equals(PvZEntity.TORCHLIGHT) || this.getType().equals(PvZEntity.TORCHLIGHTHYPNO)){
+			setCanBurn(CanBurn.FALSE);
+		}
 		super.tick();
 		if (this.getVariant().equals(ExplorerVariants.TORCHLIGHT) && this.getFireStage()) {
 			double random = Math.random();

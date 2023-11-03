@@ -204,7 +204,7 @@ public class ShadowShroomEntity extends PlantEntity implements IAnimatable {
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
         int i = this.getFuseSpeed();
 		if (this.getIsAsleep()){
-			event.getController().setAnimation(new AnimationBuilder().playOnce("shadowshroom.asleep"));
+			event.getController().setAnimation(new AnimationBuilder().loop("shadowshroom.asleep"));
 		}
         else if (i > 0) {
             event.getController().setAnimation(new AnimationBuilder().playOnce("shadowshroom.explode"));

@@ -39,7 +39,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.*;
-import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -493,7 +492,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 						browncoatEntity.setOwner(DarkAgesGraveEntity.this);
 						serverWorld.spawnEntityAndPassengers(browncoatEntity);
 					}
-					for (int c = 0; c < 2; ++c) {
+					for (int c = 0; c < 2 / halfModifier; ++c) {
 						if (!DarkAgesGraveEntity.this.is1x1()) {
 							zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 							zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -565,7 +564,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 				if (graveWeight <= 3.5) {
 					if (difficulty >= 1.649 + difficultymodifier || isUnlock()) {
 						if (probability8 <= 0.15 / halfModifier * survChance) { // 15% x1 Pumpkin Zombie
-							for (int h = 0; h < 1 / halfModifier; ++h) {
+							for (int h = 0; h < 1; ++h) {
 								if (!DarkAgesGraveEntity.this.is1x1()) {
 									zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 									zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -625,7 +624,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 				if (graveWeight <= 3.5) {
 					if (isUnlock() || (isUnlockSpecial() && difficulty >= 1.789 + difficultymodifier)) {
 						if (probability9 <= 0.2 / halfModifier * survChance) { // 20% x2 Announcer Imp
-							for (int f = 0; f < 2; ++f) {
+							for (int f = 0; f < 2 / halfModifier; ++f) {
 								if (!DarkAgesGraveEntity.this.is1x1()) {
 									zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 									zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -745,7 +744,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 				if (graveWeight <= 3.5) {
 					if (isUnlock() || isUnlockSpecial()) {
 						if (probability13 <= 0.2 / halfModifier * survChance) { // 20% x2 Pumpkin Zombie
-							for (int h = 0; h < 2; ++h) {
+							for (int h = 0; h <2 / halfModifier; ++h) {
 								double random = Math.random();
 								EntityType<?> entityType = PvZEntity.ZOMBLOB;
 								if (random <= 0.33){
@@ -773,7 +772,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 				if (graveWeight <= 3.5) {
 					if (isUnlock() || isUnlockSpecial()) {
 						if (probability7 <= 0.2 / halfModifier * survChance) { // 20% x2 Pumpkin Zombie
-							for (int h = 0; h < 2; ++h) {
+							for (int h = 0; h <2 / halfModifier; ++h) {
 								if (!DarkAgesGraveEntity.this.is1x1()) {
 									zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
 									zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
@@ -841,25 +840,6 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 				}
 			}
 			++this.darkAgesGraveEntity.spawnCounter;
-			WorldChunk chunk1 = this.darkAgesGraveEntity.world.getWorldChunk(this.darkAgesGraveEntity.getBlockPos());
-			long time1 = chunk1.getInhabitedTime();
-			chunk1.setInhabitedTime(time1 + 2400);
-
-			WorldChunk chunk2 = this.darkAgesGraveEntity.world.getWorldChunk(this.darkAgesGraveEntity.getBlockPos().south(16));
-			long time2 = chunk2.getInhabitedTime();
-			chunk2.setInhabitedTime(time2 + 2400);
-
-			WorldChunk chunk3 = this.darkAgesGraveEntity.world.getWorldChunk(this.darkAgesGraveEntity.getBlockPos().north(16));
-			long time3 = chunk3.getInhabitedTime();
-			chunk3.setInhabitedTime(time3 + 2400);
-
-			WorldChunk chunk4 = this.darkAgesGraveEntity.world.getWorldChunk(this.darkAgesGraveEntity.getBlockPos().west(16));
-			long time4 = chunk4.getInhabitedTime();
-			chunk4.setInhabitedTime(time4 + 2400);
-
-			WorldChunk chunk5 = this.darkAgesGraveEntity.world.getWorldChunk(this.darkAgesGraveEntity.getBlockPos().east(16));
-			long time5 = chunk5.getInhabitedTime();
-			chunk5.setInhabitedTime(time5 + 2400);
         }
 
         protected SoundEvent getSoundPrepare() {

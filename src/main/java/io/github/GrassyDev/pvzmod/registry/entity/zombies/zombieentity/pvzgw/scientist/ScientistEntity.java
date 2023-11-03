@@ -381,6 +381,8 @@ public class ScientistEntity extends PvZombieEntity implements IAnimatable {
 			healStation.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
 			healStation.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 			healStation.setOwner(this);
+			healStation.setRainbowTag(Rainbow.TRUE);
+			healStation.rainbowTicks = 40;
 			serverWorld.spawnEntityAndPassengers(healStation);
 			if (this.getHypno()){
 				healStation.setHypno(IsHypno.TRUE);

@@ -77,7 +77,15 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 			if (--healTicks <= 0 && !this.hasStatusEffect(DISABLE)) {
 				this.healEntity();
 				this.healTicks = 20;
-				this.clearStatusEffects();
+				this.removeStatusEffect(ICE);
+				this.removeStatusEffect(WARM);
+				this.removeStatusEffect(BARK);
+				this.removeStatusEffect(CHEESE);
+				this.removeStatusEffect(SHADOW);
+				this.removeStatusEffect(STUN);
+				this.removeStatusEffect(FROZEN);
+				this.removeStatusEffect(PVZPOISON);
+				this.removeStatusEffect(MARIGOLD);
 				this.extinguish();
 				this.addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 100, 1)));
 			}
@@ -288,7 +296,15 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 				this.zombieList.remove(livingEntity);
 			}
 			if (livingEntity instanceof GeneralPvZombieEntity){
-				livingEntity.clearStatusEffects();
+				livingEntity.removeStatusEffect(ICE);
+				livingEntity.removeStatusEffect(WARM);
+				livingEntity.removeStatusEffect(BARK);
+				livingEntity.removeStatusEffect(CHEESE);
+				livingEntity.removeStatusEffect(SHADOW);
+				livingEntity.removeStatusEffect(STUN);
+				livingEntity.removeStatusEffect(FROZEN);
+				livingEntity.removeStatusEffect(PVZPOISON);
+				livingEntity.removeStatusEffect(MARIGOLD);
 				livingEntity.extinguish();
 				livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 100, 1)));
 			}

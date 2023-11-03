@@ -3,7 +3,7 @@
   "icon": "pvzmod:magicshroom_seed_packet",
   "category": "pvzmod:plant_category",
   "sortnum": 97,
-  "advancement": "pvzmod:make_bloomerang",
+  "advancement": "pvzmod:make_frisbloom",
   "pages": [
     {
       "type": "text",

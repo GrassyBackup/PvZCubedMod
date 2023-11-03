@@ -23,7 +23,7 @@
       "images": [
         "pvzmod:textures/gui/entries/octo.png"
       ],
-      "title": "Pool Zombie",
+      "title": "Hard Pool Zombie",
       "border": "true",
       "text": "$(#25228d)Throws octopi at your plants to bind them up."
     },

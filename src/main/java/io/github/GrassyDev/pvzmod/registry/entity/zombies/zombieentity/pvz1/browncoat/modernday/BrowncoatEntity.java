@@ -350,12 +350,12 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 	}
 
 	public void createShield() {
+		MetalShieldEntity metalShieldEntity = new MetalShieldEntity(PvZEntity.SCREENDOORSHIELD, this.world);
 		if (world instanceof ServerWorld serverWorld) {
-			MetalShieldEntity metalShieldEntity = new MetalShieldEntity(PvZEntity.SCREENDOORSHIELD, this.world);
 			metalShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-			metalShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
-			metalShieldEntity.startRiding(this);
 		}
+		metalShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+		metalShieldEntity.startRiding(this);
 	}
 
 	public void createPaperShield(){
@@ -549,6 +549,9 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
+		if (this.getType().equals(PvZEntity.PYRAMIDHEAD)) {
+			this.setCanHypno(CanHypno.FALSE);
+		}
 		if (this.getType().equals(PvZEntity.SUMMERBASIC) ||
 				this.getType().equals(PvZEntity.SUMMERBASICHYPNO) ||
 				this.getType().equals(PvZEntity.SUMMERCONEHEAD) ||

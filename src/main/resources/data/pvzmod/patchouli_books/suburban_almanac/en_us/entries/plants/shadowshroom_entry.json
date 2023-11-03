@@ -2,7 +2,7 @@
   "name": "Shadow-shroom",
   "icon": "pvzmod:shadowshroom_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 95,
+  "sortnum": 82,
   "pages": [
     {
       "type": "text",

@@ -131,6 +131,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.PLANTFOOD_FIRE));
 				stacks.add(new ItemStack(ModItems.PLANTFOOD_FLOWER));
 				stacks.add(new ItemStack(ModItems.PLANTFOOD_MUSHROOM));
+				stacks.add(new ItemStack(ModItems.PLANTFOOD_SHADOW));
 				stacks.add(new ItemStack(ModItems.PLANTFOOD_TOUGH));
 				stacks.add(new ItemStack(ModItems.SMALLSUN));
 				stacks.add(new ItemStack(ModItems.SUN));
@@ -207,6 +208,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.HAMMERFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.METEORHAMMER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DROPEA_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.FRISBLOOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BEAUTYSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.CHARMSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.MAGNETOSHROOM_SEED_PACKET));
@@ -262,6 +264,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.DROP));
 				stacks.add(new ItemStack(ModItems.ICESPIKE));
 				stacks.add(new ItemStack(ModItems.POWERICESPIKE));
+				stacks.add(new ItemStack(ModItems.FRISBEE));
 				stacks.add(new ItemStack(ModItems.PIERCEPEA));
 				stacks.add(new ItemStack(ModItems.FIREPIERCEPEA));
 				stacks.add(new ItemStack(ModItems.ACIDFUME));
@@ -271,6 +274,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.PIERCESPORE));
 				stacks.add(new ItemStack(ModItems.PIERCESPORESHADOW));
 				stacks.add(new ItemStack(ModItems.BARK));
+				stacks.add(new ItemStack(ModItems.GOLDENCARDPROJ));
 			}).build();
 
 	public static final ItemGroup PVZZOMBIES = FabricItemGroupBuilder.create(

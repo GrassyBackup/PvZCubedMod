@@ -4,6 +4,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.minecraft.entity.Entity;
@@ -100,7 +101,7 @@ public class RoseBudTile extends TileEntity {
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 &&
-							generalPvZombieEntity1.isFlying())) && !livingEntity.isInsideWaterOrBubbleColumn() && !(livingEntity instanceof ZombieShieldEntity)) {
+							generalPvZombieEntity1.isFlying())) && !livingEntity.isInsideWaterOrBubbleColumn() && !(livingEntity instanceof ZombieShieldEntity && !(livingEntity instanceof ZombieObstacleEntity))) {
 				if (zombiePropEntity2 == null ||
 						zombiePropEntity2 instanceof ZombieShieldEntity) {
 					SoundEvent sound;

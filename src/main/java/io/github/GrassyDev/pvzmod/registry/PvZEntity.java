@@ -88,6 +88,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirate
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirateseas.springbean.SpringbeanEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.wildwest.lightningreed.LightningReedEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.wildwest.peapod.PeapodEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.boomerang.frisbloom.FrisbloomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.charm.beautyshroom.BeautyshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.charm.charmshroom.CharmshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.icepea.dropea.DropeaEntity;
@@ -145,6 +146,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.bubbles.BubbleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.card.ShootingCardEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.electricpea.ShootingElectricPeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.frisbee.ShootingFrisbeeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.fume.FumeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.jingle.JingleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.piercespore.PierceSporeEntity;
@@ -313,6 +315,7 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.HAMMERFLOWER);
 		PLANT_LIST.add(PvZEntity.METEORHAMMER);
 		PLANT_LIST.add(PvZEntity.DROPEA);
+		PLANT_LIST.add(PvZEntity.FRISBLOOM);
 		PLANT_LIST.add(PvZEntity.BEAUTYSHROOM);
 		PLANT_LIST.add(PvZEntity.CHARMSHROOM);
 		PLANT_LIST.add(PvZEntity.MAGNETOSHROOM);
@@ -831,6 +834,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<DropeaEntity>create(SpawnGroup.CREATURE, DropeaEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.8f)).build()
 	);
 
+	public static final EntityType<FrisbloomEntity> FRISBLOOM = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "frisbloom"),
+			QuiltEntityTypeBuilder.<FrisbloomEntity>create(SpawnGroup.CREATURE, FrisbloomEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 1f)).build()
+	);
+
 	public static final EntityType<BeautyshroomEntity> BEAUTYSHROOM = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "beautyshroom"),
@@ -1174,6 +1183,12 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "drop"),
 			QuiltEntityTypeBuilder.<ShootingDropEntity>create(SpawnGroup.MISC, ShootingDropEntity::new).setDimensions(EntityDimensions.fixed(.5f,.5f)).build()
+	);
+
+	public static final EntityType<ShootingFrisbeeEntity> FRISBEEPROJ = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "frisbeeproj"),
+			QuiltEntityTypeBuilder.<ShootingFrisbeeEntity>create(SpawnGroup.MISC, ShootingFrisbeeEntity::new).setDimensions(EntityDimensions.fixed(.5f,.5f)).build()
 	);
 
 	public static final EntityType<GroundBounceEntity> GROUNDBOUNCE = Registry.register(
@@ -2622,6 +2637,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.METEORHAMMER, MeteorHammerEntity.createMeteorHammerAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.DROPEA, DropeaEntity.createDropeaAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.FRISBLOOM, FrisbloomEntity.createFrisbloomAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BEAUTYSHROOM, BeautyshroomEntity.createBeautyshroomAttributes().build());
 

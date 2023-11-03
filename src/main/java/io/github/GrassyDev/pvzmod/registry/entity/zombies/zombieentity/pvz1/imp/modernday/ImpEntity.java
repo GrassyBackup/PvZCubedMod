@@ -143,8 +143,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			this.initCustomGoals();
 		}
 		else if (this.getType().equals(PvZEntity.IMPDRAGON)){
-			setVariant(ImpVariants.IMPDRAGON);
 			setCanBurn(CanBurn.FALSE);
+			setVariant(ImpVariants.IMPDRAGON);
 			this.initCustomGoals();
 		}
 		else if (this.getType().equals(PvZEntity.BASSIMP)){
@@ -442,8 +442,11 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
+		if (this.getType().equals(PvZEntity.IMPDRAGON) || this.getType().equals(PvZEntity.IMPDRAGONHYPNO)){
+			setCanBurn(CanBurn.FALSE);
+		}
 		super.tick();
-		if (!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(STUN)) {
+		if (!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(STUN) && !this.getRainbow()) {
 			if (age > 40 && this.isAlive() && this.getTarget() != null) {
 				if (--bassTime <= 0 && (this.getVariant().equals(ImpVariants.BASSIMP) || this.getVariant().equals(ImpVariants.BASSIMPHYPNO))) {
 					this.bassExplode();
@@ -531,6 +534,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			}
 			impEntity.setRainbowTag(Rainbow.TRUE);
 			impEntity.rainbowTicks = 10;
+			impEntity.bassTime = 40;
 			impEntity.setFlying(Flying.FALSE);
 		}
 		if (announcerImp != null) {
@@ -558,7 +562,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 				announcerImp.setHypno(IsHypno.TRUE);
 			}
 			announcerImp.setRainbowTag(Rainbow.TRUE);
-			announcerImp.rainbowTicks = 30;
+			announcerImp.rainbowTicks = 10;
 			announcerImp.setFlying(Flying.FALSE);
 		}
 	}

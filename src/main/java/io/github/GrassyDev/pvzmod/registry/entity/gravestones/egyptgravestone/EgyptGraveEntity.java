@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -10,6 +11,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.brow
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.explorer.ExplorerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.mummy.FlagMummyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.pharaoh.PharaohEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.soldier.SoldierEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityData;
@@ -20,7 +22,6 @@ import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -405,6 +406,9 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 			double probability9 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability10 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability12 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability14 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability13 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability22 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 
 			int zombiePos = -2 + EgyptGraveEntity.this.random.nextInt(5);
 			int zombiePosZ = -2 + EgyptGraveEntity.this.random.nextInt(5);
@@ -413,7 +417,7 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 				zombiePosZ = 0;
 			}
 
-            for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
+			for(int b = 0; b < 1; ++b) { // 100% x1 Browncoat
 				if (!EgyptGraveEntity.this.is1x1()) {
 					zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 					zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
@@ -422,69 +426,50 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
 					zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 				}
-                BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-                MummyEntity mummyEntity = (MummyEntity)PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-                mummyEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
-                mummyEntity.setOwner(EgyptGraveEntity.this);
-                serverWorld.spawnEntityAndPassengers(mummyEntity);
-            }
-			if (graveWeight <= 3) {
-				if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
-					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
-						if (!EgyptGraveEntity.this.is1x1()) {
-							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-							zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-						}
-						if (EgyptGraveEntity.this.isChallengeGrave()) {
-							zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-							zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-						}
-						BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-						mummyEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-						mummyEntity.setOwner(EgyptGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(mummyEntity);
+				BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+				MummyEntity browncoatEntity = (MummyEntity)PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
+				browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+				browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+				browncoatEntity.setOwner(EgyptGraveEntity.this);
+				serverWorld.spawnEntityAndPassengers(browncoatEntity);
+			}
+			if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
+				for (int c = 0; c < 1; ++c) {
+					if (!EgyptGraveEntity.this.is1x1()) {
+						zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+						zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
 					}
-					for (int c = 0; c < 1; ++c) {
-						if (!EgyptGraveEntity.this.is1x1()) {
-							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-							zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-						}
-						if (EgyptGraveEntity.this.isChallengeGrave()) {
-							zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-							zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-						}
-						BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
-						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						coneheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-						coneheadEntity.setOwner(EgyptGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(coneheadEntity);
-						graveWeight += 0.5;
+					if (EgyptGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+						zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
 					}
+					BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+					MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
+					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+					coneheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					coneheadEntity.setOwner(EgyptGraveEntity.this);
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
+				}
+				for(int b = 0; b < 1; ++b) { // 100% x1 Browncoat
+					if (!EgyptGraveEntity.this.is1x1()) {
+						zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+						zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+					}
+					if (EgyptGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+						zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+					}
+					BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+					MummyEntity browncoatEntity = (MummyEntity)PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
+					browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+					browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+					browncoatEntity.setOwner(EgyptGraveEntity.this);
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 				}
 			}
-			if (graveWeight <= 3) {
-				if (probability2 <= 0.10 / halfModifier * survChance) { // 10% x2 Buckethead
-					for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
-						if (!EgyptGraveEntity.this.is1x1()) {
-							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-							zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-						}
-						if (EgyptGraveEntity.this.isChallengeGrave()) {
-							zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-							zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-						}
-						BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-						mummyEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-						mummyEntity.setOwner(EgyptGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(mummyEntity);
-					}
-					for (int u = 0; u < 2; ++u) {
+			if (serverWorld.toServerWorld().getTime() > 24000) {
+				if (probability2 <= 0.05 / halfModifier * survChance) { // 5% x1 Buckethead
+					for (int u = 0; u < 1; ++u) {
 						if (!EgyptGraveEntity.this.is1x1()) {
 							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
 							zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
@@ -500,13 +485,122 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.setOwner(EgyptGraveEntity.this);
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
-					graveWeight += 1;
+					for (int c = 0; c < 2 / halfModifier; ++c) { // 100% x2 Conehead
+						if (!EgyptGraveEntity.this.is1x1()) {
+							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+							zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+						}
+						if (EgyptGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+							zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+						}
+						BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
+						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						coneheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						coneheadEntity.setOwner(EgyptGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(coneheadEntity);
+					}
+				}
+				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
+					if (probability11 <= 0.05 / halfModifier * survChance) { // 5% x2 Conehead
+						for (int c = 0; c < 2 / halfModifier; ++c) {
+							if (!EgyptGraveEntity.this.is1x1()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
+							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
+							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							coneheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							coneheadEntity.setOwner(EgyptGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(coneheadEntity);
+						}
+						for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
+							if (!EgyptGraveEntity.this.is1x1()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
+							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							MummyEntity browncoatEntity = (MummyEntity)PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
+							browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+							browncoatEntity.setOwner(EgyptGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(browncoatEntity);
+						}
+					}
+				}
+			}
+			if (difficulty >= 1.599 + difficultymodifier || isUnlock()) {
+				if (probability22 <= 0.15 / halfModifier * survChance) { // 15% x1 Buckethead
+					for (int u = 0; u < 2 / halfModifier; ++u) {
+						if (!EgyptGraveEntity.this.is1x1()) {
+							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+							zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+						}
+						if (EgyptGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+							zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+						}
+						BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						MummyEntity bucketheadEntity = (MummyEntity) PvZEntity.MUMMYBUCKET.create(EgyptGraveEntity.this.world);
+						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						bucketheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.setOwner(EgyptGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+					}
+					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
+						if (!EgyptGraveEntity.this.is1x1()) {
+							zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+							zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+						}
+						if (EgyptGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+							zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+						}
+						BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
+						browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						browncoatEntity.setOwner(EgyptGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(browncoatEntity);
+					}
 				}
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
-				if (graveWeight <= 3) {
-					if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-						if (probability4 <= 0.1 / halfModifier * survChance) { // 15% x1 Flag Zombie
+				if (difficulty >= 1.599 + difficultymodifier || isUnlock()) {
+					if (probability10 <= 0.3 / halfModifier * survChance) { // 5% x1 Pyramidhead Zombie
+						for (int j = 0; j < 1; ++j) {
+							if (!EgyptGraveEntity.this.is1x1()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
+							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							MummyEntity brickhead = (MummyEntity) PvZEntity.PYRAMIDHEAD.create(EgyptGraveEntity.this.world);
+							brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							brickhead.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							brickhead.setOwner(EgyptGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(brickhead);
+						}
+					}
+				}
+			}
+			if (serverWorld.toServerWorld().getTime() > 24000) {
+				if (extraGraveWeight <= 2.5) {
+					if (difficulty >= 1.599 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
+						if (probability4 <= 0.1 / halfModifier * survChance) { // 10% x1 Flag Zombie
 							for (int f = 0; f < 1; ++f) {
 								if (!EgyptGraveEntity.this.is1x1()) {
 									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
@@ -522,318 +616,14 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								flagzombieEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(EgyptGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
-
-								BlockPos blockPos2 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-								mummyEntity.refreshPositionAndAngles(blockPos2, 0.0F, 0.0F);
-								mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity);
-
-								BlockPos blockPos3 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity2 = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-								mummyEntity2.refreshPositionAndAngles(blockPos3, 0.0F, 0.0F);
-								mummyEntity2.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos3), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity2.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity2);
-
-								BlockPos blockPos4 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
-								coneheadEntity.refreshPositionAndAngles(blockPos4, 0.0F, 0.0F);
-								coneheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos4), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								coneheadEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(coneheadEntity);
-								graveWeight += 10;
 							}
+							extraGraveWeight += 1;
 						}
 					}
 				}
-				if (graveWeight <= 3) {
-					if (difficulty >= 1.709 + difficultymodifier || isUnlock()) {
-						if (probability7 <= 0.15 / halfModifier * survChance) { // 15% x1 Undying Zombie
-							for (int h = 0; h < 1; ++h) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PharaohEntity pharaohEntity = (PharaohEntity) PvZEntity.UNDYINGPHARAOH.create(EgyptGraveEntity.this.world);
-								pharaohEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								pharaohEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								pharaohEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(pharaohEntity);
-
-								BlockPos blockPos2 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PharaohEntity pharaohEntity1 = (PharaohEntity) PvZEntity.PHARAOH.create(EgyptGraveEntity.this.world);
-								pharaohEntity1.refreshPositionAndAngles(blockPos2, 0.0F, 0.0F);
-								pharaohEntity1.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								pharaohEntity1.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(pharaohEntity1);
-
-								BlockPos blockPos3 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity2 = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-								mummyEntity2.refreshPositionAndAngles(blockPos3, 0.0F, 0.0F);
-								mummyEntity2.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos3), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity2.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity2);
-
-								BlockPos blockPos4 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
-								coneheadEntity.refreshPositionAndAngles(blockPos4, 0.0F, 0.0F);
-								coneheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos4), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								coneheadEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(coneheadEntity);
-								graveWeight += 1.75;
-							}
-						}
-					}
-				}
-				if (graveWeight <= 3) {
-					if (difficulty >= 1.629 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
+				if (extraGraveWeight <= 2.5) {
+					if (difficulty >= 1.549 + difficultymodifier || isUnlock()) {
 						if (probability3 <= 0.15 / halfModifier * survChance) { // 15% x2 Explorer
-							for (int p = 0; p < 2; ++p) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								ExplorerEntity explorerEntity = (ExplorerEntity) PvZEntity.EXPLORER.create(EgyptGraveEntity.this.world);
-								explorerEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								explorerEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								explorerEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(explorerEntity);
-								graveWeight += 0.75;
-							}
-						}
-					}
-				}
-				if (graveWeight <= 3) {
-					if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
-						if (probability11 <= 0.15 / halfModifier * survChance) { // 15% x2 Conehead
-							for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-								mummyEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity);
-							}
-							for (int c = 0; c < 2 / halfModifier; ++c) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity coneheadEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
-								coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								coneheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								coneheadEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(coneheadEntity);
-								graveWeight += 0.5f;
-							}
-						}
-					}
-				}
-				if (graveWeight <= 3) {
-					if (difficulty >= 1.709 + difficultymodifier || isUnlock()) {
-						if (probability10 <= 0.2 / halfModifier * survChance) { // 20% x1 Pyramid Zombie
-							if (difficulty >= 1.709) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity pyramidHead = (MummyEntity) PvZEntity.PYRAMIDHEAD.create(EgyptGraveEntity.this.world);
-								pyramidHead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								pyramidHead.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								pyramidHead.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(pyramidHead);
-
-								BlockPos blockPos2 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-								mummyEntity.refreshPositionAndAngles(blockPos2, 0.0F, 0.0F);
-								mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity);
-								graveWeight += 1.5;
-							}
-							for (int j = 0; j < 1; ++j) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity pyramidHead = (MummyEntity) PvZEntity.PYRAMIDHEAD.create(EgyptGraveEntity.this.world);
-								pyramidHead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								pyramidHead.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								pyramidHead.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(pyramidHead);
-
-								BlockPos blockPos2 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-								mummyEntity.refreshPositionAndAngles(blockPos2, 0.0F, 0.0F);
-								mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity);
-
-								BlockPos blockPos4 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity3 = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
-								mummyEntity3.refreshPositionAndAngles(blockPos4, 0.0F, 0.0F);
-								mummyEntity3.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos4), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity3.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity3);
-								graveWeight += 1.5;
-							}
-						}
-					}
-				}
-				if (graveWeight <= 3) {
-					if (difficulty >= 1.539 + difficultymodifier || isUnlock()) {
-						for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
-							if (!EgyptGraveEntity.this.is1x1()) {
-								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-							}
-							if (EgyptGraveEntity.this.isChallengeGrave()) {
-								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-							}
-							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-							mummyEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-							mummyEntity.setOwner(EgyptGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(mummyEntity);
-						}
-						if (probability21 <= 0.10 / halfModifier * survChance) { // 10% x2 Buckethead
-							for (int u = 0; u < 2 / halfModifier; ++u) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity bucketheadEntity = (MummyEntity) PvZEntity.MUMMYBUCKET.create(EgyptGraveEntity.this.world);
-								bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								bucketheadEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								bucketheadEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(bucketheadEntity);
-								graveWeight += 1;
-							}
-						}
-					}
-				}
-				if (graveWeight <= 3) {
-					if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
-						if (probability9 <= 0.20 / halfModifier * survChance) { // 10% x2 Torchlight Zombie
-							for (int g = 0; g < Math.round(3 / halfModifier); ++g) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								ExplorerEntity torchlight = (ExplorerEntity) PvZEntity.TORCHLIGHT.create(EgyptGraveEntity.this.world);
-								torchlight.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								torchlight.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								torchlight.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(torchlight);
-							}
-							for (int g1 = 0; g1 < 2 / halfModifier; ++g1) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-
-								BlockPos blockPos4 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity3 = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
-								mummyEntity3.refreshPositionAndAngles(blockPos4, 0.0F, 0.0F);
-								mummyEntity3.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos4), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity3.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity3);
-								graveWeight += 1.25;
-							}
-						}
-					}
-				}
-				if (graveWeight <= 3) {
-					if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
-						if (probability8 <= 0.25 / halfModifier * survChance) { // 25% x1 Torchlight Zombie
-							for (int g = 0; g < 2; ++g) {
-								if (!EgyptGraveEntity.this.is1x1()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
-									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
-								}
-								if (EgyptGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
-									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								ExplorerEntity torchlight = (ExplorerEntity) PvZEntity.TORCHLIGHT.create(EgyptGraveEntity.this.world);
-								torchlight.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								torchlight.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								torchlight.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(torchlight);
-
-								BlockPos blockPos2 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-								mummyEntity.refreshPositionAndAngles(blockPos2, 0.0F, 0.0F);
-								mummyEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity);
-
-								BlockPos blockPos3 = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								MummyEntity mummyEntity2 = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
-								mummyEntity2.refreshPositionAndAngles(blockPos3, 0.0F, 0.0F);
-								mummyEntity2.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos3), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								mummyEntity2.setOwner(EgyptGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(mummyEntity2);
-								graveWeight += 1.25;
-							}
-						}
-					}
-				}
-				if (graveWeight <= 3) {
-					if (isUnlock() || isUnlockSpecial()) {
-						if (probability5 <= 0.25 / halfModifier * survChance) { // 25% x1 Explorer
 							for (int p = 0; p < 2 / halfModifier; ++p) {
 								if (!EgyptGraveEntity.this.is1x1()) {
 									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
@@ -849,8 +639,382 @@ public class EgyptGraveEntity extends GraveEntity implements IAnimatable {
 								explorerEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								explorerEntity.setOwner(EgyptGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(explorerEntity);
-								graveWeight += 0.75;
 							}
+							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							extraGraveWeight += 1;
+						}
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if ((difficulty >= 2.009 + difficultymodifier) && (isUnlock() || isUnlockSpecial())) {
+						if (probability8 <= 0.15 / halfModifier * survChance) { // 15% x2 Pharaoh
+							for (int g = 0; g < 2 / halfModifier; ++g) {
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								PharaohEntity pharaoh = (PharaohEntity) PvZEntity.PHARAOH.create(EgyptGraveEntity.this.world);
+								pharaoh.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								pharaoh.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								pharaoh.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(pharaoh);
+							}
+							for (int b = 0; b < 4 / halfModifier; ++b) { // 100% x4 Browncoat
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							extraGraveWeight += 1.25;
+						}
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if ((difficulty >= 2.009 + difficultymodifier) && (isUnlock() || isUnlockSpecial())) {
+						if (probability6 <= 0.05 / halfModifier * survChance) { // 5% x3 Pyramidhead
+							for (int j = 0; j < 3 / halfModifier; ++j) {
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity brickhead = (MummyEntity) PvZEntity.PYRAMIDHEAD.create(EgyptGraveEntity.this.world);
+								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								brickhead.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(brickhead);
+							}
+							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Conehead
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMYBUCKET.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							extraGraveWeight += 1.75;
+						}
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if (difficulty >= 1.599 + difficultymodifier || isUnlock()) {
+						if (probability9 <= 0.2 / halfModifier * survChance) { // 20% x1 Pharaoh
+							for (int g = 0; g < 1; ++g) {
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								PharaohEntity pharaoh = (PharaohEntity) PvZEntity.PHARAOH.create(EgyptGraveEntity.this.world);
+								pharaoh.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								pharaoh.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								pharaoh.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(pharaoh);
+							}
+							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMY.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							extraGraveWeight += 0.75;
+						}
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if (probability13 <= 0.3 / halfModifier * survChance) { // 30% x1 Explorer
+						for (int p = 0; p < 1; ++p) {
+							if (!EgyptGraveEntity.this.is1x1()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+								zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+							}
+							if (EgyptGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+								zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+							}
+							BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							ExplorerEntity explorerEntity = (ExplorerEntity) PvZEntity.EXPLORER.create(EgyptGraveEntity.this.world);
+							explorerEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							explorerEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							explorerEntity.setOwner(EgyptGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(explorerEntity);
+						}
+						extraGraveWeight += 0.5;
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if (probability21 <= 0.25 / halfModifier * survChance) {
+						if (difficulty >= 1.599 + difficultymodifier || isUnlock()) { // 25% x1 Pyramidhead
+							for (int j = 0; j < 1; ++j) {
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity brickhead = (MummyEntity) PvZEntity.PYRAMIDHEAD.create(EgyptGraveEntity.this.world);
+								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								brickhead.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(brickhead);
+							}
+							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMYBUCKET.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							extraGraveWeight += 0.75;
+						}
+					}
+				}
+				if (specialGraveWeight <= 3) {
+					if (difficulty >= 2.009 + difficultymodifier || isUnlock()) {
+						if (probability12 <= 0.10 / halfModifier * survChance) { // 15% x1 Undying Pharaoh
+							for (int p = 0; p < 1; ++p) {
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								SoldierEntity soldier = (SoldierEntity) PvZEntity.SOLDIER.create(EgyptGraveEntity.this.world);
+								soldier.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								soldier.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								soldier.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(soldier);
+							}
+							for (int b = 0; b < 3 / halfModifier; ++b) { // 100% x3 Conehead
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							for (int h = 0; h < 2 / halfModifier; ++h) { // 100% x2 Buckethead
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMYBUCKET.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							specialGraveWeight += 1.5;
+						}
+					}
+				}
+				if (specialGraveWeight <= 3) {
+					if ((difficulty >= 2.009 + difficultymodifier) && (isUnlock() || isUnlockSpecial())) {
+						if (probability14 <= 0.15 / halfModifier * survChance) { // 10% x2 Torchlight
+							for (int p = 0; p < 2 / halfModifier; ++p) {
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								ExplorerEntity torchlight = (ExplorerEntity) PvZEntity.TORCHLIGHT.create(EgyptGraveEntity.this.world);
+								torchlight.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								torchlight.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								torchlight.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(torchlight);
+							}
+							for (int b = 0; b < 1; ++b) { // 100% x1 Conehead
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMYBUCKET.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							specialGraveWeight += 1.25;
+						}
+					}
+				}
+				if (specialGraveWeight <= 3) {
+					if ((difficulty >= 1.599 + difficultymodifier) && (isUnlock() || isUnlockSpecial())) {
+						if (probability5 <= 0.15 / halfModifier * survChance) { // 20% x1 Torchlight
+							for (int p = 0; p < 1; ++p) {
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								ExplorerEntity torchlight = (ExplorerEntity) PvZEntity.TORCHLIGHT.create(EgyptGraveEntity.this.world);
+								torchlight.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								torchlight.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								torchlight.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(torchlight);
+							}
+							for (int b = 0; b < 1; ++b) { // 100% x1 Conehead
+								if (!EgyptGraveEntity.this.is1x1()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-1, 1);
+									zombiePos = EgyptGraveEntity.this.random.range(-1, 1);
+								}
+								if (EgyptGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = EgyptGraveEntity.this.random.range(-3, 3);
+									zombiePos = EgyptGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = EgyptGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								MummyEntity browncoatEntity = (MummyEntity) PvZEntity.MUMMYCONE.create(EgyptGraveEntity.this.world);
+								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								browncoatEntity.initialize(serverWorld, EgyptGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.setOwner(EgyptGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							}
+							specialGraveWeight += 0.5;
 						}
 					}
 				}

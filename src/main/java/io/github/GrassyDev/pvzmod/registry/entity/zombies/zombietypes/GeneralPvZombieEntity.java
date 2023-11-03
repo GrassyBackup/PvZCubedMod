@@ -27,11 +27,10 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.foot
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntity;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PowderSnowBlock;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.pathing.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.ProjectileDamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -44,18 +43,15 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -206,6 +202,8 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
 								 SpawnReason spawnReason, @Nullable EntityData entityData,
 								 @Nullable NbtCompound entityNbt) {
+		this.setCanHypno(CanHypno.TRUE);
+		this.setCanBurn(CanBurn.TRUE);
 		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
 	}
 
@@ -1467,7 +1465,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		}
 	}
 
-	@Override
+	/**@Override
 	protected EntityNavigation createNavigation(World world) {
 		return new GeneralPvZombieEntity.SwimNavigation(this, world);
 	}
@@ -1518,7 +1516,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		}
 	}
 
-	static class SwimNavigation extends AmphibiousNavigation {
+	static class SwimNavigtaion extends AmphibiousNavigation {
 		SwimNavigation(GeneralPvZombieEntity zombie, World world) {
 			super(zombie, world);
 		}
@@ -1529,5 +1527,5 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			this.nodeMaker.setCanEnterOpenDoors(true);
 			return new PathNodeNavigator(this.nodeMaker, range);
 		}
-	}
+	}**/
 }

@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "pvzmod:plantfood_flower"
+      "item": "minecraft:diamond"
     },
     {
       "item": "pvzmod:plantfood_air"
     },
     {
-      "item": "pvzmod:sun"
+      "item": "pvzmod:plantfood_air"
     },
     {
       "item": "pvzmod:sun"

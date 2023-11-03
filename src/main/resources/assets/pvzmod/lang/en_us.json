@@ -127,6 +127,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.empeachS": "E.M.Peach Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.endurianS": "Endurian Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.firepeaS": "Fire Pea Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.frisbloomS": "Frisbloom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.fumeshroomS": "Fume-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gambleshroomS": "Gamble-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gatlingpeaS": "Gatling Pea Seed",
@@ -809,6 +810,12 @@
   "item.pvzmod.dropea_seed_packet": "⭘ Dropea Seed Packet",
   "item.pvzmod.dropea_seed_packet.flavour": "Has a bubbly personality",
   "item.pvzmod.drop": "Drop",
+
+  "entity.pvzmod.frisbloom": "Frisbloom",
+  "item.pvzmod.frisbloom_seed_packet": "✂ Frisbloom Seed Packet",
+  "item.pvzmod.frisbloom_seed_packet.flavour": "\"Magnets? Gravity? Crikey, I asked my cousin and",
+  "item.pvzmod.frisbloom_seed_packet.flavour2": "even he doesn't know why they come back\"",
+  "item.pvzmod.frisbeeproj": "Frisbee",
 
   "entity.pvzmod.beautyshroom": "Beauty-shroom",
   "item.pvzmod.beautyshroom_seed_packet": "⭐ Beauty-shroom Seed Packet",

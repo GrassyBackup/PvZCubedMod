@@ -187,7 +187,7 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float bellflowerS = 2.5f;
 		@RestartRequired
-		public float bloomerangS = 15f;
+		public float bloomerangS = 25f;
 		@RestartRequired
 		public float bombseedlingS = 2.5f;
 		@RestartRequired
@@ -232,6 +232,8 @@ public class PvZConfigModel {
 		public float endurianS = 30.0f;
 		@RestartRequired
 		public float firepeaS = 15.0f;
+		@RestartRequired
+		public float frisbloomS = 12.5f;
 		@RestartRequired
 		public float fumeshroomS = 7.5f;
 		@RestartRequired
@@ -391,7 +393,7 @@ public class PvZConfigModel {
 		public float armorBubbleDMG = 2f;
 		public float beespikeDMGv2 = 2f;
 		public float breezeDMG = 2f;
-		public float boomerangDMG = 3.5f;
+		public float boomerangDMGv2 = 2.5f;
 		public float bubblesDMG = 2f;
 		public float cabbageDMG = 4f;
 		public float cardDMGv2 = 0.5f;
@@ -402,6 +404,7 @@ public class PvZConfigModel {
 		public float electricPeaDMG = 4f;
 		public float firepiercepeaDMG = 6f;
 		public float firepiercepeaSDMG = 3f;
+		public float frisbeeDMG = 3.5f;
 		public float flamingPeaDMGv2 = 8f;
 		public float flamingPeaSDMG = 4f;
 		public float fumeDMG = 2.5f;

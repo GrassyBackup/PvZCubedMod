@@ -133,12 +133,14 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
         super(EntityType.SNOWBALL, owner, world);
     }
 
+	public boolean left = false;
+	public boolean right = false;
     public void tick() {
 		if (age <= 1){
 			if (this.getOwner() != null) {
 				this.ownerYaw = this.getOwner().getHeadYaw();
 			}
-			this.playSound(PvZSounds.BOOMERANGAMBIENTEVENT, 0.025f, 1f);
+			this.playSound(PvZSounds.BOOMERANGAMBIENTEVENT, 0.0125f, 1f);
 		}
 		super.tick();
 		HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
@@ -176,7 +178,14 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 			}
 			if (--returningTicks <= 0) {
 				this.setReturning(Returning.TRUE);
-				Vec3d vec3d = new Vec3d((double) -0.04, 0.0, 0.0).rotateY(-this.ownerYaw * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+				float difference = 0;
+				if (right){
+					difference = -7.5f;
+				}
+				if (left){
+					difference = 7.5f;
+				}
+				Vec3d vec3d = new Vec3d((double) -0.04, 0.0, 0.0).rotateY((-this.ownerYaw + difference) * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				if (this.age <= 50) {
 					this.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
 				}
@@ -224,7 +233,7 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 			}
 			if (!world.isClient && this.getReturning()) {
 				if (entityStore.contains(entity) && this.retuningStart) {
-					float damage = PVZCONFIG.nestedProjDMG.boomerangDMG();
+					float damage = PVZCONFIG.nestedProjDMG.boomerangDMGv2();
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 					SoundEvent sound;
 					sound = switch (zombieMaterial) {
@@ -257,7 +266,7 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth())
 					&& !(entity instanceof ZombieVehicleEntity && (zombiePropEntity instanceof ZombieObstacleEntity)) &&
 					!this.getReturning() && !this.retuningStart && damageCounter <= 2 && !entityStore.contains(entity) && !entityStoreVehicle.contains(entity)) {
-				float damage = PVZCONFIG.nestedProjDMG.boomerangDMG();
+				float damage = PVZCONFIG.nestedProjDMG.boomerangDMGv2();
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {

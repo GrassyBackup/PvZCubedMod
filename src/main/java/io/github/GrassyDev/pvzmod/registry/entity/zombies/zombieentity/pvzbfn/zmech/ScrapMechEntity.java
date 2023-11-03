@@ -174,49 +174,47 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 	}
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+		if (this.isFrozen || this.isStunned) {
+			event.getController().setAnimationSpeed(0);
+		} else if (this.isIced) {
+			event.getController().setAnimationSpeed(0.5);
+		} else {
+			event.getController().setAnimationSpeed(1);
+		}
 		if (this.isInsideWaterOrBubbleColumn()) {
-			if (this.isDisabled && this.disableTicks > 0) {
+			if (inDyingAnimation) {
+				event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.ducky.explode"));
+				event.getController().setAnimationSpeed(1);
+			} else if (inLaunchAnimation) {
+				event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.ducky.shoot"));
+			} else if (inAnimation) {
+				event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.ducky.smash"));
+			} else if (this.isDisabled && this.disableTicks > 0) {
 				event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.ducky.stun"));
+				event.getController().setAnimationSpeed(1);
 			} else if (this.isDisabled) {
 				event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.ducky.stun.idle"));
+			} else {
+				event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.ducky"));
 			}
-		}
-		else if (this.isDisabled && this.disableTicks > 0) {
-			event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.stun"));
-		} else if (this.isDisabled) {
-			event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.stun.idle"));
 		}
 		else {
-			if (this.isFrozen || this.isStunned) {
-				event.getController().setAnimationSpeed(0);
-			} else if (this.isIced) {
-				event.getController().setAnimationSpeed(0.5);
-			} else {
+			if (inDyingAnimation) {
+				event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.explode"));
 				event.getController().setAnimationSpeed(1);
-			}
-			if (this.isInsideWaterOrBubbleColumn()) {
-				if (inDyingAnimation) {
-					event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.ducky.explode"));
-				} else if (inLaunchAnimation) {
-					event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.ducky.shoot"));
-				} else if (inAnimation) {
-					event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.ducky.smash"));
-				} else {
-					event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.ducky"));
-				}
+			} else if (inLaunchAnimation) {
+				event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.shoot"));
+			} else if (inAnimation) {
+				event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.smash"));
+			} else if (!(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F)) {
+				event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.walk"));
+			} else if (this.isDisabled && this.disableTicks > 0) {
+				event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.stun"));
+				event.getController().setAnimationSpeed(1);
+			} else if (this.isDisabled) {
+				event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.stun.idle"));
 			} else {
-				if (inDyingAnimation) {
-					event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.explode"));
-					event.getController().setAnimationSpeed(1);
-				} else if (inLaunchAnimation) {
-					event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.shoot"));
-				} else if (inAnimation) {
-					event.getController().setAnimation(new AnimationBuilder().playOnce("scrapmech.smash"));
-				} else if (!(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F)) {
-					event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.walk"));
-				} else {
-					event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.idle"));
-				}
+				event.getController().setAnimation(new AnimationBuilder().loop("scrapmech.idle"));
 			}
 		}
         return PlayState.CONTINUE;

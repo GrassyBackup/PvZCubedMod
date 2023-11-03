@@ -5,12 +5,12 @@
     },
     "title": "A Brick Joke",
     "description": "Craft a Bloomerang",
-    "frame": "task",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": false
+    "hidden": true
   },
-  "parent": "pvzmod:make_bellflower",
+  "parent": "pvzmod:make_frisbloom",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",
@@ -30,9 +30,6 @@
     }
   },
   "rewards": {
-    "recipes": [
-      "pvzmod:plants/enchant/magicshroom"
-    ],
-    "experience": 25
+    "experience": 100
   }
 }
