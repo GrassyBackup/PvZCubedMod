@@ -123,7 +123,7 @@ public class GravebusterEntity extends PlantEntity implements IAnimatable {
 				this.applyDamageEffects(this, target);
 			}
 			this.used = true;
-			target.kill();
+			target.damage(DamageSource.mob(this), Integer.MAX_VALUE);
 			this.remove(RemovalReason.DISCARDED);
 			return bl;
 		} else {

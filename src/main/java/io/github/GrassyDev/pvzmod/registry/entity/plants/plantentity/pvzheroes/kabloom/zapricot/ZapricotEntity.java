@@ -89,8 +89,6 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public ZapricotEntity(EntityType<? extends ZapricotEntity> entityType, World world) {
 		super(entityType, world);
 
-
-		this.setNoGravity(true);
 	}
 
 	protected void initDataTracker() {

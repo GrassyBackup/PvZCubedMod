@@ -452,11 +452,13 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 		if (this.getAttacking() == null && !(this.getHypno())){
 			if (this.CollidesWithPlant(0f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 				this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 				this.setTarget(CollidesWithPlant(0f, 0f));
 				this.setStealthTag(Stealth.FALSE);
 			}
 			else if (this.CollidesWithPlant(2f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 				this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 				this.setTarget(CollidesWithPlant(2f, 0f));
 				this.setStealthTag(Stealth.FALSE);
 			}

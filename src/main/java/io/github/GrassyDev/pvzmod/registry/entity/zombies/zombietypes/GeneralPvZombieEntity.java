@@ -158,7 +158,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			super.handleStatus(status);
 		}
 		if (status == 69) {
-			for (int i = 0; i < 64; ++i) {
+			for (int i = 0; i < 16; ++i) {
 				double d = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 3);
 				double f = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
@@ -561,6 +561,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 							case "frostbite" -> ModItems.FROSTBITE_SEED_LIST.get(getRandom().nextInt(ModItems.FROSTBITE_SEED_LIST.size()));
 							case "lostcity" -> ModItems.LOSTCITY_SEED_LIST.get(getRandom().nextInt(ModItems.LOSTCITY_SEED_LIST.size()));
 							case "skycity" -> ModItems.SKYCITY_SEED_LIST.get(getRandom().nextInt(ModItems.SKYCITY_SEED_LIST.size()));
+							case "fairytale" -> ModItems.FAIRYTALE_SEED_LIST.get(getRandom().nextInt(ModItems.FAIRYTALE_SEED_LIST.size()));
 							default -> ModItems.SEED_PACKET_LIST.get(getRandom().nextInt(ModItems.SEED_PACKET_LIST.size()));
 						};
 						if (item == null){
@@ -1030,7 +1031,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		}
 		Vec3d lastPos = this.getPos();
 		if (this.firstPos != null && !this.isFlying()) {
-			if (lastPos.squaredDistanceTo(firstPos) < 0.0001 && this.CollidesWithPlant(1f, 0f) == null && !this.hasStatusEffect(PvZCubed.BOUNCED) && this.getTarget() != null && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE) && !this.hasStatusEffect(PvZCubed.ICE) && this.age >= 30 && this.attackingTick <= 0 && --this.unstuckDelay <= 0 && !this.isInsideWaterOrBubbleColumn()) {
+			if (lastPos.squaredDistanceTo(firstPos) < 0.0001 && this.CollidesWithPlant(0.1f, 0f) == null && !this.hasStatusEffect(PvZCubed.BOUNCED) && this.getTarget() != null && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE) && !this.hasStatusEffect(PvZCubed.ICE) && this.age >= 30 && this.attackingTick <= 0 && --this.unstuckDelay <= 0 && !this.isInsideWaterOrBubbleColumn()) {
 				this.setVelocity(0, 0, 0);
 				this.addVelocity(0, 0.3, 0);
 				++this.stuckTimes;
@@ -1152,6 +1153,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			if (target != null) {
 				if (target.squaredDistanceTo(this) < 2.25 && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
 					this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 				}
 			}
 		}
@@ -1353,6 +1355,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				source.getSource() instanceof ChomperEntity ||
 				source.getSource() instanceof ChesterEntity ||
 				source.getSource() instanceof OlivePitEntity) && this.swallowed) ||
+				source.getSource() instanceof GravebusterEntity ||
 				source.getAttacker() == this ||
 				source.isOutOfWorld())){
 			super.applyDamage(source, amount);

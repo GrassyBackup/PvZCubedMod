@@ -253,9 +253,14 @@ public class FlagSargeantEntity extends SummonerEntity implements IAnimatable {
 	public void tick() {
 		super.tick();
 		if (this.getAttacking() == null && !(this.getHypno())){
-			for (float x = 0; x <= 2.5f; x = x + 0.5f) {
-				if (this.CollidesWithPlant(x, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
+			for (float x = 0; x <= 2f; ++x) {
+				if (this.CollidesWithPlant(x, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(x, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
 					this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 					this.setTarget(CollidesWithPlant(x, 0f));
 					this.setStealthTag(Stealth.FALSE);
 				} else if (this.CollidesWithPlayer(x + 0.5f) != null && !this.CollidesWithPlayer(x + 0.5f).isCreative()) {
@@ -298,7 +303,7 @@ public class FlagSargeantEntity extends SummonerEntity implements IAnimatable {
 
 	public static DefaultAttributeContainer.Builder createFlagSargeantAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
-				.add(ReachEntityAttributes.ATTACK_RANGE, 2.5D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 3.5D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.18D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)

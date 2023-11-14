@@ -10,9 +10,11 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTil
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelmetVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.PokerVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.imp.modernday.ImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.browncoat.fairytale.PokerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallichelmet.MetalHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.metallicshield.MetalShieldEntity;
@@ -114,6 +116,21 @@ public abstract class PlantEntity extends GolemEntity {
 		this.dataTracker.set(DATA_ID_LOWPROF, tag.getBoolean("lowProf"));
 		this.dataTracker.set(DATA_ID_FIREIMMUNE, tag.getBoolean("fireImmune"));
 		this.dataTracker.set(DATA_ID_IMMUNE, tag.getBoolean("Immune"));
+	}
+
+	@Override
+	public void handleStatus(byte status) {
+		if (status != 2 && status != 60) {
+			super.handleStatus(status);
+		}
+		if (status == 69) {
+			for (int i = 0; i < 16; ++i) {
+				double d = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
+				double e = this.random.nextDouble() / 2 * this.random.range(0, 3);
+				double f = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
+				this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + 0.5 + e, this.getZ() + f, d, e, f);
+			}
+		}
 	}
 
 	/** /~*~//~*VARIANTS*~//~*~/ **/
@@ -956,8 +973,17 @@ public abstract class PlantEntity extends GolemEntity {
 					if (tileEntity instanceof SnowTile) {
 						tileEntity.discard();
 					}
-					if (tileEntity instanceof WaterTile) {
-						tileEntity.discard();
+					boolean waterTile = false;
+					if (tileEntity instanceof WaterTile waterTile2) {
+						List<LivingEntity> list2 = world.getNonSpectatingEntities(LivingEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(waterTile2.getX(), waterTile2.getY(), waterTile2.getZ()));
+						for (LivingEntity livingEntity : list2){
+							if (livingEntity.squaredDistanceTo(waterTile2) <= 0.5 && livingEntity != waterTile2){
+								waterTile = true;
+							}
+						}
+						if (!waterTile) {
+							tileEntity.discard();
+						}
 					}
 					if (tileEntity instanceof OilTile oilTile) {
 						oilTile.makeFireTrail(oilTile.getBlockPos());
@@ -1077,6 +1103,13 @@ public abstract class PlantEntity extends GolemEntity {
 						helmetProj = MetalHelmetVariants.SUMMERBUCKET;
 					} else if (livingEntity.getType().equals(PvZEntity.FUTUREBUCKET)) {
 						helmetProj = MetalHelmetVariants.FUTUREBUCKET;
+					} else if (livingEntity.getType().equals(PvZEntity.POKERBUCKET) && livingEntity instanceof PokerEntity pokerEntity) {
+						if (pokerEntity.getPoker().equals(PokerVariants.HEART) || pokerEntity.getPoker().equals(PokerVariants.DIAMOND)){
+							helmetProj = MetalHelmetVariants.POKERLIDRED;
+						}
+						else {
+							helmetProj = MetalHelmetVariants.POKERLIDBLACK;
+						}
 					} else {
 						helmetProj = MetalHelmetVariants.BUCKET;
 					}
@@ -1120,6 +1153,13 @@ public abstract class PlantEntity extends GolemEntity {
 									helmetProj2 = MetalHelmetVariants.SUMMERBUCKET;
 								} else if (livingEntity2.getType().equals(PvZEntity.FUTUREBUCKET)) {
 									helmetProj2 = MetalHelmetVariants.FUTUREBUCKET;
+								} else if (livingEntity2.getType().equals(PvZEntity.POKERBUCKET) && livingEntity2 instanceof PokerEntity pokerEntity) {
+									if (pokerEntity.getPoker().equals(PokerVariants.HEART) || pokerEntity.getPoker().equals(PokerVariants.DIAMOND)){
+										helmetProj2 = MetalHelmetVariants.POKERLIDRED;
+									}
+									else {
+										helmetProj2 = MetalHelmetVariants.POKERLIDBLACK;
+									}
 								} else {
 									helmetProj2 = MetalHelmetVariants.BUCKET;
 								}
@@ -1164,6 +1204,13 @@ public abstract class PlantEntity extends GolemEntity {
 									helmetProj3 = MetalHelmetVariants.SUMMERBUCKET;
 								} else if (livingEntity3.getType().equals(PvZEntity.FUTUREBUCKET)) {
 									helmetProj3 = MetalHelmetVariants.FUTUREBUCKET;
+								} else if (livingEntity3.getType().equals(PvZEntity.POKERBUCKET) && livingEntity3 instanceof PokerEntity pokerEntity) {
+									if (pokerEntity.getPoker().equals(PokerVariants.HEART) || pokerEntity.getPoker().equals(PokerVariants.DIAMOND)){
+										helmetProj3 = MetalHelmetVariants.POKERLIDRED;
+									}
+									else {
+										helmetProj3 = MetalHelmetVariants.POKERLIDBLACK;
+									}
 								} else {
 									helmetProj3 = MetalHelmetVariants.BUCKET;
 								}

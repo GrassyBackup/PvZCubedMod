@@ -9,7 +9,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.browncoat.sargeant.SargeantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.flagzombie.sargeant.FlagSargeantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.zombie.HawkerZombieEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityData;
@@ -400,16 +399,19 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 			double probability = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability11 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability2 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
-			double probability10 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability21 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability22 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability3 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability4 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability5 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability6 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability7 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
-			double probability9 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability8 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability9 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability10 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability12 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability13 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability14 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 
 			int zombiePos = -2 + MausoleumGraveEntity.this.random.nextInt(5);
 			int zombiePosZ = -2 + MausoleumGraveEntity.this.random.nextInt(5);
@@ -418,7 +420,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 				zombiePosZ = 0;
 			}
 
-			for(int a = 0; a < 2 / halfModifier; ++a) { // 100% x2 Sargeant
+			for(int b = 0; b < 1; ++b) { // 100% x1 Browncoat
 				if (!MausoleumGraveEntity.this.is1x1()) {
 					zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
 					zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
@@ -427,16 +429,50 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
 					zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 				}
-                BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-                SargeantEntity browncoatEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
-                browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                browncoatEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
-                browncoatEntity.setOwner(MausoleumGraveEntity.this);
-                serverWorld.spawnEntityAndPassengers(browncoatEntity);
-            }
-			if (graveWeight <= 3.5) {
-				if (probability <= 0.45 / halfModifier * survChance) { // 45% x1 Conehead
-					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
+				BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+				SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+				SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+				SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+				SargeantEntity.setOwner(MausoleumGraveEntity.this);
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
+			}
+			if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
+				for (int c = 0; c < 1; ++c) {
+					if (!MausoleumGraveEntity.this.is1x1()) {
+						zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+						zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+					}
+					if (MausoleumGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+						zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+					}
+					BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+					SargeantEntity coneheadEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.world);
+					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+					coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					coneheadEntity.setOwner(MausoleumGraveEntity.this);
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
+				}
+				for(int b = 0; b < 1; ++b) { // 100% x1 Browncoat
+					if (!MausoleumGraveEntity.this.is1x1()) {
+						zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+						zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+					}
+					if (MausoleumGraveEntity.this.isChallengeGrave()) {
+						zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+						zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+					}
+					BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+					SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+					SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+					SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+					SargeantEntity.setOwner(MausoleumGraveEntity.this);
+					serverWorld.spawnEntityAndPassengers(SargeantEntity);
+				}
+			}
+			if (serverWorld.toServerWorld().getTime() > 24000) {
+				if (probability2 <= 0.05 / halfModifier * survChance) { // 5% x1 Buckethead
+					for (int u = 0; u < 1; ++u) {
 						if (!MausoleumGraveEntity.this.is1x1()) {
 							zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
 							zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
@@ -446,13 +482,13 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						SargeantEntity browncoatEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
-						browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						browncoatEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-						browncoatEntity.setOwner(MausoleumGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(browncoatEntity);
+						SargeantEntity bucketheadEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
+						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						bucketheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.setOwner(MausoleumGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
-					for (int h = 0; h < 1; ++h) {
+					for (int c = 0; c < 2 / halfModifier; ++c) { // 100% x2 Conehead
 						if (!MausoleumGraveEntity.this.is1x1()) {
 							zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
 							zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
@@ -467,116 +503,11 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 						coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(MausoleumGraveEntity.this);
 						serverWorld.spawnEntityAndPassengers(coneheadEntity);
-						graveWeight += 0.5;
 					}
 				}
-			}
-			if (graveWeight <= 3.5) {
-				if (probability3 <= 0.10 / halfModifier * survChance) { // 10% x2 Helmet Sargeant
-					for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
-						if (!MausoleumGraveEntity.this.is1x1()) {
-							zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
-							zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
-						}
-						if (MausoleumGraveEntity.this.isChallengeGrave()) {
-							zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
-							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
-						}
-						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						SargeantEntity browncoatEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
-						browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						browncoatEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-						browncoatEntity.setOwner(MausoleumGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(browncoatEntity);
-					}
-					for (int c = 0; c < 2 / halfModifier; ++c) {
-						if (!MausoleumGraveEntity.this.is1x1()) {
-							zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
-							zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
-						}
-						if (MausoleumGraveEntity.this.isChallengeGrave()) {
-							zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
-							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
-						}
-						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						SargeantEntity sargeantBucket = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
-						sargeantBucket.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						sargeantBucket.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-						sargeantBucket.setOwner(MausoleumGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(sargeantBucket);
-					}
-					graveWeight += 1;
-				}
-			}
-			if (serverWorld.toServerWorld().getTime() > 24000) {
-				if (graveWeight <= 3.5) {
-					if (difficulty >= 1.609 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-						if (probability5 <= 0.1 / halfModifier * survChance) { // 15% x1 Flag Zombie
-							for (int f = 0; f < 1; ++f) {
-								if (!MausoleumGraveEntity.this.is1x1()) {
-									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
-									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
-								}
-								if (MausoleumGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
-									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
-								}
-								if (MausoleumGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
-									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
-								}
-								double random = Math.random();
-								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FlagSargeantEntity flagzombieEntity = (FlagSargeantEntity) PvZEntity.FLAGSARGEANT.create(MausoleumGraveEntity.this.world);
-								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								flagzombieEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								flagzombieEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
-
-								BlockPos blockPos2 = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity browncoatEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
-								browncoatEntity.refreshPositionAndAngles(blockPos2, 0.0F, 0.0F);
-								browncoatEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								browncoatEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
-
-								BlockPos blockPos3 = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity coneheadEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.world);
-								coneheadEntity.refreshPositionAndAngles(blockPos3, 0.0F, 0.0F);
-								coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos3), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								coneheadEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(coneheadEntity);
-
-								BlockPos blockPos4 = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity screendoorEntity = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.world);
-								screendoorEntity.refreshPositionAndAngles(blockPos4, 0.0F, 0.0F);
-								screendoorEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos4), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								screendoorEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(screendoorEntity);
-								graveWeight += 10;
-							}
-						}
-					}
-				}
-				if (graveWeight <= 3.5) {
-					if (probability11 <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
-						for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
-							if (!MausoleumGraveEntity.this.is1x1()) {
-								zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
-								zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
-							}
-							if (MausoleumGraveEntity.this.isChallengeGrave()) {
-								zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
-								zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
-							}
-							BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							SargeantEntity browncoatEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
-							browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							browncoatEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-							browncoatEntity.setOwner(MausoleumGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(browncoatEntity);
-						}
-						for (int h = 0; h < 2 / halfModifier; ++h) {
+				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
+					if (probability11 <= 0.05 / halfModifier * survChance) { // 5% x2 Conehead
+						for (int c = 0; c < 2 / halfModifier; ++c) {
 							if (!MausoleumGraveEntity.this.is1x1()) {
 								zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
 								zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
@@ -591,14 +522,89 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(MausoleumGraveEntity.this);
 							serverWorld.spawnEntityAndPassengers(coneheadEntity);
-							graveWeight += 0.5;
+						}
+						for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
+							if (!MausoleumGraveEntity.this.is1x1()) {
+								zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+								zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+							}
+							if (MausoleumGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+								zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+							}
+							BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+							SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+							SargeantEntity.setOwner(MausoleumGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(SargeantEntity);
 						}
 					}
 				}
-				if (graveWeight <= 3.5) {
-					if (difficulty >= 1.579 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
-						if (probability2 <= 0.2 / halfModifier * survChance) { // 20% x1 Sergeant Shield
-							for (int c = 0; c < 1; ++c) {
+			}
+			if (difficulty >= 1.599 + difficultymodifier || isUnlock()) {
+				if (probability22 <= 0.15 / halfModifier * survChance) { // 15% x1 Buckethead
+					for (int u = 0; u < 2 / halfModifier; ++u) {
+						if (!MausoleumGraveEntity.this.is1x1()) {
+							zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+							zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+						}
+						if (MausoleumGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+						}
+						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						SargeantEntity bucketheadEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
+						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						bucketheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.setOwner(MausoleumGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+					}
+					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
+						if (!MausoleumGraveEntity.this.is1x1()) {
+							zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+							zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+						}
+						if (MausoleumGraveEntity.this.isChallengeGrave()) {
+							zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+						}
+						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+						SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+						SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+						SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						SargeantEntity.setOwner(MausoleumGraveEntity.this);
+						serverWorld.spawnEntityAndPassengers(SargeantEntity);
+					}
+				}
+			}
+			if (serverWorld.toServerWorld().getTime() > 24000) {
+				if (difficulty >= 1.599 + difficultymodifier || isUnlock()) {
+					if (probability10 <= 0.3 / halfModifier * survChance) { // 5% x1 Brickhead Zombie
+						for (int j = 0; j < 1; ++j) {
+							if (!MausoleumGraveEntity.this.is1x1()) {
+								zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+								zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+							}
+							if (MausoleumGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+								zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+							}
+							BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.world);
+							brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							brickhead.setOwner(MausoleumGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(brickhead);
+						}
+					}
+				}
+			}
+			if (serverWorld.toServerWorld().getTime() > 24000) {
+				if (extraGraveWeight <= 2.5) {
+					if (difficulty >= 1.599 + difficultymodifier || isUnlock() || isUnlockSpecial()) {
+						if (probability4 <= 0.1 / halfModifier * survChance) { // 10% x1 Flag Zombie
+							for (int f = 0; f < 1; ++f) {
 								if (!MausoleumGraveEntity.this.is1x1()) {
 									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
 									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
@@ -608,20 +614,20 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity screendoor = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.world);
-								screendoor.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								screendoor.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								screendoor.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(screendoor);
-								graveWeight += 1.25;
+								FlagSargeantEntity flagzombieEntity = (FlagSargeantEntity) PvZEntity.FLAGSARGEANT.create(MausoleumGraveEntity.this.world);
+								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								flagzombieEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								flagzombieEntity.setOwner(MausoleumGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
 							}
+							extraGraveWeight += 1;
 						}
 					}
 				}
-				if (graveWeight <= 3.5) {
-					if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
-						if (probability10 <= 0.2 / halfModifier * survChance) { // 20% x2 Book Burner
-							for (int f = 0; f < 2 / halfModifier; ++f) {
+				if (extraGraveWeight <= 2.5) {
+					if (difficulty >= 1.549 + difficultymodifier || isUnlock()) {
+						if (probability3 <= 0.15 / halfModifier * survChance) { // 15% x2 Book Burner
+							for (int p = 0; p < 2 / halfModifier; ++p) {
 								if (!MausoleumGraveEntity.this.is1x1()) {
 									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
 									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
@@ -636,15 +642,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								bookburner.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								bookburner.setOwner(MausoleumGraveEntity.this);
 								serverWorld.spawnEntityAndPassengers(bookburner);
-								graveWeight += 1.25;
 							}
-						}
-					}
-				}
-				if (graveWeight <= 3.5) {
-					if ((difficulty >= 1.909 + difficultymodifier && isUnlockSpecial()) || isUnlock()) {
-						if (probability12 <= 0.2 / halfModifier * survChance) { // 20% x1 Hawker Cart
-							for (int f = 0; f < 1; ++f) {
+							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 								if (!MausoleumGraveEntity.this.is1x1()) {
 									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
 									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
@@ -654,13 +653,144 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								HawkerZombieEntity hawkerZombieEntity = (HawkerZombieEntity) PvZEntity.HAWKERPUSHER.create(MausoleumGraveEntity.this.world);
-								hawkerZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								hawkerZombieEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								hawkerZombieEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(hawkerZombieEntity);
-								graveWeight += 1;
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.setOwner(MausoleumGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(SargeantEntity);
 							}
+							extraGraveWeight += 1;
+						}
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if ((difficulty >= 2.009 + difficultymodifier) && (isUnlock() || isUnlockSpecial())) {
+						if (probability6 <= 0.05 / halfModifier * survChance) { // 5% x3 Brickhead
+							for (int j = 0; j < 3/ halfModifier ; ++j) {
+								if (!MausoleumGraveEntity.this.is1x1()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+								}
+								if (MausoleumGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.world);
+								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.setOwner(MausoleumGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(brickhead);
+							}
+							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
+								if (!MausoleumGraveEntity.this.is1x1()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+								}
+								if (MausoleumGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.setOwner(MausoleumGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+							}
+							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Conehead
+								if (!MausoleumGraveEntity.this.is1x1()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+								}
+								if (MausoleumGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.world);
+								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.setOwner(MausoleumGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+							}
+							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
+								if (!MausoleumGraveEntity.this.is1x1()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+								}
+								if (MausoleumGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
+								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.setOwner(MausoleumGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+							}
+							extraGraveWeight += 1.75;
+						}
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if (probability13 <= 0.3 / halfModifier * survChance) { // 30% x1 Pole Vaulting Zombie
+						for (int p = 0; p < 1; ++p) {
+							if (!MausoleumGraveEntity.this.is1x1()) {
+								zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+								zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+							}
+							if (MausoleumGraveEntity.this.isChallengeGrave()) {
+								zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+								zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+							}
+							BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+							SargeantEntity bookburner = (SargeantEntity) PvZEntity.BOOKBURNER.create(MausoleumGraveEntity.this.world);
+							bookburner.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+							bookburner.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							bookburner.setOwner(MausoleumGraveEntity.this);
+							serverWorld.spawnEntityAndPassengers(bookburner);
+						}
+						extraGraveWeight += 0.5;
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if (probability21 <= 0.25 / halfModifier * survChance) {
+						if (difficulty >= 1.599 + difficultymodifier || isUnlock()) { // 25% x1 Brickhead
+							for (int j = 0; j < 1; ++j) {
+								if (!MausoleumGraveEntity.this.is1x1()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+								}
+								if (MausoleumGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.world);
+								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.setOwner(MausoleumGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(brickhead);
+							}
+							for (int h = 0; h < 1; ++h) { // 100% x1 Buckethead
+								if (!MausoleumGraveEntity.this.is1x1()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-1, 1);
+									zombiePos = MausoleumGraveEntity.this.random.range(-1, 1);
+								}
+								if (MausoleumGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = MausoleumGraveEntity.this.random.range(-3, 3);
+									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
+								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.setOwner(MausoleumGraveEntity.this);
+								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+							}
+							extraGraveWeight += 0.75;
 						}
 					}
 				}

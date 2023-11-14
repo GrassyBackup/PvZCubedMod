@@ -6,7 +6,11 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.BrowncoatVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.DefaultAndHypnoVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.PokerVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.ZombieKingVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.browncoat.darkages.PeasantEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.browncoat.fairytale.PokerEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.plastichelmet.PlasticHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.PvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import net.fabricmc.api.EnvType;
@@ -72,17 +76,20 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+		this.dataTracker.startTracking(COLOR, 0);
 	}
 
 	@Override
 	public void writeCustomDataToNbt(NbtCompound tag) {
 		super.writeCustomDataToNbt(tag);
 		tag.putInt("Variant", this.getTypeVariant());
+		tag.putInt("Color", this.getColorVariant());
 	}
 
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
+		this.dataTracker.set(COLOR, tag.getInt("Color"));
 	}
 
 	static {
@@ -119,12 +126,30 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
 			DataTracker.registerData(ZombieKingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
+	private static final TrackedData<Integer> COLOR =
+			DataTracker.registerData(ZombieKingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
 								 SpawnReason spawnReason, @Nullable EntityData entityData,
 								 @Nullable NbtCompound entityNbt) {
 		if (this.getType().equals(PvZEntity.ZOMBIEKINGHYPNO)){
 			setVariant(DefaultAndHypnoVariants.HYPNO);
 			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.REDZOMBIEKINGHYPNO)) {
+			setVariant(DefaultAndHypnoVariants.HYPNO);
+			this.setColor(ZombieKingVariants.RED);
+			this.setHypno(IsHypno.TRUE);
+		}else if (this.getType().equals(PvZEntity.BLACKZOMBIEKINGHYPNO)) {
+			setVariant(DefaultAndHypnoVariants.HYPNO);
+			this.setColor(ZombieKingVariants.BLACK);
+			this.setHypno(IsHypno.TRUE);
+		}else if (this.getType().equals(PvZEntity.REDZOMBIEKING)) {
+			this.setColor(ZombieKingVariants.RED);
+			this.createKingPieceProp();
+		}else if (this.getType().equals(PvZEntity.BLACKZOMBIEKING)) {
+			this.setColor(ZombieKingVariants.BLACK);
+			this.createKingPieceProp();
 		}
 		else {
 			setVariant(DefaultAndHypnoVariants.DEFAULT);
@@ -142,6 +167,27 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 
 	public void setVariant(DefaultAndHypnoVariants variant) {
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+	}
+
+	private int getColorVariant() {
+		return this.dataTracker.get(COLOR);
+	}
+
+	public ZombieKingVariants getColor() {
+		return ZombieKingVariants.byId(this.getColorVariant() & 255);
+	}
+
+	public void setColor(ZombieKingVariants variant) {
+		this.dataTracker.set(COLOR, variant.getId() & 255);
+	}
+
+	public void createKingPieceProp(){
+		if (world instanceof ServerWorld serverWorld) {
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.KINGPIECEGEAR, this.world);
+			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			propentity.startRiding(this);
+		}
 	}
 
 
@@ -197,6 +243,15 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 		if (this.getType().equals(PvZEntity.ZOMBIEKINGHYPNO)) {
 			initHypnoGoals();
 		}
+		else if (this.getType().equals(PvZEntity.REDZOMBIEKINGHYPNO)) {
+			initRedHypnoGoals();
+		}else if (this.getType().equals(PvZEntity.BLACKZOMBIEKINGHYPNO)) {
+			initBlackHypnoGoals();
+		}else if (this.getType().equals(PvZEntity.REDZOMBIEKING)) {
+			initRedGoals();
+		}else if (this.getType().equals(PvZEntity.BLACKZOMBIEKING)) {
+			initBlackGoals();
+		}
 		else {
 			initCustomGoals();
 		}
@@ -209,12 +264,42 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 		}));
     }
 
+	protected void initRedGoals() {
+		////////// Zombie targets ///////
+		this.targetSelector.add(1, new TargetGoal<>(this, MobEntity.class, 0, false, false, (livingEntity) -> {
+			return (livingEntity instanceof PokerEntity pokerEntity && !(pokerEntity.getHypno()) && (pokerEntity.getPoker().equals(PokerVariants.SPADE) || pokerEntity.getPoker().equals(PokerVariants.CLUB)));
+		}));
+	}
+
+	protected void initBlackGoals() {
+		////////// Zombie targets ///////
+		this.targetSelector.add(1, new TargetGoal<>(this, MobEntity.class, 0, false, false, (livingEntity) -> {
+			return (livingEntity instanceof PokerEntity pokerEntity && !(pokerEntity.getHypno()) && (pokerEntity.getPoker().equals(PokerVariants.HEART) || pokerEntity.getPoker().equals(PokerVariants.DIAMOND)));
+		}));
+	}
+
 	protected void initHypnoGoals(){
 		////////// Hypnotized Zombie targets ///////
 		this.targetSelector.add(1, new TargetGoal<>(this, MobEntity.class, 0, false, false, (livingEntity) -> {
 			return (livingEntity instanceof PeasantEntity peasantEntity && peasantEntity.getVariant().equals(BrowncoatVariants.BROWNCOAT));
 		}));
 	}
+
+	protected void initRedHypnoGoals(){
+		////////// Hypnotized Zombie targets ///////
+		this.targetSelector.add(1, new TargetGoal<>(this, MobEntity.class, 0, false, false, (livingEntity) -> {
+			return (livingEntity instanceof PokerEntity pokerEntity && (pokerEntity.getPoker().equals(PokerVariants.SPADE) || pokerEntity.getPoker().equals(PokerVariants.CLUB)));
+		}));
+	}
+
+
+	protected void initBlackHypnoGoals(){
+		////////// Hypnotized Zombie targets ///////
+		this.targetSelector.add(1, new TargetGoal<>(this, MobEntity.class, 0, false, false, (livingEntity) -> {
+			return (livingEntity instanceof PokerEntity pokerEntity && (pokerEntity.getPoker().equals(PokerVariants.HEART) || pokerEntity.getPoker().equals(PokerVariants.DIAMOND)));
+		}));
+	}
+
 
 	public void upgradeKnight(LivingEntity livingEntity) {
 		if (this.world instanceof ServerWorld) {
@@ -259,8 +344,19 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
+		System.out.println(this.getTarget());
 		if (this.getTarget() instanceof PeasantEntity peasantEntity && (peasantEntity.getVariant().equals(BrowncoatVariants.PEASANTKNIGHT) || peasantEntity.getVariant().equals(BrowncoatVariants.PEASANTKNIGHTHYPNO))) {
 			this.setTarget(null);
+		}
+		if (this.getColor().equals(ZombieKingVariants.RED)){
+			if (this.getTarget() instanceof PokerEntity pokerEntity && (pokerEntity.getPoker().equals(PokerVariants.HEART) || pokerEntity.getPoker().equals(PokerVariants.DIAMOND))){
+				this.setTarget(null);
+			}
+		}
+		if (this.getColor().equals(ZombieKingVariants.BLACK)){
+			if (this.getTarget() instanceof PokerEntity pokerEntity && (pokerEntity.getPoker().equals(PokerVariants.SPADE) || pokerEntity.getPoker().equals(PokerVariants.CLUB))){
+				this.setTarget(null);
+			}
 		}
 		super.tick();
 		double random = Math.random();
@@ -270,7 +366,36 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 		if (convertTicks == 25 * animationMultiplier && this.getTarget() instanceof PeasantEntity peasantEntity && (peasantEntity.getVariant().equals(BrowncoatVariants.BROWNCOAT) || peasantEntity.getVariant().equals(BrowncoatVariants.BROWNCOATHYPNO)) && !this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)){
 			this.upgradeKnight(peasantEntity);
 		}
+		if (convertTicks == 25 * animationMultiplier && this.getTarget() instanceof PokerEntity pokerEntity && !this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)){
+			double random2 = Math.random();
+			if (this.getColor().equals(ZombieKingVariants.RED)){
+				if (random2 <= 0.5) {
+					pokerEntity.setVariant(PokerVariants.HEART);
+				}
+				else {
+					pokerEntity.setVariant(PokerVariants.DIAMOND);
+				}
+			}
+			else {
+				if (random2 <= 0.5) {
+					pokerEntity.setVariant(PokerVariants.SPADE);
+				}
+				else {
+					pokerEntity.setVariant(PokerVariants.CLUB);
+				}
+			}
+			pokerEntity.playSound(PvZSounds.KNIGHTTRANSFORMEVENT, 1F, 1.0F);
+			pokerEntity.setRainbowTag(Rainbow.TRUE);
+			pokerEntity.rainbowTicks = 40;
+			pokerEntity.setHealth(pokerEntity.getMaxHealth());
+			if (this.getHypno()){
+				pokerEntity.damage(PvZCubed.HYPNO_DAMAGE, 0f);
+			}
+		}
 		if (convertTicks <= 0 && this.getTarget() instanceof PeasantEntity peasantEntity && random <= 0.01 && (peasantEntity.getVariant().equals(BrowncoatVariants.BROWNCOAT) || peasantEntity.getVariant().equals(BrowncoatVariants.BROWNCOATHYPNO)) && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
+			this.convertTicks = 45 * animationMultiplier;
+		}
+		if (convertTicks <= 0 && this.getTarget() instanceof PokerEntity && random <= 0.01 && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE)) {
 			this.convertTicks = 45 * animationMultiplier;
 		}
 		if (this.hasStatusEffect(PvZCubed.FROZEN) || this.hasStatusEffect(PvZCubed.STUN) || this.hasStatusEffect(PvZCubed.DISABLE)){
@@ -305,7 +430,13 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.ZOMBIEKINGEGG.getDefaultStack();
+		if (this.getColor().equals(ZombieKingVariants.RED)) {
+			return ModItems.REDZOMBIEKINGEGG.getDefaultStack();
+		} else if (this.getColor().equals(ZombieKingVariants.BLACK)) {
+			return ModItems.BLACKZOMBIEKINGEGG.getDefaultStack();
+		} else {
+			return ModItems.ZOMBIEKINGEGG.getDefaultStack();
+		}
 	}
 
 
@@ -361,8 +492,14 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
 	protected EntityType<?> hypnoType;
-	protected void checkHypno(){
-		hypnoType = PvZEntity.ZOMBIEKINGHYPNO;
+	protected void checkHypno() {
+		if (this.getType().equals(PvZEntity.REDZOMBIEKING)) {
+			hypnoType = PvZEntity.REDZOMBIEKINGHYPNO;
+		} else if (this.getType().equals(PvZEntity.BLACKZOMBIEKING)) {
+			hypnoType = PvZEntity.BLACKZOMBIEKINGHYPNO;
+		} else {
+			hypnoType = PvZEntity.ZOMBIEKINGHYPNO;
+		}
 	}
 
 	public boolean damage(DamageSource source, float amount) {

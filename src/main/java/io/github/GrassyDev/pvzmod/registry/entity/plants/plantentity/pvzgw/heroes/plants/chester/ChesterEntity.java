@@ -289,6 +289,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			default -> PvZSounds.PEAHITEVENT;
 		};
 		target.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
+		this.setGoop(HasGoop.TRUE);
 		this.setTarget(null);
 	}
 
@@ -460,6 +461,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	boolean shootSwitch = true;
 	boolean shot = false;
+	boolean goopshot = false;
 
 	public void FireBeamGoal() {
 		LivingEntity livingEntity = this.getTarget();
@@ -482,17 +484,21 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			if (this.beamTicks >= 0 && this.animationTicks <= -10) {
 				this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 2F, 1);
 				if (!this.isInsideWaterOrBubbleColumn()) {
-					RandomGenerator randomGenerator = this.random;
-					double xr = (double) MathHelper.nextBetween(randomGenerator, 10F, 20F);
-					Vec3d vec3d2 = new Vec3d((double) xr, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-					CheeseProjEntity proj = new CheeseProjEntity(PvZEntity.CHEESEPROJ, this.world);
-					float h = MathHelper.sqrt(MathHelper.sqrt(100)) * 0.5F;
-					proj.setVelocity(vec3d2.x, -3.9200000762939453 + 28 / (h * 2.2), vec3d2.z, 0.4F, 0F);
-					proj.updatePosition(this.getX(), this.getY() + 0.75D, this.getZ());
-					proj.setOwner(this);
+					for(float i = 3; i < 7; ++i) {
+						RandomGenerator randomGenerator = this.random;
+						double xr = (double) MathHelper.nextBetween(randomGenerator, 10F, 20F);
+						float variance = MathHelper.nextBetween(randomGenerator, -0.2F, 0.2F);
+						Vec3d vec3d2 = new Vec3d((double) xr, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+						CheeseProjEntity proj = new CheeseProjEntity(PvZEntity.CHEESEPROJ, this.world);
+						float h = MathHelper.sqrt(MathHelper.sqrt(100)) * 0.5F;
+						proj.setVelocity(vec3d2.x, -3.9200000762939453 + 28 / (h * 2.2), vec3d2.z, (i / 10) + variance, 0F);
+						proj.updatePosition(this.getX(), this.getY() + 0.75D, this.getZ());
+						proj.setOwner(this);
+						this.world.spawnEntity(proj);
+						goopshot = true;
+					}
 					this.beamTicks = -14;
 					this.world.sendEntityStatus(this, (byte) 113);
-					this.world.spawnEntity(proj);
 					shot = true;
 				}
 			} else if (this.animationTicks >= 0) {
@@ -502,6 +508,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 				this.animationTicks = -32;
 				this.setGoop(HasGoop.FALSE);
 				shot = false;
+				goopshot = false;
 			}
 		}
 		else if (livingEntity != null && !this.getIsAsleep() && this.getTypeCount() <= 0 && livingEntity.squaredDistanceTo(this) <= 9) {
@@ -516,7 +523,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 				this.playSound(PvZSounds.CHOMPERBITEVENT, 1.0F, 1.0F);
 			}
 			this.getNavigation().stop();
-			if (livingEntity != null) {
+			if (livingEntity.isAlive()) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 				if (livingEntity instanceof GraveEntity ||
 						IS_MACHINE.get(livingEntity.getType()).orElse(false).equals(true) ||
@@ -541,9 +548,8 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			}
 			if (this.beamTicks >= 0) {
 				if (!this.isInsideWaterOrBubbleColumn()) {
-					if (livingEntity != null) {
+					if (livingEntity.isAlive()) {
 						this.smack(livingEntity);
-						this.setGoop(HasGoop.TRUE);
 					}
 					this.beamTicks = -25;
 					shot = true;
@@ -561,7 +567,11 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			if (shot) {
 				this.world.sendEntityStatus(this, (byte) 121);
 			}
+			if (goopshot){
+				this.setGoop(HasGoop.FALSE);
+			}
 			shot = false;
+			goopshot = false;
 		}
 	}
 }

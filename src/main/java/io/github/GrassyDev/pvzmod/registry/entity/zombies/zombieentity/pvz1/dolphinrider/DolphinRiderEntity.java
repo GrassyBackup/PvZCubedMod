@@ -305,7 +305,11 @@ public class DolphinRiderEntity extends PvZombieEntity implements IAnimatable {
 			this.rainbowTicks = 5;
 		}
 		if (this.getAttacking() == null && !(this.getHypno()) && this.isAlive()){
-			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && !(this.CollidesWithPlant(1f, 0f) instanceof TangleKelpEntity) && this.getDolphinStage() && this.isInsideWaterOrBubbleColumn() && !removeDolphin){
+			if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && !(this.CollidesWithPlant(0.1f, 0f) instanceof TangleKelpEntity) && this.getDolphinStage() && this.isInsideWaterOrBubbleColumn() && !removeDolphin){
 				Vec3d vec3d = new Vec3d(0.5, 0.8, 0.0).rotateY(-this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				this.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
 				this.removeDolphin = true;
@@ -319,13 +323,22 @@ public class DolphinRiderEntity extends PvZombieEntity implements IAnimatable {
 				this.waitDolphinTick = 5;
 				this.playSound(DOLPHINJUMPEVENT, 0.75f, 1);
 			}
-			else if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && (PLANT_LOCATION.get(this.CollidesWithPlant(1f, 0f).getType()).orElse("normal").equals("tall") || PLANT_LOCATION.get(this.CollidesWithPlant(1f, 0f).getType()).orElse("normal").equals("flying")) && !this.onGround && !this.isInsideWaterOrBubbleColumn()){
+			else if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && (PLANT_LOCATION.get(this.CollidesWithPlant(0.1f, 0f).getType()).orElse("normal").equals("tall") || PLANT_LOCATION.get(this.CollidesWithPlant(0.1f, 0f).getType()).orElse("normal").equals("flying")) && !this.onGround && !this.isInsideWaterOrBubbleColumn()){
 				Vec3d vec3d = new Vec3d(-0.175, -0.3, 0.0).rotateY(-this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				this.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
 			}
-			else if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && ((this.isInsideWaterOrBubbleColumn() && !this.getDolphinStage()) || this.onGround)){
+			else if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && ((this.isInsideWaterOrBubbleColumn() && !this.getDolphinStage()) || this.onGround)){
 				this.setVelocity(0, -0.3, 0);
-				this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+				this.setTarget(CollidesWithPlant(0.1f, 0f));
 				this.setStealthTag(Stealth.FALSE);
 			}
 			else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()){

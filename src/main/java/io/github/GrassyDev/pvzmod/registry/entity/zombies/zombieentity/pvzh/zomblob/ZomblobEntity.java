@@ -278,9 +278,14 @@ public class ZomblobEntity extends PvZombieEntity implements IAnimatable {
 		}
 		super.tick();
 		if (this.getAttacking() == null && !(this.getHypno())){
-			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
+			if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 				this.setVelocity(0, -0.3, 0);
-				this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+				this.setTarget(CollidesWithPlant(0.1f, 0f));
 				this.setStealthTag(Stealth.FALSE);
 			}
 			else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()){

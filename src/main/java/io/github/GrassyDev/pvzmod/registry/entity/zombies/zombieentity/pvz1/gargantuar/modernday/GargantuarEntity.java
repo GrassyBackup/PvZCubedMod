@@ -173,6 +173,16 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 			this.initCustomGoals();
 			createProp();
 		}
+		else if (this.getType().equals(PvZEntity.CURSEDGARGOLITH)){
+			setVariant(GargantuarVariants.GARGOLITH);
+			this.initCustomGoals();
+			this.setImpStage(ImpStage.NOIMP);
+		}
+		else if (this.getType().equals(PvZEntity.CURSEDGARGOLITHHYPNO)){
+			setVariant(GargantuarVariants.GARGOLITHHYPNO);
+			this.setHypno(IsHypno.TRUE);
+			this.setImpStage(ImpStage.NOIMP);
+		}
 		else if (this.getType().equals(PvZEntity.GARGANTUARHYPNO)){
 			setVariant(GargantuarVariants.GARGANTUARHYPNO);
 			this.setHypno(IsHypno.TRUE);
@@ -318,6 +328,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	protected void initGoals() {
 		if (this.getType().equals(PvZEntity.GARGANTUARHYPNO) ||
 				this.getType().equals(PvZEntity.DEFENSIVEENDHYPNO) ||
+				this.getType().equals(PvZEntity.CURSEDGARGOLITHHYPNO) ||
 				this.getType().equals(PvZEntity.UNICORNGARGANTUARHYPNO) ||
 				this.getType().equals(PvZEntity.DEFENSIVEEND_NEWYEARHYPNO)) {
 			initHypnoGoals();
@@ -532,14 +543,28 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 			onDeath(DamageSource.GENERIC);
 		}
 		super.tick();
-		if (this.getAttacking() == null && !(this.getHypno())){
+		if (this.getVariant().equals(GargantuarVariants.GARGOLITH) && this.getAttacking() == null && !(this.getHypno())){
+			if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
+				this.setVelocity(0, -0.3, 0);
+				this.getNavigation().stop();
+				this.setTarget(CollidesWithPlant(0.1f, 0f));
+				this.setStealthTag(Stealth.FALSE);
+			}
+			else if (this.CollidesWithPlayer(0.1f) != null && !this.CollidesWithPlayer(0.1f).isCreative()){
+				this.setTarget(CollidesWithPlayer(0.1f));
+				this.setStealthTag(Stealth.FALSE);
+			}
+		}
+		else if (!this.getVariant().equals(GargantuarVariants.GARGOLITH) && this.getAttacking() == null && !(this.getHypno())){
 			if (this.CollidesWithPlant(0f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 				this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 				this.setTarget(CollidesWithPlant(0f, 0f));
 				this.setStealthTag(Stealth.FALSE);
 			}
 			else if (this.CollidesWithPlant(2f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 				this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 				this.setTarget(CollidesWithPlant(2f, 0f));
 				this.setStealthTag(Stealth.FALSE);
 			}
@@ -627,6 +652,9 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.UNICORNGARGANTUAR) || this.getType().equals(PvZEntity.UNICORNGARGANTUARHYPNO)){
 			return ModItems.UNICORNGARGANTUAREGG.getDefaultStack();
 		}
+		else if (this.getType().equals(PvZEntity.CURSEDGARGOLITH) || this.getType().equals(PvZEntity.CURSEDGARGOLITHHYPNO)){
+			return ModItems.UNICORNGARGANTUAREGG.getDefaultStack();
+		}
 		else if (this.getType().equals(PvZEntity.DEFENSIVEEND) ||
 				this.getType().equals(PvZEntity.DEFENSIVEENDHYPNO) ||
 				this.getType().equals(PvZEntity.DEFENSIVEEND_NEWYEAR) ||
@@ -686,7 +714,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	public static DefaultAttributeContainer.Builder createGargantuarAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
 				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.16D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 90.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.gargantuarH());
@@ -695,7 +723,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	public static DefaultAttributeContainer.Builder createDefensiveendAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
 				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.16D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 90.0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.defensiveendH());
@@ -704,10 +732,19 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	public static DefaultAttributeContainer.Builder createUnicornGargantuarAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
 				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.16D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 90.0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.unicorngargantuarH());
+	}
+
+	public static DefaultAttributeContainer.Builder createGargolithAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 90.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.cursedgargolithH());
 	}
 
 	protected SoundEvent getAmbientSound() {
@@ -750,6 +787,10 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 	protected void checkHypno(){
 		if (this.getType().equals(PvZEntity.DEFENSIVEEND)){
 			hypnoType = PvZEntity.DEFENSIVEENDHYPNO;
+		}
+		else
+		if (this.getType().equals(PvZEntity.CURSEDGARGOLITH)){
+			hypnoType = PvZEntity.CURSEDGARGOLITHHYPNO;
 		}
 		else if (this.getType().equals(PvZEntity.UNICORNGARGANTUAR)){
 			hypnoType = PvZEntity.UNICORNGARGANTUARHYPNO;

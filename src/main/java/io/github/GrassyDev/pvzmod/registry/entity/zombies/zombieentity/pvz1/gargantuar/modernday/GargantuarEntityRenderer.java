@@ -45,6 +45,10 @@ public class GargantuarEntityRenderer extends GeoEntityRenderer<GargantuarEntity
 						new Identifier("pvzmod", "geo/defensiveend.geo.json"));
 				map.put(GargantuarVariants.DEFENSIVEEND_NEWYEARHYPNO,
 						new Identifier("pvzmod", "geo/defensiveend.geo.json"));
+				map.put(GargantuarVariants.GARGOLITH,
+						new Identifier("pvzmod", "geo/gargolith.geo.json"));
+				map.put(GargantuarVariants.GARGOLITHHYPNO,
+						new Identifier("pvzmod", "geo/gargolith.geo.json"));
 			});
 
 	public Identifier getModelResource(GargantuarEntity object) {

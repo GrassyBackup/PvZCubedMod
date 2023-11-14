@@ -4,7 +4,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public enum PlasticHelmetVariants {
-	CONE(0);
+	CONE(0),
+	PAWN(1),
+	KNIGHT(2),
+	TOWER(3),
+	BISHOP(4),
+	KING(5);
 
 	private static final PlasticHelmetVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(PlasticHelmetVariants::getId)).toArray(PlasticHelmetVariants[]::new);

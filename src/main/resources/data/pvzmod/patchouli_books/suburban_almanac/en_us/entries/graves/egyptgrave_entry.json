@@ -34,7 +34,8 @@
         "pvzmod:zombies/explorer_entry",
         "pvzmod:zombies/torchlight_entry",
         "pvzmod:zombies/pharaoh_entry",
-        "pvzmod:zombies/undying_entry"
+        "pvzmod:zombies/undying_entry",
+        "pvzmod:zombies/cursedgargolith_entry"
       ],
       "title": "Spawnable Zombies"
     }

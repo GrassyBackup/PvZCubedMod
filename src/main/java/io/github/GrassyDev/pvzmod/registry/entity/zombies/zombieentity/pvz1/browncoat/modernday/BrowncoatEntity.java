@@ -119,6 +119,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		if (this.getType().equals(PvZEntity.CONEHEAD) ||
 				this.getType().equals(PvZEntity.SUMMERCONEHEAD) ||
 				this.getType().equals(PvZEntity.MUMMYCONE) ||
+				this.getType().equals(PvZEntity.POKERCONE) ||
 				this.getType().equals(PvZEntity.FUTURECONE)){
 			setVariant(BrowncoatVariants.CONEHEAD);
 			createConeheadProp();
@@ -136,6 +137,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.BUCKETHEAD) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKET) ||
+				this.getType().equals(PvZEntity.POKERBUCKET) ||
 				this.getType().equals(PvZEntity.SUMMERBUCKETHEAD) ||
 				this.getType().equals(PvZEntity.PEASANTBUCKET) ||
 				this.getType().equals(PvZEntity.FUTUREBUCKET)){
@@ -158,6 +160,30 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 			this.setCanHypno(CanHypno.FALSE);
 			setVariant(BrowncoatVariants.PYRAMIDHEAD);
 			createPyramidProp();
+			this.initCustomGoals();
+		}
+		else if (this.getType().equals(PvZEntity.POKERPAWN)){
+			this.setCanHypno(CanHypno.FALSE);
+			setVariant(BrowncoatVariants.POKERPAWN);
+			createPokerPawnProp();
+			this.initCustomGoals();
+		}
+		else if (this.getType().equals(PvZEntity.POKERKNIGHT)){
+			this.setCanHypno(CanHypno.FALSE);
+			setVariant(BrowncoatVariants.POKERKNIGHT);
+			createPokerKnightProp();
+			this.initCustomGoals();
+		}
+		else if (this.getType().equals(PvZEntity.POKERTOWER)){
+			this.setCanHypno(CanHypno.FALSE);
+			setVariant(BrowncoatVariants.POKERTOWER);
+			createPokerTowerProp();
+			this.initCustomGoals();
+		}
+		else if (this.getType().equals(PvZEntity.POKERBISHOP)){
+			this.setCanHypno(CanHypno.FALSE);
+			setVariant(BrowncoatVariants.POKERBISHOP);
+			createPokerBishopProp();
 			this.initCustomGoals();
 		}
 		else if (this.getType().equals(PvZEntity.PEASANTKNIGHT)){
@@ -192,6 +218,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.BROWNCOATHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYHYPNO) ||
+				this.getType().equals(PvZEntity.POKERHYPNO) ||
 				this.getType().equals(PvZEntity.SUMMERBASICHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTHYPNO) ||
@@ -201,6 +228,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.CONEHEADHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYCONEHYPNO) ||
+				this.getType().equals(PvZEntity.POKERCONEHYPNO) ||
 				this.getType().equals(PvZEntity.SUMMERCONEHEADHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTCONEHYPNO) ||
 				this.getType().equals(PvZEntity.FUTURECONEHYPNO) ||
@@ -211,6 +239,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.BUCKETHEADHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKETHYPNO) ||
+				this.getType().equals(PvZEntity.POKERBUCKETHYPNO) ||
 				this.getType().equals(PvZEntity.SUMMERBUCKETHEADHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTBUCKETHYPNO) ||
 				this.getType().equals(PvZEntity.SARGEANTHELMETHYPNO) ||
@@ -220,6 +249,22 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.PYRAMIDHEADHYPNO)){
 			setVariant(BrowncoatVariants.PYRAMIDHEADHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.POKERPAWNHYPNO)){
+			setVariant(BrowncoatVariants.POKERPAWNHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.POKERKNIGHTHYPNO)){
+			setVariant(BrowncoatVariants.POKERKNIGHTHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.POKERTOWERHYPNO)){
+			setVariant(BrowncoatVariants.POKERTOWERHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.POKERBISHOPHYPNO)){
+			setVariant(BrowncoatVariants.POKERBISHOPHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.PEASANTKNIGHTHYPNO)){
@@ -268,6 +313,42 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 	public void createConeheadProp(){
 		if (world instanceof ServerWorld serverWorld) {
 			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.CONEHEADGEAR, this.world);
+			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			propentity.startRiding(this);
+		}
+	}
+
+	public void createPokerPawnProp(){
+		if (world instanceof ServerWorld serverWorld) {
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERPAWNGEAR, this.world);
+			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			propentity.startRiding(this);
+		}
+	}
+
+	public void createPokerKnightProp(){
+		if (world instanceof ServerWorld serverWorld) {
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERKNIGHTGEAR, this.world);
+			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			propentity.startRiding(this);
+		}
+	}
+
+	public void createPokerTowerProp(){
+		if (world instanceof ServerWorld serverWorld) {
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERTOWERGEAR, this.world);
+			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			propentity.startRiding(this);
+		}
+	}
+
+	public void createPokerBishopProp(){
+		if (world instanceof ServerWorld serverWorld) {
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERBISHOPGEAR, this.world);
 			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
@@ -400,7 +481,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		return this.factory;
 	}
 
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+	protected  <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
 		ZombieShieldEntity zombieShieldEntity = null;
 		for (Entity entity : this.getPassengerList()){
 			if (entity instanceof ZombieShieldEntity) {
@@ -488,6 +569,13 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.MUMMYCONEHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKETHYPNO) ||
 				this.getType().equals(PvZEntity.PYRAMIDHEADHYPNO) ||
+				this.getType().equals(PvZEntity.POKERHYPNO) ||
+				this.getType().equals(PvZEntity.POKERCONEHYPNO) ||
+				this.getType().equals(PvZEntity.POKERBUCKETHYPNO) ||
+				this.getType().equals(PvZEntity.POKERPAWNHYPNO) ||
+				this.getType().equals(PvZEntity.POKERKNIGHTHYPNO) ||
+				this.getType().equals(PvZEntity.POKERTOWERHYPNO) ||
+				this.getType().equals(PvZEntity.POKERBISHOPHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTCONEHYPNO) ||
 				this.getType().equals(PvZEntity.PEASANTBUCKETHYPNO) ||
@@ -545,7 +633,6 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		}));
 	}
 
-
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
@@ -563,6 +650,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		super.tick();
 		if (this.getAttacking() != null){
 			this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 			this.getNavigation().stop();
 		}
 		if (!(this.getHypno()) && !this.world.isClient()){
@@ -570,9 +658,14 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 					this.getType().equals(PvZEntity.SARGEANTBOWL) ||
 					this.getType().equals(PvZEntity.SARGEANTHELMET) ||
 			this.getType().equals(PvZEntity.SARGEANTSHIELD)){
-				for (float x = 0; x <= 2.5f; x = x + 0.5f) {
-					if (this.CollidesWithPlant(x, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
+				for (float x = 0; x <= 2f; ++x) {
+					if (this.CollidesWithPlant(x, 0f) instanceof GardenChallengeEntity){
+						this.setTarget(CollidesWithPlant(0.1f, 0f));
+						this.setStealthTag(Stealth.FALSE);
+					}
+					else if (this.CollidesWithPlant(x, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
 						this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 						this.setTarget(CollidesWithPlant(x, 0f));
 						this.setStealthTag(Stealth.FALSE);
 					} else if (this.CollidesWithPlayer(x + 0.5f) != null && !this.CollidesWithPlayer(x + 0.5f).isCreative()) {
@@ -582,9 +675,14 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 				}
 			}
 			else {
-				if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
+				if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
 					this.setVelocity(0, -0.3, 0);
-					this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
 					this.setStealthTag(Stealth.FALSE);
 				} else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()) {
 					this.setTarget(CollidesWithPlayer(1.5f));
@@ -859,14 +957,26 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.PYRAMIDHEAD)){
 			hypnoType = PvZEntity.PYRAMIDHEADHYPNO;
 		}
-		else if (this.getType().equals(PvZEntity.PEASANT)){
-			hypnoType = PvZEntity.PEASANTHYPNO;
+		else if (this.getType().equals(PvZEntity.POKER)){
+			hypnoType = PvZEntity.POKERHYPNO;
 		}
-		else if (this.getType().equals(PvZEntity.PEASANTCONE)){
-			hypnoType = PvZEntity.PEASANTCONEHYPNO;
+		else if (this.getType().equals(PvZEntity.POKERCONE)){
+			hypnoType = PvZEntity.POKERCONEHYPNO;
 		}
-		else if (this.getType().equals(PvZEntity.PEASANTBUCKET)){
-			hypnoType = PvZEntity.PEASANTBUCKETHYPNO;
+		else if (this.getType().equals(PvZEntity.POKERBUCKET)){
+			hypnoType = PvZEntity.POKERBUCKETHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.POKERPAWN)){
+			hypnoType = PvZEntity.POKERPAWNHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.POKERKNIGHT)){
+			hypnoType = PvZEntity.POKERKNIGHTHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.POKERTOWER)){
+			hypnoType = PvZEntity.POKERTOWERHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.POKERBISHOP)){
+			hypnoType = PvZEntity.POKERBISHOPHYPNO;
 		}
 		else if (this.getType().equals(PvZEntity.PEASANTKNIGHT)){
 			hypnoType = PvZEntity.PEASANTKNIGHTHYPNO;

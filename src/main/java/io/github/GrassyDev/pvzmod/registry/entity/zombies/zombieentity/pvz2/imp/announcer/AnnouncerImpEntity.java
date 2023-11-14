@@ -12,6 +12,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.su
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.sunshroom.SunshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.DefaultAndHypnoVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.ZombieKingVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
@@ -85,17 +86,20 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+		this.dataTracker.startTracking(COLOR, 0);
 	}
 
 	@Override
 	public void writeCustomDataToNbt(NbtCompound tag) {
 		super.writeCustomDataToNbt(tag);
 		tag.putInt("Variant", this.getTypeVariant());
+		tag.putInt("Color", this.getColorVariant());
 	}
 
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
+		this.dataTracker.set(COLOR, tag.getInt("Color"));
 	}
 
 	static {
@@ -113,12 +117,31 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 	private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
 			DataTracker.registerData(AnnouncerImpEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
+	private static final TrackedData<Integer> COLOR =
+			DataTracker.registerData(AnnouncerImpEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
 								 SpawnReason spawnReason, @Nullable EntityData entityData,
 								 @Nullable NbtCompound entityNbt) {
 		if (this.getType().equals(PvZEntity.ANNOUNCERIMPHYPNO)){
 			setVariant(DefaultAndHypnoVariants.HYPNO);
 			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.REDANNOUNCERIMP)){
+			this.setColor(ZombieKingVariants.RED);
+		}
+		else if (this.getType().equals(PvZEntity.REDANNOUNCERIMPHYPNO)){
+			setVariant(DefaultAndHypnoVariants.HYPNO);
+			this.setHypno(IsHypno.TRUE);
+			this.setColor(ZombieKingVariants.RED);
+		}
+		else if (this.getType().equals(PvZEntity.BLACKANNOUNCERIMP)){
+			this.setColor(ZombieKingVariants.RED);
+		}
+		else if (this.getType().equals(PvZEntity.BLACKANNOUNCERIMPHYPNO)){
+			setVariant(DefaultAndHypnoVariants.HYPNO);
+			this.setHypno(IsHypno.TRUE);
+			this.setColor(ZombieKingVariants.BLACK);
 		}
 		else {
 			setVariant(DefaultAndHypnoVariants.DEFAULT);
@@ -136,6 +159,18 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 
 	public void setVariant(DefaultAndHypnoVariants variant) {
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+	}
+
+	private int getColorVariant() {
+		return this.dataTracker.get(COLOR);
+	}
+
+	public ZombieKingVariants getColor() {
+		return ZombieKingVariants.byId(this.getColorVariant() & 255);
+	}
+
+	public void setColor(ZombieKingVariants variant) {
+		this.dataTracker.set(COLOR, variant.getId() & 255);
 	}
 
 
@@ -250,11 +285,17 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 		super.tick();
 		if (this.isAggro && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 			this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 		}
 		if (this.getAttacking() == null && !(this.getHypno())){
-			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
+			if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 				this.setVelocity(0, -0.3, 0);
-				this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+				this.setTarget(CollidesWithPlant(0.1f, 0f));
 				this.setStealthTag(Stealth.FALSE);
 			}
 			else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()){
@@ -275,7 +316,13 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 	@Nullable
 	@Override
 	public ItemStack getPickBlockStack() {
-		return ModItems.ANNOUNCERIMPEGG.getDefaultStack();
+		if (this.getColor().equals(ZombieKingVariants.RED)) {
+			return ModItems.REDANNOUNCERIMPEGG.getDefaultStack();
+		} else if (this.getColor().equals(ZombieKingVariants.BLACK)) {
+			return ModItems.BLACKANNOUNCERIMPEGG.getDefaultStack();
+		} else {
+			return ModItems.ANNOUNCERIMPEGG.getDefaultStack();
+		}
 	}
 
 
@@ -331,7 +378,16 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 
 	protected EntityType<?> hypnoType;
 	protected void checkHypno(){
-		hypnoType = PvZEntity.ANNOUNCERIMPHYPNO;
+		if (this.getType().equals(PvZEntity.REDANNOUNCERIMP)) {
+			hypnoType = PvZEntity.REDANNOUNCERIMPHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.BLACKANNOUNCERIMP)) {
+
+			hypnoType = PvZEntity.BLACKANNOUNCERIMPHYPNO;
+		}
+		else {
+			hypnoType = PvZEntity.ANNOUNCERIMPHYPNO;
+		}
 	}
 
 	public boolean damage(DamageSource source, float amount) {
@@ -508,8 +564,22 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
         protected void castSpell() {
 
 			EntityType<?> king = PvZEntity.ZOMBIEKING;
-			if (this.announcerImpEntity.getHypno()){
-				king = PvZEntity.ZOMBIEKINGHYPNO;
+			if (this.announcerImpEntity.getColor().equals(ZombieKingVariants.RED)){
+				king = PvZEntity.REDZOMBIEKING;
+				if (this.announcerImpEntity.getHypno()){
+					king = PvZEntity.REDZOMBIEKINGHYPNO;
+				}
+			}
+			else if (this.announcerImpEntity.getColor().equals(ZombieKingVariants.BLACK)){
+				king = PvZEntity.BLACKZOMBIEKING;
+				if (this.announcerImpEntity.getHypno()){
+					king = PvZEntity.BLACKZOMBIEKINGHYPNO;
+				}
+			}
+			else {
+				if (this.announcerImpEntity.getHypno()) {
+					king = PvZEntity.ZOMBIEKINGHYPNO;
+				}
 			}
 
             ServerWorld serverWorld = (ServerWorld) AnnouncerImpEntity.this.world;

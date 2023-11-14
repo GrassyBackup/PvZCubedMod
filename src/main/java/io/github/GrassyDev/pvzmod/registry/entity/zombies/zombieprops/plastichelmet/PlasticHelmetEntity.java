@@ -82,6 +82,21 @@ public class PlasticHelmetEntity extends ZombiePropEntity implements IAnimatable
 		if (this.getType().equals(PvZEntity.CONEHEADGEAR)){
 			setVariant(PlasticHelmetVariants.CONE);
 		}
+		else if (this.getType().equals(PvZEntity.POKERPAWNGEAR)){
+			setVariant(PlasticHelmetVariants.PAWN);
+		}
+		else if (this.getType().equals(PvZEntity.POKERKNIGHTGEAR)){
+			setVariant(PlasticHelmetVariants.KNIGHT);
+		}
+		else if (this.getType().equals(PvZEntity.POKERTOWERGEAR)){
+			setVariant(PlasticHelmetVariants.TOWER);
+		}
+		else if (this.getType().equals(PvZEntity.POKERBISHOPGEAR)){
+			setVariant(PlasticHelmetVariants.BISHOP);
+		}
+		else if (this.getType().equals(PvZEntity.KINGPIECEGEAR)){
+			setVariant(PlasticHelmetVariants.KING);
+		}
 		else {
 			setVariant(PlasticHelmetVariants.CONE);
 		}
@@ -139,6 +154,51 @@ public class PlasticHelmetEntity extends ZombiePropEntity implements IAnimatable
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.coneH());
     }
+
+	public static DefaultAttributeContainer.Builder createPawnGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.pokerpawngearH());
+	}
+
+	public static DefaultAttributeContainer.Builder createKnightGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.pokerknightgearH());
+	}
+
+	public static DefaultAttributeContainer.Builder createTownGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.pokertowergearH());
+	}
+
+	public static DefaultAttributeContainer.Builder createBishopGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.pokerbishopgearH());
+	}
+
+	public static DefaultAttributeContainer.Builder createKingPieceGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.kingpiecegearH());
+	}
 
 	protected SoundEvent getAmbientSound() {
 		return PvZSounds.SILENCEVENET;

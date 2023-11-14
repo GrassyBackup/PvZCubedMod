@@ -32,6 +32,7 @@
   "rewards": {
     "recipes": [
       "pvzmod:plants/contain/jumpingbean",
+      "pvzmod:plants/contain/burstshroom",
       "pvzmod:plants/contain/springprincess"
     ],
     "experience": 25

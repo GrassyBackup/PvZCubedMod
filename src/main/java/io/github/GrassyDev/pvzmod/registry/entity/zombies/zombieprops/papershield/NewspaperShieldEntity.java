@@ -5,6 +5,7 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.PapershieldVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.explorer.ExplorerEntity;
@@ -183,7 +184,11 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 				}
 			}
 			if (!(this.getHypno())) {
-				if (this.CollidesWithPlant(1f, 0f) instanceof PlantEntity plantEntity && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
+				if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) instanceof PlantEntity plantEntity && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
 					if (!plantEntity.onWater && !plantEntity.getFireImmune() && this.getFireStage()) {
 						BlockPos blockPos = plantEntity.getBlockPos();
 						boolean bl = plantEntity.hasVehicle();
@@ -202,17 +207,27 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 						if (vehicle != null) {
 							vehicle.damage(DamageSource.mob(this), Integer.MAX_VALUE);
 						}
-						if (this.CollidesWithPlant(1f, 0f) == null) {
+						if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) == null) {
 							this.world.sendEntityStatus(this, (byte) 115);
 						}
 					} else if (!this.hasStatusEffect(PvZCubed.BOUNCED)) {
 						this.setVelocity(0, -0.3, 0);
-						this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+						this.setTarget(CollidesWithPlant(0.1f, 0f));
 						this.setStealthTag(Stealth.FALSE);
 					}
-				} else if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
+				} else if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
 					this.setVelocity(0, -0.3, 0);
-					this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
 					this.setStealthTag(Stealth.FALSE);
 				} else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()) {
 					this.setTarget(CollidesWithPlayer(1.5f));

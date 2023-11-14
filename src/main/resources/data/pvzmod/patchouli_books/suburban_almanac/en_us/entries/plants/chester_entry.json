@@ -13,7 +13,7 @@
         "$(br)$(#bd951a)Range: $()$(#ff0000)2 Blocks (Melee), 6 Blocks (Cheese)",
         "$(br)$(#bd951a)Chew Time: $()$(#ff0000)8.75s, 1.5s (Small Zombies)",
         "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)25s",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)Tall. Chomper. Spits a Cheese Tile once forwards (with varying distance) after biting a Zombie.",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Tall. Chomper. Spits 4 Cheese Tiles with random speed after biting a Zombie.",
         "$(br)$(#bd951a)Crazy Dave accidentally planted a chunk of cheese in his Zen garden..."
       ]
     },

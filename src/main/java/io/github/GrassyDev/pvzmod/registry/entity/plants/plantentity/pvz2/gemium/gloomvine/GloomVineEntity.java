@@ -7,7 +7,6 @@ import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowFullTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
@@ -181,7 +180,6 @@ public class GloomVineEntity extends PlantEntity.VineEntity implements IAnimatab
 					if (!world.isClient &&
 							!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
-							!(livingEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
 							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
 						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 						SoundEvent sound;
@@ -246,7 +244,7 @@ public class GloomVineEntity extends PlantEntity.VineEntity implements IAnimatab
 	}
 
 	public void tick() {
-		this.targetZombies(this.getPos(), 3, false, false, true);
+		this.targetZombies(this.getPos(), 3, true, false, true);
 		super.tick();
 		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {

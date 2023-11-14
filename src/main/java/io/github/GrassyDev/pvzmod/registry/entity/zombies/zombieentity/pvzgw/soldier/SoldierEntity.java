@@ -405,9 +405,14 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 					this.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
 				}
 			}
-			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && (this.onGround || this.isInsideWaterOrBubbleColumn())){
+			if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && (this.onGround || this.isInsideWaterOrBubbleColumn())){
 				this.setVelocity(0, -0.3, 0);
-				this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+				this.setTarget(CollidesWithPlant(0.1f, 0f));
 				this.setStealthTag(Stealth.FALSE);
 			}
 			else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()){

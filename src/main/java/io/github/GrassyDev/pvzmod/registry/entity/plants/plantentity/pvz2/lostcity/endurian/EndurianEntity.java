@@ -210,13 +210,6 @@ public class EndurianEntity extends PlantEntity implements IAnimatable {
 			this.discard();
 			return ActionResult.SUCCESS;
 		}
-		if (itemStack.isOf(ModItems.LARGESUN) && this.getHealth() < this.getMaxHealth()) {
-			this.setHealth(this.getMaxHealth());
-			if (!player.getAbilities().creativeMode){
-				itemStack.decrement(1);
-			}
-			return ActionResult.SUCCESS;
-		}
 		return super.interactMob(player, hand);
 	}
 

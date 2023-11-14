@@ -14,7 +14,7 @@ public class PoolGraveModel extends AnimatedGeoModel<PoolGraveEntity> {
     @Override
     public Identifier getTextureResource(PoolGraveEntity object)
     {
-        return new Identifier("pvzmod", "textures/entity/gravestone/basicgravestone.png");
+        return new Identifier("pvzmod", "textures/entity/gravestone/poolgravestone.png");
     }
 
     @Override

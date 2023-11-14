@@ -70,7 +70,6 @@ public class ShadowShroomEntity extends PlantEntity implements IAnimatable {
 
     public ShadowShroomEntity(EntityType<? extends ShadowShroomEntity> entityType, World world) {
         super(entityType, world);
-		this.setFireImmune(FireImmune.TRUE);
 
 		this.isBurst = true;
 		this.targetHelmet = true;

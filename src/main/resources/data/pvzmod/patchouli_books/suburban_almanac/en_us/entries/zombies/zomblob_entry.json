@@ -21,7 +21,7 @@
       "images": [
         "pvzmod:textures/gui/entries/zomblob.png"
       ],
-      "title": "Hard Dark Ages Zombie",
+      "title": "Fairytale Forest Zombie",
       "border": "true",
       "text": "$(#25228d)Zomblobs split into multiple smaller versions of themselves."
     },

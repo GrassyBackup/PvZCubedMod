@@ -25,6 +25,10 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/future/future.png"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant.png"));
+				map.put(MetalHelmetVariants.POKERLIDRED,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/poker/poker.png"));
+				map.put(MetalHelmetVariants.POKERLIDBLACK,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/poker/club/pokercl.png"));
 				map.put(MetalHelmetVariants.SERGEANTHELMET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/sargeant/sargeant.png"));
 				map.put(MetalHelmetVariants.SCREENDOOR,
@@ -65,6 +69,10 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/future/future_geardmg1.png"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/peasant/peasant_geardmg1.png"));
+				map.put(MetalHelmetVariants.POKERLIDRED,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/poker/poker_geardmg1.png"));
+				map.put(MetalHelmetVariants.POKERLIDBLACK,
+						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/poker/club/pokercl_geardmg1.png"));
 				map.put(MetalHelmetVariants.SERGEANTHELMET,
 						new Identifier(PvZCubed.MOD_ID, "textures/entity/browncoat/sargeant/sargeant_geardmg1.png"));
 				map.put(MetalHelmetVariants.SCREENDOOR,
@@ -105,6 +113,10 @@ public class MetalHelmetProjEntityRenderer extends GeoProjectilesRenderer {
 						new Identifier(PvZCubed.MOD_ID, "geo/futurebucketproj.geo.json"));
 				map.put(MetalHelmetVariants.PEASANTBUCKET,
 						new Identifier(PvZCubed.MOD_ID, "geo/peasantbucketproj.geo.json"));
+				map.put(MetalHelmetVariants.POKERLIDRED,
+						new Identifier(PvZCubed.MOD_ID, "geo/lidproj.geo.json"));
+				map.put(MetalHelmetVariants.POKERLIDBLACK,
+						new Identifier(PvZCubed.MOD_ID, "geo/lidproj.geo.json"));
 				map.put(MetalHelmetVariants.SERGEANTHELMET,
 						new Identifier(PvZCubed.MOD_ID, "geo/helmetproj.geo.json"));
 				map.put(MetalHelmetVariants.SCREENDOOR,

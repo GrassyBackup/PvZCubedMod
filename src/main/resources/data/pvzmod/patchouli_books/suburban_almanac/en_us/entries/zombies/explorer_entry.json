@@ -31,7 +31,6 @@
         "pvzmod:plants/snowpea_entry",
         "pvzmod:plants/icebergpult_entry",
         "pvzmod:plants/iceberglettuce_entry",
-        "pvzmod:plants/acidshroom_entry",
         "pvzmod:plants/navybean_entry",
         "pvzmod:plants/cattail_entry",
         "pvzmod:plants/repeater_entry",
@@ -39,7 +38,15 @@
         "pvzmod:plants/spikerock_entry",
         "pvzmod:plants/narcissus_entry",
         "pvzmod:plants/dropea_entry",
-        "pvzmod:plants/breezeshroom_entry"
+        "pvzmod:plants/breezeshroom_entry",
+        "pvzmod:plants/burstshroom_entry"
+      ]
+    },
+    {
+      "type": "relations",
+      "title": "Recommended Plants",
+      "entries": [
+        "pvzmod:plants/acidshroom_entry"
       ]
     },
     {

@@ -127,7 +127,7 @@ public class SargeantEntity extends BrowncoatEntity {
 
 	public static DefaultAttributeContainer.Builder createSergeantAttributes() {
 		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
-				.add(ReachEntityAttributes.ATTACK_RANGE, 2.5D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 3.5D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)

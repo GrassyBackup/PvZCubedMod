@@ -193,6 +193,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float breezesroomS = 15f;
 		@RestartRequired
+		public float burstshroomS = 20f;
+		@RestartRequired
 		public float buttonshroomS = 2.5f;
 		@RestartRequired
 		public float cabbagepultS = 5.0f;
@@ -252,6 +254,8 @@ public class PvZConfigModel {
 		public float gravebusterS = 5.0f;
 		@RestartRequired
 		public float hammerflowerS = 15.0f;
+		@RestartRequired
+		public float heavenlypeachS = 25f;
 		@RestartRequired
 		public float hypnoshroomS = 20.0f;
 		@RestartRequired
@@ -469,6 +473,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double darkAgesGraveH = 170D;
 		@RestartRequired
+		public double fairytaleGraveH = 360D;
+		@RestartRequired
 		public double mausoleumGraveH = 300D;
 
 		@RestartRequired
@@ -485,6 +491,14 @@ public class PvZConfigModel {
 		public double futureH = 27D;
 		@RestartRequired
 		public double peasantH = 27D;
+		@RestartRequired
+		public double pokerheartH = 65D;
+		@RestartRequired
+		public double pokerspadeH = 37D;
+		@RestartRequired
+		public double pokerclubH = 37D;
+		@RestartRequired
+		public double pokerdiamondH = 50D;
 		@RestartRequired
 		public double bobsledH = 65D;
 		@RestartRequired
@@ -512,6 +526,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double flagPeasantH = 50D;
 		@RestartRequired
+		public double flagPokerH = 65D;
+		@RestartRequired
 		public double flagSargeantH = 75D;
 		@RestartRequired
 		public double footballH = 27D;
@@ -521,6 +537,8 @@ public class PvZConfigModel {
 		public double gargantuarH = 360D;
 		@RestartRequired
 		public double defensiveendH = 360D;
+		@RestartRequired
+		public double cursedgargolithH = 260D;
 		@RestartRequired
 		public double unicorngargantuarH = 360D;
 		@RestartRequired
@@ -578,6 +596,11 @@ public class PvZConfigModel {
 
 		@RestartRequired
 		public double coneH = 37D;
+		public double pokerpawngearH = 140D;
+		public double pokerknightgearH = 212D;
+		public double pokertowergearH = 286D;
+		public double pokerbishopgearH = 212D;
+		public double kingpiecegearH = 65D;
 
 		@RestartRequired
 		public double bucketH = 110D;
@@ -634,6 +657,11 @@ public class PvZConfigModel {
 		public double basketballObstH = 120D;
 		@RestartRequired
 		public double healstationObstH = 60D;
+
+		@RestartRequired
+		public double gargolithObstH = 360D;
+		@RestartRequired
+		public double imptabletObstH = 65D;
 
 		@RestartRequired
 		public double hawkerObstH = 90D;

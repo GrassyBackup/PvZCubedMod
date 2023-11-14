@@ -2,7 +2,7 @@
   "name": "Super Chomper",
   "icon": "pvzmod:superchomper_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 49,
+  "sortnum": 50,
   "advancement": "pvzmod:make_chomper",
   "pages": [
     {

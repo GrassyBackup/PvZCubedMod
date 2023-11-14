@@ -21,6 +21,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.environment.watertile.WaterTil
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.basicgrave.BasicGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.darkagesgrave.DarkAgesGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.egyptgravestone.EgyptGraveRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.gravestones.fairytaleforest.FairyTaleGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.futuregrave.FutureGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.mausoleum.MausoleumGraveRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.nightgrave.NightGraveRenderer;
@@ -70,6 +71,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrad
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.OxygaeEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.breezeshroom.BreezeshroomEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.burstshroom.BurstshroomEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.ancientegypt.bloomerang.BloomerangEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.ancientegypt.iceberglettuce.IcebergLettuceEntityRenderer;
@@ -102,6 +104,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.gener
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.pumpkinwitch.PumpkinWitchEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.tulimpeter.TulimpeterEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.heian.dripphylleia.DripphylleiaEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.kongfu.HeavenlyPeachEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.renaissance.oilyolive.OilyOliveEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.skycity.loquat.LoquatEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.skycity.saucer.SaucerEntityRenderer;
@@ -211,6 +214,8 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.octo
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.pharaoh.PharaohEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.browncoat.fairytale.PokerEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.flagzombie.fairytale.FlagPokerEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.pumpkinzombie.PumpkinZombieEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.browncoat.sargeant.SargeantEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.flagzombie.sargeant.FlagSargeantEntityRenderer;
@@ -233,6 +238,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.papershiel
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.planthelmet.PlantHelmetEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.plantobstacle.WoodObstacleEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.plastichelmet.PlasticHelmetEntityRenderer;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.rockobstacle.RockObstacleEntityRenderer;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.stonehelmet.StoneHelmetEntityRenderer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -282,6 +288,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.BUBBLEPAD, BubblePadEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.BREEZESHROOM, BreezeshroomEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.BURSTSHROOM, BurstshroomEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.SUPERCHOMPER, SuperChomperEntityRenderer::new);
 
@@ -383,6 +391,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.OLIVEPIT, OlivePitEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.GLOOMVINE, GloomVineEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.HEAVENLYPEACH, HeavenlyPeachEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.MAGICSHROOM, MagicshroomEntityRenderer::new);
 
@@ -570,6 +580,11 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.FLAGZOMBIE_GHYPNO, FlagzombieEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.CONEHEADGEAR, PlasticHelmetEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERPAWNGEAR, PlasticHelmetEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERKNIGHTGEAR, PlasticHelmetEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERTOWERGEAR, PlasticHelmetEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERBISHOPGEAR, PlasticHelmetEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.KINGPIECEGEAR, PlasticHelmetEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.POLEVAULTING, PoleVaultingEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.POLEVAULTINGHYPNO, PoleVaultingEntityRenderer::new);
@@ -654,6 +669,11 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.UNICORNGARGANTUAR, GargantuarEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.UNICORNGARGANTUARHYPNO, GargantuarEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.CURSEDGARGOLITH, GargantuarEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.CURSEDGARGOLITHHYPNO, GargantuarEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.GARGOLITHOBSTACLE, RockObstacleEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.SCRAPMECH, ScrapMechEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SCRAPMECHHYPNO, ScrapMechEntityRenderer::new);
 
@@ -725,6 +745,23 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.HOLOHEAD, FutureZombieEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.HOLOHEADHYPNO, FutureZombieEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.POKER, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERHYPNO, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAGPOKER, FlagPokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.FLAGPOKERHYPNO, FlagPokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERCONE, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERCONEHYPNO, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERBUCKET, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERBUCKETHYPNO, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERPAWN, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERPAWNHYPNO, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERKNIGHT, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERKNIGHTHYPNO, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERTOWER, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERTOWERHYPNO, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERBISHOP, PokerEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.POKERBISHOPHYPNO, PokerEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.SARGEANT, SargeantEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SARGEANTHYPNO, SargeantEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SARGEANTBOWL, SargeantEntityRenderer::new);
@@ -742,8 +779,22 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.ANNOUNCERIMP, AnnouncerImpEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.ANNOUNCERIMPHYPNO, AnnouncerImpEntityRenderer::new);
 
+		EntityRendererRegistry.register(PvZEntity.REDANNOUNCERIMP, AnnouncerImpEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.REDANNOUNCERIMPHYPNO, AnnouncerImpEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.BLACKANNOUNCERIMP, AnnouncerImpEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.BLACKANNOUNCERIMPHYPNO, AnnouncerImpEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.IMPTABLETOBSTACLE, RockObstacleEntityRenderer::new);
+
 		EntityRendererRegistry.register(PvZEntity.ZOMBIEKING, ZombieKingEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.ZOMBIEKINGHYPNO, ZombieKingEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.REDZOMBIEKING, ZombieKingEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.REDZOMBIEKINGHYPNO, ZombieKingEntityRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.BLACKZOMBIEKING, ZombieKingEntityRenderer::new);
+		EntityRendererRegistry.register(PvZEntity.BLACKZOMBIEKINGHYPNO, ZombieKingEntityRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.SUPERFANIMP, SuperFanImpEntityRenderer::new);
 		EntityRendererRegistry.register(PvZEntity.SUPERFANIMPHYPNO, SuperFanImpEntityRenderer::new);
@@ -863,6 +914,8 @@ public class PvZEntityClient implements ClientModInitializer {
 		EntityRendererRegistry.register(PvZEntity.FUTUREGRAVESTONE, FutureGraveRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.DARKAGESGRAVESTONE, DarkAgesGraveRenderer::new);
+
+		EntityRendererRegistry.register(PvZEntity.FAIRYTALEGRAVESTONE, FairyTaleGraveRenderer::new);
 
 		EntityRendererRegistry.register(PvZEntity.MAUSOLEUMGRAVESTONE, MausoleumGraveRenderer::new);
 

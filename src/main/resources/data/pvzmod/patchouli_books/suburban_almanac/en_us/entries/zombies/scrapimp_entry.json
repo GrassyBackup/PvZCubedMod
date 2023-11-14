@@ -2,7 +2,7 @@
   "name": "Scrap Imp",
   "icon": "pvzmod:scrapimp_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 803,
+  "sortnum": 903,
   "advancement": "pvzmod:make_challenge",
   "pages": [
     {

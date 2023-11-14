@@ -60,7 +60,6 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 	public SmooshroomEntity(EntityType<? extends SmooshroomEntity> entityType, World world) {
 		super(entityType, world);
 		this.setFireImmune(FireImmune.TRUE);
-		this.setNoGravity(true);
 		this.nocturnal = true;
 	}
 

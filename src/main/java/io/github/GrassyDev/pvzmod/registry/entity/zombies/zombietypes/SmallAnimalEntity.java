@@ -2,6 +2,7 @@ package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -35,10 +36,15 @@ public abstract class SmallAnimalEntity extends PvZombieEntity implements IAnima
 	public void tick() {
 		super.tick();
 		if (this.getAttacking() == null && !(this.getHypno())){
-			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
+			if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 				if (this.isOnGround() || this.isInsideWaterOrBubbleColumn()){
 					this.setVelocity(0, -0.3, 0);
-					this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
 				}
 				this.setStealthTag(Stealth.FALSE);
 			}
@@ -56,6 +62,7 @@ public abstract class SmallAnimalEntity extends PvZombieEntity implements IAnima
 		}
 		if (!list1.isEmpty() && !this.hasStatusEffect(PvZCubed.BOUNCED) && !this.onGround && !this.isInsideWaterOrBubbleColumn()){
 			this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 			this.setTarget(list1.get(0));
 		}
 	}

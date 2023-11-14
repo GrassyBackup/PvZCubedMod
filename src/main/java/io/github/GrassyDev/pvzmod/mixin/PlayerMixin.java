@@ -2,10 +2,14 @@ package io.github.GrassyDev.pvzmod.mixin;
 
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
+import io.github.GrassyDev.pvzmod.registry.items.seedpackets.HeavenlyPeachSeeds;
 import io.github.GrassyDev.pvzmod.registry.items.seedpackets.SeedItem;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ShovelItem;
@@ -15,6 +19,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.MAX_REACH_UUID;
 import static io.github.GrassyDev.pvzmod.PvZCubed.createReachModifier;
@@ -47,6 +53,14 @@ public abstract class PlayerMixin extends LivingEntity {
 			EntityAttributeInstance maxReachAttribute = this.getAttributeInstance(ReachEntityAttributes.REACH);
 			assert maxReachAttribute != null;
 			maxReachAttribute.removeModifier(MAX_REACH_UUID);
+		}
+		if (this.getInventory().getMainHandStack().getItem() instanceof HeavenlyPeachSeeds){
+			List<PlantEntity> plantList = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(15));
+			for (PlantEntity plantEntity : plantList){
+				if (plantEntity.getHealth() <= plantEntity.getMaxHealth() / 2){
+					plantEntity.addStatusEffect((new StatusEffectInstance(StatusEffects.GLOWING, 2, 1)));
+				}
+			}
 		}
     }
 }

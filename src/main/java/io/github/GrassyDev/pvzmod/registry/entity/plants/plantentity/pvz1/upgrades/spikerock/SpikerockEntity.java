@@ -289,20 +289,6 @@ public class SpikerockEntity extends PlantEntity implements IAnimatable {
 			this.discard();
 			return ActionResult.SUCCESS;
 		}
-		if (itemStack.isOf(ModItems.LARGESUN) && !this.getCrack().equals(Crack.FULL)) {
-			float heal = 0;
-			if (this.getCrack().equals(Crack.DAMAGED)){
-				heal = this.getMaxHealth();
-			}
-			else if (this.getCrack().equals(Crack.DYING)){
-				heal = 180;
-			}
-			this.setHealth(heal);
-			if (!player.getAbilities().creativeMode){
-				itemStack.decrement(1);
-			}
-			return ActionResult.SUCCESS;
-		}
 		return super.interactMob(player, hand);
 	}
 

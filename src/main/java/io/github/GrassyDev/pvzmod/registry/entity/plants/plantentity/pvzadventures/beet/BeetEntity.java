@@ -46,8 +46,6 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 
 	public BeetEntity(EntityType<? extends BeetEntity> entityType, World world) {
 		super(entityType, world);
-		this.setFireImmune(FireImmune.TRUE);
-		this.setNoGravity(true);
 	}
 
 	static {

@@ -1,9 +1,7 @@
 package io.github.GrassyDev.pvzmod.registry.entity.statuseffects;
 
 import net.minecraft.entity.LivingEntity;
-import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
@@ -18,8 +16,8 @@ public class Ice extends StatusEffect {
         super(
                 StatusEffectType.HARMFUL, // whether beneficial or harmful for entity
                 0x33FFFF); // color in RGB
-		final UUID MAX_SPEED_UUID = UUID.nameUUIDFromBytes(MOD_ID.getBytes(StandardCharsets.UTF_8));
-		final UUID MAX_STRENGTH_UUID = UUID.nameUUIDFromBytes(MOD_ID.getBytes(StandardCharsets.UTF_8));
+		final UUID MAX_SPEED_UUID = UUID.nameUUIDFromBytes(MOD_ID.getBytes(StandardCharsets.US_ASCII));
+		final UUID MAX_STRENGTH_UUID = UUID.nameUUIDFromBytes(MOD_ID.getBytes(StandardCharsets.US_ASCII));
 		addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, String.valueOf(MAX_SPEED_UUID), -0.115375, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
 		addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, String.valueOf(MAX_STRENGTH_UUID), -0.25, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
     }

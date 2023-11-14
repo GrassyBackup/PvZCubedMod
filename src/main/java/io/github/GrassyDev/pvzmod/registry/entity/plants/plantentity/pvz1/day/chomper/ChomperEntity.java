@@ -516,7 +516,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 			}
 			if (this.beamTicks >= 0) {
 				if (!this.isInsideWaterOrBubbleColumn()) {
-					if (livingEntity != null) {
+					if (livingEntity.isAlive()) {
 						this.smack(livingEntity);
 					}
 					this.beamTicks = -25;

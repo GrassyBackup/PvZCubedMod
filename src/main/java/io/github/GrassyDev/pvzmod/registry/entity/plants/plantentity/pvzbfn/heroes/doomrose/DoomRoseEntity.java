@@ -55,8 +55,6 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	public DoomRoseEntity(EntityType<? extends DoomRoseEntity> entityType, World world) {
 		super(entityType, world);
-		this.setFireImmune(FireImmune.TRUE);
-		this.setNoGravity(true);
 	}
 
 	static {

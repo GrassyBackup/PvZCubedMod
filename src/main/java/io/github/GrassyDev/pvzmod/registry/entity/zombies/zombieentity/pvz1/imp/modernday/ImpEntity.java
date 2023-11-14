@@ -9,13 +9,9 @@ import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.chomper.ChomperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.sunflower.SunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.sunshroom.SunshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.social.superchomper.SuperChomperEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroes.plants.chester.ChesterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.ImpVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntity;
@@ -460,10 +456,15 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			this.bassTime = 20;
 		}
 		if (this.getAttacking() == null && !(this.getHypno())){
-			if (this.CollidesWithPlant(1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
+			if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
+					this.setStealthTag(Stealth.FALSE);
+				}
+				else if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED)){
 				if (this.isOnGround() || this.isInsideWaterOrBubbleColumn()){
 					this.setVelocity(0, -0.3, 0);
-					this.setTarget(CollidesWithPlant(1f, 0f));
+						this.getNavigation().stop();
+					this.setTarget(CollidesWithPlant(0.1f, 0f));
 				}
 				this.setStealthTag(Stealth.FALSE);
 			}
@@ -487,6 +488,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		}
 		if (!list1.isEmpty() && !this.hasStatusEffect(PvZCubed.BOUNCED) && !this.onGround && !this.isInsideWaterOrBubbleColumn()){
 			this.setVelocity(0, -0.3, 0);
+						this.getNavigation().stop();
 			this.setTarget(list1.get(0));
 		}
 	}
@@ -569,12 +571,6 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 
 	@Override
 	public void onDeath(DamageSource source) {
-		if (!(source.getSource() instanceof SuperChomperEntity) &&
-				!(source.getSource() instanceof ChomperEntity) &&
-				!(source.getSource() instanceof ChesterEntity) &&
-				!(source.getSource() instanceof OlivePitEntity)) {
-			tryLaunch(this.getTarget());
-		}
 		for (Entity entity : this.getPassengerList()){
 			if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity){
 				generalPvZombieEntity.setFlying(Flying.FALSE);

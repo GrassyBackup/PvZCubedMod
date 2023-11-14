@@ -82,6 +82,9 @@ public class BreezeshroomSeeds extends SeedItem implements FabricItem {
 
 		tooltip.add(Text.translatable("item.pvzmod.breezeshroom_seed_packet.flavour")
 				.formatted(Formatting.DARK_GRAY));
+
+		tooltip.add(Text.translatable("item.pvzmod.breezeshroom.alt")
+				.formatted(Formatting.GRAY));
 	}
 
     public ActionResult useOnBlock(ItemUsageContext context) {

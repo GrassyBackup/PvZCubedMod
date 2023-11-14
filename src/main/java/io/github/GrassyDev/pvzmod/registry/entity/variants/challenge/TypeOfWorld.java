@@ -11,7 +11,8 @@ public enum TypeOfWorld {
 	EGYPT(4),
 	DARKAGES(5),
 	FUTURE(6),
-	MAUSOLEUM(7);
+	MAUSOLEUM(7),
+	FAIRYTALE(8);
 
 	private static final TypeOfWorld[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(TypeOfWorld::getId)).toArray(TypeOfWorld[]::new);

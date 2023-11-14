@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer;
 
+import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.ZombieKingVariants;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
@@ -8,13 +9,29 @@ public class AnnouncerImpEntityModel extends AnimatedGeoModel<AnnouncerImpEntity
     @Override
     public Identifier getModelResource(AnnouncerImpEntity object)
     {
-        return new Identifier("pvzmod", "geo/announcerimp.geo.json");
+		if (object.getColor().equals(ZombieKingVariants.RED)) {
+			return new Identifier("pvzmod", "geo/redannouncerimp.geo.json");
+		}
+		else if (object.getColor().equals(ZombieKingVariants.BLACK)) {
+			return new Identifier("pvzmod", "geo/blackannouncerimp.geo.json");
+		}
+		else {
+			return new Identifier("pvzmod", "geo/announcerimp.geo.json");
+		}
     }
 
     @Override
     public Identifier getTextureResource(AnnouncerImpEntity object)
     {
-		return new Identifier("pvzmod", "textures/entity/imp/announcerimp.png");
+		if (object.getColor().equals(ZombieKingVariants.RED)) {
+			return new Identifier("pvzmod", "textures/entity/imp/announcerimp_red.png");
+		}
+		else if (object.getColor().equals(ZombieKingVariants.BLACK)) {
+			return new Identifier("pvzmod", "textures/entity/imp/announcerimp_black.png");
+		}
+		else {
+			return new Identifier("pvzmod", "textures/entity/imp/announcerimp.png");
+		}
     }
 
     @Override

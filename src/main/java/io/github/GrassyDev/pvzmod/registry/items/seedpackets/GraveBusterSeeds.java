@@ -121,7 +121,9 @@ public class GraveBusterSeeds extends SeedItem implements FabricItem {
 			for (LivingEntity livingEntity : list){
 				if (livingEntity instanceof GraveEntity graveEntity && graveEntity.isChallengeGrave()){
 					list2.clear();
-					break;
+				}
+				else if (livingEntity.getType().equals(PvZEntity.GARGOLITHOBSTACLE)){
+					list2.clear();
 				}
 				else {
 					list2.add(livingEntity);

@@ -60,8 +60,6 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 	public BananasaurusEntity(EntityType<? extends BananasaurusEntity> entityType, World world) {
 		super(entityType, world);
 
-
-		this.setNoGravity(true);
 	}
 
 	static {

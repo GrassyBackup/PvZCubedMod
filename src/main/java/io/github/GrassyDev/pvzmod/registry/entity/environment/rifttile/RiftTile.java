@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.RiftVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday.BrowncoatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.bass.BassZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.metallicvehicle.speakervehicle.SpeakerVehicleEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.rockobstacle.RockObstacleEntity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -41,6 +42,12 @@ public class RiftTile extends TileEntity {
 				this.discard();
 			}
 		}
+		else if (this.getVariant().equals(RiftVariants.GARGOLITH)){
+			if (this.getTypeCount() >= 300) {
+				this.createGargolith();
+				this.discard();
+			}
+		}
 		else if (this.getTypeCount() >= 75){
 			this.createBrowncoat();
 			this.discard();
@@ -57,6 +64,14 @@ public class RiftTile extends TileEntity {
 			zombie2.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			zombie2.startRiding(zombie);
 			serverWorld.spawnEntityAndPassengers(zombie2);
+		}
+	}
+
+	public void createGargolith(){
+		if (world instanceof ServerWorld serverWorld) {
+			RockObstacleEntity zombie = new RockObstacleEntity(PvZEntity.GARGOLITHOBSTACLE, this.world);
+			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
+			serverWorld.spawnEntityAndPassengers(zombie);
 		}
 	}
 

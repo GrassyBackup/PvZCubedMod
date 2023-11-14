@@ -58,7 +58,6 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 
 	public HammerFlowerEntity(EntityType<? extends HammerFlowerEntity> entityType, World world) {
 		super(entityType, world);
-		this.setNoGravity(true);
 	}
 
 	protected void initDataTracker() {

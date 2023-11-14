@@ -107,6 +107,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bananasaurusS": "Bananasaurus Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.bombseedlingS": "Bomb Seedling Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.breezesroomS": "Breeze-shroom Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.burstshroomS": "Burst-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.buttonshroomS": "Button-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cabbagepultS": "Cabbage-pult Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cattailS": "Cattail Seed",
@@ -135,6 +136,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gloomshroomS": "Gloom-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.gravebusterS": "Grave Buster Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.hammerflowerS": "Hammer Flower Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.heavenlypeachS": "Heavenly Peach Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.hypnoshroomS": "Hypno-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.iceberglettuceS": "Iceberg Lettuce Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.icebergpultS": "Iceberg-pult Seed",
@@ -272,6 +274,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.egyptGraveH": "Egypt Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.futureGraveH": "Future Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.darkAgesGraveH": "Dark Ages Gravestone Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.fairytaleGraveH": "Fairy Tale Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.mausoleumGraveH": "Mausoleum Gravestone Health",
   "text.config.pvz3-config.option.nestedZombieHealth.backupH": "Backup Zombie Health",
   "text.config.pvz3-config.option.nestedZombieHealth.browncoatH": "Browncoat Health",
@@ -292,12 +295,14 @@
   "text.config.pvz3-config.option.nestedZombieHealth.flagMummyH": "Flag Mummy Health",
   "text.config.pvz3-config.option.nestedZombieHealth.flagPeasantH": "Flag Peasant Health",
   "text.config.pvz3-config.option.nestedZombieHealth.flagFutureH": "Flag Future Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.flagPokerH": "Flag Poker Health",
   "text.config.pvz3-config.option.nestedZombieHealth.flagSargeantH": "Flag Sergeant Health",
   "text.config.pvz3-config.option.nestedZombieHealth.footballH": "Football Health",
   "text.config.pvz3-config.option.nestedZombieHealth.berserkerH": "Berserker Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bobsledH": "Bobsled Rider Health",
   "text.config.pvz3-config.option.nestedZombieHealth.gargantuarH": "Gargantuar Health",
   "text.config.pvz3-config.option.nestedZombieHealth.defensiveendH": "Defensive End Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.cursedgargolithH": "Cursed Gargolith Health",
   "text.config.pvz3-config.option.nestedZombieHealth.unicorngargantuarH": "Unicorn Gargantuar Health",
   "text.config.pvz3-config.option.nestedZombieHealth.impH": "Imp Health",
   "text.config.pvz3-config.option.nestedZombieHealth.impdragonH": "Imp Dragon Health",
@@ -347,6 +352,8 @@
   "text.config.pvz3-config.option.nestedZombieHealth.trashcanObstH": "Trash Can Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.basketballObstH": "Basketball Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.healstationObstH": "Heal Station Obstacle Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.gargolithObstH": "Gargolith Obstacle Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.imptabletObstH": "Ancient Imp Tablet Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.octoObstH": "Octo Obstacle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bobsledVH": "Bobsled Vehicle Health",
   "text.config.pvz3-config.option.nestedZombieHealth.speakerVH": "Speaker Vehicle Health",
@@ -637,9 +644,16 @@
   "entity.pvzmod.bubblepad": "Bubble",
 
   "entity.pvzmod.breezeshroom": "Breeze-shroom",
+  "item.pvzmod.breezeshroom.alt": "Icy Fume-Shroom",
   "item.pvzmod.breezeshroom_seed_packet": "❄ Breeze-shroom Seed Packet",
   "item.pvzmod.breezeshroom_seed_packet.flavour": "Bless you.",
   "item.pvzmod.breeze": "Breeze",
+
+  "entity.pvzmod.burstshroom": "Burst-shroom",
+  "item.pvzmod.burstshroom.alt": "Fire-shroom",
+  "item.pvzmod.burstshroom_seed_packet": "\uD83D\uDD25 Burst-shroom Seed Packet",
+  "item.pvzmod.burstshroom_seed_packet.flavour": "Achieved a highscore of 100,000,000",
+  "item.pvzmod.burstshroom_seed_packet.flavour2": "in Plants vs. Zombies Pinball",
 
   "entity.pvzmod.superchomper": "Super Chomper",
   "item.pvzmod.superchomper_seed_packet": "\uD83D\uDDE1 Super Chomper Seed Packet",
@@ -741,6 +755,10 @@
   "item.pvzmod.gloomvine_seed_packet.flavour": "Any resemblance between plants, fungus,",
   "item.pvzmod.gloomvine_seed_packet.flavour2": "or undead, is purely coincidental.",
   "entity.pvzmod.shadowtile": "Shadow Tile",
+
+  "entity.pvzmod.heavenlypeach": "Heavenly Peach",
+  "item.pvzmod.heavenlypeach_seed_packet": "⭐ Heavenly Peach Seed Packet",
+  "item.pvzmod.heavenlypeach_seed_packet.flavour": "\"Ain't I peachy?\"",
 
   "entity.pvzmod.magicshroom": "Magic-shroom",
   "entity.pvzmod.magichat": "Magic Hat",
@@ -1091,6 +1109,42 @@
   "entity.pvzmod.blastronaut_hypnotized": "Hypnotized Blastronaut Zombie",
   "entity.pvzmod.blastronautgear": "Futuristic Helmet",
 
+  "entity.pvzmod.pokerzombie": "Poker Guard Zombie",
+  "item.pvzmod.pokerzombie_egg": "Poker Guard Zombie",
+  "entity.pvzmod.pokerzombie_hypnotized": "Hypnotized Poker Guard Zombie",
+
+  "entity.pvzmod.flagpoker": "Flag Poker Guard Zombie",
+  "item.pvzmod.flagpoker_egg": "Flag Poker Guard Zombie",
+  "entity.pvzmod.flagpoker_hypnotized": "Hypnotized Flag Poker Guard Zombie",
+
+  "entity.pvzmod.pokercone": "Poker Conehead Guard Zombie",
+  "item.pvzmod.pokerconehead_egg": "Poker Conehead Guard Zombie",
+  "entity.pvzmod.pokercone_hypnotized": "Hypnotized Poker Conehead Guard Zombie",
+
+  "entity.pvzmod.pokerbucket": "Poker Lid Guard Zombie",
+  "item.pvzmod.pokerbuckethead_egg": "Poker Lid Guard Zombie",
+  "entity.pvzmod.pokerbucket_hypnotized": "Hypnotized Poker Lid Guard Zombie",
+
+  "entity.pvzmod.pokerpawn": "Poker Pawn Guard Zombie",
+  "item.pvzmod.pokerpawn_egg": "Poker Pawn Guard Zombie",
+  "entity.pvzmod.pokerpawngear": "Pawn Helmet",
+  "entity.pvzmod.pokerpawn_hypnotized": "Hypnotized Poker Pawn Guard ",
+
+  "entity.pvzmod.pokerknight": "Poker Knight Guard Zombie",
+  "item.pvzmod.pokerknight_egg": "Poker Knight Guard Zombie",
+  "entity.pvzmod.pokerknightgear": "Knight Helmet",
+  "entity.pvzmod.pokerknight_hypnotized": "Hypnotized Poker Knight Guard ",
+
+  "entity.pvzmod.pokertower": "Poker Tower Guard Zombie",
+  "item.pvzmod.pokertower_egg": "Poker Tower Guard Zombie",
+  "entity.pvzmod.pokertowergear": "Tower Helmet",
+  "entity.pvzmod.pokertower_hypnotized": "Hypnotized Poker Tower Guard ",
+
+  "entity.pvzmod.pokerbishop": "Poker Bishop Guard Zombie",
+  "item.pvzmod.pokerbishop_egg": "Poker Bishop Guard Zombie",
+  "entity.pvzmod.pokerbishopgear": "Bishop Helmet",
+  "entity.pvzmod.pokerbishop_hypnotized": "Hypnotized Poker Bishop Guard ",
+
   "entity.pvzmod.peasant": "Peasant Zombie",
   "item.pvzmod.peasant_egg": "Peasant Zombie",
   "entity.pvzmod.peasant_hypnotized": "Hypnotized Peasant Zombie",
@@ -1117,9 +1171,27 @@
   "item.pvzmod.announcerimp_egg": "Announcer Imp",
   "entity.pvzmod.announcerimp_hypnotized": "Hypnotized Announcer Imp",
 
+  "entity.pvzmod.redannouncerimp": "Red Announcer Imp",
+  "item.pvzmod.redannouncerimp_egg": "Red Announcer Imp",
+  "entity.pvzmod.redannouncerimp_hypnotized": "Hypnotized Red Announcer Imp",
+
+  "entity.pvzmod.blackannouncerimp": "Black Announcer Imp",
+  "item.pvzmod.blackannouncerimp_egg": "Black Announcer Imp",
+  "entity.pvzmod.blackannouncerimp_hypnotized": "Hypnotized Black Announcer Imp",
+
   "entity.pvzmod.zombieking": "Zombie King",
   "item.pvzmod.zombieking_egg": "Zombie King",
   "entity.pvzmod.zombieking_hypnotized": "Hypnotized Zombie King",
+
+  "entity.pvzmod.redzombieking": "Red Zombie King",
+  "item.pvzmod.redzombieking_egg": "Red Zombie King",
+  "entity.pvzmod.redzombieking_hypnotized": "Hypnotized Red Zombie King",
+
+  "entity.pvzmod.blackzombieking": "Black Zombie King",
+  "item.pvzmod.blackzombieking_egg": "Black Zombie King",
+  "entity.pvzmod.blackzombieking_hypnotized": "Hypnotized Black Zombie King",
+
+  "entity.pvzmod.kingpiecegear": "Chess King Piece",
 
   "entity.pvzmod.impdragon": "Imp Dragon Zombie",
   "item.pvzmod.impdragon_egg": "Imp Dragon Zombie",
@@ -1215,6 +1287,12 @@
 
   "entity.pvzmod.defensiveend_newyear": "Defensive End",
   "entity.pvzmod.defensiveend_newyear_hypnotized": "Hypnotized Defensive End",
+
+  "entity.pvzmod.cursedgargolith": "Cursed Gargolith",
+  "item.pvzmod.cursedgargolith_egg": "Cursed Gargolith",
+  "entity.pvzmod.cursedgargolith_hypnotized": "Hypnotized Cursed Gargolith",
+  "entity.pvzmod.gargolithobst": "Gargolith",
+  "entity.pvzmod.imptabletobst": "Ancient Imp Tablet",
 
   "entity.pvzmod.impthrower": "Imp-Throwing Imp",
   "item.pvzmod.impthrow_egg": "Imp-Throwing Imp",
@@ -1316,6 +1394,9 @@
 
   "entity.pvzmod.darkagesgrave": "Dark Ages Gravestone",
   "item.pvzmod.darkagesgrave_spawn": "Dark Ages Gravestone",
+
+  "entity.pvzmod.fairytalegrave": "Fairy Tale Gravestone",
+  "item.pvzmod.fairytalegrave_spawn": "Fairy Tale Gravestone",
 
   "entity.pvzmod.mausoleumgrave": "Mausoleum Gravestone",
   "item.pvzmod.mausoleumgrave_spawn": "Mausoleum Gravestone",

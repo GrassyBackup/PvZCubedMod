@@ -55,7 +55,6 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 
 	public MeteorHammerEntity(EntityType<? extends MeteorHammerEntity> entityType, World world) {
 		super(entityType, world);
-		this.setNoGravity(true);
 	}
 
 	static {

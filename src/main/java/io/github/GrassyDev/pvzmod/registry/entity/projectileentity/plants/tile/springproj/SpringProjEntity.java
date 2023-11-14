@@ -58,6 +58,9 @@ public class SpringProjEntity extends PvZProjectileEntity implements IAnimatable
 
 	private boolean noDMG;
 
+	public float ownerYaw;
+
+
 	@Override
 	public void registerControllers(AnimationData animationData) {
 		AnimationController controller = new AnimationController(this, controllerName, 0, this::predicate);
@@ -98,6 +101,11 @@ public class SpringProjEntity extends PvZProjectileEntity implements IAnimatable
 	}
 
     public void tick() {
+		if (age <= 1) {
+			if (this.getOwner() != null) {
+				this.ownerYaw = this.getOwner().getHeadYaw();
+			}
+		}
         super.tick();
 		HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
 		boolean bl = false;
@@ -202,9 +210,9 @@ public class SpringProjEntity extends PvZProjectileEntity implements IAnimatable
 					if (entity.hasVehicle()){
 						livingEntity = (LivingEntity) entity.getVehicle();
 					}
-					Vec3d vec3d2 = new Vec3d((double) -2.33, -0.5, 1).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+					Vec3d vec3d2 = new Vec3d((double) 2.33, -0.5, 1).rotateY(-ownerYaw * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					if (!(livingEntity instanceof ZombiePropEntity) && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno())) {
-						Vec3d vec3d = new Vec3d((double) -0.25, +0.5, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
+						Vec3d vec3d = new Vec3d((double) 0.25, +0.5, 0).rotateY(-ownerYaw * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.BOUNCED, 20, 1)));
 						livingEntity.setVelocity(Vec3d.ZERO);
 						livingEntity.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
@@ -223,7 +231,6 @@ public class SpringProjEntity extends PvZProjectileEntity implements IAnimatable
 				tile.refreshPositionAndAngles(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0, 0);
 				tile.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				tile.setPersistent();
-				tile.setHeadYaw(0);
 				serverWorld.spawnEntityAndPassengers(tile);
 			}
 		}
