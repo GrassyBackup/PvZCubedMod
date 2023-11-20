@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.FumeVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
@@ -219,7 +221,7 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				if (et == null) {

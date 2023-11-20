@@ -184,7 +184,7 @@ public class ShootingPowerIcespikeEntity extends PvZProjectileEntity implements 
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
 				float damage = PVZCONFIG.nestedProjDMG.icespikeDMGv2() * 1.5f;
 				if (((LivingEntity) entity).hasStatusEffect(PvZCubed.ICE) || ((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-					damage = damage * PVZCONFIG.nestedProjDMG.iceSpikeMultiplier();
+					damage = damage * PVZCONFIG.nestedProjDMG.iceSpikeMultiplier() * damageMultiplier;
 				}
 				if (entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 					damage = damage * 2;
@@ -194,7 +194,7 @@ public class ShootingPowerIcespikeEntity extends PvZProjectileEntity implements 
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {

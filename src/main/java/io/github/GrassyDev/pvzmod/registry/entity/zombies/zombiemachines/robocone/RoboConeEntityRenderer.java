@@ -7,6 +7,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
@@ -55,5 +56,9 @@ public class RoboConeEntityRenderer extends GeoEntityRenderer<RoboConeEntity> {
 		else {
 			super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		}
+	}
+
+	protected int getBlockLight(RoboConeEntity entity, BlockPos blockPos) {
+		return Math.min(super.getBlockLight(entity, blockPos) + 5, 15);
 	}
 }

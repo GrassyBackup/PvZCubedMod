@@ -154,6 +154,9 @@ public class PvZSounds {
 	public static final Identifier SOLDIERZPG = new Identifier("pvzmod:soldier.zpg");
 	public static SoundEvent SOLDIERZPGEVENT = new SoundEvent(SOLDIERZPG);
 
+	public static final Identifier ROCKETRIDEJINGLE = new Identifier("pvzmod:rocketride.jingle");
+	public static SoundEvent ROCKETRIDEJINGLEEVENT = new SoundEvent(ROCKETRIDEJINGLE);
+
 
 	public static final Identifier IMPLAUNCH = new Identifier("pvzmod:imp.launch");
 	public static SoundEvent IMPLAUNCHEVENT = new SoundEvent(IMPLAUNCH);
@@ -240,6 +243,7 @@ public class PvZSounds {
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SPEAKERCRASH, SPEAKERCRASHEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SOLDIERPREP, SOLDIERPREPEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.SOLDIERZPG, SOLDIERZPGEVENT);
+		Registry.register(Registry.SOUND_EVENT, PvZSounds.ROCKETRIDEJINGLE, ROCKETRIDEJINGLEEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.IMPLAUNCH, IMPLAUNCHEVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.IMPANNOUNCER, IMPANNOUNCEREVENT);
 		Registry.register(Registry.SOUND_EVENT, PvZSounds.IMPANNOUNCERALT, IMPANNOUNCERALTEVENT);

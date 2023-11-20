@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.planthelm
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.gears.PlantHelmetVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import net.fabricmc.api.EnvType;

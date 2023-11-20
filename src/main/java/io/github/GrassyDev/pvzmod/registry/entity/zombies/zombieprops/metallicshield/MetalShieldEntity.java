@@ -4,6 +4,8 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.gears.MetallicShieldVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.fabricmc.api.EnvType;

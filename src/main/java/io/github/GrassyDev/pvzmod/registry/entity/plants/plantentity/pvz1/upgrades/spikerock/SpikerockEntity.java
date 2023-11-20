@@ -185,7 +185,7 @@ public class SpikerockEntity extends PlantEntity implements IAnimatable {
 					sound = switch (zombieMaterial) {
 						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
-						case "stone" -> PvZSounds.STONEHITEVENT;
+						case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
 					};
 					livingEntity.playSound(sound, 0.1F, (float) (0.5F + Math.random()));
@@ -195,6 +195,12 @@ public class SpikerockEntity extends PlantEntity implements IAnimatable {
 					}
 					else if (this.getCrack().equals(Crack.DYING)){
 						damage = 4;
+					}
+					if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
+						damage = damage * 2;
+					}
+					if ("paper".equals(zombieMaterial) || "rubber".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
+						damage = damage / 2;
 					}
 					if (damage > livingEntity.getHealth() &&
 							!(livingEntity instanceof ZombieShieldEntity) &&

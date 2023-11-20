@@ -2,6 +2,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.environment.sunbomb;
 
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;

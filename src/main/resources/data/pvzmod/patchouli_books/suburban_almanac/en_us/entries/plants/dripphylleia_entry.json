@@ -8,7 +8,7 @@
     {
       "type": "text",
       "text": [
-        "$(#bd951a)Seed Recharge Time: $()$(#ff0000)15s",
+        "$(#bd951a)Seed Recharge: $()$(#ff0000)15s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Creates Water Tiles in a 3x3 area around it.",
         "$(br2)$(#bd951a)As a member of the fire brigade, Dripphylleia has extreme enthusiasm for extinguishing fire, down to the smallest flame, and always carries ice water for cooling down very hot objects."
       ]

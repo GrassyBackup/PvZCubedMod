@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
@@ -477,7 +479,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				damaged.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
@@ -980,7 +982,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 							sound = switch (zombieMaterial) {
 								case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 								case "plastic" -> PvZSounds.CONEHITEVENT;
-								case "stone" -> PvZSounds.STONEHITEVENT;
+								case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 								default -> PvZSounds.PEAHITEVENT;
 							};
 							this.plantEntity.playSound(PvZSounds.LIGHTNINGSHOOTEVENT, 0.75F, (float) (0.75F + (Math.random() / 2)));

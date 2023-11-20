@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
@@ -181,13 +183,13 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !hit) {
-				float damage = PVZCONFIG.nestedProjDMG.firepiercepeaDMG();
+				float damage = PVZCONFIG.nestedProjDMG.firepiercepeaDMG() * damageMultiplier;
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				if (et == null) {
@@ -275,7 +277,7 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 										}
 									}
 									if (!(zombiePropEntity4 instanceof ZombieShieldEntity)&& zombiePropEntity6 == null) {
-										float damageSplash = PVZCONFIG.nestedProjDMG.firepiercepeaSDMG();
+										float damageSplash = PVZCONFIG.nestedProjDMG.firepiercepeaSDMG() * damageMultiplier;
 										String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 										if ("paper".equals(zombieMaterial2)) {
 											damageSplash = damageSplash * 2;

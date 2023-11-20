@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.ancientegypt.bloomerang.BloomerangEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.frisbee.ShootingFrisbeeEntity;
@@ -340,6 +342,7 @@ public class FrisbloomEntity extends PlantEntity implements IAnimatable, RangedA
 						proj.setVelocity(e * (double)h, f * (double)h, g * (double)h, 0.33F, 0F);
 						proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 						proj.setOwner(this.plantEntity);
+						proj.damageMultiplier = plantEntity.damageMultiplier;
 						if (livingEntity.isAlive()) {
 							this.beamTicks = -10;
 							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);

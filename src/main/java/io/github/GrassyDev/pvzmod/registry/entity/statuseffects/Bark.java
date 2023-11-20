@@ -15,7 +15,7 @@ public class Bark extends StatusEffect {
     public Bark() {
         super(
                 StatusEffectType.HARMFUL, // whether beneficial or harmful for entity
-                0x9E9E9E); // color in RGB
+                0xFFFFFF); // color in RGB
 		final UUID MAX_SPEED_UUID = UUID.nameUUIDFromBytes(MOD_ID.getBytes(StandardCharsets.US_ASCII));
 		addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, String.valueOf(MAX_SPEED_UUID), -0.115375, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
     }

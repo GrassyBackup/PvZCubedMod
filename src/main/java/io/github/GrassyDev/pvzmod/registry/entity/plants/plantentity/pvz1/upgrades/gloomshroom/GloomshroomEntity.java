@@ -187,7 +187,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 	}
 
 	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if (this.isTired) {
+		if (this.getIsAsleep()) {
 			event.getController().setAnimation(new AnimationBuilder().loop("gloomshroom.asleep"));
 		} else if (this.isFiring) {
 			event.getController().setAnimation(new AnimationBuilder().playOnce("gloomshroom.attack"));
@@ -249,7 +249,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 						sound = switch (zombieMaterial) {
 							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 							case "plastic" -> PvZSounds.CONEHITEVENT;
-							case "stone" -> PvZSounds.STONEHITEVENT;
+							case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 							default -> PvZSounds.PEAHITEVENT;
 						};
 						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));

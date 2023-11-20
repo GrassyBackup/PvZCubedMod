@@ -83,6 +83,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.gloomvine.GloomVineEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.missiletoe.MissileToeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.olivepit.OlivePitEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.gemium.peanut.PeanutEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.endurian.EndurianEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.lostcity.goldleaf.GoldLeafEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.modernday.shadowshroom.ShadowShroomEntity;
@@ -97,6 +98,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.icep
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2as.magnet.MagnetoShroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.fairytale.springprincess.SpringPrincessEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.hammerflower.HammerFlowerEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.impatyens.ImpatyensEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.magicshroom.MagichatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.magicshroom.MagicshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.meteorhammer.MeteorHammerEntity;
@@ -104,7 +106,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.gener
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.pumpkinwitch.PumpkinWitchEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.tulimpeter.TulimpeterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.heian.dripphylleia.DripphylleiaEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.kongfu.HeavenlyPeachEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.kongfu.heavenlypeach.HeavenlyPeachEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.renaissance.oilyolive.OilyOliveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.skycity.loquat.LoquatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.skycity.saucer.SaucerEntity;
@@ -121,6 +123,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.heroe
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.potted.acidshroom.AcidshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.potted.perfoomshroom.PerfoomshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzgw.summon.plants.dandelionweed.DandelionWeedEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.guardian.locococo.LocoCocoEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.guardian.smackadamia.SmackadamiaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.guardian.smallnut.SmallNutEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.kabloom.bombseedling.BombSeedlingEntity;
@@ -136,10 +139,14 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.s
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.solar.sunflowerseed.SunflowerSeedEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor.MetalHelmetProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.ground.groundbounce.GroundBounceEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.ground.peanut.PeanutBowlingEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.ground.wallnut.WallnutBowlingEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.cabbage.ShootingCabbageEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.iceberg.ShootingIcebergEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.peanut.PeaNutProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.pepper.ShootingPepperEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.pumpkinproj.ShootingPumpkinEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.smallnut.SmallNutProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.smooshproj.SmooshProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.acidfume.AcidFumeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.acidspore.AcidSporeEntity;
@@ -165,6 +172,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.spiked
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.armorbubble.ArmorBubbleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.coconut.CoconutEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.dropea.ShootingDropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.dye.ShootingDyeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.flamingpea.ShootingFlamingPeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.hypnoproj.HypnoProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.pea.ShootingPeaEntity;
@@ -181,11 +189,13 @@ import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.baske
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.flamingbook.FlamingBookEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.laser.LaserEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.octo.ShootingOctoEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.rocket.RocketEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.soundwave.SoundwaveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.zpg.ZPGEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.miscentity.locustswarm.LocustSwarmEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.bully.basic.BullyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.bully.basketballcarrier.BasketballCarrierEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.pumpkincar.PumpkinCarEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.backupdancer.BackupDancerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.bobsledteam.BobsledRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday.BrowncoatEntity;
@@ -221,6 +231,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.bro
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.flagzombie.sargeant.FlagSargeantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.piggy.PiggyEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2o.hawker.zombie.HawkerZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzbfn.actionhero.ActionheroEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzbfn.zmech.ScrapMechEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.scientist.ScientistEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.soldier.SoldierEntity;
@@ -308,6 +319,7 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.SHADOWSHROOM);
 		PLANT_LIST.add(PvZEntity.MISSILETOE);
 		PLANT_LIST.add(PvZEntity.ELECTROPEA);
+		PLANT_LIST.add(PvZEntity.PEANUT);
 		PLANT_LIST.add(PvZEntity.GHOSTPEPPER);
 		PLANT_LIST.add(PvZEntity.OLIVEPIT);
 		PLANT_LIST.add(PvZEntity.HEAVENLYPEACH);
@@ -320,6 +332,7 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.PUMPKINWITCH);
 		PLANT_LIST.add(PvZEntity.TULIMPETER);
 		PLANT_LIST.add(PvZEntity.NARCISSUS);
+		PLANT_LIST.add(PvZEntity.IMPATYENS);
 		PLANT_LIST.add(PvZEntity.HAMMERFLOWER);
 		PLANT_LIST.add(PvZEntity.METEORHAMMER);
 		PLANT_LIST.add(PvZEntity.DROPEA);
@@ -334,6 +347,7 @@ public class PvZEntity implements ModInitializer {
 		PLANT_LIST.add(PvZEntity.PERFOOMSHROOM);
 		PLANT_LIST.add(PvZEntity.SMALLNUT);
 		PLANT_LIST.add(PvZEntity.SMACKADAMIA);
+		PLANT_LIST.add(PvZEntity.LOCOCOCO);
 		PLANT_LIST.add(PvZEntity.BUTTONSHROOM);
 		PLANT_LIST.add(PvZEntity.BOMBSEEDLING);
 		PLANT_LIST.add(PvZEntity.ZAPRICOT);
@@ -753,6 +767,13 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<ElectropeaEntity>create(SpawnGroup.CREATURE, ElectropeaEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.8f)).build()
 	);
 
+	public static final EntityType<PeanutEntity> PEANUT = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "peanut"),
+			QuiltEntityTypeBuilder.<PeanutEntity>create(SpawnGroup.CREATURE, PeanutEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 1.95f)).build()
+	);
+
+
 	public static final EntityType<GhostpepperEntity> GHOSTPEPPER = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "ghostpepper"),
@@ -836,6 +857,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<NarcissusEntity>create(SpawnGroup.CREATURE, NarcissusEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 1.55f)).build()
 	);
 
+	public static final EntityType<ImpatyensEntity> IMPATYENS = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "impatyens"),
+			QuiltEntityTypeBuilder.<ImpatyensEntity>create(SpawnGroup.CREATURE, ImpatyensEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 0.8f)).build()
+	);
+
 	public static final EntityType<HammerFlowerEntity> HAMMERFLOWER = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "hammerflower"),
@@ -882,6 +909,12 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "smackadamia"),
 			QuiltEntityTypeBuilder.<SmackadamiaEntity>create(SpawnGroup.CREATURE, SmackadamiaEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 2.65f)).build()
+	);
+
+	public static final EntityType<LocoCocoEntity> LOCOCOCO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "locococo"),
+			QuiltEntityTypeBuilder.<LocoCocoEntity>create(SpawnGroup.CREATURE, LocoCocoEntity::new).setDimensions(EntityDimensions.fixed(0.99f, 2.65f)).build()
 	);
 
 	public static final EntityType<ButtonshroomEntity> BUTTONSHROOM = Registry.register(
@@ -1205,6 +1238,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<ShootingDropEntity>create(SpawnGroup.MISC, ShootingDropEntity::new).setDimensions(EntityDimensions.fixed(.5f,.5f)).build()
 	);
 
+	public static final EntityType<ShootingDyeEntity> DYEPROJ = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "dyeproj"),
+			QuiltEntityTypeBuilder.<ShootingDyeEntity>create(SpawnGroup.MISC, ShootingDyeEntity::new).setDimensions(EntityDimensions.fixed(.5f,.5f)).build()
+	);
+
 	public static final EntityType<ShootingFrisbeeEntity> FRISBEEPROJ = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "frisbeeproj"),
@@ -1215,6 +1254,30 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "groundbounce"),
 			QuiltEntityTypeBuilder.<GroundBounceEntity>create(SpawnGroup.MISC, GroundBounceEntity::new).setDimensions(EntityDimensions.fixed(.5f,.5f)).build()
+	);
+
+	public static final EntityType<WallnutBowlingEntity> WALLNUTBOWLING = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "wallnutbowling"),
+			QuiltEntityTypeBuilder.<WallnutBowlingEntity>create(SpawnGroup.MISC, WallnutBowlingEntity::new).setDimensions(EntityDimensions.fixed(.5f,.5f)).build()
+	);
+
+	public static final EntityType<PeanutBowlingEntity> PEANUTBOWLING = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "peanutbowling"),
+			QuiltEntityTypeBuilder.<PeanutBowlingEntity>create(SpawnGroup.MISC, PeanutBowlingEntity::new).setDimensions(EntityDimensions.fixed(2.5f,.5f)).build()
+	);
+
+	public static final EntityType<SmallNutProjEntity> SMALLNUTPROJ = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "smallnutproj"),
+			QuiltEntityTypeBuilder.<SmallNutProjEntity>create(SpawnGroup.MISC, SmallNutProjEntity::new).setDimensions(EntityDimensions.fixed(1f,.5f)).build()
+	);
+
+	public static final EntityType<PeaNutProjEntity> PEANUTPROJ = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "peanutproj"),
+			QuiltEntityTypeBuilder.<PeaNutProjEntity>create(SpawnGroup.MISC, PeaNutProjEntity::new).setDimensions(EntityDimensions.fixed(1f,.5f)).build()
 	);
 
 	public static final EntityType<JingleEntity> JINGLE = Registry.register(
@@ -1750,6 +1813,11 @@ public class PvZEntity implements ModInitializer {
 	public static final EntityType<CrystalHelmetEntity> HOLOGEAR = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "hologear"),
+			QuiltEntityTypeBuilder.<CrystalHelmetEntity>create(SpawnGroup.MONSTER, CrystalHelmetEntity::new).setDimensions(EntityDimensions.fixed(0.8f, 1.95f)).build()
+	);
+	public static final EntityType<CrystalHelmetEntity> CRYSTALSHOEGEAR = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "crystalshoegear"),
 			QuiltEntityTypeBuilder.<CrystalHelmetEntity>create(SpawnGroup.MONSTER, CrystalHelmetEntity::new).setDimensions(EntityDimensions.fixed(0.8f, 1.95f)).build()
 	);
 	public static final EntityType<StoneHelmetEntity> SARCOPHAGUS = Registry.register(
@@ -2308,6 +2376,12 @@ public class PvZEntity implements ModInitializer {
 			QuiltEntityTypeBuilder.<ZPGEntity>create(SpawnGroup.MONSTER, ZPGEntity::new).setDimensions(EntityDimensions.fixed(0.5f, 0.5f)).build()
 	);
 
+	public static final EntityType<RocketEntity> ROCKETPROJ = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "rocketproj"),
+			QuiltEntityTypeBuilder.<RocketEntity>create(SpawnGroup.MONSTER, RocketEntity::new).setDimensions(EntityDimensions.fixed(0.5f, 0.5f)).build()
+	);
+
 	public static final EntityType<BullyEntity> BULLY = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "bully"),
@@ -2318,6 +2392,18 @@ public class PvZEntity implements ModInitializer {
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "bully_hypnotized"),
 			QuiltEntityTypeBuilder.<BullyEntity>create(SpawnGroup.MONSTER, BullyEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 2.2f)).build()
+	);
+
+	public static final EntityType<ActionheroEntity> ACTIONHERO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "80sactionhero"),
+			QuiltEntityTypeBuilder.<ActionheroEntity>create(SpawnGroup.MONSTER, ActionheroEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 2.2f)).build()
+	);
+
+	public static final EntityType<ActionheroEntity> ACTIONHEROHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "80sactionhero_hypnotized"),
+			QuiltEntityTypeBuilder.<ActionheroEntity>create(SpawnGroup.MONSTER, ActionheroEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 2.2f)).build()
 	);
 
 	public static final EntityType<OctoEntity> OCTO = Registry.register(
@@ -2497,6 +2583,24 @@ public class PvZEntity implements ModInitializer {
 	public static final EntityType<ImpEntity> BASSIMPHYPNO = Registry.register(
 			Registry.ENTITY_TYPE,
 			new Identifier(ModID, "bassimp_hypnotized"),
+			QuiltEntityTypeBuilder.<ImpEntity>create(SpawnGroup.CREATURE, ImpEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1f)).build()
+	);
+
+	public static final EntityType<PumpkinCarEntity> PUMPKINCAR = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "pumpkincar"),
+			QuiltEntityTypeBuilder.<PumpkinCarEntity>create(SpawnGroup.MONSTER, PumpkinCarEntity::new).setDimensions(EntityDimensions.fixed(0.825f, 2.25f)).build()
+	);
+
+	public static final EntityType<ImpEntity> CINDERELLAIMP = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "cinderellaimp"),
+			QuiltEntityTypeBuilder.<ImpEntity>create(SpawnGroup.MONSTER, ImpEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1f)).build()
+	);
+
+	public static final EntityType<ImpEntity> CINDERELLAIMPHYPNO = Registry.register(
+			Registry.ENTITY_TYPE,
+			new Identifier(ModID, "cinderellaimp_hypnotized"),
 			QuiltEntityTypeBuilder.<ImpEntity>create(SpawnGroup.CREATURE, ImpEntity::new).setDimensions(EntityDimensions.fixed(0.625f, 1f)).build()
 	);
 
@@ -2816,6 +2920,8 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ELECTROPEA, ElectropeaEntity.createElectropeaAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.PEANUT, PeanutEntity.createPeanutAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.GHOSTPEPPER, GhostpepperEntity.createGhostPepperAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.OLIVEPIT, OlivePitEntity.createOlivePitAttributes().build());
@@ -2844,6 +2950,8 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.NARCISSUS, NarcissusEntity.createNarcissusAttributes().build());
 
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.IMPATYENS, ImpatyensEntity.createImpatyensAttributes().build());
+
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.HAMMERFLOWER, HammerFlowerEntity.createHammerFlowerAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.METEORHAMMER, MeteorHammerEntity.createMeteorHammerAttributes().build());
@@ -2859,6 +2967,8 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SMALLNUT, SmallNutEntity.createSmallnutAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SMACKADAMIA, SmackadamiaEntity.createSmackadamiaAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.LOCOCOCO, LocoCocoEntity.createLocoCocoAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BUTTONSHROOM, ButtonshroomEntity.createButtonshroomAttributes().build());
 
@@ -2979,6 +3089,7 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.SARCOPHAGUS, StoneHelmetEntity.createSarcophagusAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.HOLOGEAR, CrystalHelmetEntity.createHoloGearAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.CRYSTALSHOEGEAR, CrystalHelmetEntity.createCrystalShoeGearAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.NEWSPAPER, NewspaperEntity.createNewspaperAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.NEWSPAPERHYPNO, NewspaperEntity.createNewspaperAttributes().build());
@@ -3059,6 +3170,10 @@ public class PvZEntity implements ModInitializer {
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.NEWYEARIMPHYPNO, SuperFanImpEntity.createSuperFanImpAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASSIMP, ImpEntity.createBassImpAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BASSIMPHYPNO, ImpEntity.createBassImpAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.CINDERELLAIMP, ImpEntity.createCinderellaImpAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.CINDERELLAIMPHYPNO, ImpEntity.createCinderellaImpAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.PUMPKINCAR, PumpkinCarEntity.createPumpkinCarAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ANNOUNCERIMP, AnnouncerImpEntity.createAnnouncerImpAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ANNOUNCERIMPHYPNO, AnnouncerImpEntity.createAnnouncerImpAttributes().build());
@@ -3220,6 +3335,9 @@ public class PvZEntity implements ModInitializer {
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BULLY, BullyEntity.createBullyAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.BULLYHYPNO, BullyEntity.createBullyAttributes().build());
+
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ACTIONHERO, ActionheroEntity.createActionheroAttributes().build());
+		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.ACTIONHEROHYPNO, ActionheroEntity.createActionheroAttributes().build());
 
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.OCTO, OctoEntity.createOctoAttributes().build());
 		DefaultAttributeRegistry.DEFAULT_ATTRIBUTE_REGISTRY.put(PvZEntity.OCTOHYPNO, OctoEntity.createOctoAttributes().build());

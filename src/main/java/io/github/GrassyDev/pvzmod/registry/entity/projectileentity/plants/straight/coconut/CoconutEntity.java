@@ -1,6 +1,8 @@
 package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.coconut;
 
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
@@ -185,7 +187,7 @@ public class CoconutEntity extends PvZProjectileEntity implements IAnimatable {
 								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 										&& (generalPvZombieEntity.getHypno()))) {
 							if (livingEntity != entity) {
-								float damage3 = PVZCONFIG.nestedProjDMG.coconutSDMG();
+								float damage3 = PVZCONFIG.nestedProjDMG.coconutSDMG() * damageMultiplier;
 								ZombiePropEntity zombiePropEntity4 = null;
 								for (Entity entity1 : livingEntity.getPassengerList()) {
 									if (entity1 instanceof ZombiePropEntity zpe) {

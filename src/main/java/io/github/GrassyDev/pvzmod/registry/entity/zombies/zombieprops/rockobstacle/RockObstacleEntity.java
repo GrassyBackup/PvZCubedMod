@@ -146,7 +146,7 @@ public class RockObstacleEntity extends ZombieObstacleEntity implements IAnimata
 	@Override
 	public ItemStack getPickBlockStack() {
 		ItemStack itemStack;
-		itemStack = ModItems.BASKETBALLCARRIEREGG.getDefaultStack();
+		itemStack = ModItems.CURSEDGARGOLITHEGG.getDefaultStack();
 		return itemStack;
 	}
 

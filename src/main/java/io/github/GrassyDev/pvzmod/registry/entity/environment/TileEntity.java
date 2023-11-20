@@ -35,6 +35,8 @@ public abstract class TileEntity extends PathAwareEntity implements IAnimatable 
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
 	private String controllerName = "firetrailcontroller";
 
+	public float damageMultiplier = 1;
+
     public TileEntity(EntityType<? extends TileEntity> entityType, World world) {
         super(entityType, world);
 

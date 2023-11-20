@@ -434,6 +434,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 				SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 				SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 				SargeantEntity.setOwner(MausoleumGraveEntity.this);
+				SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 			}
 			if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
@@ -451,6 +452,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(MausoleumGraveEntity.this);
+					coneheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 				}
 				for(int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -467,7 +469,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 					SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 					SargeantEntity.setOwner(MausoleumGraveEntity.this);
-					serverWorld.spawnEntityAndPassengers(SargeantEntity);
+					SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 				}
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
@@ -486,6 +489,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						bucketheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(MausoleumGraveEntity.this);
+						bucketheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 					for (int c = 0; c < 2 / halfModifier; ++c) { // 100% x2 Conehead
@@ -502,7 +506,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(MausoleumGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(coneheadEntity);
+						coneheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 					}
 				}
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
@@ -521,7 +526,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(MausoleumGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(coneheadEntity);
+							coneheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 						}
 						for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 							if (!MausoleumGraveEntity.this.is1x1()) {
@@ -537,7 +543,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 							SargeantEntity.setOwner(MausoleumGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(SargeantEntity);
+							SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 						}
 					}
 				}
@@ -558,6 +565,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						bucketheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(MausoleumGraveEntity.this);
+						bucketheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -574,7 +582,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 						SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						SargeantEntity.setOwner(MausoleumGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(SargeantEntity);
+						SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 					}
 				}
 			}
@@ -595,6 +604,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							brickhead.setOwner(MausoleumGraveEntity.this);
+							brickhead.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
 						}
 					}
@@ -618,6 +628,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								flagzombieEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(MausoleumGraveEntity.this);
+								flagzombieEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
 							}
 							extraGraveWeight += 1;
@@ -641,6 +652,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								bookburner.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								bookburner.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								bookburner.setOwner(MausoleumGraveEntity.this);
+								bookburner.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(bookburner);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
@@ -657,7 +669,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 							}
 							extraGraveWeight += 1;
 						}
@@ -680,7 +693,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 								if (!MausoleumGraveEntity.this.is1x1()) {
@@ -696,7 +710,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Conehead
 								if (!MausoleumGraveEntity.this.is1x1()) {
@@ -712,7 +727,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
 								if (!MausoleumGraveEntity.this.is1x1()) {
@@ -728,7 +744,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 							}
 							extraGraveWeight += 1.75;
 						}
@@ -750,6 +767,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							bookburner.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							bookburner.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							bookburner.setOwner(MausoleumGraveEntity.this);
+							bookburner.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(bookburner);
 						}
 						extraGraveWeight += 0.5;
@@ -772,7 +790,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							for (int h = 0; h < 1; ++h) { // 100% x1 Buckethead
 								if (!MausoleumGraveEntity.this.is1x1()) {
@@ -788,7 +807,8 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(SargeantEntity);
+								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(SargeantEntity);
 							}
 							extraGraveWeight += 0.75;
 						}

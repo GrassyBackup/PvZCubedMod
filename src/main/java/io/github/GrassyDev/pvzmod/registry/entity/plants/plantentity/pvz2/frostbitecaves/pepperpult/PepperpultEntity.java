@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.pepper.ShootingPepperEntity;
 import net.fabricmc.api.EnvType;
@@ -307,6 +309,7 @@ public class PepperpultEntity extends PlantEntity implements IAnimatable, Ranged
 						proj.setVelocity(vel.getX(), -3.9200000762939453 + 28 / (h * 2.2), vel.getZ(),dist, 0F);
 						proj.updatePosition(projPos.getX(), projPos.getY(), projPos.getZ());
 						proj.setOwner(this.plantEntity);
+						proj.damageMultiplier = plantEntity.damageMultiplier;
 						if (plantEntity.getTarget() != null){
 							proj.getTarget(plantEntity.getTarget());
 						}

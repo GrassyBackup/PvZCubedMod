@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.items.spawneggs;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.dolphinrider.DolphinRiderEntity;
 import io.github.GrassyDev.pvzmod.registry.items.seedpackets.SeedItem;
 import net.minecraft.client.item.TooltipContext;

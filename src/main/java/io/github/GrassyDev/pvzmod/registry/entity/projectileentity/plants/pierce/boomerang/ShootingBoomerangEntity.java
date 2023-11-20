@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
@@ -233,13 +235,13 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 			}
 			if (!world.isClient && this.getReturning()) {
 				if (entityStore.contains(entity) && this.retuningStart) {
-					float damage = PVZCONFIG.nestedProjDMG.boomerangDMGv2();
+					float damage = PVZCONFIG.nestedProjDMG.boomerangDMGv2() * damageMultiplier;
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 					SoundEvent sound;
 					sound = switch (zombieMaterial) {
 						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
-						case "stone" -> PvZSounds.STONEHITEVENT;
+						case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
 					};
 					entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
@@ -266,13 +268,13 @@ public class ShootingBoomerangEntity extends PvZProjectileEntity implements IAni
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth())
 					&& !(entity instanceof ZombieVehicleEntity && (zombiePropEntity instanceof ZombieObstacleEntity)) &&
 					!this.getReturning() && !this.retuningStart && damageCounter <= 2 && !entityStore.contains(entity) && !entityStoreVehicle.contains(entity)) {
-				float damage = PVZCONFIG.nestedProjDMG.boomerangDMGv2();
+				float damage = PVZCONFIG.nestedProjDMG.boomerangDMGv2() * damageMultiplier;
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				++this.damageCounter;

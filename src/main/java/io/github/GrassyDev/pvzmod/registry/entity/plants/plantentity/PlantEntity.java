@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
@@ -66,6 +68,8 @@ public abstract class PlantEntity extends GolemEntity {
 	protected boolean dryLand;
 
 	protected int tickDelay;
+
+	public float damageMultiplier = 1;
 
 	@Override
 	public boolean canBeLeashedBy(PlayerEntity player) {

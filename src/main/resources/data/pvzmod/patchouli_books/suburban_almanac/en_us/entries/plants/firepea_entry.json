@@ -13,7 +13,7 @@
         "$(#bd951a)Splash: $()$(#ff0000)1.5 Blocks ",
         "$(br)$(#bd951a)Plasma DMG: $()$(#ff0000)12 DMG/1.5s (Pierce)",
         "$(br)$(#bd951a)Range: $()$(#ff0000)15 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)15s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)15s $(#bd951a)Stale: $()$(#ff0000)1.5%",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Immune to Fire. Illuminating. Fire Damage. 66% Fire Pea, 33% Plasma Pea",
         "$(br)$(#bd951a)She had a relationship with Snow Queen Pea a few months back. She may have cooled since then, but her burning peas have never been hotter."
       ]

@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -326,7 +328,7 @@ public class PoleVaultingEntity extends PvZombieEntity implements IAnimatable {
 		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
 		if (this.getPoleStage() &&
 				this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
-					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
+					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) && !this.hasStatusEffect(GENERICSLOW) &&
 					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
 					!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
 			assert maxSpeedAttribute != null;

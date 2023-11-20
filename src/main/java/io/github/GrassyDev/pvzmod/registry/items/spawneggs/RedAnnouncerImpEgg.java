@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.items.spawneggs;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntity;
 import io.github.GrassyDev.pvzmod.registry.items.seedpackets.SeedItem;
 import net.minecraft.client.item.TooltipContext;
@@ -49,7 +51,7 @@ public class RedAnnouncerImpEgg extends SeedItem {
         Vec3d vec3d = Vec3d.ofBottomCenter(blockPos);
         Box box = PvZEntity.REDANNOUNCERIMP.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ());
              if (world.isSpaceEmpty((Entity)null, box) && world instanceof ServerWorld serverWorld) {
-                    AnnouncerImpEntity impEntity = (AnnouncerImpEntity) PvZEntity.REDANNOUNCERIMPHYPNO.create(serverWorld, itemStack.getNbt(), (Text) null, context.getPlayer(), blockPos, SpawnReason.SPAWN_EGG, true, true);
+                    AnnouncerImpEntity impEntity = (AnnouncerImpEntity) PvZEntity.REDANNOUNCERIMP.create(serverWorld, itemStack.getNbt(), (Text) null, context.getPlayer(), blockPos, SpawnReason.SPAWN_EGG, true, true);
                     if (impEntity == null) {
                         return ActionResult.FAIL;
                     }

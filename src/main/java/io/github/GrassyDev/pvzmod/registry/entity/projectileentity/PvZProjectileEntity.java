@@ -3,7 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
@@ -32,6 +31,8 @@ public abstract class PvZProjectileEntity extends ThrownItemEntity {
 		super.tick();
 		this.hitEntities.clear();
 	}
+
+	public float damageMultiplier = 1;
 
 	public List<Entity> hitEntities = new ArrayList<>();
 

@@ -8,7 +8,7 @@
     {
       "type": "text",
       "text": [
-        "$(#bd951a)Seed Recharge Time: $()$(#ff0000)7.5s",
+        "$(#bd951a)Seed Recharge: $()$(#ff0000)7.5s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Wakes up a Nocturnal Plant forever.",
         "$(br2)$(#bd951a)\"Hey, guys, hey!\" says Coffee Bean. \"Hey! What's up? Who's that? Hey! Didja see that thing? What thing? Whoa! Lions!\" Yep, Coffee Bean sure does get excited."
       ]

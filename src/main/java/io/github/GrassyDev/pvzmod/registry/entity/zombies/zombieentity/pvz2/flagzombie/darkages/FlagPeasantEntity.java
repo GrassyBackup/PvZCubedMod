@@ -561,7 +561,7 @@ public class FlagPeasantEntity extends SummonerEntity implements IAnimatable {
 				if (this.FlagPeasantEntity.getHypno()){
 					coneheadEntity.createConeheadProp();
 				}
-                serverWorld.spawnEntityAndPassengers(coneheadEntity);
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
             }
             for(int d = 0; d < 2; ++d) { // 2 Buckethead
 				RandomGenerator randomGenerator = FlagPeasantEntity.this.getRandom();
@@ -581,7 +581,7 @@ public class FlagPeasantEntity extends SummonerEntity implements IAnimatable {
 				if (this.FlagPeasantEntity.getHypno()){
 					bucketheadEntity.createBucketProp();
 				}
-                serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
             }
             for(int t = 0; t < 6; ++t) { // 6 Browncoat
 				RandomGenerator randomGenerator = FlagPeasantEntity.this.getRandom();

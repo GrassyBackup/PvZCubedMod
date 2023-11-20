@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.pea.ShootingPeaEntity;
 import net.fabricmc.api.EnvType;
@@ -308,6 +310,7 @@ public class ThreepeaterEntity extends PlantEntity implements IAnimatable, Range
 						proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.33F, 0F);
 						proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.8D, this.plantEntity.getZ());
 						proj.setOwner(this.plantEntity);
+						proj.damageMultiplier = plantEntity.damageMultiplier;
 						if (livingEntity.isAlive()) {
 							this.beamTicks = -16;
 							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);
@@ -326,6 +329,7 @@ public class ThreepeaterEntity extends PlantEntity implements IAnimatable, Range
 						proj3.setVelocity(e3 * (double) h + vec3d4.x, f3 * (double) h3, g3 * (double) h +vec3d4.z, 0.33F, 0F);
 						proj3.updatePosition(this.plantEntity.getX() + vec3d2.x, this.plantEntity.getY() + 0.5, this.plantEntity.getZ() + vec3d2.z);
 						proj3.setOwner(this.plantEntity);
+						proj3.damageMultiplier = plantEntity.damageMultiplier;
 						if (livingEntity.isAlive()) {
 							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);
@@ -344,6 +348,7 @@ public class ThreepeaterEntity extends PlantEntity implements IAnimatable, Range
 						proj2.setVelocity(e2 * (double) h + vec3d6.x, f2 * (double) h2, g2 * (double) h + vec3d6.z, 0.33F, 0);
 						proj2.updatePosition(this.plantEntity.getX() + vec3d5.x, this.plantEntity.getY() + 0.5, this.plantEntity.getZ() + vec3d5.z);
 						proj2.setOwner(this.plantEntity);
+						proj2.damageMultiplier = plantEntity.damageMultiplier;
 						if (livingEntity.isAlive()) {
 							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);
 							this.plantEntity.world.spawnEntity(proj2);

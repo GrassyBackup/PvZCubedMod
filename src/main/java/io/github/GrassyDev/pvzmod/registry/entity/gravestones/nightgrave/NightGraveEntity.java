@@ -186,17 +186,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 				this.kill();
 			}
 		}
-		else if (this.spawnCounter == 5 && difficulty <= 2.109 + difficultymodifier){
-			if (!this.isInfinite()) {
-				this.kill();
-			}
-		}
-		else if (this.spawnCounter == 6 && difficulty >= 2.309 + difficultymodifier){
-			if (!this.isInfinite()) {
-				this.kill();
-			}
-		}
-		else if (this.spawnCounter > 7){
+		else if (this.spawnCounter > 4){
 			if (!this.isInfinite()) {
 				this.kill();
 			}
@@ -432,7 +422,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 				browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 				browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 				browncoatEntity.setOwner(NightGraveEntity.this);
-				serverWorld.spawnEntityAndPassengers(browncoatEntity);
+				browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 			}
 			if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
 				for (int c = 0; c < 1; ++c) {
@@ -449,6 +440,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					coneheadEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(NightGraveEntity.this);
+					coneheadEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 				}
 				for(int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -465,6 +457,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 					browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 					browncoatEntity.setOwner(NightGraveEntity.this);
+					browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 				}
 			}
@@ -484,6 +477,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 						screendoorEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						screendoorEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						screendoorEntity.setOwner(NightGraveEntity.this);
+						screendoorEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(screendoorEntity);
 					}
 					for (int c = 0; c < 1; ++c) { // 100% x1 Conehead
@@ -500,7 +494,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						coneheadEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(NightGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(coneheadEntity);
+						coneheadEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 					}
 				}
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
@@ -519,7 +514,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							coneheadEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(NightGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(coneheadEntity);
+							coneheadEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 						}
 						for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 							if (!NightGraveEntity.this.is1x1()) {
@@ -535,7 +531,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 							browncoatEntity.setOwner(NightGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 						}
 					}
 				}
@@ -556,6 +553,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						bucketheadEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(NightGraveEntity.this);
+						bucketheadEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -572,7 +570,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 						browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						browncoatEntity.setOwner(NightGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(browncoatEntity);
+						browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 					}
 				}
 			}
@@ -594,6 +593,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								flagzombieEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(NightGraveEntity.this);
+								flagzombieEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
 							}
 							extraGraveWeight += 1;
@@ -617,6 +617,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								newspaperEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								newspaperEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								newspaperEntity.setOwner(NightGraveEntity.this);
+								newspaperEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(newspaperEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Conehead
@@ -633,7 +634,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(NightGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							extraGraveWeight += 1;
 						}
@@ -656,6 +658,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								footballEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								footballEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								footballEntity.setOwner(NightGraveEntity.this);
+								footballEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(footballEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Screendoor
@@ -672,6 +675,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								screendoor.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								screendoor.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								screendoor.setOwner(NightGraveEntity.this);
+								screendoor.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(screendoor);
 							}
 							extraGraveWeight += 1.25;
@@ -695,7 +699,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(NightGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							extraGraveWeight += 1.25;
 						}
@@ -718,6 +723,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								superFanImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								superFanImpEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								superFanImpEntity.setOwner(NightGraveEntity.this);
+								superFanImpEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(superFanImpEntity);
 							}
 							for (int b = 0; b < 3 / halfModifier; ++b) { // 100% x3 Browncoat
@@ -734,7 +740,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(NightGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							extraGraveWeight += 0.75;
 						}
@@ -757,6 +764,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								bassImp.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								bassImp.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								bassImp.setOwner(NightGraveEntity.this);
+								bassImp.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(bassImp);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Conehead
@@ -773,7 +781,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(NightGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							extraGraveWeight += 0.75;
 						}
@@ -796,6 +805,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								footballEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								footballEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								footballEntity.setOwner(NightGraveEntity.this);
+								footballEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(footballEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
@@ -812,7 +822,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(NightGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							extraGraveWeight += 0.75;
 						}
@@ -834,6 +845,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 							newspaperEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							newspaperEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							newspaperEntity.setOwner(NightGraveEntity.this);
+							newspaperEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(newspaperEntity);
 						}
 						extraGraveWeight += 0.5;
@@ -856,6 +868,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								dancingZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								dancingZombieEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								dancingZombieEntity.setOwner(NightGraveEntity.this);
+								dancingZombieEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(dancingZombieEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Screendoor
@@ -872,6 +885,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								screendoor.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								screendoor.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								screendoor.setOwner(NightGraveEntity.this);
+								screendoor.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(screendoor);
 							}
 							extraGraveWeight += 0.75;
@@ -895,6 +909,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								defensiveEnd.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								defensiveEnd.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								defensiveEnd.setOwner(NightGraveEntity.this);
+								defensiveEnd.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(defensiveEnd);
 							}
 							for (int p = 0; p < 2 / halfModifier; ++p) { // 100% x2 Super-Fan Imp
@@ -911,6 +926,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								superFanImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								superFanImpEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								superFanImpEntity.setOwner(NightGraveEntity.this);
+								superFanImpEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(superFanImpEntity);
 							}
 							double random = Math.random();
@@ -929,6 +945,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 									defensiveEnd.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 									defensiveEnd.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 									defensiveEnd.setOwner(NightGraveEntity.this);
+									defensiveEnd.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 									serverWorld.spawnEntityAndPassengers(defensiveEnd);
 								}
 							}
@@ -953,6 +970,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								sundayEdition.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								sundayEdition.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								sundayEdition.setOwner(NightGraveEntity.this);
+								sundayEdition.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(sundayEdition);
 							}
 							for (int p = 0; p < 2 / halfModifier; ++p) { // 15% x2 Newspaper
@@ -969,6 +987,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								sundayEdition.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								sundayEdition.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								sundayEdition.setOwner(NightGraveEntity.this);
+								sundayEdition.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(sundayEdition);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Screendoor
@@ -985,7 +1004,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(NightGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							specialGraveWeight += 1.5;
 						}
@@ -1008,6 +1028,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								defensiveEnd.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								defensiveEnd.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								defensiveEnd.setOwner(NightGraveEntity.this);
+								defensiveEnd.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(defensiveEnd);
 							}
 							for (int p = 0; p < 2 / halfModifier; ++p) { // 100% x2 Rainbow Bass Imp
@@ -1024,6 +1045,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								bassImp.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								bassImp.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								bassImp.setOwner(NightGraveEntity.this);
+								bassImp.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(bassImp);
 							}
 							double random = Math.random();
@@ -1042,6 +1064,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 									defensiveEnd.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 									defensiveEnd.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 									defensiveEnd.setOwner(NightGraveEntity.this);
+									defensiveEnd.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 									serverWorld.spawnEntityAndPassengers(defensiveEnd);
 								}
 							}
@@ -1066,6 +1089,7 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								football.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								football.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								football.setOwner(NightGraveEntity.this);
+								football.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(football);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Conehead
@@ -1082,7 +1106,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(NightGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
 								if (!NightGraveEntity.this.is1x1()) {
@@ -1098,7 +1123,8 @@ public class NightGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, NightGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(NightGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = NightGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							specialGraveWeight += 1.75;
 						}

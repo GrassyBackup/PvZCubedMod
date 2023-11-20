@@ -13,7 +13,7 @@
         "$(br)$(#bd951a)Electric Radius: $()$(#ff0000)5 Blocks",
         "$(br)$(#bd951a)Electric Chains: $()$(#ff0000)3 Chains",
         "$(br)$(#bd951a)Range: $()$(#ff0000)15 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)20s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)20s $(#bd951a)Stale: $()$(#ff0000)1.5%",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Illuminating. Electrocutes Zombies. Can target any Zombie.",
         "$(br2)$(#bd951a)Electric Peashooter expects resistance, but he doesn't want to ohm anybody."
       ]

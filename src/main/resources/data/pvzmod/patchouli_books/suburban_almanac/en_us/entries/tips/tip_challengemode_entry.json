@@ -85,7 +85,14 @@
     {
       "type": "text",
       "text": [
-        "$(br2)Zombies spawned by the Challenge will have a 20% chance to drop a random type of Plant Food when killed, allowing you to quickly expand your defenses to keep up with the increasing difficulty."
+        "$(br2)Zombies spawned by the Challenge will have a 20% chance to drop a random type of Plant Food when killed, allowing you to quickly expand your defenses to keep up with the increasing difficulty.",
+        "$(br2)Zombies spawned by the Challenge will have damage reduction starting from the 4th World, which increases by the more Worlds you have."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br)WARNING: Plants inside the Challenge Mode will stale. The more Plants of the same type you have, the less damage they will do. Use a variety of Plants instead of spamming only one. Plants without a Stale stat don't stale."
       ]
     },
     {

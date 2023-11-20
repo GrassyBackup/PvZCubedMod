@@ -402,11 +402,9 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 		}
 		if (this.getPotatoStage()){
 			this.targetZombies(this.getPos(), 2, false, false, true);
-			this.setLowprof(LowProf.TRUE);
 		}
 		else {
 			this.setTarget(null);
-			this.setLowprof(LowProf.FALSE);
 		}
 		if (this.isAlive() && this.potatoPreparingTime <= 0 && this.potatoAnimationTime > 0 && !this.getPotatoStage()) {
 			--this.potatoAnimationTime;

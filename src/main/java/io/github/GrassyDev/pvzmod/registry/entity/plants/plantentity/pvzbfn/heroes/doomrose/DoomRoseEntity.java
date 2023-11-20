@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.rosebuds.RoseBudTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowFullTile;
@@ -365,6 +367,7 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 					tile.setPersistent();
 					tile.setHeadYaw(0);
 					tile.setTarget(this.getTarget());
+					tile.damageMultiplier = damageMultiplier;
 					if (this.getMoonPowered()){
 						tile.setMoonPowered(TileEntity.Moon.TRUE);
 					}
@@ -380,6 +383,7 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 						tile2.setPersistent();
 						tile2.setHeadYaw(0);
 						tile2.setShadowPowered(TileEntity.Shadow.TRUE);
+						tile2.damageMultiplier = damageMultiplier;
 						serverWorld.spawnEntityAndPassengers(tile2);
 					}
 				}

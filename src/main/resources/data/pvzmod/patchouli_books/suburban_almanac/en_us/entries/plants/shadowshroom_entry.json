@@ -11,7 +11,7 @@
         "$(br)$(#bd951a)Activation Range: $()$(#ff0000)1.5 Blocks",
         "$(br)$(#bd951a)Explosion Range: $()$(#ff0000)2 Blocks",
         "$(br)$(#bd951a)Fuse Time: $()$(#ff0000)0.75s",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)5s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)5s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Nocturnal. New Moon. Explodes, poisoning the strongest Zombie with headwear, or closest. Spawns uncommonly. Drops Shadow Plant Food",
         "$(br)$(#bd951a)Despite being such a poisonous fungus, Shadow-shroom is nonetheless a total cutie-pie."
       ]

@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -128,6 +130,13 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.OCTO)){
 			setVariant(BullyVariants.OCTO);
 		}
+		else if (this.getType().equals(PvZEntity.ACTIONHERO)){
+			setVariant(BullyVariants.ACTIONHERO);
+		}
+		else if (this.getType().equals(PvZEntity.ACTIONHEROHYPNO)){
+			setVariant(BullyVariants.ACTIONHEROHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
 		else if (this.getType().equals(PvZEntity.BASKETBALLCARRIERHYPNO)){
 			setVariant(BullyVariants.BASKETHYPNO);
 			this.setHypno(IsHypno.TRUE);
@@ -219,7 +228,8 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 	protected void initGoals() {
 		if (this.getType().equals(PvZEntity.BULLYHYPNO) ||
 				this.getType().equals(PvZEntity.BASKETBALLCARRIERHYPNO) ||
-				this.getType().equals(PvZEntity.OCTOHYPNO)) {
+				this.getType().equals(PvZEntity.OCTOHYPNO) ||
+				this.getType().equals(PvZEntity.ACTIONHEROHYPNO)) {
 			initHypnoGoals();
 		}
 		else {
@@ -270,13 +280,15 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
+		this.removeStatusEffect(STUN);
 		super.tick();
+		this.removeStatusEffect(STUN);
 		var zombieObstacleEntity = this.getPassengerList()
 				.stream()
 				.filter(e -> e instanceof ZombieObstacleEntity)
 				.map(e -> (ZombieObstacleEntity) e)
 				.findFirst();
-		if (this.getAttacking() == null && !(this.getHypno()) && zombieObstacleEntity.isEmpty()){
+		if (this.getAttacking() == null && !(this.getHypno()) && zombieObstacleEntity.isEmpty() && (!this.getVariant().equals(BullyVariants.ACTIONHERO) && !this.getVariant().equals(BullyVariants.ACTIONHEROHYPNO))){
 			if (this.CollidesWithPlant(0.1f, 0f) instanceof GardenChallengeEntity){
 					this.setTarget(CollidesWithPlant(0.1f, 0f));
 					this.setStealthTag(Stealth.FALSE);
@@ -312,7 +324,7 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
 		if (zombieObstacleEntity.isEmpty() &&
 				this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
-					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
+					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) && !this.hasStatusEffect(GENERICSLOW) &&
 					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
 					!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
 			assert maxSpeedAttribute != null;
@@ -421,6 +433,9 @@ public class BullyEntity extends PvZombieEntity implements IAnimatable {
 		}
 		else if (this.getType().equals(PvZEntity.OCTO)){
 			hypnoType = PvZEntity.OCTOHYPNO;
+		}
+		else if (this.getType().equals(PvZEntity.ACTIONHERO)){
+			hypnoType = PvZEntity.ACTIONHEROHYPNO;
 		}
 		else {
 			hypnoType = PvZEntity.BULLYHYPNO;

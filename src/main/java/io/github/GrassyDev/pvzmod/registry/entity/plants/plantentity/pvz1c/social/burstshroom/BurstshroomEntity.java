@@ -22,6 +22,7 @@ import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -370,7 +371,7 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 						sound = switch (zombieMaterial) {
 							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 							case "plastic" -> PvZSounds.CONEHITEVENT;
-							case "stone" -> PvZSounds.STONEHITEVENT;
+							case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 							default -> PvZSounds.PEAHITEVENT;
 						};
 						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));

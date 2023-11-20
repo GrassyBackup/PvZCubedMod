@@ -11,7 +11,7 @@
         "$(#bd951a)Health: $()$(#ff0000)28",
         "$(br)$(#bd951a)Damage: $()$(#ff0000)0 (Pierce), Instant-kill (Scare, Pierce)",
         "$(br)$(#bd951a)Range: $()$(#ff0000)6 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)15s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)15s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Tall. Sound Damage. Slows Zombies' movement speed by the same amount as Chill, but doesn't stack. Scares Small Zombies.",
         "$(br)$(#bd951a)Dogwood is part St. Firnard, part Pineranian, a bit of Oaker Spaniel, and all \"Who's a Good Boy?\""
       ]

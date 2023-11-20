@@ -2,7 +2,7 @@
   "name": "Weenie Beanie",
   "icon": "pvzmod:weeniebeanie_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 307,
+  "sortnum": 317,
   "pages": [
     {
       "type": "text",
@@ -10,7 +10,7 @@
         "$(#bd951a)Health: $()$(#ff0000)8",
         "$(br)$(#bd951a)Melee Damage: $()$(#ff0000)8 DMG/1s",
         "$(br)$(#bd951a)Melee Range: $()$(#ff0000)2 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)2.5s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)2.5s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Spawns commonly during the day. Drops Plant Food.",
         "$(br2)$(#bd951a)\"They all make fun of my size, but I always say that it's not the size that matters...\""
       ]

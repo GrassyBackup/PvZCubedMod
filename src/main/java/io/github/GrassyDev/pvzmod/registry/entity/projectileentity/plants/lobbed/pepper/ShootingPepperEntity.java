@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbe
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -202,7 +204,7 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 						sound = switch (zombieMaterial) {
 							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 							case "plastic" -> PvZSounds.CONEHITEVENT;
-							case "stone" -> PvZSounds.STONEHITEVENT;
+							case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 							default -> PvZSounds.PEAHITEVENT;
 						};
 						entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
@@ -273,7 +275,7 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 									!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 											&& (generalPvZombieEntity.getHypno())) && !livingEntity.hasStatusEffect(PvZCubed.WET) && !livingEntity.isWet() && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !generalPvZombieEntity1.canBurn())) {
 								if (livingEntity != entity) {
-									float damageSplash = PVZCONFIG.nestedProjDMG.pepperSDMG();
+									float damageSplash = PVZCONFIG.nestedProjDMG.pepperSDMG() * damageMultiplier;
 									String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 									if ("paper".equals(zombieMaterial2)) {
 										damageSplash = damageSplash * 2;

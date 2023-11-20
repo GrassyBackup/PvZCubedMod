@@ -570,7 +570,7 @@ public class FlagPokerEntity extends SummonerEntity implements IAnimatable {
 				if (this.flagPokerEntity.getHypno()){
 					coneheadEntity.createConeheadProp();
 				}
-                serverWorld.spawnEntityAndPassengers(coneheadEntity);
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
             }
             for(int d = 0; d < 1; ++d) { // 1 Buckethead
 				RandomGenerator randomGenerator = FlagPokerEntity.this.getRandom();
@@ -590,7 +590,7 @@ public class FlagPokerEntity extends SummonerEntity implements IAnimatable {
 				if (this.flagPokerEntity.getHypno()){
 					bucketheadEntity.createBucketProp();
 				}
-                serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
             }
             for(int t = 0; t < 3; ++t) { // 3 Browncoat
 				RandomGenerator randomGenerator = FlagPokerEntity.this.getRandom();

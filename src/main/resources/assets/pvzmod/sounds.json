@@ -259,6 +259,11 @@
       "pvzmod:soldier_zpg"
     ]
   },
+  "rocketride.jingle": {
+    "sounds": [
+      "pvzmod:rocketride_jingle"
+    ]
+  },
   "imp.launch": {
     "sounds": [
       "pvzmod:imp_launch"

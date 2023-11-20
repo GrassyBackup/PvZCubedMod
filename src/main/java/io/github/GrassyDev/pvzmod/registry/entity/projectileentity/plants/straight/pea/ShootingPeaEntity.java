@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.strai
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.torchwood.TorchwoodEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.flamingpea.ShootingFlamingPeaEntity;
@@ -178,6 +180,7 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 				shootingFlamingPeaEntity.maxAge = this.maxAge;
 				shootingFlamingPeaEntity.setOwner(this.getOwner());
 				shootingFlamingPeaEntity.canHitFlying = this.canHitFlying;
+				shootingFlamingPeaEntity.damageMultiplier = damageMultiplier;
 				world.spawnEntity(shootingFlamingPeaEntity);
 				this.remove(RemovalReason.DISCARDED);
 			}
@@ -237,7 +240,7 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));

@@ -2,7 +2,7 @@
   "name": "Admiral Navy Bean",
   "icon": "pvzmod:admiralnavybean_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 309,
+  "sortnum": 319,
   "advancement": "pvzmod:make_navybean",
   "pages": [
     {
@@ -12,7 +12,7 @@
         "$(br)$(#bd951a)Damage: $()$(#ff0000)24 DMG/1s (Melee), x2 2 DMG/1.5s (Spit)",
         "$(br)$(#bd951a)Melee Range: $()$(#ff0000)4 Blocks",
         "$(br)$(#bd951a)Spit Range: $()$(#ff0000)15 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)10s",
+        "$(br)$(#bd951a)Seed: $()$(#ff0000)10s $(#bd951a)Stale: $()$(#ff0000)1.5% (Proj)",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Amphibious. Can only spit on water.",
         "$(br)$(#bd951a)Farewell and adieu to you, Spanish Lilies",
         "$(br)$(#bd951a)Farewell and adieu to you, Lilies of Spain",

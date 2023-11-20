@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbe
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
@@ -194,14 +196,14 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 					sound = switch (zombieMaterial) {
 						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
-						case "stone" -> PvZSounds.STONEHITEVENT;
+						case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
 					};
 					if (entity instanceof ZombieShieldEntity || (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
 						entity.playSound(sound, 0.2F, 1F);
 					}
 					entity.playSound(PvZSounds.SNOWPEAHITEVENT, 0.2F, 1F);
-					float damage = PVZCONFIG.nestedProjDMG.icebergDMGv2();
+					float damage = PVZCONFIG.nestedProjDMG.icebergDMGv2() * damageMultiplier;
 					if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
 						damage = damage / 2;
 					}
@@ -237,7 +239,7 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 										&& (generalPvZombieEntity.getHypno()))) {
 							if (livingEntity != entity) {
-								float damage3 = PVZCONFIG.nestedProjDMG.icebergSDMG();
+								float damage3 = PVZCONFIG.nestedProjDMG.icebergSDMG() * damageMultiplier;
 								String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 								if ("crystal".equals(zombieMaterial2)) {
 									damage3 = damage3 / 2;

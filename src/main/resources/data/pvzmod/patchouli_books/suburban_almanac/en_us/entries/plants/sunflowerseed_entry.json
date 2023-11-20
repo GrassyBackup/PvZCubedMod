@@ -2,7 +2,7 @@
   "name": "Sunflower Seed",
   "icon": "pvzmod:sunflowerseed_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 313,
+  "sortnum": 323,
   "pages": [
     {
       "type": "text",
@@ -12,7 +12,7 @@
         "$(br)$(#bd951a)Damage Radius: $()$(#ff0000)Low Profile. 5 Blocks",
         "$(br)$(#bd951a)Sun: $()$(#ff0000)Small",
         "$(br)$(#bd951a)Sun Rate: $()$(#ff0000)3 minutes, after shooting.",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)2.5s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)2.5s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Produces sun when attacking. Spawns commonly during the day. Drops Petal Plant Food.",
         "$(br)$(#bd951a)From every night's end comes the beginning of a new Sunflower's dawn."
       ]

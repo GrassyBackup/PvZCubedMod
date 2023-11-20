@@ -56,6 +56,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 	protected float specialGraveWeight = 0;
 
 	public boolean decorative;
+	public float defenseMultiplier = 1;
 
 	private static final TrackedData<Byte> SPELL;
 	private GraveEntity.Spell spell;

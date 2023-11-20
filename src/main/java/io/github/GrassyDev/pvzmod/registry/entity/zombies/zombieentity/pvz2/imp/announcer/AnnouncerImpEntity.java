@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -136,7 +138,7 @@ public class AnnouncerImpEntity extends SummonerEntity implements IAnimatable {
 			this.setColor(ZombieKingVariants.RED);
 		}
 		else if (this.getType().equals(PvZEntity.BLACKANNOUNCERIMP)){
-			this.setColor(ZombieKingVariants.RED);
+			this.setColor(ZombieKingVariants.BLACK);
 		}
 		else if (this.getType().equals(PvZEntity.BLACKANNOUNCERIMPHYPNO)){
 			setVariant(DefaultAndHypnoVariants.HYPNO);

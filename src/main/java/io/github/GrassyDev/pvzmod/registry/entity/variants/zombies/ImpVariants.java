@@ -17,7 +17,9 @@ public enum ImpVariants {
 	SCRAP(10),
 	SCRAPHYPNO(11),
 	BASSIMP(12),
-	BASSIMPHYPNO(13);
+	BASSIMPHYPNO(13),
+	CINDERELLA(14),
+	CINDERELLAHYPNO(15);
 
 	private static final ImpVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(ImpVariants::getId)).toArray(ImpVariants[]::new);

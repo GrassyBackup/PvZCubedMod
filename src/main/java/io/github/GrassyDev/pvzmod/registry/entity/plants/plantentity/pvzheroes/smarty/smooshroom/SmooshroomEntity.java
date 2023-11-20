@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.smooshproj.SmooshProjEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
@@ -357,7 +359,7 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 						sound = switch (zombieMaterial) {
 							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 							case "plastic" -> PvZSounds.CONEHITEVENT;
-							case "stone" -> PvZSounds.STONEHITEVENT;
+							case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 							default -> PvZSounds.PEAHITEVENT;
 						};
 						livingEntity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
@@ -461,6 +463,7 @@ public class SmooshroomEntity extends PlantEntity implements IAnimatable, Ranged
 					proj.setVelocity(vel.getX(), -3.9200000762939453 + 28 / (h * 2.2), vel.getZ(),dist, 0F);
 					proj.updatePosition(projPos.getX(), projPos.getY(), projPos.getZ());
 					proj.setOwner(this);
+					proj.damageMultiplier = damageMultiplier;
 					if (this.getTarget() != null){
 						proj.getTarget(this.getTarget());
 					}

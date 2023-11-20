@@ -6,6 +6,7 @@ import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.pumpkincar.PumpkinCarEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.browncoat.fairytale.PokerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.flagzombie.fairytale.FlagPokerEntity;
@@ -385,7 +386,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 				browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 				browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				browncoatEntity.setOwner(FairyTaleGraveEntity.this);
-				serverWorld.spawnEntityAndPassengers(browncoatEntity);
+				browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 			}
 			if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
 				for (int c = 0; c < 1; ++c) {
@@ -402,6 +404,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(FairyTaleGraveEntity.this);
+					coneheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 				}
 				for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -418,6 +421,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 					browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					browncoatEntity.setOwner(FairyTaleGraveEntity.this);
+					browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 				}
 			}
@@ -437,6 +441,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						bucketheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(FairyTaleGraveEntity.this);
+						bucketheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 					for (int c = 0; c < 1; ++c) { // 100% x1 Conehead
@@ -453,7 +458,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(FairyTaleGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(coneheadEntity);
+						coneheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 					}
 				}
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
@@ -472,7 +478,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(FairyTaleGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(coneheadEntity);
+							coneheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 						}
 						for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
 							if (!FairyTaleGraveEntity.this.is1x1()) {
@@ -488,7 +495,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 							browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							browncoatEntity.setOwner(FairyTaleGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(browncoatEntity);
+							browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 						}
 					}
 				}
@@ -509,6 +517,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						bucketheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(FairyTaleGraveEntity.this);
+						bucketheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -525,7 +534,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 						browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						browncoatEntity.setOwner(FairyTaleGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(browncoatEntity);
+						browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 					}
 				}
 			}
@@ -554,7 +564,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 						brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						brickhead.setOwner(FairyTaleGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(brickhead);
+						brickhead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 					}
 				}
 			}
@@ -576,6 +587,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								flagzombieEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(FairyTaleGraveEntity.this);
+								flagzombieEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
 							}
 							extraGraveWeight += 1;
@@ -599,48 +611,10 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								zomblob.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								zomblob.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								zomblob.setOwner(FairyTaleGraveEntity.this);
+								zomblob.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(zomblob);
 							}
 							extraGraveWeight += 1;
-						}
-					}
-				}
-				if (extraGraveWeight <= 2.5) {
-					if ((difficulty >= 2.009 + difficultymodifier) && (isUnlock() || isUnlockSpecial())) {
-						if (probability8 <= 0.15 / halfModifier * survChance) { // 15% x2 Trash Can
-							/**for (int g = 0; g < 2 / halfModifier; ++g) {
-								if (!FairyTaleGraveEntity.this.is1x1()) {
-									zombiePosZ = FairyTaleGraveEntity.this.random.range(-1, 1);
-									zombiePos = FairyTaleGraveEntity.this.random.range(-1, 1);
-								}
-								if (FairyTaleGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = FairyTaleGraveEntity.this.random.range(-3, 3);
-									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity trashCan = (PokerEntity) PvZEntity.TRASHCAN.create(FairyTaleGraveEntity.this.world);
-								trashCan.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								trashCan.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								trashCan.setOwner(FairyTaleGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(trashCan);
-							}**/
-							for (int b = 0; b < 4 / halfModifier; ++b) { // 100% x4 Browncoat
-								if (!FairyTaleGraveEntity.this.is1x1()) {
-									zombiePosZ = FairyTaleGraveEntity.this.random.range(-1, 1);
-									zombiePos = FairyTaleGraveEntity.this.random.range(-1, 1);
-								}
-								if (FairyTaleGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = FairyTaleGraveEntity.this.random.range(-3, 3);
-									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.world);
-								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								browncoatEntity.setOwner(FairyTaleGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
-							}
-							extraGraveWeight += 1.25;
 						}
 					}
 				}
@@ -672,7 +646,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FairyTaleGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
 								if (!FairyTaleGraveEntity.this.is1x1()) {
@@ -688,7 +663,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(FairyTaleGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Conehead
 								if (!FairyTaleGraveEntity.this.is1x1()) {
@@ -704,7 +680,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(FairyTaleGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							extraGraveWeight += 1.75;
 						}
@@ -726,6 +703,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 							zomblob.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							zomblob.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							zomblob.setOwner(FairyTaleGraveEntity.this);
+							zomblob.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(zomblob);
 						}
 						extraGraveWeight += 0.5;
@@ -759,7 +737,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FairyTaleGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							for (int h = 0; h < 1; ++h) { // 100% x1 Buckethead
 								if (!FairyTaleGraveEntity.this.is1x1()) {
@@ -775,9 +754,62 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								buckethead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								buckethead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								buckethead.setOwner(FairyTaleGraveEntity.this);
+								buckethead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(buckethead);
 							}
 							extraGraveWeight += 0.75;
+						}
+					}
+				}
+				if (specialGraveWeight <= 3) {
+					if ((difficulty >= 2.009 + difficultymodifier) && (isUnlock() || isUnlockSpecial())) {
+						if (probability12 <= 0.25 / halfModifier * survChance) { // 15% x1 Pumpkin Car
+							for (int p = 0; p < 1; ++p) {
+								if (!FairyTaleGraveEntity.this.is1x1()) {
+									zombiePosZ = FairyTaleGraveEntity.this.random.range(-1, 1);
+									zombiePos = FairyTaleGraveEntity.this.random.range(-1, 1);
+								}
+								if (FairyTaleGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = FairyTaleGraveEntity.this.random.range(-3, 3);
+									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								PumpkinCarEntity pumpkinCarEntity = (PumpkinCarEntity) PvZEntity.PUMPKINCAR.create(FairyTaleGraveEntity.this.world);
+								pumpkinCarEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								pumpkinCarEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								pumpkinCarEntity.setOwner(FairyTaleGraveEntity.this);
+								pumpkinCarEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+								serverWorld.spawnEntityAndPassengers(pumpkinCarEntity);
+							}
+							for (int b = 0; b < 3 / halfModifier; ++b) { // 100% x2 Brickhead
+								if (!FairyTaleGraveEntity.this.is1x1()) {
+									zombiePosZ = FairyTaleGraveEntity.this.random.range(-1, 1);
+									zombiePos = FairyTaleGraveEntity.this.random.range(-1, 1);
+								}
+								if (FairyTaleGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = FairyTaleGraveEntity.this.random.range(-3, 3);
+									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
+								}
+								EntityType<?> pokerType = PvZEntity.POKERPAWN;
+								double random = Math.random();
+								if (random <= 0.25){
+									pokerType = PvZEntity.POKERBISHOP;
+								}
+								else if (random <= 0.5){
+									pokerType = PvZEntity.POKERTOWER;
+								}
+								else if (random <= 0.75){
+									pokerType = PvZEntity.POKERKNIGHT;
+								}
+								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.world);
+								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.setOwner(FairyTaleGraveEntity.this);
+								brickhead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
+							}
+							specialGraveWeight += 1.5;
 						}
 					}
 				}
@@ -803,6 +835,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								announcerImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								announcerImpEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								announcerImpEntity.setOwner(FairyTaleGraveEntity.this);
+								announcerImpEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(announcerImpEntity);
 							}
 							for (int b = 0; b < 3 / halfModifier; ++b) { // 100% x3 Conehead
@@ -819,7 +852,8 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(FairyTaleGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(browncoatEntity);
+								browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(browncoatEntity);
 							}
 							specialGraveWeight += 1.25;
 						}

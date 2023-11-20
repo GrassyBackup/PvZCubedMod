@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -119,6 +121,12 @@ public class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 		}
 		else if (this.hasStatusEffect(PvZCubed.CHEESE) && vehicle != null && !vehicle.hasStatusEffect(PvZCubed.CHEESE) && !(this instanceof ZombieShieldEntity)){
 			this.removeStatusEffect(PvZCubed.CHEESE);
+		}
+		if (this.hasStatusEffect(PvZCubed.GENERICSLOW) && vehicle != null && !(this instanceof ZombieShieldEntity)){
+			vehicle.addStatusEffect((new StatusEffectInstance(PvZCubed.GENERICSLOW, Objects.requireNonNull(this.getStatusEffect(PvZCubed.GENERICSLOW)).getDuration(), Objects.requireNonNull(this.getStatusEffect(PvZCubed.GENERICSLOW)).getAmplifier())));
+		}
+		else if (this.hasStatusEffect(PvZCubed.GENERICSLOW) && vehicle != null && !vehicle.hasStatusEffect(PvZCubed.GENERICSLOW) && !(this instanceof ZombieShieldEntity)){
+			this.removeStatusEffect(PvZCubed.GENERICSLOW);
 		}
 		if (this.hasStatusEffect(PvZCubed.WET) && vehicle != null && !(this instanceof ZombieShieldEntity)){
 			vehicle.addStatusEffect((new StatusEffectInstance(PvZCubed.WET, Objects.requireNonNull(this.getStatusEffect(PvZCubed.WET)).getDuration(), Objects.requireNonNull(this.getStatusEffect(PvZCubed.WET)).getAmplifier())));

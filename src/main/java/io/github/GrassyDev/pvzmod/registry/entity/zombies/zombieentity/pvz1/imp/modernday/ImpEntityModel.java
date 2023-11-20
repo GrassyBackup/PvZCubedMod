@@ -30,6 +30,14 @@ public class ImpEntityModel extends AnimatedGeoModel<ImpEntity> {
 				identifier = new Identifier("pvzmod", "textures/entity/imp/scrapimp.png");
 			}
 		}
+		else if (object.getVariant().equals(ImpVariants.CINDERELLA) || object.getVariant().equals(ImpVariants.CINDERELLAHYPNO)) {
+			if (object.gear1less) {
+				identifier = new Identifier("pvzmod", "textures/entity/imp/cinderellaimp_gearless.png");
+			}
+			else {
+				identifier = new Identifier("pvzmod", "textures/entity/imp/cinderellaimp.png");
+			}
+		}
 		else {
 			identifier = new Identifier("pvzmod", "textures/entity/imp/imp.png");
 		}

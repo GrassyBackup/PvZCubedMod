@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.torchwood.TorchwoodEntity;
@@ -348,6 +350,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 				plasmaPeaEntity.setVelocity(this.getVelocity());
 				plasmaPeaEntity.age = this.age;
 				plasmaPeaEntity.setOwner(this.getOwner());
+				plasmaPeaEntity.damageMultiplier = damageMultiplier;
 				world.spawnEntity(plasmaPeaEntity);
 				this.remove(RemovalReason.DISCARDED);
 			}
@@ -384,7 +387,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 			if (lightningCounter > 0 && livingEntity instanceof Monster &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno())) && !(livingEntity instanceof GraveEntity graveEntity && graveEntity.decorative)) {
-				float damage = PVZCONFIG.nestedProjDMG.electricPeaDMG();
+				float damage = PVZCONFIG.nestedProjDMG.electricPeaDMG() * damageMultiplier;
 				ZombiePropEntity passenger = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
 					if (entity1 instanceof ZombiePropEntity zpe && !(entity1 instanceof ZombieShieldEntity)) {
@@ -400,7 +403,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				damaged.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
@@ -481,7 +484,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 					!(zombiePropEntity != null && !(zombiePropEntity instanceof ZombieShieldEntity)) &&
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth())) {
-				float damage = PVZCONFIG.nestedProjDMG.electricPeaDMG();
+				float damage = PVZCONFIG.nestedProjDMG.electricPeaDMG() * damageMultiplier;
 				if (et == null) {
 					entity.playSound(PvZSounds.LIGHTNINGSHOOTEVENT, 0.2F, (float) (0.5F + Math.random()));
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");

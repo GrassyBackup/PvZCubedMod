@@ -155,7 +155,7 @@ public class ShootingPowerSpikeEntity extends PvZProjectileEntity implements IAn
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth())
 					&& !(entity instanceof ZombieVehicleEntity && (zombiePropEntity instanceof ZombieObstacleEntity))) {
-				float damage = PVZCONFIG.nestedProjDMG.spikeDMGv2() * 1.5f;
+				float damage = PVZCONFIG.nestedProjDMG.spikeDMGv2() * 1.5f * damageMultiplier;
 				if (entity instanceof LivingEntity livingEntity) {
 					if (livingEntity.isWet() || livingEntity.hasStatusEffect(PvZCubed.WET)) {
 						damage = damage * 2;
@@ -166,7 +166,7 @@ public class ShootingPowerSpikeEntity extends PvZProjectileEntity implements IAn
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				if (et == null) {

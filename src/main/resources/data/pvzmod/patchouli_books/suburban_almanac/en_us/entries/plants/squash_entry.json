@@ -12,7 +12,7 @@
         "$(br)$(#bd951a)Activation Range: $()$(#ff0000)4 Blocks",
         "$(br)$(#bd951a)Smash Radius: $()$(#ff0000)Low Profile. 1.5 Blocks",
         "$(br)$(#bd951a)Delay: $()$(#ff0000)2.25s",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)25s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)25s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Heavy Damage. Jumps on top of the target Zombie, smashing everyone near.",
         "$(br2)$(#bd951a)Squash is actually his stage name. His birth name was Tracy."
         ]

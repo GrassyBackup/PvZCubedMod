@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.torchwood.TorchwoodEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
@@ -122,6 +124,7 @@ public class PiercePeaEntity extends PvZProjectileEntity implements IAnimatable 
 				shootingFlamingPeaEntity.age = this.age;
 				shootingFlamingPeaEntity.setOwner(this.getOwner());
 				shootingFlamingPeaEntity.damageCounter = this.damageCounter;
+				shootingFlamingPeaEntity.damageMultiplier = damageMultiplier;
 				world.spawnEntity(shootingFlamingPeaEntity);
 				this.remove(RemovalReason.DISCARDED);
 			}
@@ -183,13 +186,13 @@ public class PiercePeaEntity extends PvZProjectileEntity implements IAnimatable 
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
 					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) {
-				float damage = PVZCONFIG.nestedProjDMG.piercepeaDMG();
+				float damage = PVZCONFIG.nestedProjDMG.piercepeaDMG() * damageMultiplier;
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				if (et == null) {

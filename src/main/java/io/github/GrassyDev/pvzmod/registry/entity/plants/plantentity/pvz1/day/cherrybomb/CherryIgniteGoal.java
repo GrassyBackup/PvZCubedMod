@@ -2,6 +2,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.c
 
 import net.minecraft.entity.LivingEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.entity.ai.goal.Goal;
 
 public class CherryIgniteGoal extends Goal {

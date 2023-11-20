@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzadventu
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import net.fabricmc.api.EnvType;
@@ -286,7 +288,7 @@ public class BeetEntity extends PlantEntity implements IAnimatable, RangedAttack
 		sound = switch (zombieMaterial) {
 			case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 			case "plastic" -> PvZSounds.CONEHITEVENT;
-			case "stone" -> PvZSounds.STONEHITEVENT;
+			case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 			default -> PvZSounds.PEAHITEVENT;
 		};
 		target.playSound(sound, 0.2F, (float) (0.5F + Math.random()));

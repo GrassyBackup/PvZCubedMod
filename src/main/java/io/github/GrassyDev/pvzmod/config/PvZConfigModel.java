@@ -265,6 +265,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float iceshroomS = 25.0f;
 		@RestartRequired
+		public float impatyensS = 17.5f;
+		@RestartRequired
 		public float jalapenoS = 35.0f;
 		@RestartRequired
 		public float jumpingbeanS = 20f;
@@ -274,6 +276,8 @@ public class PvZConfigModel {
 		public float lilypadS = 0f;
 		@RestartRequired
 		public float loquatS = 2.5f;
+		@RestartRequired
+		public float locococoS = 12.5f;
 		@RestartRequired
 		public float magicshroomS = 15f;
 		@RestartRequired
@@ -296,6 +300,8 @@ public class PvZConfigModel {
 		public float olivepitS = 12.5f;
 		@RestartRequired
 		public float oxygaeS = 25.0f;
+		@RestartRequired
+		public float peanutS = 12.5f;
 		@RestartRequired
 		public float peapodS = 3.75f;
 		@RestartRequired
@@ -405,6 +411,7 @@ public class PvZConfigModel {
 		public float coconutSDMG = 100f;
 		public float dropDMGv2 = 2.5f;
 		public float dropSDMG = 2.5f;
+		public float dyeDMG = 4f;
 		public float electricPeaDMG = 4f;
 		public float firepiercepeaDMG = 6f;
 		public float firepiercepeaSDMG = 3f;
@@ -443,6 +450,7 @@ public class PvZConfigModel {
 		public float laserDMG = 32f;
 		public float soundwaveDMG = 9f;
 		public float zpgDMG = 30f;
+		public float rocketDMG = 15f;
 	}
 
 	@SectionHeader("zombieVar")
@@ -505,6 +513,8 @@ public class PvZConfigModel {
 		public double sargeantH = 27D;
 		@RestartRequired
 		public double bullyH = 110D;
+		@RestartRequired
+		public double actionheroH = 85D;
 		@RestartRequired
 		public double basketballH = 110D;
 		@RestartRequired
@@ -574,6 +584,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double pharaohH = 50D;
 		@RestartRequired
+		public double pumpkincarH = 210D;
+		@RestartRequired
 		public double undyingPharaohH = 65D;
 		@RestartRequired
 		public double roboconeH = 250D;
@@ -634,6 +646,8 @@ public class PvZConfigModel {
 
 		@RestartRequired
 		public double holoHelmetH = 190D;
+		@RestartRequired
+		public double crystalshoeHelmetH = 85D;
 
 		@RestartRequired
 		public double pumpkinH = 84D;

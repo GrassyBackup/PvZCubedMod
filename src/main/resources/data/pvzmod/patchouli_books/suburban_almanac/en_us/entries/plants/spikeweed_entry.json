@@ -11,7 +11,7 @@
         "$(#bd951a)Health: $()$(#ff0000)8",
         "$(br)$(#bd951a)Damage: $()$(#ff0000)4 DMG/1s",
         "$(br)$(#bd951a)Range: $()$(#ff0000)0.25 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)5s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)5s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Low Profile. Damages everyone nearby. Destroys an object then dies.",
         "$(br)$(#bd951a)Hockey is his special interest. He's got box seat season tickets. He keeps close track of the players. And he always cleans up in the office hockey pool. Just one problem: he's terrified of pucks."
       ]

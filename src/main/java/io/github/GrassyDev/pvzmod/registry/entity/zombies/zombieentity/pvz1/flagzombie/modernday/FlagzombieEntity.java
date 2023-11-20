@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.flagzombie.modernday;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -24,7 +25,6 @@ import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -581,7 +581,7 @@ public class FlagzombieEntity extends SummonerEntity implements IAnimatable {
 				if (this.flagzombieEntity.getHypno()){
 					coneheadEntity.createConeheadProp();
 				}
-                serverWorld.spawnEntityAndPassengers(coneheadEntity);
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
             }
             for(int d = 0; d < 2; ++d) { // 2 Buckethead
 				RandomGenerator randomGenerator = FlagzombieEntity.this.getRandom();
@@ -601,7 +601,7 @@ public class FlagzombieEntity extends SummonerEntity implements IAnimatable {
 				if (this.flagzombieEntity.getHypno()){
 					bucketheadEntity.createBucketProp();
 				}
-                serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
             }
             for(int t = 0; t < 6; ++t) { // 6 Browncoat
 				RandomGenerator randomGenerator = FlagzombieEntity.this.getRandom();

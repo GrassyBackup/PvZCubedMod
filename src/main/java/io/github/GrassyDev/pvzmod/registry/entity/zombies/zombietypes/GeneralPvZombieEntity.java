@@ -107,6 +107,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 
 	public boolean inDyingAnimation;
 	public int deathTicks;
+	public float defenseMultiplier = 1;
 
 
 	protected void initDataTracker() {
@@ -792,6 +793,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			this.removeStatusEffect(WET);
 			this.removeStatusEffect(BARK);
 			this.removeStatusEffect(CHEESE);
+			this.removeStatusEffect(GENERICSLOW);
 			this.removeStatusEffect(SHADOW);
 			this.removeStatusEffect(STUN);
 			this.removeStatusEffect(FROZEN);
@@ -806,10 +808,6 @@ public class GeneralPvZombieEntity extends HostileEntity {
 						generalPvZombieEntity.setRainbowTag(Rainbow.TRUE);
 						generalPvZombieEntity.rainbowTicks = this.rainbowTicks;
 					}
-				}
-				if (this.hasVehicle() && this.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity) {
-					generalPvZombieEntity.setRainbowTag(Rainbow.TRUE);
-					generalPvZombieEntity.rainbowTicks = this.rainbowTicks;
 				}
 			}
 		}
@@ -876,15 +874,15 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		return this.onGround ? this.getMovementSpeed() * (0.21600002F / (slipperiness * slipperiness * slipperiness)) : this.flyingSpeed;
 	}
 
-
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
+
 
 	public boolean damage(DamageSource source, float amount) {
 		if ((!this.canHypno() || this.isCovered()) && source.equals(HYPNO_DAMAGE)) {
 			return false;
 		}
 		else {
-			return super.damage(source, amount);
+			return super.damage(source, amount * defenseMultiplier);
 		}
 	}
 
@@ -961,10 +959,12 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		if (!this.world.isClient) {
 			if (this.hasStatusEffect(SHADOW)) {
 				this.removeStatusEffect(CHEESE);
+				this.removeStatusEffect(GENERICSLOW);
 				this.removeStatusEffect(BARK);
 			}
 			if (this.hasStatusEffect(BARK)) {
 				this.removeStatusEffect(CHEESE);
+				this.removeStatusEffect(GENERICSLOW);
 				barkTicks = this.getStatusEffect(BARK).getDuration();
 			}
 			if (this.hasStatusEffect(ICE)) {
@@ -976,6 +976,9 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				}
 				if (this.hasStatusEffect(CHEESE)) {
 					this.removeStatusEffect(CHEESE);
+				}
+				if (this.hasStatusEffect(GENERICSLOW)) {
+					this.removeStatusEffect(GENERICSLOW);
 				}
 				--barkTicks;
 				++chillTicks;

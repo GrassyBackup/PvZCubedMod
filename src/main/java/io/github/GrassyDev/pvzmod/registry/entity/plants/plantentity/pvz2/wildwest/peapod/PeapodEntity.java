@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.pea.ShootingPeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.PeapodCountVariants;
@@ -469,6 +471,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 						proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.33F, 0F);
 						proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.33D, this.plantEntity.getZ());
 						proj.setOwner(this.plantEntity);
+						proj.damageMultiplier = plantEntity.damageMultiplier;
 						if (livingEntity.isAlive()) {
 							this.beamTicks = -16;
 							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);
@@ -487,6 +490,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 							proj3.setVelocity(e3 * (double) h3, f3 * (double) h3, g3 * (double) h3, 0.33F, 0F);
 							proj3.updatePosition(this.plantEntity.getX() + vec3d3.x, this.plantEntity.getY() + 0.3, this.plantEntity.getZ() + vec3d3.z);
 							proj3.setOwner(this.plantEntity);
+							proj3.damageMultiplier = plantEntity.damageMultiplier;
 							if (livingEntity.isAlive()) {
 								if (this.plantEntity.getVariant().equals(PeapodVariants.PLURAL)){
 									proj3.setVariant(ShootingPeaVariants.BLACK);
@@ -509,6 +513,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 							proj2.setVelocity(e2 * (double) h2, f2 * (double) h2, g2 * (double) h2, 0.33F, 0);
 							proj2.updatePosition(this.plantEntity.getX() + vec3d2.x, this.plantEntity.getY() + 0.3, this.plantEntity.getZ() + vec3d2.z);
 							proj2.setOwner(this.plantEntity);
+							proj2.damageMultiplier = plantEntity.damageMultiplier;
 							if (livingEntity.isAlive()) {
 								if (this.plantEntity.getVariant().equals(PeapodVariants.PLURAL)){
 									proj2.setVariant(ShootingPeaVariants.PURPLE);
@@ -529,6 +534,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 							proj4.setVelocity(e4 * (double) h4, f4 * (double) h4, g4 * (double) h4, 0.33F, 0F);
 							proj4.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 							proj4.setOwner(this.plantEntity);
+							proj4.damageMultiplier = plantEntity.damageMultiplier;
 							if (livingEntity.isAlive()) {
 								if (this.plantEntity.getVariant().equals(PeapodVariants.PLURAL)){
 									proj4.setVariant(ShootingPeaVariants.BLUE);
@@ -550,6 +556,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 							proj5.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 1.25D, this.plantEntity.getZ());
 							proj5.setOwner(this.plantEntity);
 							proj5.canHitFlying = true;
+							proj5.damageMultiplier = plantEntity.damageMultiplier;
 							if (livingEntity.isAlive()) {
 								if (this.plantEntity.getVariant().equals(PeapodVariants.PLURAL)){
 									proj5.setVariant(ShootingPeaVariants.CYAN);

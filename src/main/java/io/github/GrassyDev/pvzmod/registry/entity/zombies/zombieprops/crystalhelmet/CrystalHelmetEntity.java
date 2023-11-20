@@ -83,7 +83,7 @@ public class CrystalHelmetEntity extends ZombiePropEntity implements IAnimatable
 			setVariant(CrystalHelmetVariants.HOLO);
 		}
 		else {
-			setVariant(CrystalHelmetVariants.HOLO);
+			setVariant(CrystalHelmetVariants.CRYSTALSHOE);
 		}
 		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
 	}
@@ -139,6 +139,15 @@ public class CrystalHelmetEntity extends ZombiePropEntity implements IAnimatable
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.holoHelmetH());
     }
+
+	public static DefaultAttributeContainer.Builder createCrystalShoeGearAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.crystalshoeHelmetH());
+	}
 
 	protected SoundEvent getAmbientSound() {
 		return PvZSounds.SILENCEVENET;

@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.pharaoh;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -23,7 +24,6 @@ import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -523,7 +523,7 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
 		if (sarcophagusEntity == null &&
 				this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, MAX_SPEED_UUID) &&
-					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) &&
+					!this.hasStatusEffect(ICE) && !this.hasStatusEffect(CHEESE) && !this.hasStatusEffect(GENERICSLOW) &&
 					!this.hasStatusEffect(FROZEN) && !this.hasStatusEffect(BARK) && !this.hasStatusEffect(SHADOW) &&
 					!this.hasStatusEffect(DISABLE) && !this.hasStatusEffect(STUN)) {
 			assert maxSpeedAttribute != null;

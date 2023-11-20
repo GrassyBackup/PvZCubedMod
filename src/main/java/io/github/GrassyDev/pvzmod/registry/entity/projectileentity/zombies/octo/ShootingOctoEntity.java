@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.octo
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
@@ -198,7 +200,7 @@ public class ShootingOctoEntity extends PvZProjectileEntity implements IAnimatab
 							sound = switch (zombieMaterial) {
 								case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 								case "plastic" -> PvZSounds.CONEHITEVENT;
-								case "stone" -> PvZSounds.STONEHITEVENT;
+								case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 								default -> PvZSounds.PEAHITEVENT;
 							};
 							entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
@@ -227,7 +229,7 @@ public class ShootingOctoEntity extends PvZProjectileEntity implements IAnimatab
 							sound = switch (zombieMaterial) {
 								case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 								case "plastic" -> PvZSounds.CONEHITEVENT;
-								case "stone" -> PvZSounds.STONEHITEVENT;
+								case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 								default -> PvZSounds.PEAHITEVENT;
 							};
 							entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));

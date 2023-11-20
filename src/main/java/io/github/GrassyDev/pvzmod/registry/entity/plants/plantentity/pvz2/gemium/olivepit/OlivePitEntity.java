@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.bananatile.BananaTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
@@ -223,7 +225,7 @@ public class OlivePitEntity extends PlantEntity implements IAnimatable {
 					sound = switch (zombieMaterial) {
 						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
-						case "stone" -> PvZSounds.STONEHITEVENT;
+						case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
 					};
 					livingEntity.playSound(SoundEvents.ENTITY_PLAYER_BURP, 0.4F, (float) (0.5F + Math.random()));

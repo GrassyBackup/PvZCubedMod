@@ -432,6 +432,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 				FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 				FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 				FutureZombieEntity.setOwner(FutureGraveEntity.this);
+				FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 			}
 			if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
@@ -449,6 +450,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(FutureGraveEntity.this);
+					coneheadEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 				}
 				for(int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -465,7 +467,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 					FutureZombieEntity.setOwner(FutureGraveEntity.this);
-					serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+					FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 				}
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
@@ -484,6 +487,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						bucketheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(FutureGraveEntity.this);
+						bucketheadEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 					for (int c = 0; c < 2 / halfModifier; ++c) { // 100% x2 Conehead
@@ -500,7 +504,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(FutureGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(coneheadEntity);
+						coneheadEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 					}
 				}
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
@@ -519,7 +524,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(FutureGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(coneheadEntity);
+							coneheadEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 						}
 						for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 							if (!FutureGraveEntity.this.is1x1()) {
@@ -535,7 +541,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 							FutureZombieEntity.setOwner(FutureGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+							FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 						}
 					}
 				}
@@ -556,6 +563,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						jetpack.setOwner(FutureGraveEntity.this);
+						jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);
 					}
 					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -572,7 +580,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						FutureZombieEntity.setOwner(FutureGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+						FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 					}
 				}
 			}
@@ -593,7 +602,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							jetpack.setOwner(FutureGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(jetpack);
+							jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+						serverWorld.spawnEntityAndPassengers(jetpack);
 						}
 						for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
 							if (!FutureGraveEntity.this.is1x1()) {
@@ -609,6 +619,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							buckethead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							buckethead.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							buckethead.setOwner(FutureGraveEntity.this);
+							buckethead.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(buckethead);
 						}
 					}
@@ -629,6 +640,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							brickhead.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							brickhead.setOwner(FutureGraveEntity.this);
+							brickhead.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
 						}
 					}
@@ -653,6 +665,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								flagzombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(FutureGraveEntity.this);
+								flagzombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
 							}
 							extraGraveWeight += 1;
@@ -676,7 +689,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(jetpack);
+								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+						serverWorld.spawnEntityAndPassengers(jetpack);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 								if (!FutureGraveEntity.this.is1x1()) {
@@ -692,7 +706,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							extraGraveWeight += 1;
 						}
@@ -715,6 +730,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								roboConeEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								roboConeEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								roboConeEntity.setOwner(FutureGraveEntity.this);
+								roboConeEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(roboConeEntity);
 							}
 							for (int b = 0; b < 4 / halfModifier; ++b) { // 100% x4 Browncoat
@@ -731,7 +747,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							extraGraveWeight += 1.25;
 						}
@@ -754,7 +771,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 								if (!FutureGraveEntity.this.is1x1()) {
@@ -770,7 +788,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Conehead
 								if (!FutureGraveEntity.this.is1x1()) {
@@ -786,7 +805,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
 								if (!FutureGraveEntity.this.is1x1()) {
@@ -802,7 +822,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							extraGraveWeight += 1.75;
 						}
@@ -825,6 +846,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								roboConeEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								roboConeEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								roboConeEntity.setOwner(FutureGraveEntity.this);
+								roboConeEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(roboConeEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
@@ -841,7 +863,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							extraGraveWeight += 0.75;
 						}
@@ -863,7 +886,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							jetpack.setOwner(FutureGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(jetpack);
+							jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+						serverWorld.spawnEntityAndPassengers(jetpack);
 						}
 						extraGraveWeight += 0.5;
 					}
@@ -885,7 +909,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							for (int h = 0; h < 1; ++h) { // 100% x1 Bully
 								if (!FutureGraveEntity.this.is1x1()) {
@@ -901,7 +926,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							extraGraveWeight += 0.75;
 						}
@@ -924,6 +950,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								scrapMechEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								scrapMechEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								scrapMechEntity.setOwner(FutureGraveEntity.this);
+								scrapMechEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(scrapMechEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Jetpack
@@ -940,7 +967,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(jetpack);
+								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+						serverWorld.spawnEntityAndPassengers(jetpack);
 							}
 							for (int h = 0; h < 1; ++h) { // 100% x1 Blastronaut
 								if (!FutureGraveEntity.this.is1x1()) {
@@ -956,7 +984,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(jetpack);
+								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+						serverWorld.spawnEntityAndPassengers(jetpack);
 							}
 							specialGraveWeight += 1.5;
 						}
@@ -979,7 +1008,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(jetpack);
+								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+						serverWorld.spawnEntityAndPassengers(jetpack);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Conehead
 								if (!FutureGraveEntity.this.is1x1()) {
@@ -995,7 +1025,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
 								if (!FutureGraveEntity.this.is1x1()) {
@@ -1011,7 +1042,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							specialGraveWeight += 1.25;
 						}
@@ -1034,7 +1066,8 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(jetpack);
+								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+						serverWorld.spawnEntityAndPassengers(jetpack);
 							}
 							specialGraveWeight += 0.5;
 						}

@@ -11,7 +11,7 @@
         "$(#bd951a)Health: $()$(#ff0000)10",
         "$(br)$(#bd951a)Damage: $()$(#ff0000)4 DMG/4s",
         "$(br)$(#bd951a)Range: $()$(#ff0000)10 Blocks (Lobbed)",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)15s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)15s $(#bd951a)Stale: $()$(#ff0000)1.5%",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Slightly Bounces the damaged Zombie back, then the projectile bounces backwards and creates a Spring Tile when it hits the ground.",
         "$(br)$(#bd951a)She refused many princes trying to rescue her from her tall tower. Why? She is still waiting for a princess in shining armor."
       ]

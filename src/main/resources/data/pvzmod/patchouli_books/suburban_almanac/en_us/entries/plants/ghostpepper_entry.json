@@ -2,7 +2,7 @@
   "name": "Ghost Pepper",
   "icon": "pvzmod:ghostpepper_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 91,
+  "sortnum": 92,
   "advancement": "pvzmod:make_spikeweed",
   "pages": [
     {
@@ -10,7 +10,7 @@
       "text": [
         "$(#bd951a)Damage: $()$(#ff0000)12 DMG/1s $(#bd951a)Area: $()$(#ff0000)Low Profile, 2 Blocks in front and behind, 3 wide. ",
         "$(#bd951a)Range: $()$(#ff0000)2 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)30s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)30s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Flying. Immune to damage. Zombies ignore. Full Moon. New Moon. Deals damage directly to Zombies, can't hurt Obstacles. Dies after attacking for 8 seconds total.",
         "$(br)$(#bd951a)It may look like she is wearing a white sheet, but this is how ghosts actually look like."
         ]

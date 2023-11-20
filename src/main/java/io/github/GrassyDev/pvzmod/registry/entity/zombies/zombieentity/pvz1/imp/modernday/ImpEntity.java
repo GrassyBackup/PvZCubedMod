@@ -5,6 +5,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -15,6 +17,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrad
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.ImpVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.PvZombieAttackGoal;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.crystalhelmet.CrystalHelmetEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -160,12 +163,21 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			setVariant(ImpVariants.SCRAP);
 			this.initCustomGoals();
 		}
+		else if (this.getType().equals(PvZEntity.CINDERELLAIMP)){
+			setVariant(ImpVariants.CINDERELLA);
+			createCrsytalShoeProp();
+			this.initCustomGoals();
+		}
 		else if (this.getType().equals(PvZEntity.IMPHYPNO)){
 			setVariant(ImpVariants.DEFAULTHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.SCRAPIMPHYPNO)){
 			setVariant(ImpVariants.SCRAPHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
+		else if (this.getType().equals(PvZEntity.CINDERELLAIMPHYPNO)){
+			setVariant(ImpVariants.CINDERELLAHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
 		else if (this.getType().equals(PvZEntity.IMPDRAGONHYPNO)){
@@ -207,6 +219,15 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
 	}
 
+	public void createCrsytalShoeProp() {
+		if (world instanceof ServerWorld serverWorld) {
+			CrystalHelmetEntity propentity = new CrystalHelmetEntity(PvZEntity.CRYSTALSHOEGEAR, this.world);
+			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
+			propentity.startRiding(this);
+		}
+	}
+
 	public void createRandomImp(){
 		List<EntityType<?>> impList = new ArrayList<>();
 		List<EntityType<?>> impListHypno = new ArrayList<>();
@@ -224,6 +245,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		impListHypno.add(PvZEntity.ANNOUNCERIMPHYPNO);
 		impList.add(PvZEntity.SCRAPIMP);
 		impListHypno.add(PvZEntity.SCRAPIMPHYPNO);
+		impList.add(PvZEntity.CINDERELLAIMP);
+		impListHypno.add(PvZEntity.CINDERELLAIMPHYPNO);
 		EntityType<?> impEntity = impList.get(random.range(0, impList.size() - 1));
 		EntityType<?> impEntityHypno = impListHypno.get(random.range(0, impList.size() - 1));
 		if (world instanceof ServerWorld serverWorld) {
@@ -341,7 +364,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.IMPDRAGONHYPNO) ||
 				this.getType().equals(PvZEntity.BASSIMPHYPNO) ||
 				this.getType().equals(PvZEntity.IMPTHROWERHYPNO) ||
-				this.getType().equals(PvZEntity.SCRAPIMPHYPNO)) {
+				this.getType().equals(PvZEntity.SCRAPIMPHYPNO) ||
+				this.getType().equals(PvZEntity.CINDERELLAIMPHYPNO)) {
 			initHypnoGoals();
 		}
 		else {
@@ -590,6 +614,9 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getVariant().equals(ImpVariants.BASSIMP) || this.getVariant().equals(ImpVariants.BASSIMPHYPNO)){
 			return ModItems.BASSIMPEGG.getDefaultStack();
 		}
+		else if (this.getVariant().equals(ImpVariants.CINDERELLA) || this.getVariant().equals(ImpVariants.CINDERELLAHYPNO)){
+			return ModItems.BASSIMPEGG.getDefaultStack();
+		}
 		else{
 			return ModItems.IMPEGG.getDefaultStack();
 		}
@@ -654,6 +681,15 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0D)
 				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.bassimpH());
+	}
+
+	public static DefaultAttributeContainer.Builder createCinderellaImpAttributes() {
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0D)
+				.add(ReachEntityAttributes.ATTACK_RANGE, 1.5D)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.12D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0D)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, PVZCONFIG.nestedZombieHealth.impH());
 	}
 
 	@Override
@@ -731,6 +767,9 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.SCRAPIMP)){
 			hypnoType = PvZEntity.SCRAPIMPHYPNO;
 		}
+		else if (this.getType().equals(PvZEntity.CINDERELLAIMP)){
+			hypnoType = PvZEntity.CINDERELLAIMPHYPNO;
+		}
 		else {
 			hypnoType = PvZEntity.IMPHYPNO;
 		}
@@ -751,6 +790,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 					hypnoType2 = PvZEntity.IMPTHROWERHYPNO;
 				} else if (entity.getType().equals(PvZEntity.SCRAPIMP)) {
 					hypnoType2 = PvZEntity.SCRAPIMPHYPNO;
+				} else if (entity.getType().equals(PvZEntity.CINDERELLAIMP)) {
+					hypnoType2 = PvZEntity.CINDERELLAIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.ANNOUNCERIMP)) {
 					hypnoType2 = PvZEntity.ANNOUNCERIMPHYPNO;
 				} else {

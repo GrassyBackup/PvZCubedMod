@@ -31,7 +31,8 @@
   },
   "rewards": {
     "recipes": [
-      "pvzmod:plants/enchant/tulimpeter"
+      "pvzmod:plants/enchant/tulimpeter",
+      "pvzmod:plants/contain/impatyens"
     ],
     "experience": 25
   }

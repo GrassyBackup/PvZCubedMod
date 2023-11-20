@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.strai
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.torchwood.TorchwoodEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.pea.ShootingPeaEntity;
@@ -144,6 +146,7 @@ public class ShootingDropEntity extends PvZProjectileEntity implements IAnimatab
 				shootingPeaEntity.setOwner(this.getOwner());
 				world.spawnEntity(shootingPeaEntity);
 				shootingPeaEntity.age = this.age;
+				shootingPeaEntity.damageMultiplier = damageMultiplier;
 				this.remove(RemovalReason.DISCARDED);
 			}
 		}
@@ -202,12 +205,12 @@ public class ShootingDropEntity extends PvZProjectileEntity implements IAnimatab
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				entity.playSound(sound, 0.2F, 1F);
 				entity.playSound(SoundEvents.ENTITY_GENERIC_SPLASH, 0.2F, 1F);
-				float damage = PVZCONFIG.nestedProjDMG.dropDMGv2();
+				float damage = PVZCONFIG.nestedProjDMG.dropDMGv2() * damageMultiplier;
 				if ("paper".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
 					damage = damage * 2;
 				} else if ("plant".equals(zombieMaterial)) {
@@ -247,7 +250,7 @@ public class ShootingDropEntity extends PvZProjectileEntity implements IAnimatab
 								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 										&& (generalPvZombieEntity.getHypno()))) {
 							if (livingEntity != entity) {
-								float damage3 = PVZCONFIG.nestedProjDMG.dropSDMG();
+								float damage3 = PVZCONFIG.nestedProjDMG.dropSDMG() * damageMultiplier;
 								String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 								if ("paper".equals(zombieMaterial2) || "stone".equals(zombieMaterial2)) {
 									damage3 = damage3 * 2;

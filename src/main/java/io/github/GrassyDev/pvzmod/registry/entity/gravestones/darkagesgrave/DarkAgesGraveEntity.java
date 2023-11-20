@@ -12,7 +12,6 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.brow
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.darkages.FlagPeasantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.announcer.AnnouncerImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2c.pumpkinzombie.PumpkinZombieEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzh.zomblob.ZomblobEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityData;
@@ -438,6 +437,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 				PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 				PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 				PeasantEntity.setOwner(DarkAgesGraveEntity.this);
+				PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 			}
 			if (probability <= 0.25 / halfModifier * survChance) { // 25% x1 Conehead
@@ -455,6 +455,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					coneheadEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(DarkAgesGraveEntity.this);
+					coneheadEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 				}
 				for(int b = 0; b < 1; ++b) { // 100% x1 Browncoat
@@ -471,7 +472,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 					PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 					PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 					PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-					serverWorld.spawnEntityAndPassengers(PeasantEntity);
+					PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 				}
 			}
 			if (serverWorld.toServerWorld().getTime() > 24000) {
@@ -490,6 +492,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						bucketheadEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(DarkAgesGraveEntity.this);
+						bucketheadEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
 					}
 					for (int c = 0; c < 2 / halfModifier; ++c) { // 100% x2 Conehead
@@ -506,7 +509,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						coneheadEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(DarkAgesGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(coneheadEntity);
+						coneheadEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 					}
 				}
 				if (difficulty >= 1.519 + difficultymodifier || isUnlock()) {
@@ -525,7 +529,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							coneheadEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(DarkAgesGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(coneheadEntity);
+							coneheadEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 						}
 						for(int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 							if (!DarkAgesGraveEntity.this.is1x1()) {
@@ -541,7 +546,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 							PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(PeasantEntity);
+							PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 						}
 					}
 				}
@@ -562,7 +568,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 						PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 						PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(PeasantEntity);
+						PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 					}
 					for (int b = 0; b < 1; ++b) { // 100% x1 Browncoat
 						if (!DarkAgesGraveEntity.this.is1x1()) {
@@ -578,7 +585,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 						PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 						PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-						serverWorld.spawnEntityAndPassengers(PeasantEntity);
+						PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 					}
 				}
 			}
@@ -599,7 +607,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							coneheadEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(DarkAgesGraveEntity.this);
-							serverWorld.spawnEntityAndPassengers(coneheadEntity);
+							coneheadEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
 						}
 					}
 				}
@@ -619,6 +628,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							brickhead.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							brickhead.setOwner(DarkAgesGraveEntity.this);
+							brickhead.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
 						}
 					}
@@ -643,6 +653,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								flagzombieEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(DarkAgesGraveEntity.this);
+								flagzombieEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
 							}
 							extraGraveWeight += 1;
@@ -666,6 +677,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								impdragon.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								impdragon.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								impdragon.setOwner(DarkAgesGraveEntity.this);
+								impdragon.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(impdragon);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
@@ -682,7 +694,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							extraGraveWeight += 1;
 						}
@@ -705,6 +718,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								announcerImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								announcerImpEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								announcerImpEntity.setOwner(DarkAgesGraveEntity.this);
+								announcerImpEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(announcerImpEntity);
 							}
 							for (int b = 0; b < 4 / halfModifier; ++b) { // 100% x4 Browncoat
@@ -721,7 +735,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							extraGraveWeight += 1.25;
 						}
@@ -744,7 +759,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
 								if (!DarkAgesGraveEntity.this.is1x1()) {
@@ -760,7 +776,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Conehead
 								if (!DarkAgesGraveEntity.this.is1x1()) {
@@ -776,7 +793,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
 								if (!DarkAgesGraveEntity.this.is1x1()) {
@@ -792,7 +810,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							extraGraveWeight += 1.75;
 						}
@@ -815,6 +834,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								announcerImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								announcerImpEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								announcerImpEntity.setOwner(DarkAgesGraveEntity.this);
+								announcerImpEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(announcerImpEntity);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Browncoat
@@ -831,7 +851,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							extraGraveWeight += 0.75;
 						}
@@ -853,6 +874,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 							impdragon.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 							impdragon.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							impdragon.setOwner(DarkAgesGraveEntity.this);
+							impdragon.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(impdragon);
 						}
 						extraGraveWeight += 0.5;
@@ -875,7 +897,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								brickhead.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(brickhead);
+								brickhead.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+							serverWorld.spawnEntityAndPassengers(brickhead);
 							}
 							for (int h = 0; h < 1; ++h) { // 100% x1 Buckethead
 								if (!DarkAgesGraveEntity.this.is1x1()) {
@@ -891,7 +914,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							extraGraveWeight += 0.75;
 						}
@@ -914,6 +938,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								pumpkinZombie.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								pumpkinZombie.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								pumpkinZombie.setOwner(DarkAgesGraveEntity.this);
+								pumpkinZombie.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(pumpkinZombie);
 							}
 							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x2 Conehead
@@ -930,7 +955,8 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
 								if (!DarkAgesGraveEntity.this.is1x1()) {
@@ -946,64 +972,10 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
+								PeasantEntity.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
+				serverWorld.spawnEntityAndPassengers(PeasantEntity);
 							}
 							specialGraveWeight += 1.5;
-						}
-					}
-				}
-				if (specialGraveWeight <= 3) {
-					if ((difficulty >= 2.009 + difficultymodifier) && (isUnlock() || isUnlockSpecial())) {
-						if (probability14 <= 0.10 / halfModifier * survChance) { // 10% x2 Zomblob
-							for (int p = 0; p < 2 / halfModifier; ++p) {
-								if (!DarkAgesGraveEntity.this.is1x1()) {
-									zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
-									zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
-								}
-								if (DarkAgesGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
-									zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								ZomblobEntity zomblob = (ZomblobEntity) PvZEntity.ZOMBLOB.create(DarkAgesGraveEntity.this.world);
-								zomblob.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								zomblob.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								zomblob.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(zomblob);
-							}
-							for (int b = 0; b < 1; ++b) { // 100% x1 Conehead
-								if (!DarkAgesGraveEntity.this.is1x1()) {
-									zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
-									zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
-								}
-								if (DarkAgesGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
-									zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PeasantEntity PeasantEntity = (PeasantEntity) PvZEntity.PEASANTCONE.create(DarkAgesGraveEntity.this.world);
-								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
-							}
-							for (int b = 0; b < 1; ++b) { // 100% x1 Buckethead
-								if (!DarkAgesGraveEntity.this.is1x1()) {
-									zombiePosZ = DarkAgesGraveEntity.this.random.range(-1, 1);
-									zombiePos = DarkAgesGraveEntity.this.random.range(-1, 1);
-								}
-								if (DarkAgesGraveEntity.this.isChallengeGrave()) {
-									zombiePosZ = DarkAgesGraveEntity.this.random.range(-3, 3);
-									zombiePos = DarkAgesGraveEntity.this.random.range(-3, 3);
-								}
-								BlockPos blockPos = DarkAgesGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PeasantEntity PeasantEntity = (PeasantEntity) PvZEntity.PEASANTBUCKET.create(DarkAgesGraveEntity.this.world);
-								PeasantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								PeasantEntity.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
-								PeasantEntity.setOwner(DarkAgesGraveEntity.this);
-								serverWorld.spawnEntityAndPassengers(PeasantEntity);
-							}
-							specialGraveWeight += 1.25;
 						}
 					}
 				}
@@ -1024,6 +996,7 @@ public class DarkAgesGraveEntity extends GraveEntity implements IAnimatable {
 								pumpkinZombie.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
 								pumpkinZombie.initialize(serverWorld, DarkAgesGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								pumpkinZombie.setOwner(DarkAgesGraveEntity.this);
+								pumpkinZombie.defenseMultiplier = DarkAgesGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(pumpkinZombie);
 							}
 							specialGraveWeight += 0.5;

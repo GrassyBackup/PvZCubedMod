@@ -2,6 +2,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.statuseffects;
 
 import net.minecraft.entity.LivingEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;

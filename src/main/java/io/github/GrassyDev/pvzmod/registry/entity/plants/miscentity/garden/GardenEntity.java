@@ -2,6 +2,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden;
 
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

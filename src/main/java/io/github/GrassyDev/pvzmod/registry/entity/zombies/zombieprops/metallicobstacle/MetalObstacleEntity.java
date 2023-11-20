@@ -5,6 +5,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.spikeweed.SpikeweedEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.spikerock.SpikerockEntity;
@@ -81,6 +83,7 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 				this.removeStatusEffect(WARM);
 				this.removeStatusEffect(BARK);
 				this.removeStatusEffect(CHEESE);
+				this.removeStatusEffect(GENERICSLOW);
 				this.removeStatusEffect(SHADOW);
 				this.removeStatusEffect(STUN);
 				this.removeStatusEffect(FROZEN);
@@ -300,6 +303,7 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 				livingEntity.removeStatusEffect(WARM);
 				livingEntity.removeStatusEffect(BARK);
 				livingEntity.removeStatusEffect(CHEESE);
+				livingEntity.removeStatusEffect(GENERICSLOW);
 				livingEntity.removeStatusEffect(SHADOW);
 				livingEntity.removeStatusEffect(STUN);
 				livingEntity.removeStatusEffect(FROZEN);

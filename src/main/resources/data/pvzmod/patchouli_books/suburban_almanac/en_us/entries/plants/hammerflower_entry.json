@@ -2,7 +2,7 @@
   "name": "Hammer Flower",
   "icon": "pvzmod:hammerflower_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 108,
+  "sortnum": 109,
   "advancement": "pvzmod:make_beet",
   "pages": [
     {
@@ -11,7 +11,7 @@
         "$(#bd951a)Health: $()$(#ff0000)24",
         "$(br)$(#bd951a)Melee Damage: $()$(#ff0000)16 DMG/1.5s",
         "$(br)$(#bd951a)Melee Range: $()$(#ff0000)4 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)15s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)15s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Heavy Damage. Stuns Zombies without helmets that aren't Big or bigger for 5 seconds and hits behind the shield.",
         "$(br2)$(#bd951a)\"There's nothing that can't be solved with a hammer hit. If there is, just hammer twice.\" - Hammer Flower."
       ]

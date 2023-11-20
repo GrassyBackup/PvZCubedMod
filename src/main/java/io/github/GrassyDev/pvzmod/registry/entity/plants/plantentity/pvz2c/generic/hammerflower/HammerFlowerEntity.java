@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.gene
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
@@ -358,7 +360,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		sound = switch (zombieMaterial) {
 			case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 			case "plastic" -> PvZSounds.CONEHITEVENT;
-			case "stone" -> PvZSounds.STONEHITEVENT;
+			case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 			default -> PvZSounds.PEAHITEVENT;
 		};
 		target.playSound(sound, 0.2F, (float) (0.5F + Math.random()));

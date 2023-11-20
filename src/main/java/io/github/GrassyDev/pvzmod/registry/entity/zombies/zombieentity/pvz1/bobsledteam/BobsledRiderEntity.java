@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -345,7 +347,7 @@ public class BobsledRiderEntity extends ZombieRidersEntity implements IAnimatabl
 
 	protected EntityType<?> hypnoType;
 	protected void checkHypno(){
-		hypnoType = PvZEntity.ZOMBONIHYPNO;
+		hypnoType = PvZEntity.BOBSLEDHYPNO;
 	}
 
 	public boolean damage(DamageSource source, float amount) {

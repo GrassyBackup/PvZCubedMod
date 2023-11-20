@@ -11,7 +11,7 @@
         "$(#bd951a)Damage: $()$(#ff0000)12 DMG/2s",
         "$(br)$(#bd951a)Area: $()$(#ff0000)Low Profile. Target's tile.",
         "$(br)$(#bd951a)Range: $()$(#ff0000)10 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)20s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)20s $(#bd951a)Stale: $()$(#ff0000)1.5%",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Full Moon. New Moon. When a Zombie dies to it, it drops a Marigold Pile on it's tile, amount depending on it's strength.",
         "$(br2)$(#bd951a)Marigold doesn't like seeing her sisters being trampled, unfortunately, Doom Rose doesn't care."
         ]
@@ -31,6 +31,7 @@
         "$(br2)$(#bd951a)Damage: $()$(#ff0000)12 DMG/2s",
         "$(br)$(#bd951a)Area: $()$(#ff0000)Low Profile. Target's tile and the tile behind it.",
         "$(br)$(#bd951a)Range: $()$(#ff0000)10 Blocks",
+        "$(br)$(#bd951a)Stale: $()$(#ff0000)1.5%",
         "$(br)$(#bd951a)Special: $()$(#ff0000)New Moon Powered Form. When a Zombie dies to it, it drops a Withered Marigold Pile on it's tile, amount depending on it's strength."
       ]
     },
@@ -49,6 +50,7 @@
         "$(br2)$(#bd951a)Damage: $()$(#ff0000)12 DMG/2s",
         "$(br)$(#bd951a)Area: $()$(#ff0000)Low Profile. Target's tile.",
         "$(br)$(#bd951a)Range: $()$(#ff0000)10 Blocks",
+        "$(br)$(#bd951a)Stale: $()$(#ff0000)1.5%",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Full Moon Powered Form. When a Zombie dies to it, it drops a three stack Marigold Pile on it's tile."
       ]
     },

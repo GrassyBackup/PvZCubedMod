@@ -2,6 +2,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.environment.rosebuds;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
@@ -90,7 +92,7 @@ public class RoseBudTile extends TileEntity {
 					hasHelmet = true;
 				}
 			}
-			float damage = 6;
+			float damage = 6 * damageMultiplier;
 			if (!hasHelmet && !(livingEntity instanceof ZombiePropEntity) && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
 				damage = damage * 2;
 			}
@@ -108,7 +110,7 @@ public class RoseBudTile extends TileEntity {
 					sound = switch (zombieMaterial) {
 						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
-						case "stone" -> PvZSounds.STONEHITEVENT;
+						case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
 					};
 					livingEntity.playSound(sound, 0.1F, (float) (0.5F + Math.random()));

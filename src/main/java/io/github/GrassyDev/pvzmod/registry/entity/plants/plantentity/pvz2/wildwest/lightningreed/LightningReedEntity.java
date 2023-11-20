@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
@@ -30,6 +32,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.HitResult;
@@ -459,15 +462,15 @@ public class LightningReedEntity extends PlantEntity implements IAnimatable, Ran
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				damaged.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
 				if (livingEntity.isWet() || livingEntity.hasStatusEffect(PvZCubed.WET)){
-					damaged.damage(PvZCubed.LIGHTNING_DAMAGE, 4);
+					damaged.damage(PvZCubed.LIGHTNING_DAMAGE, 4 * damageMultiplier);
 				}
 				else {
-					damaged.damage(PvZCubed.LIGHTNING_DAMAGE, 2);
+					damaged.damage(PvZCubed.LIGHTNING_DAMAGE, 2 * damageMultiplier);
 				}
 				damaged.damage(DamageSource.thrownProjectile(this, this), 0);
 				setSparkTarget(damaged.getId());
@@ -956,12 +959,12 @@ public class LightningReedEntity extends PlantEntity implements IAnimatable, Ran
 							sound = switch (zombieMaterial) {
 								case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 								case "plastic" -> PvZSounds.CONEHITEVENT;
-								case "stone" -> PvZSounds.STONEHITEVENT;
+								case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 								default -> PvZSounds.PEAHITEVENT;
 							};
 							this.plantEntity.playSound(PvZSounds.LIGHTNINGSHOOTEVENT, 0.75F, (float) (0.75F + (Math.random() / 2)));
 							damaged.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-							float damage = 2;
+							float damage = 2 * plantEntity.damageMultiplier;
 							if (livingEntity.isWet() || livingEntity.hasStatusEffect(PvZCubed.WET)) {
 								damage = damage * 2;
 							}

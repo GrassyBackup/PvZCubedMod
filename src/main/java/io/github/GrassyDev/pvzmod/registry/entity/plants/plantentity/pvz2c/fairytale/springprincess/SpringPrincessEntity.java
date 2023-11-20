@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.tile.springproj.SpringProjEntity;
 import net.fabricmc.api.EnvType;
@@ -298,6 +300,7 @@ public class SpringPrincessEntity extends PlantEntity implements IAnimatable, Ra
 				proj.setVelocity(vel.getX(), -3.9200000762939453 + 28 / (h * 2.2), vel.getZ(),dist, 0F);
 				proj.updatePosition(projPos.getX(), projPos.getY(), projPos.getZ());
 				proj.setOwner(this);
+				proj.damageMultiplier = damageMultiplier;
 				if (this.getTarget() != null){
 					proj.getTarget(this.getTarget());
 				}

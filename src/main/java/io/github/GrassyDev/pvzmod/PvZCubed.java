@@ -5,6 +5,8 @@ import io.github.GrassyDev.pvzmod.registry.ModBlocks;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.damage.HypnoDamage;
 import io.github.GrassyDev.pvzmod.registry.entity.damage.LightningDamage;
 import io.github.GrassyDev.pvzmod.registry.entity.statuseffects.*;
@@ -74,6 +76,7 @@ public class PvZCubed implements ModInitializer {
 	public static final StatusEffect PVZPOISON = new PvZPoison();
 	public static final StatusEffect BARK = new Bark();
 	public static final StatusEffect CHEESE = new Cheese();
+	public static final StatusEffect GENERICSLOW = new GenericSlow();
 	public static final StatusEffect SHADOW = new Shadow();
 	public static final StatusEffect MARIGOLD = new Marigold();
 	public static final StatusEffect ACID = new Acid();
@@ -194,6 +197,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.SHADOWSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.MISSILETOE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ELECTROPEA_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.PEANUT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.GHOSTPEPPER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.OLIVEPIT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.GLOOMVINE_SEED_PACKET));
@@ -207,6 +211,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.PUMPKINWITCH_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.TULIMPETER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.NARCISSUS_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.IMPATYENS_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.HAMMERFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.METEORHAMMER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DROPEA_SEED_PACKET));
@@ -221,6 +226,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.PERFOOMSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SMALLNUT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SMACKADAMIA_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.LOCOCOCO_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BUTTONSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BOMBSEEDLING_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ZAPRICOT_SEED_PACKET));
@@ -263,6 +269,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.HYPNOPROJ));
 				stacks.add(new ItemStack(ModItems.BUBBLES));
 				stacks.add(new ItemStack(ModItems.ARMORBUBBLE));
+				stacks.add(new ItemStack(ModItems.DYEITEM));
 				stacks.add(new ItemStack(ModItems.DROP));
 				stacks.add(new ItemStack(ModItems.ICESPIKE));
 				stacks.add(new ItemStack(ModItems.POWERICESPIKE));
@@ -361,6 +368,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.CURSEDGARGOLITHEGG));
 				stacks.add(new ItemStack(ModItems.IMPTHROWEGG));
 				stacks.add(new ItemStack(ModItems.SCRAPMECHEGG));
+				stacks.add(new ItemStack(ModItems.ACTIONHEROEGG));
 				stacks.add(new ItemStack(ModItems.UNICORNGARGANTUAREGG));
 				stacks.add(new ItemStack(ModItems.BASSIMPEGG));
 				stacks.add(new ItemStack(ModItems.BULLYEGG));
@@ -369,6 +377,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.REDZOMBIEKINGEGG));
 				stacks.add(new ItemStack(ModItems.BLACKANNOUNCERIMPEGG));
 				stacks.add(new ItemStack(ModItems.BLACKZOMBIEKINGEGG));
+				stacks.add(new ItemStack(ModItems.PUMPKINCARRIAGEEGG));
+				stacks.add(new ItemStack(ModItems.CRYSTALSHOEIMPEGG));
 				stacks.add(new ItemStack(ModItems.BOOKBURNEREGG));
 				stacks.add(new ItemStack(ModItems.SCRAPIMPEGG));
 			}).build();
@@ -473,6 +483,7 @@ public class PvZCubed implements ModInitializer {
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "acid"), ACID);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "bark"), BARK);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "cheese"), CHEESE);
+		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "genericslow"), GENERICSLOW);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "shadow"), SHADOW);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier("pvzmod", "marigold"), MARIGOLD);
 	}

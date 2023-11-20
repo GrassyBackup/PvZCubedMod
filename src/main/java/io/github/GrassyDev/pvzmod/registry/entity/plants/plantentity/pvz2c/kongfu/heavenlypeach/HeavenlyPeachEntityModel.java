@@ -1,4 +1,4 @@
-package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.kongfu;
+package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.kongfu.heavenlypeach;
 
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

@@ -4,6 +4,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.BrowncoatVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.DefaultAndHypnoVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.PokerVariants;
@@ -344,7 +346,6 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
-		System.out.println(this.getTarget());
 		if (this.getTarget() instanceof PeasantEntity peasantEntity && (peasantEntity.getVariant().equals(BrowncoatVariants.PEASANTKNIGHT) || peasantEntity.getVariant().equals(BrowncoatVariants.PEASANTKNIGHTHYPNO))) {
 			this.setTarget(null);
 		}

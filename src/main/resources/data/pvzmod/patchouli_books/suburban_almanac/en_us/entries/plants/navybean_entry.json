@@ -2,7 +2,7 @@
   "name": "Navy Bean",
   "icon": "pvzmod:navybean_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 310,
+  "sortnum": 320,
   "advancement": "pvzmod:start_pvz",
   "pages": [
     {
@@ -12,7 +12,7 @@
         "$(br)$(#bd951a)Damage: $()$(#ff0000)12 DMG/1s (Melee), 2 DMG/1.5s (Spit)",
         "$(br)$(#bd951a)Melee Range: $()$(#ff0000)4 Blocks",
         "$(br)$(#bd951a)Spit Range: $()$(#ff0000)15 Blocks",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)5s",
+        "$(br)$(#bd951a)Seed: $()$(#ff0000)5s $(#bd951a)Stale: $()$(#ff0000)1.5% (Proj)",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Amphibious. Can only spit on water.",
         "$(br2)$(#bd951a)After he lost his wife he swore to destroy all zombies. He swore like a sailor."
       ]

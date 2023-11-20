@@ -557,7 +557,7 @@ public class FlagMummyEntity extends SummonerEntity implements IAnimatable {
 				if (this.flagzombieEntity.getHypno()){
 					coneheadEntity.createConeheadProp();
 				}
-                serverWorld.spawnEntityAndPassengers(coneheadEntity);
+					serverWorld.spawnEntityAndPassengers(coneheadEntity);
             }
             for(int d = 0; d < 2; ++d) { // 2 Buckethead
 				RandomGenerator randomGenerator = FlagMummyEntity.this.getRandom();
@@ -577,7 +577,7 @@ public class FlagMummyEntity extends SummonerEntity implements IAnimatable {
 				if (this.flagzombieEntity.getHypno()){
 					bucketheadEntity.createBucketProp();
 				}
-                serverWorld.spawnEntityAndPassengers(bucketheadEntity);
+						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
             }
             for(int t = 0; t < 6; ++t) { // 6 Browncoat
 				RandomGenerator randomGenerator = FlagMummyEntity.this.getRandom();

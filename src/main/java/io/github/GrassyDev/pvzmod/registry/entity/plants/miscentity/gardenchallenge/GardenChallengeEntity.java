@@ -613,6 +613,26 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 	int blockBreakCooldown;
 
 	public void tick() {
+		List<PlantEntity> list = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(25, 5, 25));
+		for (PlantEntity plantEntity : list) {
+			float multiplierTimes = 1;
+			plantEntity.damageMultiplier = 1;
+			for (PlantEntity plantEntity1 : list){
+				if (plantEntity1.getType() == plantEntity.getType() && plantEntity1 != plantEntity){
+					++multiplierTimes;
+					plantEntity1.damageMultiplier = 1;
+				}
+			}
+			for (PlantEntity plantEntity1 : list){
+				if (plantEntity1.getType() == plantEntity.getType() && plantEntity1 != plantEntity){
+					float multiplier = plantEntity1.damageMultiplier - 0.015f * multiplierTimes;
+					if (multiplier <= 0.66){
+						multiplier = 0.66f;
+					}
+					plantEntity1.damageMultiplier = multiplier;
+				}
+			}
+		}
 		this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
 		float maxWaves = switch (getTier()) {
 			case ONE -> maxWaves = 3;
@@ -663,8 +683,8 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 		}
 		if (this.currentTime != null) {
 			if (this.currentTime.getTime().equals(ChallengeTime.DROUGHT)) {
-				List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
-				for (HostileEntity hostileEntity : list) {
+				List<HostileEntity> list2 = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
+				for (HostileEntity hostileEntity : list2) {
 					if (!hostileEntity.isWet()) {
 						hostileEntity.removeStatusEffect(PvZCubed.WET);
 						hostileEntity.removeStatusEffect(PvZCubed.ICE);
@@ -1295,6 +1315,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					if (this.getTierCount() >= 3){
 						graveEntity.setVariant(GraveDifficulty.HARD);
 						graveEntity.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
+						graveEntity.defenseMultiplier = 1;
+						for (int x = 0; x < this.getTierCount() - 3; ++x){
+							graveEntity.defenseMultiplier = graveEntity.defenseMultiplier - 0.05f;
+						}
 					}
 					else {
 						graveEntity.setVariant(GraveDifficulty.MED);
@@ -1311,6 +1335,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					if (this.getTierCount() >= 3){
 						graveEntity.setVariant(GraveDifficulty.HARD);
 						graveEntity.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
+						graveEntity.defenseMultiplier = 1;
+						for (int x = 0; x < this.getTierCount() - 3; ++x){
+							graveEntity.defenseMultiplier = graveEntity.defenseMultiplier - 0.05f;
+						}
 					}
 					else {
 						graveEntity.setVariant(GraveDifficulty.MED);
@@ -1326,6 +1354,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 							graveEntity2.initialize(serverWorld, this.world.getLocalDifficulty(getPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							if (this.getTierCount() >= 3){
 								graveEntity2.setVariant(GraveDifficulty.MEDHARD);
+								graveEntity2.defenseMultiplier = 1;
+								for (int x = 0; x < this.getTierCount() - 3; ++x){
+									graveEntity2.defenseMultiplier = graveEntity2.defenseMultiplier - 0.05f;
+								}
 							}
 							else {
 								graveEntity2.setVariant(GraveDifficulty.EASYMED);
@@ -1343,6 +1375,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if (this.getTierCount() >= 3){
 							graveEntity2.setVariant(GraveDifficulty.HARD);
 							graveEntity2.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
+							graveEntity2.defenseMultiplier = 1;
+							for (int x = 0; x < this.getTierCount() - 3; ++x){
+								graveEntity2.defenseMultiplier = graveEntity2.defenseMultiplier - 0.075f;
+							}
 						}
 						else {
 							graveEntity2.setVariant(GraveDifficulty.MED);

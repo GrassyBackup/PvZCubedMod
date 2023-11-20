@@ -5,6 +5,8 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -653,7 +655,7 @@ public class GargantuarEntity extends PvZombieEntity implements IAnimatable {
 			return ModItems.UNICORNGARGANTUAREGG.getDefaultStack();
 		}
 		else if (this.getType().equals(PvZEntity.CURSEDGARGOLITH) || this.getType().equals(PvZEntity.CURSEDGARGOLITHHYPNO)){
-			return ModItems.UNICORNGARGANTUAREGG.getDefaultStack();
+			return ModItems.CURSEDGARGOLITHEGG.getDefaultStack();
 		}
 		else if (this.getType().equals(PvZEntity.DEFENSIVEEND) ||
 				this.getType().equals(PvZEntity.DEFENSIVEENDHYPNO) ||

@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public enum CrystalHelmetVariants {
-	HOLO(0);
+	HOLO(0),
+	CRYSTALSHOE(1);
 
 	private static final CrystalHelmetVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(CrystalHelmetVariants::getId)).toArray(CrystalHelmetVariants[]::new);

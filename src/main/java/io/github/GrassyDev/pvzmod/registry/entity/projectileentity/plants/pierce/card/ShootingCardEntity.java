@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -259,7 +261,10 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 			if (!world.isClient && this.getReturning()) {
 				if (entityStore.contains(entity) && this.retuningStart) {
 					boolean hasHelmet = false;
-					float damage = PVZCONFIG.nestedProjDMG.cardDMGv2();
+					float damage = PVZCONFIG.nestedProjDMG.cardDMGv2() * damageMultiplier;
+					if (this.getGolden()){
+						damage = PVZCONFIG.nestedProjDMG.goldencardDMG() * damageMultiplier;
+					}
 					for (Entity entity1 : entity.getPassengerList()) {
 						if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
 							hasHelmet = true;
@@ -276,7 +281,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 					sound = switch (zombieMaterial) {
 						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 						case "plastic" -> PvZSounds.CONEHITEVENT;
-						case "stone" -> PvZSounds.STONEHITEVENT;
+						case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
 					};
 					entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
@@ -304,9 +309,9 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
 					!this.getReturning() && !this.retuningStart && damageCounter <= 2 && !entityStore.contains(entity) && !entityStoreVehicle.contains(entity)) {
 				boolean hasHelmet = false;
-				float damage = PVZCONFIG.nestedProjDMG.cardDMGv2();
+				float damage = PVZCONFIG.nestedProjDMG.cardDMGv2() * damageMultiplier;
 				if (this.getGolden()){
-					damage = PVZCONFIG.nestedProjDMG.goldencardDMG();
+					damage = PVZCONFIG.nestedProjDMG.goldencardDMG() * damageMultiplier;
 				}
 				for (Entity entity1 : entity.getPassengerList()) {
 					if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
@@ -324,7 +329,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				++this.damageCounter;

@@ -3,6 +3,8 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.strai
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.pea.ShootingPeaEntity;
@@ -201,7 +203,7 @@ public class ShootingFlamingPeaEntity extends PvZProjectileEntity implements IAn
 				sound = switch (zombieMaterial) {
 					case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
 					case "plastic" -> PvZSounds.CONEHITEVENT;
-					case "stone" -> PvZSounds.STONEHITEVENT;
+					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
 				if ((entity instanceof ZombieShieldEntity || entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET) ||
@@ -209,7 +211,7 @@ public class ShootingFlamingPeaEntity extends PvZProjectileEntity implements IAn
 					entity.playSound(sound, 0.2F, 1F);
 				}
 				entity.playSound(PvZSounds.FIREPEAHITEVENT, 0.2F, 1F);
-				float damage = PVZCONFIG.nestedProjDMG.flamingPeaDMGv2();
+				float damage = PVZCONFIG.nestedProjDMG.flamingPeaDMGv2() * damageMultiplier;
 				if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 					if (!entity.isWet() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
@@ -288,7 +290,7 @@ public class ShootingFlamingPeaEntity extends PvZProjectileEntity implements IAn
 									}
 								}
 								if (!(zombiePropEntity4 instanceof ZombieShieldEntity)&& zombiePropEntity6 == null) {
-									float damageSplash = PVZCONFIG.nestedProjDMG.flamingPeaSDMG();
+									float damageSplash = PVZCONFIG.nestedProjDMG.flamingPeaSDMG() * damageMultiplier;
 									String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 									if ("paper".equals(zombieMaterial2)) {
 										damageSplash = damageSplash * 2;

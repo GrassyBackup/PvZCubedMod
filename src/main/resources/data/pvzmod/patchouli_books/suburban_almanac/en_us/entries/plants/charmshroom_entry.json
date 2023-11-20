@@ -10,7 +10,7 @@
       "text": [
         "$(#bd951a)Health: $()$(#ff0000)12 $(#bd951a)Range: $()$(#ff0000)10 Blocks",
         "$(br)$(#bd951a)Hypnotizing Time: $()$(#ff0000)2.5s",
-        "$(br)$(#bd951a)Seed Recharge Time: $()$(#ff0000)25s",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)25s",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Nocturnal. Full Moon. Hypnotizes up to 2 of the toughest Zombies or 1 Gargantuar, then vanishes.",
         "$(br)$(#bd951a)\"People ask if I have all these charms to ward off evil Zombies or if it's a new fashion trend. But I can't bring myself to tell them the truth: that it's for good luck in my entrance exams.\""
       ]
