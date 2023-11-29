@@ -29,6 +29,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -38,6 +47,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.EnumSet;
 import java.util.List;
@@ -85,7 +95,7 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 				double d = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
 				double e = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
 				double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
-				this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + 0.6, this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + 0.6, this.getZ(), d, e, f);
 			}
 		}
 	}
@@ -155,7 +165,7 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.MISSILETOE_SEED_PACKET);
 				}
 				this.discard();
@@ -163,10 +173,10 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 		}
 		--rechargeTime;
 		if (rechargeTime <= 0) {
-			this.world.sendEntityStatus(this, (byte) 88);
+			this.getWorld().sendEntityStatus(this, (byte) 88);
 		}
 
-		List<MissileToeTarget> targetList = this.world.getNonSpectatingEntities(MissileToeTarget.class, this.getBoundingBox().expand(30));
+		List<MissileToeTarget> targetList = this.getWorld().getNonSpectatingEntities(MissileToeTarget.class, this.getBoundingBox().expand(30));
 		boolean targetIdBool = false;
 		for (MissileToeTarget missileToeTarget : targetList) {
 			if (missileToeTarget.getTargetID() == this.getId()) {
@@ -174,17 +184,17 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 				this.setTarget(missileToeTarget);
 			}
 		}
-		if (targetIdBool && !this.world.isClient) {
+		if (targetIdBool && !this.getWorld().isClient) {
 			if (rechargeTime <= 0 && !this.isFiring) {
 				startShooting = true;
 			}
 		}
 
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			if (this.rechargeTime <= 0 && !isFiring) {
 				double random = Math.random();
 				if (random <= 0.33) {
-					this.world.sendEntityStatus(this, (byte) 115);
+					this.getWorld().sendEntityStatus(this, (byte) 115);
 				}
 			}
 		}
@@ -192,7 +202,7 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -221,7 +231,7 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 			this.discard();
 			return ActionResult.SUCCESS;
 		}
-		else if (!this.world.isClient && !itemStack.isOf(ModItems.DAVES_SHOVEL)) {
+		else if (!this.getWorld().isClient && !itemStack.isOf(ModItems.DAVES_SHOVEL)) {
 			if (!player.getInventory().contains(ModItems.MISSILETOE_TARGET.getDefaultStack()) && rechargeTime <= 0 && !isFiring) {
 				MissileToeTargetItem missileToeTargetItem = (MissileToeTargetItem) ModItems.MISSILETOE_TARGET;
 				missileToeTargetItem.targetID = this.getId();
@@ -279,14 +289,7 @@ public class MissileToeEntity extends PlantEntity implements IAnimatable, Ranged
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

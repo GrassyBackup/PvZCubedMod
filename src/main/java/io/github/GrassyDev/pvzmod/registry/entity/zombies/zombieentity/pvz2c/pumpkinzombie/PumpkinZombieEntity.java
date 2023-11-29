@@ -55,6 +55,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -64,6 +73,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.Iterator;
 import java.util.List;
@@ -113,14 +123,14 @@ public class PumpkinZombieEntity extends PvZombieEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.SOUL, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.SCULK_SOUL, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SOUL, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SCULK_SOUL, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 16; ++i) {
 				double e = this.random.nextDouble() / 6 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (this.random.range(-1, 1)),
 						this.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -163,8 +173,8 @@ public class PumpkinZombieEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createPumpkinProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			PlantHelmetEntity propentity = new PlantHelmetEntity(PvZEntity.PUMPKINGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			PlantHelmetEntity propentity = new PlantHelmetEntity(PvZEntity.PUMPKINGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -275,7 +285,7 @@ public class PumpkinZombieEntity extends PvZombieEntity implements IAnimatable {
 
 		if (pumpkinProp == null && this.age > 1 && this.isAlive()){
 			this.raycastExplode();
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			this.playSound(SoundEvents.BLOCK_SCULK_SHRIEKER_SHRIEK, 1F, 0.75F);
 			this.spawnEffectsCloud();
 			this.kill();
@@ -304,13 +314,13 @@ public class PumpkinZombieEntity extends PvZombieEntity implements IAnimatable {
 			double d = this.random.nextDouble() / 20 * this.random.range(-1, 1);
 			double e = this.random.nextDouble() / 10 * this.random.range(0, 1);
 			double f = this.random.nextDouble() / 20 * this.random.range(-1, 1);
-			this.world.addParticle(ParticleTypes.SCULK_SOUL, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
-			this.world.addParticle(ParticleTypes.SOUL, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
-			this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SCULK_SOUL, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SOUL, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SOUL_FIRE_FLAME, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
 		}
 		for(int i = 0; i < 1; ++i) {
 			double e = this.random.nextDouble() / 10 * (this.random.range(0, 1));
-			this.world.addParticle(ParticleTypes.SOUL, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+			this.getWorld().addParticle(ParticleTypes.SOUL, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 					particlePos.getY(),
 					particlePos.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 							-0.5F, 0.5F), 0, e, 0);
@@ -321,7 +331,7 @@ public class PumpkinZombieEntity extends PvZombieEntity implements IAnimatable {
 		double squaredDist;
 		squaredDist = 4;
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -364,22 +374,22 @@ public class PumpkinZombieEntity extends PvZombieEntity implements IAnimatable {
 	}
 
 	private void spawnEffectsCloud() {
-		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity.setParticleType(ParticleTypes.SOUL_FIRE_FLAME);
 		areaEffectCloudEntity.setRadius(6F);
 		areaEffectCloudEntity.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity.setWaitTime(5);
 		areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 35);
 		areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float) areaEffectCloudEntity.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity);
-		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		this.getWorld().spawnEntity(areaEffectCloudEntity);
+		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity2.setParticleType(ParticleTypes.SOUL);
 		areaEffectCloudEntity2.setRadius(2F);
 		areaEffectCloudEntity2.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity2.setWaitTime(5);
 		areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 80);
 		areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float)areaEffectCloudEntity2.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity2);
+		this.getWorld().spawnEntity(areaEffectCloudEntity2);
 	}
 
 	/** /~*~//~*INTERACTION*~//~*~/ **/
@@ -455,11 +465,11 @@ public class PumpkinZombieEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
         if (!super.damage(source, amount)) {
             return false;
-        } else if (!(this.world instanceof ServerWorld)) {
+        } else if (!(this.getWorld() instanceof ServerWorld)) {
             return false;
         }
 		else {
-            ServerWorld serverWorld = (ServerWorld)this.world;
+            ServerWorld serverWorld = (ServerWorld)this.getWorld();
             LivingEntity livingEntity = this.getTarget();
             if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
                 livingEntity = (LivingEntity)source.getAttacker();

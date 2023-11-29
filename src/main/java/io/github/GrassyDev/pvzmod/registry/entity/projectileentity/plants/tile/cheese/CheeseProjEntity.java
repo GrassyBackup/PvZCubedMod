@@ -32,6 +32,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.List;
 import java.util.UUID;
 
@@ -87,14 +89,14 @@ public class CheeseProjEntity extends PvZProjectileEntity implements IAnimatable
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -105,13 +107,13 @@ public class CheeseProjEntity extends PvZProjectileEntity implements IAnimatable
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-			this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+			this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 120) {
-			this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient && this.age >= 120) {
+			this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -122,7 +124,7 @@ public class CheeseProjEntity extends PvZProjectileEntity implements IAnimatable
     }
 
 	public void createCheeseTile(BlockPos blockPos){
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			List<TileEntity> tileCheck = world.getNonSpectatingEntities(TileEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(blockPos.getX(), blockPos.getY(), blockPos.getZ()).expand(-0.5f, 0, -0.5f));
 			if (tileCheck.isEmpty()) {
 				CheeseTile tile = (CheeseTile) PvZEntity.CHEESETILE.create(world);

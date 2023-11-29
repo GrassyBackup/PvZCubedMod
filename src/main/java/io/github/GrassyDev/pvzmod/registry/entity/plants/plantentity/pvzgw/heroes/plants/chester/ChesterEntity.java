@@ -38,6 +38,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -47,6 +56,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.*;
 
@@ -253,12 +263,12 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			damage = 32;
 			this.attackTicksLeft = 25;
 			this.setCount(25);
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 		}
 		else if (zombieSize.equals("small") && !hasShield){
 			this.attackTicksLeft = 25;
 			this.setCount(25);
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
 				generalPvZombieEntity.swallowed = true;
 			}
@@ -266,7 +276,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 		else if (hasShield) {
 			this.attackTicksLeft = 175;
 			this.setCount(175);
-			this.world.sendEntityStatus(this, (byte) 105);
+			this.getWorld().sendEntityStatus(this, (byte) 105);
 			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
 				generalPvZombieEntity.swallowed = true;
 			}
@@ -274,7 +284,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 		else {
 			this.attackTicksLeft = 175;
 			this.setCount(175);
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
 				generalPvZombieEntity.swallowed = true;
 			}
@@ -312,7 +322,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	public void tick() {
 		super.tick();
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.FireBeamGoal();
 		}
 		BlockPos blockPos = this.getBlockPos();
@@ -320,7 +330,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.CHESTER_SEED_PACKET);
 				}
 				this.discard();
@@ -331,7 +341,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -436,14 +446,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	/** //~*~//~DAMAGE HANDLER~//~*~// **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -482,7 +485,7 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 			if (livingEntity != null) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 			}
-			this.world.sendEntityStatus(this, (byte) 113);
+			this.getWorld().sendEntityStatus(this, (byte) 113);
 			if (this.beamTicks >= 0 && this.animationTicks <= -10) {
 				this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 2F, 1);
 				if (!this.isInsideWaterOrBubbleColumn()) {
@@ -491,21 +494,21 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 						double xr = (double) MathHelper.nextBetween(randomGenerator, 10F, 20F);
 						float variance = MathHelper.nextBetween(randomGenerator, -0.2F, 0.2F);
 						Vec3d vec3d2 = new Vec3d((double) xr, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-						CheeseProjEntity proj = new CheeseProjEntity(PvZEntity.CHEESEPROJ, this.world);
+						CheeseProjEntity proj = new CheeseProjEntity(PvZEntity.CHEESEPROJ, this.getWorld());
 						float h = MathHelper.sqrt(MathHelper.sqrt(100)) * 0.5F;
 						proj.setVelocity(vec3d2.x, -3.9200000762939453 + 28 / (h * 2.2), vec3d2.z, (i / 10) + variance, 0F);
 						proj.updatePosition(this.getX(), this.getY() + 0.75D, this.getZ());
 						proj.setOwner(this);
-						this.world.spawnEntity(proj);
+						this.getWorld().spawnEntity(proj);
 						goopshot = true;
 					}
 					this.beamTicks = -14;
-					this.world.sendEntityStatus(this, (byte) 113);
+					this.getWorld().sendEntityStatus(this, (byte) 113);
 					shot = true;
 				}
 			} else if (this.animationTicks >= 0) {
 				this.shootSwitch = true;
-				this.world.sendEntityStatus(this, (byte) 112);
+				this.getWorld().sendEntityStatus(this, (byte) 112);
 				this.beamTicks = -14;
 				this.animationTicks = -32;
 				this.setGoop(HasGoop.FALSE);
@@ -525,32 +528,32 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 				this.playSound(PvZSounds.CHOMPERBITEVENT, 1.0F, 1.0F);
 			}
 			this.getNavigation().stop();
-			if (livingEntity.isAlive()) {
+			if (livingEntity != null && livingEntity.isAlive()) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 				if (livingEntity instanceof GraveEntity ||
 						IS_MACHINE.get(livingEntity.getType()).orElse(false).equals(true) ||
 						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("gargantuar") ||
 						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("big") ||
 						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("small")){
-					this.world.sendEntityStatus(this, (byte) 106);
+					this.getWorld().sendEntityStatus(this, (byte) 106);
 				}
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			this.isFiring = true;
 			if (this.animationTicks >= 0) {
 				this.shootSwitch = true;
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				this.isFiring = false;
 				this.beamTicks = -5;
 				this.animationTicks = -20;
 				if (shot) {
-					this.world.sendEntityStatus(this, (byte) 121);
+					this.getWorld().sendEntityStatus(this, (byte) 121);
 				}
 				shot = false;
 			}
 			if (this.beamTicks >= 0) {
 				if (!this.isInsideWaterOrBubbleColumn()) {
-					if (livingEntity.isAlive()) {
+					if (livingEntity != null && livingEntity.isAlive()) {
 						this.smack(livingEntity);
 					}
 					this.beamTicks = -25;
@@ -560,14 +563,14 @@ public class ChesterEntity extends PlantEntity implements IAnimatable, RangedAtt
 		}
 		else if (animationTicks >= 0){
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
-			this.world.sendEntityStatus(this, (byte) 112);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 112);
 			this.isFiring = false;
 			if (this.getTarget() != null){
 				this.attack(this.getTarget(), 0);
 			}
 			if (shot) {
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 			}
 			if (goopshot){
 				this.setGoop(HasGoop.FALSE);

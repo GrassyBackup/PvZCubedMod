@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.generic.magicshroom.MagicshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.pumpkinproj.ShootingPumpkinEntity;
@@ -197,7 +195,7 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.PUMPKINWITCH_SEED_PACKET);
 				}
 				this.discard();
@@ -210,7 +208,7 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 				this.setTarget(null);
 			}
 		}
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			if (!this.hasProj()) {
 				if (--this.recoverTicks <= 0) {
 					this.setProj(Proj.TRUE);
@@ -222,7 +220,7 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -299,14 +297,7 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -390,7 +381,7 @@ public class PumpkinWitchEntity extends PlantEntity implements IAnimatable, Rang
 						if (plantEntity.getTarget() != null){
 							proj.getTarget(plantEntity.getTarget());
 						}
-						if (livingEntity.isAlive()) {
+						if (livingEntity != null && livingEntity.isAlive()) {
 							this.beamTicks = -7;
 							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);

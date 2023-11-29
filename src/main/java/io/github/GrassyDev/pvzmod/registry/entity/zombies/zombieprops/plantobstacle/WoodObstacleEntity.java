@@ -36,6 +36,15 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -45,6 +54,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.List;
 
@@ -83,7 +93,7 @@ public class WoodObstacleEntity extends ZombieObstacleEntity implements IAnimata
 	public void tick() {
 		super.tick();
 
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			if (this.getType().equals(PvZEntity.HAWKERCART)) {
 				if (++hawkerTicks >= 140) {
 					EntityType<?> type = PvZEntity.PIGGY;
@@ -92,8 +102,8 @@ public class WoodObstacleEntity extends ZombieObstacleEntity implements IAnimata
 					}
 					List<PlantEntity> list = world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(15));
 					if (!list.isEmpty()) {
-						PiggyEntity piggyEntity = (PiggyEntity) type.create(this.world);
-						piggyEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						PiggyEntity piggyEntity = (PiggyEntity) type.create(this.getWorld());
+						piggyEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						piggyEntity.refreshPositionAndAngles(this.getBlockPos(), this.getYaw(), 0.0F);
 						piggyEntity.setOwner(this);
 						piggyEntity.setHeadYaw(this.getHeadYaw());
@@ -205,7 +215,7 @@ public class WoodObstacleEntity extends ZombieObstacleEntity implements IAnimata
 		if (this.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()){
 			type = PvZEntity.PIGGYHYPNO;
 		}
-		if (this.world instanceof ServerWorld serverWorld  && !(source.getSource() instanceof SuperChomperEntity) &&
+		if (this.getWorld() instanceof ServerWorld serverWorld  && !(source.getSource() instanceof SuperChomperEntity) &&
 				!(source.getSource() instanceof ChomperEntity) &&
 				!(source.getSource() instanceof ChesterEntity) &&
 				!(source.getSource() instanceof OlivePitEntity)) {

@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.c
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.ChomperVariants;
@@ -234,7 +232,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 			damage = 32;
 			this.attackTicksLeft = 25;
 			this.setCount(25);
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
 				generalPvZombieEntity.swallowed = false;
 			}
@@ -242,7 +240,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 		else if (zombieSize.equals("small") && !hasShield){
 			this.attackTicksLeft = 25;
 			this.setCount(25);
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
 				generalPvZombieEntity.swallowed = true;
 			}
@@ -250,7 +248,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 		else if (hasShield) {
 			this.attackTicksLeft = 250;
 			this.setCount(250);
-			this.world.sendEntityStatus(this, (byte) 105);
+			this.getWorld().sendEntityStatus(this, (byte) 105);
 			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
 				generalPvZombieEntity.swallowed = true;
 			}
@@ -258,7 +256,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 		else {
 			this.attackTicksLeft = 250;
 			this.setCount(250);
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 			if (damaged instanceof GeneralPvZombieEntity generalPvZombieEntity){
 				generalPvZombieEntity.swallowed = true;
 			}
@@ -295,7 +293,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	public void tick() {
 		super.tick();
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.FireBeamGoal();
 		}
 		BlockPos blockPos = this.getBlockPos();
@@ -303,7 +301,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.CHOMPER_SEED_PACKET);
 				}
 				this.discard();
@@ -314,7 +312,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -450,14 +448,7 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 
 	/** //~*~//~DAMAGE HANDLER~//~*~// **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -501,24 +492,24 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("gargantuar") ||
 						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("big") ||
 						ZOMBIE_SIZE.get(livingEntity.getType()).orElse("medium").equals("small")){
-					this.world.sendEntityStatus(this, (byte) 106);
+					this.getWorld().sendEntityStatus(this, (byte) 106);
 				}
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			this.isFiring = true;
 			if (this.animationTicks >= 0) {
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				this.isFiring = false;
 				this.beamTicks = -5;
 				this.animationTicks = -20;
 				if (shot) {
-					this.world.sendEntityStatus(this, (byte) 121);
+					this.getWorld().sendEntityStatus(this, (byte) 121);
 				}
 				shot = false;
 			}
 			if (this.beamTicks >= 0) {
 				if (!this.isInsideWaterOrBubbleColumn()) {
-					if (livingEntity.isAlive()) {
+					if (livingEntity != null && livingEntity.isAlive()) {
 						this.smack(livingEntity);
 					}
 					this.beamTicks = -25;
@@ -528,13 +519,13 @@ public class ChomperEntity extends PlantEntity implements IAnimatable, RangedAtt
 		}
 		else if (animationTicks >= 0){
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			this.isFiring = false;
 			if (this.getTarget() != null){
 				this.attack(this.getTarget(), 0);
 			}
 			if (shot) {
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 			}
 			shot = false;
 		}

@@ -12,6 +12,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 public class ShadowFullTile extends TileEntity {
 	public ShadowFullTile(EntityType<? extends TileEntity> entityType, World world) {
 		super(entityType, world);

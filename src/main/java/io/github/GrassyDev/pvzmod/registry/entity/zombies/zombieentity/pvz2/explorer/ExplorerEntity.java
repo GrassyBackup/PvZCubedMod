@@ -54,6 +54,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -63,6 +72,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
@@ -115,14 +125,14 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 10 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 10 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 10 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.SMOKE, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
 			}
 			for(int i = 0; i < 16; ++i) {
 				double e = this.random.nextDouble() / 10 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						particlePos.getY(),
 						particlePos.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -330,7 +340,7 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 
 	private boolean isBeingRainedOn() {
 		BlockPos blockPos = this.getBlockPos();
-		return this.world.hasRain(blockPos) || this.world.hasRain(new BlockPos((double)blockPos.getX(), this.getBoundingBox().maxY, (double)blockPos.getZ()));
+		return this.getWorld().hasRain(blockPos) || this.getWorld().hasRain(new BlockPos((double)blockPos.getX(), this.getBoundingBox().maxY, (double)blockPos.getZ()));
 	}
 
 	protected int createTileTicks = 100;
@@ -387,10 +397,10 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 					this.setStealthTag(Stealth.FALSE);
 				}
 				else if (this.CollidesWithPlant(0.1f, 0f) == null) {
-						this.world.sendEntityStatus(this, (byte) 115);
+						this.getWorld().sendEntityStatus(this, (byte) 115);
 					}
 					if (!bl2 && !bl3 && this.getVariant().equals(ExplorerVariants.TORCHLIGHT) && this.CollidesWithPlant(0.1f, 0f) == null) {
-						if (this.world instanceof ServerWorld) {
+						if (this.getWorld() instanceof ServerWorld) {
 							if (world.getBlockState(blockPos).isOf(Blocks.AIR) || world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
 								createScorchedTile(blockPos);
 							}
@@ -517,11 +527,11 @@ public class ExplorerEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
         if (!super.damage(source, amount)) {
             return false;
-        } else if (!(this.world instanceof ServerWorld)) {
+        } else if (!(this.getWorld() instanceof ServerWorld)) {
             return false;
         }
 		else {
-            ServerWorld serverWorld = (ServerWorld)this.world;
+            ServerWorld serverWorld = (ServerWorld)this.getWorld();
             LivingEntity livingEntity = this.getTarget();
             if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
                 livingEntity = (LivingEntity)source.getAttacker();

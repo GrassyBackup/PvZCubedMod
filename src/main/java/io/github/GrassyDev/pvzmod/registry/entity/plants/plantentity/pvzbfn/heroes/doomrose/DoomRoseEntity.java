@@ -33,6 +33,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -42,6 +51,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.List;
 
@@ -143,19 +153,19 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	public void tick() {
 		super.tick();
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			Vec3d vec3d = Vec3d.ofCenter(this.getBlockPos()).add(0, -0.5, 0);
 			List<ShadowFullTile> fullCheck = world.getNonSpectatingEntities(ShadowFullTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
 			List<ShadowTile> tileCheck = world.getNonSpectatingEntities(ShadowTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
 			if (fullCheck.isEmpty() && tileCheck.isEmpty()) {
-				if (this.getWorld().getMoonSize() < 0.1 && this.world.isSkyVisible(this.getBlockPos())) {
+				if (this.getWorld().getMoonSize() < 0.1 && this.getWorld().isSkyVisible(this.getBlockPos())) {
 					if (serverWorld.isNight()) {
 						this.setShadowPowered(Shadow.TRUE);
 					}
 				} else {
 					this.setShadowPowered(Shadow.FALSE);
 				}
-				if (this.getWorld().getMoonSize() > 0.9 && this.world.isSkyVisible(this.getBlockPos())) {
+				if (this.getWorld().getMoonSize() > 0.9 && this.getWorld().isSkyVisible(this.getBlockPos())) {
 					if (serverWorld.isNight()) {
 						this.setMoonPowered(Moon.TRUE);
 					}
@@ -176,20 +186,20 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.DOOMROSE_SEED_PACKET);
 				}
 				this.discard();
 			}
 		}
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.FireBeamGoal();
 		}
 	}
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -294,14 +304,7 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 	 * //~*~//~DAMAGE HANDLER~//~*~//
 	 **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -338,20 +341,20 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 			if (livingEntity != null) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			if (!charge){
 				if (this.animationTicks >= 0) {
 					charge = true;
 					this.beamTicks = -15;
 					this.animationTicks = -40;
-					this.world.sendEntityStatus(this, (byte) 120);
+					this.getWorld().sendEntityStatus(this, (byte) 120);
 				}
 			}
 			else if (animationTicks >= 0 && this.getTarget() == null){
 				this.shootSwitch = true;
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				charge = false;
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 				shot = false;
 			}
 			else if (animationTicks >= 0) {
@@ -360,7 +363,7 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 				shot = false;
 			}
 			if (this.charge && this.animationTicks == -40 && this.getTarget() != null) {
-				if (this.world instanceof ServerWorld serverWorld) {
+				if (this.getWorld() instanceof ServerWorld serverWorld) {
 					RoseBudTile tile = (RoseBudTile) PvZEntity.ROSEBUDS.create(world);
 					tile.refreshPositionAndAngles(this.getTarget().getBlockPos().getX(), this.getTarget().getBlockPos().getY(), this.getTarget().getBlockPos().getZ(), 0, 0);
 					tile.initialize(serverWorld, world.getLocalDifficulty(this.getTarget().getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
@@ -391,14 +394,14 @@ public class DoomRoseEntity extends PlantEntity implements IAnimatable, RangedAt
 		}
 		else if (animationTicks >= 0 && this.getTarget() == null){
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			charge = false;
-			this.world.sendEntityStatus(this, (byte) 121);
+			this.getWorld().sendEntityStatus(this, (byte) 121);
 			shot = false;
 		}
 		else if (animationTicks >= 0) {
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			shot = false;
 		}
 	}

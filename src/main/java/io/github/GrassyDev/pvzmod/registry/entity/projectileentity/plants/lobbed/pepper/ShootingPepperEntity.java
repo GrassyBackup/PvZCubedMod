@@ -46,6 +46,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -105,14 +107,14 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -123,20 +125,20 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
 			if (!this.isWet()){
-				this.world.sendEntityStatus(this, (byte)3);
+				this.getWorld().sendEntityStatus(this, (byte)3);
 			}
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 120) {
+        if (!this.getWorld().isClient && this.age >= 120) {
 			if (!this.isWet()){
-				this.world.sendEntityStatus(this, (byte)3);
+				this.getWorld().sendEntityStatus(this, (byte)3);
 			}
             this.remove(RemovalReason.DISCARDED);
         }
-		if (!this.world.isClient && this.age > 50 && target != null) {
+		if (!this.getWorld().isClient && this.age > 50 && target != null) {
 			if (target.getHealth() > 0) {
 				this.setVelocity(0,this.getVelocity().getY(), 0);
 				this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
@@ -156,8 +158,8 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 			double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
 
 			for (int j = 0; j < 1; ++j) {
-				this.world.addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
+				this.getWorld().addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
 			}
 		}
     }
@@ -253,7 +255,7 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 						}
 						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 						Vec3d vec3d = this.getPos();
-						List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+						List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
 						Iterator var10 = list.iterator();
 						while (true) {
 							LivingEntity livingEntity;
@@ -334,13 +336,13 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 												generalPvZombieEntity.fireSplashTicks = 10;
 											}
 											if (!entity.isWet()) {
-												this.world.sendEntityStatus(this, (byte) 3);
+												this.getWorld().sendEntityStatus(this, (byte) 3);
 											}
 										}
 									}
 								}
 								if (!entity.isWet()) {
-									this.world.sendEntityStatus(this, (byte) 3);
+									this.getWorld().sendEntityStatus(this, (byte) 3);
 								}
 								this.remove(RemovalReason.DISCARDED);
 							}
@@ -350,12 +352,12 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 						((LivingEntity) entity).removeStatusEffect(PvZCubed.ICE);
 						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 						if (!entity.isWet()) {
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 						}
 						this.remove(RemovalReason.DISCARDED);
 					} else {
 						if (!entity.isWet()) {
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 						}
 						this.remove(RemovalReason.DISCARDED);
 					}
@@ -383,7 +385,7 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 				double vx = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vy = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vz = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
+				this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
 			}
 
 			for (int j = 0; j < 8; ++j) {
@@ -391,16 +393,16 @@ public class ShootingPepperEntity extends PvZProjectileEntity implements IAnimat
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
 		}
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
 			if (!this.isWet()){
-				this.world.sendEntityStatus(this, (byte)3);
+				this.getWorld().sendEntityStatus(this, (byte)3);
 			}
 			this.remove(RemovalReason.DISCARDED);
         }

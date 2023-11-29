@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -181,14 +179,14 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -199,10 +197,10 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 			this.onCollision(hitResult);
 		}
 
-		if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
+		if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
 			this.remove(RemovalReason.DISCARDED);
 		}
-		if (!this.world.isClient && this.age >= returnAge || this.damageCounter >= 3) {
+		if (!this.getWorld().isClient && this.age >= returnAge || this.damageCounter >= 3) {
 			if (this.age >= returnAge + returnAge / 2){
 				this.retuningStart = true;
 			}
@@ -217,7 +215,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 				}
 			}
 		}
-		if (!this.world.isClient && this.age >= maxAge) {
+		if (!this.getWorld().isClient && this.age >= maxAge) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 	}
@@ -357,7 +355,7 @@ public class ShootingCardEntity extends PvZProjectileEntity implements IAnimatab
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.remove(RemovalReason.DISCARDED);
         }
     }

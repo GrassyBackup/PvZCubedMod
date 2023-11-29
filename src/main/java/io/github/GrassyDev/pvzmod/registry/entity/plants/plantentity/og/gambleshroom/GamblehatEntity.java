@@ -25,7 +25,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -34,6 +33,24 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 public class GamblehatEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
@@ -57,13 +74,13 @@ public class GamblehatEntity extends PlantEntity implements IAnimatable, RangedA
 		if (status == 116){
 			for(int i = 0; i < 128; ++i) {
 				double random = Math.random();
-				this.world.addParticle(ParticleTypes.DRAGON_BREATH, this.getX() + ((this.random.range(-1, 1)) * random), this.getY() + + ((this.random.range(0, 2)) * random), this.getZ() + ((this.random.range(-1, 1)) * random), 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.DRAGON_BREATH, this.getX() + ((this.random.range(-1, 1)) * random), this.getY() + + ((this.random.range(0, 2)) * random), this.getZ() + ((this.random.range(-1, 1)) * random), 0, 0, 0);
 			}
 		}
 		if (status == 117){
 			for(int i = 0; i < 32; ++i) {
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(0, 3)), this.getZ() + (this.random.range(-1, 1)), 0, 0.2, 0);
-				this.world.addParticle(ParticleTypes.POOF, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(0, 3)), this.getZ() + (this.random.range(-1, 1)), 0, 0.2, 0);
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(0, 3)), this.getZ() + (this.random.range(-1, 1)), 0, 0.2, 0);
+				this.getWorld().addParticle(ParticleTypes.POOF, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(0, 3)), this.getZ() + (this.random.range(-1, 1)), 0, 0.2, 0);
 			}
 		}
 	}
@@ -126,7 +143,7 @@ public class GamblehatEntity extends PlantEntity implements IAnimatable, RangedA
 	public void tick() {
 		super.tick();
 		if (this.age < 3){
-			this.world.sendEntityStatus(this, (byte) 116);
+			this.getWorld().sendEntityStatus(this, (byte) 116);
 		}
 		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
@@ -140,7 +157,7 @@ public class GamblehatEntity extends PlantEntity implements IAnimatable, RangedA
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -212,14 +229,7 @@ public class GamblehatEntity extends PlantEntity implements IAnimatable, RangedA
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -248,7 +258,7 @@ public class GamblehatEntity extends PlantEntity implements IAnimatable, RangedA
 			this.dropItem(Items.IRON_NUGGET);
 			this.dropItem(Items.IRON_NUGGET);
 		}
-		this.world.sendEntityStatus(this, (byte) 117);
+		this.getWorld().sendEntityStatus(this, (byte) 117);
 		super.onDeath(source);
 		this.discard();
 	}

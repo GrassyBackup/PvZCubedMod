@@ -87,7 +87,7 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 		if (status == 107) {
 			for(int i = 0; i < 128; ++i) {
 				double e = (double) MathHelper.nextBetween(randomGenerator, 5F, 20F);
-				this.world.addParticle(ParticleTypes.WATER_SPLASH, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.WATER_SPLASH, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						this.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 3F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						0, e, 0);
@@ -126,10 +126,10 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 	protected void initGoals() {
 	}
 
-	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
+	List<LivingEntity> checkList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
 	protected void splashDamage() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -213,11 +213,11 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 		}
 
 		if (this.age > 1) {
-			if (this.animationTicksLeft <= 0 && !this.world.isClient()) {
+			if (this.animationTicksLeft <= 0 && !this.getWorld().isClient()) {
 				BlockPos blockPos2 = this.getBlockPos();
 				BlockState blockState = this.getLandingBlockState();
 				if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-					if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead) {
+					if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead) {
 						this.dropItem(ModItems.SQUASH_SEED_PACKET);
 					}
 					this.discard();
@@ -309,17 +309,17 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 			this.stopAnimation = false;
 			this.addStatusEffect((new StatusEffectInstance(StatusEffects.RESISTANCE, 999999999, 999999999)));
 			--this.animationTicksLeft;
-			this.world.sendEntityStatus(this, (byte) 113);
+			this.getWorld().sendEntityStatus(this, (byte) 113);
 		}
 		else{
 			this.removeStatusEffect(StatusEffects.RESISTANCE);
-			this.world.sendEntityStatus(this, (byte) 112);
+			this.getWorld().sendEntityStatus(this, (byte) 112);
 		}
 	}
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0 && this.animationTicksLeft <= 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0 && this.animationTicksLeft <= 0) {
 			this.discard();
 		}
 	}
@@ -408,14 +408,7 @@ public class SquashEntity extends PlantEntity implements IAnimatable {
 
 	/** //~*~//~DAMAGE HANDLER~//~*~// **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

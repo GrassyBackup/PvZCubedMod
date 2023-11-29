@@ -31,7 +31,9 @@ public enum BrowncoatVariants {
 	POKERTOWER(24),
 	POKERTOWERHYPNO(25),
 	POKERBISHOP(26),
-	POKERBISHOPHYPNO(27);
+	POKERBISHOPHYPNO(27),
+	TOMB(28),
+	TOMBHYPNO(29);
 
 	private static final BrowncoatVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(BrowncoatVariants::getId)).toArray(BrowncoatVariants[]::new);

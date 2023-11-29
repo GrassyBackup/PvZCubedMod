@@ -2,7 +2,7 @@
   "name": "Flag Future Zombie",
   "icon": "pvzmod:flagfuture_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 81,
+  "sortnum": 86,
   "pages": [
     {
       "type": "text",

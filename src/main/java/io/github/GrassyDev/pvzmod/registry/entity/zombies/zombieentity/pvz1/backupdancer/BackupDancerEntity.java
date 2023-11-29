@@ -48,6 +48,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -57,6 +66,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
@@ -133,8 +143,8 @@ public class BackupDancerEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.MEDALLIONGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.MEDALLIONGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -309,10 +319,10 @@ public class BackupDancerEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();

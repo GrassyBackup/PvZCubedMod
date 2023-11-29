@@ -27,6 +27,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.foot
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.imp.superfan.SuperFanImpEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.zombieking.ZombieKingEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.hovergoat.HoverGoatEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PowderSnowBlock;
 import net.minecraft.entity.*;
@@ -108,11 +109,14 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public boolean inDyingAnimation;
 	public int deathTicks;
 	public float defenseMultiplier = 1;
+	public float damageMultiplier = 1;
+	public int damageMultiplierTicks = 1;
 
 
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(FLYING_TAG, false);
+		this.dataTracker.startTracking(HOVER_TAG, false);
 		this.dataTracker.startTracking(CANHYPNO_TAG, true);
 		this.dataTracker.startTracking(CANBURN_TAG, true);
 		this.dataTracker.startTracking(COVERED_TAG, false);
@@ -127,6 +131,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public void writeCustomDataToNbt(NbtCompound tag) {
 		super.writeCustomDataToNbt(tag);
 		tag.putBoolean("isFlying", this.isFlying());
+		tag.putBoolean("isHovering", this.isHovering());
 		tag.putBoolean("canHypno", this.canHypno());
 		tag.putBoolean("canBurn", this.canBurn());
 		tag.putBoolean("isCovered", this.isCovered());
@@ -140,6 +145,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public void readCustomDataFromNbt(NbtCompound tag) {
 		super.readCustomDataFromNbt(tag);
 		this.dataTracker.set(FLYING_TAG, tag.getBoolean("isFlying"));
+		this.dataTracker.set(HOVER_TAG, tag.getBoolean("isHovering"));
 		this.dataTracker.set(CANHYPNO_TAG, tag.getBoolean("canHypno"));
 		this.dataTracker.set(CANBURN_TAG, tag.getBoolean("canBurn"));
 		this.dataTracker.set(COVERED_TAG, tag.getBoolean("isCovered"));
@@ -163,7 +169,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				double d = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 3);
 				double f = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + 0.5 + e, this.getZ() + f, d, e, f);
+				this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + 0.5 + e, this.getZ() + f, d, e, f);
 			}
 		}
 		if (status == 70) {
@@ -236,6 +242,36 @@ public class GeneralPvZombieEntity extends HostileEntity {
 
 	public void setFlying(GeneralPvZombieEntity.Flying flying) {
 		this.dataTracker.set(FLYING_TAG, flying.getId());
+	}
+
+
+	//Hover Tag
+
+	protected static final TrackedData<Boolean> HOVER_TAG =
+			DataTracker.registerData(GeneralPvZombieEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+
+	public enum Hover {
+		FALSE(false),
+		TRUE(true);
+
+		Hover(boolean id) {
+			this.id = id;
+		}
+
+		private final boolean id;
+
+		public boolean getId() {
+			return this.id;
+		}
+	}
+
+	public Boolean isHovering() {
+		return this.dataTracker.get(HOVER_TAG);
+	}
+
+	public void setHover(Hover hover) {
+		this.dataTracker.set(HOVER_TAG, hover.getId());
 	}
 
 
@@ -462,7 +498,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 
 	@Nullable
 	public LivingEntity getArmor2() {
-		return (LivingEntity) this.world.getEntityById((Integer)this.dataTracker.get(ARMOR2_ID));
+		return (LivingEntity) this.getWorld().getEntityById((Integer)this.dataTracker.get(ARMOR2_ID));
 	}
 
 	/** ----------------------------------------------------------------------- **/
@@ -495,7 +531,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public void onDeath(DamageSource source) {
 		double randomChallenge = 0;
 		if (source.getSource() instanceof RoseBudTile roseBudTile && !(this instanceof ZombiePropEntity)){
-			if (this.world instanceof ServerWorld serverWorld) {
+			if (this.getWorld() instanceof ServerWorld serverWorld) {
 				List<MariTile> tileCheck = world.getNonSpectatingEntities(MariTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()).expand(-0.5f, -0.5f, -0.5f));
 				if (tileCheck.isEmpty()) {
 					MariTile tile = (MariTile) PvZEntity.MARITILE.create(world);
@@ -527,7 +563,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			randomChallenge = Math.random();
 		}
 		if (randomChallenge <= 0.33333) {
-			if (this.world.getGameRules().getBoolean(PvZCubed.SHOULD_ZOMBIE_DROP)) {
+			if (this.getWorld().getGameRules().getBoolean(PvZCubed.SHOULD_ZOMBIE_DROP)) {
 				if (!(this instanceof ZombiePropEntity)) {
 					double random = Math.random();
 					float multiplier = ZOMBIE_STRENGTH.get(this.getType()).orElse(1);
@@ -621,7 +657,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 
 	@Override
 	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
-		if (this.world.getGameRules().getBoolean(PvZCubed.SHOULD_ZOMBIE_DROP)){
+		if (this.getWorld().getGameRules().getBoolean(PvZCubed.SHOULD_ZOMBIE_DROP)){
 			super.dropLoot(source, causedByPlayer);
 		}
 	}
@@ -724,7 +760,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	}
 
 	public void createScorchedTile(BlockPos blockPos){
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			ScorchedTile tile = (ScorchedTile) PvZEntity.SCORCHEDTILE.create(world);
 			tile.refreshPositionAndAngles(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0, 0);
 			tile.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
@@ -748,7 +784,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	}
 
 	public void createSnowTile(BlockPos blockPos){
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			SnowTile tile = (SnowTile) PvZEntity.SNOWTILE.create(world);
 			tile.refreshPositionAndAngles(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0, 0);
 			tile.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
@@ -812,25 +848,25 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			}
 		}
 		if (this.hasStatusEffect(PvZCubed.FROZEN)){
-			this.world.sendEntityStatus(this, (byte) 70);
+			this.getWorld().sendEntityStatus(this, (byte) 70);
 		}
 		else if (this.hasStatusEffect(PvZCubed.ICE) && !(this instanceof GargantuarEntity)){
-			this.world.sendEntityStatus(this, (byte) 71);
+			this.getWorld().sendEntityStatus(this, (byte) 71);
 		}
 		else if (!this.hasStatusEffect(ICE)) {
-			this.world.sendEntityStatus(this, (byte) 72);
+			this.getWorld().sendEntityStatus(this, (byte) 72);
 		}
 		if (this.hasStatusEffect(PVZPOISON)){
-			this.world.sendEntityStatus(this, (byte) 75);
+			this.getWorld().sendEntityStatus(this, (byte) 75);
 		}
 		else {
-			this.world.sendEntityStatus(this, (byte) 76);
+			this.getWorld().sendEntityStatus(this, (byte) 76);
 		}
 		if (this.hasStatusEffect(PvZCubed.STUN) || this.hasStatusEffect(PvZCubed.DISABLE)){
-			this.world.sendEntityStatus(this, (byte) 77);
+			this.getWorld().sendEntityStatus(this, (byte) 77);
 		}
 		else {
-			this.world.sendEntityStatus(this, (byte) 78);
+			this.getWorld().sendEntityStatus(this, (byte) 78);
 		}
 		super.mobTick();
 	}
@@ -838,7 +874,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	@Override
 	public Vec3d handleFrictionAndCalculateMovement(Vec3d movementInput, float slipperiness) {
 		BlockPos blockPos = this.getVelocityAffectingPos();
-		float p = this.world.getBlockState(blockPos).getBlock().getSlipperiness();
+		float p = this.getWorld().getBlockState(blockPos).getBlock().getSlipperiness();
 		if (p > 0.6f){
 			this.updateVelocity(this.getMovementSpeed(0.6f * p), movementInput);
 		}
@@ -949,14 +985,14 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public int rainbowTicks = 5;
 
 	public void tick() {
-		if (this.world.isRaining() && this.world.isSkyVisible(this.getBlockPos())){
+		if (this.getWorld().isRaining() && this.getWorld().isSkyVisible(this.getBlockPos())){
 			this.addStatusEffect((new StatusEffectInstance(WET, 5, 1)));
 		}
 		if (this.lastHealth < this.getHealth()) {
-			this.world.sendEntityStatus(this, (byte) 69);
+			this.getWorld().sendEntityStatus(this, (byte) 69);
 		}
 		this.lastHealth = this.getHealth();
-		if (!this.world.isClient) {
+		if (!this.getWorld().isClient) {
 			if (this.hasStatusEffect(SHADOW)) {
 				this.removeStatusEffect(CHEESE);
 				this.removeStatusEffect(GENERICSLOW);
@@ -1014,7 +1050,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			this.setStealthTag(Stealth.FALSE);
 		}
 		/**
-		 if (canJump && !this.world.isClient() && !this.isFlying() && !this.isInsideWaterOrBubbleColumn() && --jumpDelay <= 0 && this.age > 40) {
+		 if (canJump && !this.getWorld().isClient() && !this.isFlying() && !this.isInsideWaterOrBubbleColumn() && --jumpDelay <= 0 && this.age > 40) {
 		 jumpOverGap();
 		 jumpDelay = 20;
 		 }**/
@@ -1033,7 +1069,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			}
 		}
 		Vec3d lastPos = this.getPos();
-		if (this.firstPos != null && !this.isFlying()) {
+		if (this.firstPos != null && !this.isFlying() && !this.isHovering()) {
 			if (lastPos.squaredDistanceTo(firstPos) < 0.0001 && this.CollidesWithPlant(0.1f, 0f) == null && !this.hasStatusEffect(PvZCubed.BOUNCED) && this.getTarget() != null && !this.hasStatusEffect(PvZCubed.FROZEN) && !this.hasStatusEffect(PvZCubed.STUN) && !this.hasStatusEffect(PvZCubed.DISABLE) && !this.hasStatusEffect(PvZCubed.ICE) && this.age >= 30 && this.attackingTick <= 0 && --this.unstuckDelay <= 0 && !this.isInsideWaterOrBubbleColumn()) {
 				this.setVelocity(0, 0, 0);
 				this.addVelocity(0, 0.3, 0);
@@ -1115,9 +1151,9 @@ public class GeneralPvZombieEntity extends HostileEntity {
 				this.setTarget(null);
 			}
 		}
-		if (IS_MACHINE.get(this.getType()).orElse(false).equals(false)) {
+		if (IS_MACHINE.get(this.getType()).orElse(false).equals(false) && !(this instanceof HoverGoatEntity)) {
 			this.removeStatusEffect(DISABLE);
-		} else {
+		} else if (IS_MACHINE.get(this.getType()).orElse(false).equals(true) && !(this instanceof HoverGoatEntity)) {
 			this.removeStatusEffect(STUN);
 		}
 		if (this.isCovered()) {
@@ -1152,7 +1188,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 		if (this.isInsideWall()) {
 			this.setPosition(this.getX(), this.getY() + 1, this.getZ());
 		}
-		if (!this.hasNoGravity() && !this.isFlying()) {
+		if (!this.hasNoGravity() && !this.isFlying() && !this.isHovering()) {
 			if (target != null) {
 				if (target.squaredDistanceTo(this) < 2.25 && !this.hasStatusEffect(PvZCubed.BOUNCED)) {
 					this.setVelocity(0, -0.3, 0);
@@ -1168,7 +1204,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			this.kill();
 		}
 
-		if (this.world.isClient) {
+		if (this.getWorld().isClient) {
 			if (zombiePropEntity != null && zombiePropEntity != getArmor2()) {
 				var e = zombiePropEntity;
 				this.geardmg = e.getHealth() < e.getMaxHealth() / 2;
@@ -1256,7 +1292,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			this.removeStatusEffect(ICE);
 		}
 		if (!this.getHypno() && !(this instanceof ZombieKingEntity) && this.getTarget() == null && --this.playerGetTick <= 0) {
-			this.setTarget(this.world.getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
+			this.setTarget(this.getWorld().getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
 			this.playerGetTick = 200;
 		}
 		if (frozenStart){
@@ -1274,6 +1310,10 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			frozenStart = true;
 		}
 		super.tick();
+		if (--damageMultiplierTicks <= 0){
+			this.damageMultiplier = 1;
+			this.damageMultiplierTicks = 20;
+		}
 		List<WaterTile> waterTiles = world.getNonSpectatingEntities(WaterTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getX(), this.getY(), this.getZ()));
 		for (WaterTile waterTile : waterTiles) {
 			this.dontWater = true;
@@ -1287,14 +1327,14 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			frozenStart = true;
 		}
 		if (fireSplashTicks == 10){
-			this.world.sendEntityStatus(this, (byte) 80);
+			this.getWorld().sendEntityStatus(this, (byte) 80);
 		}
 		--fireSplashTicks;
 		if (--damageCooldown <= 0){
 			damageTaken = 0;
 			damageCooldown = 30;
 		}
-		if (!this.world.isClient) {
+		if (!this.getWorld().isClient) {
 			if (this.hasStatusEffect(PVZPOISON) && !poisonSound) {
 				this.playSound(POISONSPLASHEVENT, 1f, 1);
 				poisonSound = true;
@@ -1313,7 +1353,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 			int m = MathHelper.floor(this.getPos().y + vec3d2.y);
 			int n = MathHelper.floor(this.getPos().z + vec3d2.z);
 			BlockPos blockPos2 = new BlockPos(l, m, n);
-			if (!this.world.getBlockState(blockPos2).isAir()) {
+			if (!this.getWorld().getBlockState(blockPos2).isAir()) {
 				hasBlockAtEnd = true;
 				break;
 			} else {
@@ -1333,6 +1373,7 @@ public class GeneralPvZombieEntity extends HostileEntity {
 	public float damageTaken;
 	private int damageCooldown;
 	public boolean canTakeDmg;
+
 
 	@Override
 	protected void applyDamage(DamageSource source, float amount) {

@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.bask
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
@@ -97,14 +95,14 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -115,16 +113,16 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 120) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 120) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
-		if (!this.world.isClient && this.age > 50 && target != null) {
+		if (!this.getWorld().isClient && this.age > 50 && target != null) {
 			if (target.getHealth() > 0) {
 				this.setVelocity(0,this.getVelocity().getY(), 0);
 				this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
@@ -188,7 +186,7 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 								default -> PvZSounds.PEAHITEVENT;
 							};
 							entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-							float damage = 4F;
+							float damage = 4F * damageMultiplier;
 							if (damage > ((LivingEntity) entity).getHealth() &&
 									!(entity instanceof ZombieShieldEntity) &&
 									entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity1 && !(generalPvZombieEntity1.getHypno())) {
@@ -198,7 +196,7 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 							} else {
 								entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 							}
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);
 						}
 					} else {
@@ -214,7 +212,7 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 								default -> PvZSounds.PEAHITEVENT;
 							};
 							entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
-							float damage = 4F;
+							float damage = 4F * damageMultiplier;
 							if (damage > ((LivingEntity) entity).getHealth() &&
 									!(entity instanceof ZombieShieldEntity) &&
 									entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
@@ -224,7 +222,7 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
 							} else {
 								entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 							}
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);
 						}
 					}
@@ -248,7 +246,7 @@ public class ShootingBasketballEntity extends PvZProjectileEntity implements IAn
             ParticleEffect particleEffect = this.getParticleParameters();
 
             for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
 

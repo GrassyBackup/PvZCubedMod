@@ -45,6 +45,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -104,14 +106,14 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -122,16 +124,16 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-			this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+			this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 120) {
-			this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient && this.age >= 120) {
+			this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
-		if (!this.world.isClient && this.age > 50 && target != null) {
+		if (!this.getWorld().isClient && this.age > 50 && target != null) {
 			if (target.getHealth() > 0) {
 				this.setVelocity(0,this.getVelocity().getY(), 0);
 				this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
@@ -150,8 +152,8 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 		double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
 
 		for (int j = 0; j < 1; ++j) {
-			this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
-			this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
+			this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
 		}
     }
 
@@ -221,7 +223,7 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 					}
 					hit = true;
 					Vec3d vec3d = this.getPos();
-					List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+					List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
 					Iterator var10 = list.iterator();
 					while (true) {
 						LivingEntity livingEntity;
@@ -275,7 +277,7 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 									}
 								}
 							}
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);
 						}
 					}
@@ -303,7 +305,7 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 				double vx = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vy = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vz = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
+				this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
 			}
 
 			for (int j = 0; j < 8; ++j) {
@@ -311,15 +313,15 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
 		}
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-			this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+			this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }

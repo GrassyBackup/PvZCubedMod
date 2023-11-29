@@ -57,6 +57,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -66,6 +75,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -298,11 +308,11 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 
 	protected void mobTick() {
 		if (this.isAggro) {
-			this.world.sendEntityStatus(this, (byte) 113);
+			this.getWorld().sendEntityStatus(this, (byte) 113);
 			this.dancing = true;
 		}
 		else {
-			this.world.sendEntityStatus(this, (byte) 112);
+			this.getWorld().sendEntityStatus(this, (byte) 112);
 			this.dancing = false;
 		}
 
@@ -386,10 +396,10 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();
@@ -550,7 +560,7 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
         }
 
         protected void castSpell() {
-            ServerWorld serverWorld = (ServerWorld)DancingZombieEntity.this.world;
+            ServerWorld serverWorld = (ServerWorld)DancingZombieEntity.this.getWorld();
 
 			EntityType<?> backup = PvZEntity.BACKUPDANCER;
 			if (this.dancingZombieEntity.getHypno()){
@@ -562,9 +572,9 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
 					blockPos = DancingZombieEntity.this.getBlockPos();
 				}
-                BackupDancerEntity backupDancerEntity = (BackupDancerEntity) backup.create(DancingZombieEntity.this.world);
+                BackupDancerEntity backupDancerEntity = (BackupDancerEntity) backup.create(DancingZombieEntity.this.getWorld());
                 backupDancerEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                backupDancerEntity.initialize(serverWorld, DancingZombieEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound) null);
+                backupDancerEntity.initialize(serverWorld, DancingZombieEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound) null);
                 backupDancerEntity.setOwner(DancingZombieEntity.this);
 				if (this.dancingZombieEntity.getHypno()){
 					backupDancerEntity.createProp();
@@ -578,9 +588,9 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
 					blockPos = DancingZombieEntity.this.getBlockPos();
 				}
-                BackupDancerEntity backupDancerEntity = (BackupDancerEntity)backup.create(DancingZombieEntity.this.world);
+                BackupDancerEntity backupDancerEntity = (BackupDancerEntity)backup.create(DancingZombieEntity.this.getWorld());
                 backupDancerEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                backupDancerEntity.initialize(serverWorld, DancingZombieEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                backupDancerEntity.initialize(serverWorld, DancingZombieEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 backupDancerEntity.setOwner(DancingZombieEntity.this);
 				if (this.dancingZombieEntity.getHypno()){
 					backupDancerEntity.createProp();
@@ -594,9 +604,9 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
 					blockPos = DancingZombieEntity.this.getBlockPos();
 				}
-                BackupDancerEntity backupDancerEntity = (BackupDancerEntity)backup.create(DancingZombieEntity.this.world);
+                BackupDancerEntity backupDancerEntity = (BackupDancerEntity)backup.create(DancingZombieEntity.this.getWorld());
                 backupDancerEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                backupDancerEntity.initialize(serverWorld, DancingZombieEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                backupDancerEntity.initialize(serverWorld, DancingZombieEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 backupDancerEntity.setOwner(DancingZombieEntity.this);
 				if (this.dancingZombieEntity.getHypno()){
 					backupDancerEntity.createProp();
@@ -610,9 +620,9 @@ public class DancingZombieEntity extends SummonerEntity implements IAnimatable {
 				if (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR)){
 					blockPos = DancingZombieEntity.this.getBlockPos();
 				}
-                BackupDancerEntity backupDancerEntity = (BackupDancerEntity)backup.create(DancingZombieEntity.this.world);
+                BackupDancerEntity backupDancerEntity = (BackupDancerEntity)backup.create(DancingZombieEntity.this.getWorld());
                 backupDancerEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                backupDancerEntity.initialize(serverWorld, DancingZombieEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                backupDancerEntity.initialize(serverWorld, DancingZombieEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 backupDancerEntity.setOwner(DancingZombieEntity.this);
 				if (this.dancingZombieEntity.getHypno()){
 					backupDancerEntity.createProp();

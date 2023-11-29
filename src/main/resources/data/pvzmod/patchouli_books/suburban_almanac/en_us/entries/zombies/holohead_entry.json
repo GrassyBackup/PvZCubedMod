@@ -2,7 +2,7 @@
   "name": "Holo-Head",
   "icon": "pvzmod:holohead_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 86,
+  "sortnum": 91,
   "pages": [
     {
       "type": "text",
@@ -47,6 +47,7 @@
       "entries": [
         "pvzmod:plants/coconutcannon_entry",
         "pvzmod:plants/narcissus_entry",
+        "pvzmod:plants/vampireflower_entry",
         "pvzmod:plants/pumpkinwitch_entry",
         "pvzmod:plants/bananasaurus_entry"
       ]

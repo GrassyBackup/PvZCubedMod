@@ -43,6 +43,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -91,14 +93,14 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -109,11 +111,11 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 			this.onCollision(hitResult);
 		}
 
-		if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
+		if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && this.age >= maxAge || this.damageCounter >= 3) {
+		if (!this.getWorld().isClient && this.age >= maxAge || this.damageCounter >= 3) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 		double d = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
@@ -121,8 +123,8 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 		double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
 
 		for (int j = 0; j < 1; ++j) {
-			this.world.addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
-			this.world.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
+			this.getWorld().addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
 		}
 
 		if (this.isWet()){
@@ -143,7 +145,7 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 
 	public List<Entity> entityStore = new ArrayList<>();
 
-	protected int damageCounter = 0;
+	public int damageCounter = 0;
 
 	@Override
 	public void hitEntities() {
@@ -241,7 +243,7 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 						((LivingEntity) entity).removeStatusEffect(PvZCubed.FROZEN);
 						((LivingEntity) entity).removeStatusEffect(PvZCubed.ICE);
 						Vec3d vec3d = this.getPos();
-						List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+						List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
 						Iterator var10 = list.iterator();
 						while (true) {
 							LivingEntity livingEntity;
@@ -333,7 +335,7 @@ public class FirePiercePeaEntity extends PvZProjectileEntity implements IAnimata
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.remove(RemovalReason.DISCARDED);
         }
     }

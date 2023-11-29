@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.card.ShootingCardEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -36,6 +34,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -183,7 +189,7 @@ public class GambleshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 
 	protected List<HostileEntity> checkForZombiesHAT() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
 		List<HostileEntity> list2 = new ArrayList<>();
 		Iterator var9 = list.iterator();
 		while (true) {
@@ -219,14 +225,14 @@ public class GambleshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 
 	public void tick() {
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -247,7 +253,7 @@ public class GambleshroomEntity extends PlantEntity implements IAnimatable, Rang
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.GAMBLESHROOM_SEED_PACKET);
 				}
 				this.discard();
@@ -265,7 +271,7 @@ public class GambleshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -351,14 +357,7 @@ public class GambleshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -426,7 +425,7 @@ public class GambleshroomEntity extends PlantEntity implements IAnimatable, Rang
 					++this.animationTicks;
 					++this.beamTicks;
 					Vec3d vec3d2 = Vec3d.ZERO;
-					if (livingEntity.isAlive()){
+					if (livingEntity != null && livingEntity.isAlive()){
 						vec3d2 = new Vec3d((double) 1, 0.0, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					}
 					Vec3d vec3d3 = Vec3d.ofCenter(livingEntity.getBlockPos());
@@ -435,7 +434,7 @@ public class GambleshroomEntity extends PlantEntity implements IAnimatable, Rang
 					if (this.shootingHat && list.isEmpty()) {
 						this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 117);
 						if (this.beamTicks >= 0 && this.animationTicks >= -5) {
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 14);
 								GamblehatEntity hat = (GamblehatEntity) PvZEntity.GAMBLEHAT.create(this.plantEntity.world);
 								hat.refreshPositionAndAngles(blockpos.getX(), livingEntity.getY(), blockpos.getZ(), 0, 0);
@@ -475,7 +474,7 @@ public class GambleshroomEntity extends PlantEntity implements IAnimatable, Rang
 								proj.setOwner(this.plantEntity);
 								proj.setGolden(ShootingCardEntity.Golden.TRUE);
 								++this.cardsShot;
-								if (livingEntity.isAlive()) {
+								if (livingEntity != null && livingEntity.isAlive()) {
 									this.beamTicks = -1;
 									this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.125F, 1);
 									this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);

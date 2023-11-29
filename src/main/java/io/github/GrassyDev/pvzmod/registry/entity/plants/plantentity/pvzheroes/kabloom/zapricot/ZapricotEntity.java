@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvzheroes.
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
@@ -196,7 +194,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 					double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 					double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 					double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, livingEntity.getX() + (this.random.range(-1, 1)), livingEntity.getY() + 0.5 + (this.random.range(-1, 1)), livingEntity.getZ() + (this.random.range(-1, 1)), d, e, f);
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, livingEntity.getX() + (this.random.range(-1, 1)), livingEntity.getY() + 0.5 + (this.random.range(-1, 1)), livingEntity.getZ() + (this.random.range(-1, 1)), d, e, f);
 				}
 			}
 		}
@@ -317,7 +315,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.ZAPRICOT_SEED_PACKET);
 				}
 				this.discard();
@@ -327,9 +325,9 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {
 			this.discard();
 		}
-		float time = 200 / this.world.getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();
+		float time = 200 / this.getWorld().getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();
 		if (this.age > 4 && this.age <= time && !this.getPuffshroomPermanency() && !this.hasStatusEffect(StatusEffects.GLOWING)) {
-			if (this.world.getGameRules().getBoolean(PvZCubed.PLANTS_GLOW)) {
+			if (this.getWorld().getGameRules().getBoolean(PvZCubed.PLANTS_GLOW)) {
 				this.addStatusEffect((new StatusEffectInstance(StatusEffects.GLOWING, (int) Math.floor(time), 1)));
 			}
 		}
@@ -337,7 +335,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -376,7 +374,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 
 				while(j < h) {
 					j += d + this.random.nextDouble() * d;
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 							anchorEntity.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 							anchorEntity.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 				}
@@ -396,7 +394,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 
 				while(j < h) {
 					j += d + this.random.nextDouble() * d;
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity2.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity2.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 							anchorEntity2.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 							anchorEntity2.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 				}
@@ -416,7 +414,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 
 				while(j < h) {
 					j += d + this.random.nextDouble() * d;
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity3.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity3.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 							anchorEntity3.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 							anchorEntity3.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 				}
@@ -436,7 +434,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 
 				while(j < h) {
 					j += d + this.random.nextDouble() * d;
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity4.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity4.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 							anchorEntity4.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 							anchorEntity4.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 				}
@@ -447,7 +445,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	protected int lightningCounter;
 
 	public void lightning(LivingEntity origin){
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, origin.getBoundingBox().expand(10.0));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, origin.getBoundingBox().expand(10.0));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -491,7 +489,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 				}
 				damaged.damage(DamageSource.thrownProjectile(this, this), 0);
 				setSparkTarget(damaged.getId());
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 				if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 					this.lightningCounter -= 2;
 				}
@@ -594,14 +592,7 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	 * //~*~//~DAMAGE HANDLER~//~*~//
 	 **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -717,11 +708,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getBeamTarget() {
 		if (!this.hasBeamTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget != null) {
 				return this.cachedBeamTarget;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget = (LivingEntity)entity;
 					return this.cachedBeamTarget;
@@ -738,11 +729,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getElectricBeamTarget() {
 		if (!this.hasElectricBeamTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget2 != null) {
 				return this.cachedBeamTarget2;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget2 = (LivingEntity)entity;
 					return this.cachedBeamTarget2;
@@ -759,11 +750,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getBeamTarget2() {
 		if (!this.hasBeamTarget2()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget3 != null) {
 				return this.cachedBeamTarget3;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID2));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID2));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget3 = (LivingEntity)entity;
 					return this.cachedBeamTarget3;
@@ -780,11 +771,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getElectricBeamTarget2() {
 		if (!this.hasElectricBeamTarget2()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget4 != null) {
 				return this.cachedBeamTarget4;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID2));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID2));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget4 = (LivingEntity)entity;
 					return this.cachedBeamTarget4;
@@ -801,11 +792,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getBeamTarget3() {
 		if (!this.hasBeamTarget3()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget5 != null) {
 				return this.cachedBeamTarget5;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID3));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID3));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget5 = (LivingEntity)entity;
 					return this.cachedBeamTarget5;
@@ -822,11 +813,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getElectricBeamTarget3() {
 		if (!this.hasElectricBeamTarget3()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget6 != null) {
 				return this.cachedBeamTarget6;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID3));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID3));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget6 = (LivingEntity)entity;
 					return this.cachedBeamTarget6;
@@ -843,11 +834,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getBeamTarget4() {
 		if (!this.hasBeamTarget4()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget7 != null) {
 				return this.cachedBeamTarget7;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID4));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID4));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget7 = (LivingEntity)entity;
 					return this.cachedBeamTarget7;
@@ -864,11 +855,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getElectricBeamTarget4() {
 		if (!this.hasElectricBeamTarget4()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget8 != null) {
 				return this.cachedBeamTarget8;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID4));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID4));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget8 = (LivingEntity)entity;
 					return this.cachedBeamTarget8;
@@ -885,11 +876,11 @@ public class ZapricotEntity extends PlantEntity implements IAnimatable, RangedAt
 	public LivingEntity getSparkTarget() {
 		if (!this.hasSparkTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedSparkTarget != null) {
 				return this.cachedSparkTarget;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(SPARK_TARGET));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(SPARK_TARGET));
 				if (entity instanceof LivingEntity) {
 					this.cachedSparkTarget = (LivingEntity)entity;
 					return this.cachedSparkTarget;

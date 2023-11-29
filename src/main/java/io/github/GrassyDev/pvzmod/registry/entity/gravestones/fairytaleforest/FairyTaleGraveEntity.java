@@ -122,7 +122,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		this.setTarget(this.world.getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
+		this.setTarget(this.getWorld().getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
 		LocalDifficulty localDifficulty = world.getLocalDifficulty(this.getBlockPos());
 		double difficulty = 0;
 		if (this.getVariant().equals(GraveDifficulty.NONE)){
@@ -191,12 +191,12 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 				this.kill();
 			}
 		}
-		if (this.world.isClient && this.isSpellcasting()) {
+		if (this.getWorld().isClient && this.isSpellcasting()) {
 			float g = this.bodyYaw * 0.017453292F + MathHelper.cos((float)this.age * 0.6662F) * 0.25F;
 			float h = MathHelper.cos(g);
 			float i = MathHelper.sin(g);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (double)h * 0.6, this.getY(), this.getZ() + (double)i * 0.6, 0, 0.0125, 0);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX() - (double)h * 0.6, this.getY(), this.getZ() - (double)i * 0.6, 0, 0.0125, 0);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (double)h * 0.6, this.getY(), this.getZ() + (double)i * 0.6, 0, 0.0125, 0);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() - (double)h * 0.6, this.getY(), this.getZ() - (double)i * 0.6, 0, 0.0125, 0);
 		}
 	}
 
@@ -320,7 +320,7 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
         protected void castSpell() {
 			extraGraveWeight = 0;
 			specialGraveWeight = 0;
-			ServerWorld serverWorld = (ServerWorld) FairyTaleGraveEntity.this.world;
+			ServerWorld serverWorld = (ServerWorld) FairyTaleGraveEntity.this.getWorld();
 			LocalDifficulty localDifficulty = world.getLocalDifficulty(this.fairyTaleGraveEntity.getBlockPos());
 			double difficulty = 0;
 			if (this.fairyTaleGraveEntity.getVariant().equals(GraveDifficulty.NONE)) {
@@ -382,9 +382,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 				}
 				BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-				PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.world);
+				PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.getWorld());
 				browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+				browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				browncoatEntity.setOwner(FairyTaleGraveEntity.this);
 				browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -400,9 +400,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					PokerEntity coneheadEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.world);
+					PokerEntity coneheadEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.getWorld());
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(FairyTaleGraveEntity.this);
 					coneheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -417,9 +417,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.world);
+					PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.getWorld());
 					browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					browncoatEntity.setOwner(FairyTaleGraveEntity.this);
 					browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -437,9 +437,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						PokerEntity bucketheadEntity = (PokerEntity) PvZEntity.POKERBUCKET.create(FairyTaleGraveEntity.this.world);
+						PokerEntity bucketheadEntity = (PokerEntity) PvZEntity.POKERBUCKET.create(FairyTaleGraveEntity.this.getWorld());
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						bucketheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(FairyTaleGraveEntity.this);
 						bucketheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -454,9 +454,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						PokerEntity coneheadEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.world);
+						PokerEntity coneheadEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.getWorld());
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(FairyTaleGraveEntity.this);
 						coneheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -474,9 +474,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							PokerEntity coneheadEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.world);
+							PokerEntity coneheadEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.getWorld());
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							coneheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(FairyTaleGraveEntity.this);
 							coneheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -491,9 +491,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.world);
+							PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.getWorld());
 							browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							browncoatEntity.setOwner(FairyTaleGraveEntity.this);
 							browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -513,9 +513,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						PokerEntity bucketheadEntity = (PokerEntity) PvZEntity.POKERBUCKET.create(FairyTaleGraveEntity.this.world);
+						PokerEntity bucketheadEntity = (PokerEntity) PvZEntity.POKERBUCKET.create(FairyTaleGraveEntity.this.getWorld());
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						bucketheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(FairyTaleGraveEntity.this);
 						bucketheadEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -530,9 +530,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.world);
+						PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.getWorld());
 						browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						browncoatEntity.setOwner(FairyTaleGraveEntity.this);
 						browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -560,9 +560,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 							pokerType = PvZEntity.POKERKNIGHT;
 						}
 						BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.world);
+						PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.getWorld());
 						brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						brickhead.setOwner(FairyTaleGraveEntity.this);
 						brickhead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -583,9 +583,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FlagPokerEntity flagzombieEntity = (FlagPokerEntity) PvZEntity.FLAGPOKER.create(FairyTaleGraveEntity.this.world);
+								FlagPokerEntity flagzombieEntity = (FlagPokerEntity) PvZEntity.FLAGPOKER.create(FairyTaleGraveEntity.this.getWorld());
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								flagzombieEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								flagzombieEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(FairyTaleGraveEntity.this);
 								flagzombieEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
@@ -607,9 +607,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								ZomblobEntity zomblob = (ZomblobEntity) PvZEntity.ZOMBLOB.create(FairyTaleGraveEntity.this.world);
+								ZomblobEntity zomblob = (ZomblobEntity) PvZEntity.ZOMBLOB.create(FairyTaleGraveEntity.this.getWorld());
 								zomblob.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								zomblob.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								zomblob.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								zomblob.setOwner(FairyTaleGraveEntity.this);
 								zomblob.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(zomblob);
@@ -642,9 +642,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									pokerType = PvZEntity.POKERKNIGHT;
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.world);
+								PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.getWorld());
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FairyTaleGraveEntity.this);
 								brickhead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -659,9 +659,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.world);
+								PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKER.create(FairyTaleGraveEntity.this.getWorld());
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(FairyTaleGraveEntity.this);
 								browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -676,9 +676,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.world);
+								PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.getWorld());
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(FairyTaleGraveEntity.this);
 								browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -699,9 +699,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							ZomblobEntity zomblob = (ZomblobEntity) PvZEntity.ZOMBLOB.create(FairyTaleGraveEntity.this.world);
+							ZomblobEntity zomblob = (ZomblobEntity) PvZEntity.ZOMBLOB.create(FairyTaleGraveEntity.this.getWorld());
 							zomblob.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							zomblob.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							zomblob.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							zomblob.setOwner(FairyTaleGraveEntity.this);
 							zomblob.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(zomblob);
@@ -733,9 +733,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									pokerType = PvZEntity.POKERKNIGHT;
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.world);
+								PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.getWorld());
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FairyTaleGraveEntity.this);
 								brickhead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -750,9 +750,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity buckethead = (PokerEntity) PvZEntity.POKERBUCKET.create(FairyTaleGraveEntity.this.world);
+								PokerEntity buckethead = (PokerEntity) PvZEntity.POKERBUCKET.create(FairyTaleGraveEntity.this.getWorld());
 								buckethead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								buckethead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								buckethead.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								buckethead.setOwner(FairyTaleGraveEntity.this);
 								buckethead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(buckethead);
@@ -774,9 +774,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PumpkinCarEntity pumpkinCarEntity = (PumpkinCarEntity) PvZEntity.PUMPKINCAR.create(FairyTaleGraveEntity.this.world);
+								PumpkinCarEntity pumpkinCarEntity = (PumpkinCarEntity) PvZEntity.PUMPKINCAR.create(FairyTaleGraveEntity.this.getWorld());
 								pumpkinCarEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								pumpkinCarEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								pumpkinCarEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								pumpkinCarEntity.setOwner(FairyTaleGraveEntity.this);
 								pumpkinCarEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(pumpkinCarEntity);
@@ -802,9 +802,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									pokerType = PvZEntity.POKERKNIGHT;
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.world);
+								PokerEntity brickhead = (PokerEntity) pokerType.create(FairyTaleGraveEntity.this.getWorld());
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FairyTaleGraveEntity.this);
 								brickhead.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -831,9 +831,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									pokerType = PvZEntity.BLACKANNOUNCERIMP;
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								AnnouncerImpEntity announcerImpEntity = (AnnouncerImpEntity) pokerType.create(FairyTaleGraveEntity.this.world);
+								AnnouncerImpEntity announcerImpEntity = (AnnouncerImpEntity) pokerType.create(FairyTaleGraveEntity.this.getWorld());
 								announcerImpEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								announcerImpEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								announcerImpEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								announcerImpEntity.setOwner(FairyTaleGraveEntity.this);
 								announcerImpEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(announcerImpEntity);
@@ -848,9 +848,9 @@ public class FairyTaleGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FairyTaleGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FairyTaleGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.world);
+								PokerEntity browncoatEntity = (PokerEntity) PvZEntity.POKERCONE.create(FairyTaleGraveEntity.this.getWorld());
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.initialize(serverWorld, FairyTaleGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(FairyTaleGraveEntity.this);
 								browncoatEntity.defenseMultiplier = FairyTaleGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);

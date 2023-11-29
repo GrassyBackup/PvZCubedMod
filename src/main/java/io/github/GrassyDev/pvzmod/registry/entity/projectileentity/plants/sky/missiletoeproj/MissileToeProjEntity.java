@@ -48,6 +48,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -107,14 +109,14 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -125,16 +127,16 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-			this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+			this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 120) {
-			this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient && this.age >= 120) {
+			this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
-		if (!this.world.isClient && this.age > 50 && target != null) {
+		if (!this.getWorld().isClient && this.age > 50 && target != null) {
 			if (target.getHealth() > 0) {
 				this.setVelocity(0,this.getVelocity().getY(), 0);
 				this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
@@ -153,8 +155,8 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 		double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
 
 		for (int j = 0; j < 1; ++j) {
-			this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
-			this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
+			this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
 		}
     }
 
@@ -189,7 +191,7 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 				createIceTile(new BlockPos(entity.getBlockPos().getX() - 2, entity.getY(), entity.getBlockPos().getZ()));
 				createIceTile(new BlockPos(entity.getBlockPos().getX(), entity.getY(), entity.getBlockPos().getZ() - 2));
 				missileToeTarget.discard();
-				List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+				List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
 				boolean hasZombie = false;
 				for (LivingEntity livingEntity : list) {
 					if (livingEntity instanceof Monster &&
@@ -255,13 +257,13 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 									}
 								}
 							}
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);
 						}
 					}
 				}
 				else {
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 				}
 			}
@@ -269,7 +271,7 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 	}
 
 	public void createIceTile(BlockPos blockPos){
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			List<TileEntity> tileCheck = world.getNonSpectatingEntities(TileEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(blockPos.getX(), blockPos.getY(), blockPos.getZ()).expand(-0.5f, -0.5f, -0.5f));
 			tileCheck.removeIf(tile -> tile instanceof MissileToeTarget);
 			tileCheck.removeIf(tile -> tile instanceof ScorchedTile);
@@ -305,7 +307,7 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 				double vx = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vy = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vz = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
+				this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
 			}
 
 			for (int j = 0; j < 8; ++j) {
@@ -313,7 +315,7 @@ public class MissileToeProjEntity extends PvZProjectileEntity implements IAnimat
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
 		}
 

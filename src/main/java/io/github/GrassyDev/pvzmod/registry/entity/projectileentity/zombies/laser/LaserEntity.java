@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.lase
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
@@ -100,14 +98,14 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -118,13 +116,13 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 20) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 20) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
@@ -136,9 +134,9 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 			double dd = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);
 			double ee = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);;
 			double ff = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);;
-			this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), dd, ee, ff);
-			this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
-			this.world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
+			this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), dd, ee, ff);
+			this.getWorld().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
 		}
     }
 
@@ -171,7 +169,7 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 					zombiePropEntity3 = zpe;
 				}
 			}
-			float damage = PVZCONFIG.nestedProjDMG.laserDMG();
+			float damage = PVZCONFIG.nestedProjDMG.laserDMG() * damageMultiplier;
 			if (this.getOwner() instanceof GeneralPvZombieEntity owner && owner.getHypno()){
 				if (!world.isClient && entity instanceof Monster monster &&
 						!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
@@ -213,7 +211,7 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 							generalPvZombieEntity.fireSplashTicks = 10;
 						}
 					}
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 					break;
 				}
@@ -254,7 +252,7 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 						entity.setOnFireFor(4);
 						generalPvZombieEntity.fireSplashTicks = 10;
 					}
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 					break;
 				}
@@ -262,12 +260,12 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 
 				} else if (!world.isClient && !(entity instanceof PlantEntity plantEntity && plantEntity.getImmune()) && !(entity instanceof PlantEntity plantEntity1 && plantEntity1.getFireImmune()) && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity.getVehicle() instanceof PlantEntity.VineEntity)) {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 					break;
 				}
 				else if (entity instanceof PlantEntity plantEntity1 && plantEntity1.getFireImmune()){
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 					break;
 				}
@@ -294,7 +292,7 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 				double vx = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vy = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vz = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
+				this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
 			}
 
 			for (int j = 0; j < 8; ++j) {
@@ -302,15 +300,15 @@ public class LaserEntity extends PvZProjectileEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
 		}
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }

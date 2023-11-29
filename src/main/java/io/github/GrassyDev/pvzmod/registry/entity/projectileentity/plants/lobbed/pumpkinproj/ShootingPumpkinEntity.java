@@ -39,6 +39,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -96,14 +98,14 @@ public class ShootingPumpkinEntity extends PvZProjectileEntity implements IAnima
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -114,16 +116,16 @@ public class ShootingPumpkinEntity extends PvZProjectileEntity implements IAnima
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 120) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 120) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
-		if (!this.world.isClient && this.age > 50 && target != null) {
+		if (!this.getWorld().isClient && this.age > 50 && target != null) {
 			if (target.getHealth() > 0) {
 				this.setVelocity(0,this.getVelocity().getY(), 0);
 				this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
@@ -171,7 +173,7 @@ public class ShootingPumpkinEntity extends PvZProjectileEntity implements IAnima
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity1 && (generalPvZombieEntity1.isCovered())) &&
 					!(entity instanceof ZombiePropEntity) && ZOMBIE_SIZE.get(entity.getType()).orElse("medium").equals("medium")) {
-				if (this.world instanceof ServerWorld serverWorld) {
+				if (this.getWorld() instanceof ServerWorld serverWorld) {
 					this.playSound(PvZSounds.HYPNOTIZINGEVENT, 1.5F, 1.0F);
 					PumpkinZombieEntity hypnotizedZombie = (PumpkinZombieEntity) PvZEntity.PUMPKINZOMBIEHYPNO.create(world);
 					hypnotizedZombie.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entity.getYaw(), entity.getPitch());
@@ -200,7 +202,7 @@ public class ShootingPumpkinEntity extends PvZProjectileEntity implements IAnima
 							zpe.setHypno(GeneralPvZombieEntity.IsHypno.TRUE);
 						}
 					}
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 					break;
 				}
@@ -224,15 +226,15 @@ public class ShootingPumpkinEntity extends PvZProjectileEntity implements IAnima
             ParticleEffect particleEffect = this.getParticleParameters();
 
             for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }

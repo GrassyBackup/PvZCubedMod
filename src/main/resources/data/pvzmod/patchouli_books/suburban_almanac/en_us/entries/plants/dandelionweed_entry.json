@@ -2,7 +2,7 @@
   "name": "Dandelion Weed",
   "icon": "pvzmod:dandelionweed_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 149,
+  "sortnum": 150,
   "advancement": "pvzmod:make_bellflower",
   "pages": [
     {

@@ -40,6 +40,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -92,14 +94,14 @@ public class RainbowBulletEntity extends PvZProjectileEntity implements IAnimata
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -110,29 +112,29 @@ public class RainbowBulletEntity extends PvZProjectileEntity implements IAnimata
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 58) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 58) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
 		for(int i = 0; i < 1; ++i) {
 			ParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.RED_STAINED_GLASS.getDefaultState());
-			this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+			this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			ParticleEffect particleEffect2 = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.ORANGE_STAINED_GLASS.getDefaultState());
-			this.world.addParticle(particleEffect2, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+			this.getWorld().addParticle(particleEffect2, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			ParticleEffect particleEffect3 = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.YELLOW_STAINED_GLASS.getDefaultState());
-			this.world.addParticle(particleEffect3, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+			this.getWorld().addParticle(particleEffect3, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			ParticleEffect particleEffect4 = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GREEN_STAINED_GLASS.getDefaultState());
-			this.world.addParticle(particleEffect4, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+			this.getWorld().addParticle(particleEffect4, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			ParticleEffect particleEffect5 = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_STAINED_GLASS.getDefaultState());
-			this.world.addParticle(particleEffect5, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+			this.getWorld().addParticle(particleEffect5, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			ParticleEffect particleEffect6 = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.PURPLE_STAINED_GLASS.getDefaultState());
-			this.world.addParticle(particleEffect6, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+			this.getWorld().addParticle(particleEffect6, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 		}
     }
 
@@ -190,7 +192,7 @@ public class RainbowBulletEntity extends PvZProjectileEntity implements IAnimata
 				} else {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 				}
-				this.world.sendEntityStatus(this, (byte) 3);
+				this.getWorld().sendEntityStatus(this, (byte) 3);
 				this.remove(RemovalReason.DISCARDED);
 				break;
 			}
@@ -207,15 +209,15 @@ public class RainbowBulletEntity extends PvZProjectileEntity implements IAnimata
             ParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.RED_STAINED_GLASS.getDefaultState());
 
             for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }

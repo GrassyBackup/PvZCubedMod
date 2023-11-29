@@ -25,7 +25,7 @@
       "type": "text",
       "text": [
         "$(br2)\"Tall\", \"Big\", \"Gargantuar\", and \"Flying\" Zombies and Plants.",
-        "$(br2)Tall entities can interact with Flying ones, but they are still affected by other entities, e.g. tallnutSv2 blocking Flying Zombies and normal Zombies.",
+        "$(br2)Tall entities can interact with Flying ones, but they are still affected by other entities, e.g. tallnuts blocking Flying Zombies and normal Zombies.",
         "$(br2)Big Zombies are oversized Zombies that are immune to most instant-kills. Gargantuars are another type of Big Zombie, they hit Flying Plants."
       ]
     },
@@ -35,6 +35,14 @@
         "$(br)Flying entities interact with tall and above entities, e.g. Jetpack Zombie flying over most plants, or Loquat only being eaten by tall or flying zombies like Bully and Jetpack.",
         "$(br)In addition, plants like Cherry Bomb can interact with Flying Zombies, while small plants like Potato Mine and Iceberg Lettuce, even though they work similarly, can't.",
         "$(br)Flying Zombies instantly die when stunned. They also take knockback from Wind attacks if they don't have protection."
+      ]
+    },
+    {
+      "type": "text",
+      "text": [
+        "$(br)Hovering entities fly over Low Profile Plants.",
+        "$(br)In addition, they are immune to all Low Profile damage.",
+        "$(br)Hovering Zombies stop Hovering when stunned. They also take knockback from Wind attacks if they don't have protection or aren't heavy."
       ]
     },
     {

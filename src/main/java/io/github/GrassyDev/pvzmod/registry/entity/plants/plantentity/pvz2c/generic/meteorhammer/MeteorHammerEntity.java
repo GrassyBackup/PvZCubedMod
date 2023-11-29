@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.gene
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -152,24 +150,24 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.METEORHAMMER_SEED_PACKET);
 				}
 				this.discard();
 			}
 		}
 		this.targetZombies(this.getPos(), 3, false, false, true);
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.FireBeamGoal();
 		}
 		if (this.getTarget() != null) {
 			if (this.squaredDistanceTo(this.getTarget()) <= 49 && this.squaredDistanceTo(this.getTarget()) >= 9) {
 				this.charging = true;
-				this.world.sendEntityStatus(this, (byte) 113);
+				this.getWorld().sendEntityStatus(this, (byte) 113);
 			}
 			else {
 				this.charging = false;
-				this.world.sendEntityStatus(this, (byte) 112);
+				this.getWorld().sendEntityStatus(this, (byte) 112);
 			}
 		}
 		else {
@@ -189,7 +187,7 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -294,14 +292,7 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 	 * //~*~//~DAMAGE HANDLER~//~*~//
 	 **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -313,7 +304,7 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 	}
 
 	protected void splashDamage(Vec3d vec3d) {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(6));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(6));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -345,7 +336,7 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 							!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 							!(livingEntity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) &&
-							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
+							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) {
 						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 						SoundEvent sound;
 						sound = switch (zombieMaterial) {
@@ -401,13 +392,13 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 			if (livingEntity != null) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			if (this.animationTicks >= 0) {
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				this.beamTicks = -10;
 				this.animationTicks = -30;
 				if (shot) {
-					this.world.sendEntityStatus(this, (byte) 121);
+					this.getWorld().sendEntityStatus(this, (byte) 121);
 				}
 				shot = false;
 			}
@@ -417,7 +408,7 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 					Vec3d targetPos = new Vec3d(this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z);
 					this.splashDamage(targetPos);
 					this.beamTicks = -30;
-					this.world.sendEntityStatus(this, (byte) 111);
+					this.getWorld().sendEntityStatus(this, (byte) 111);
 					this.playSound(PvZSounds.PEASHOOTEVENT, 1F, 1);
 					shot = true;
 					damage = 0;
@@ -427,12 +418,12 @@ public class MeteorHammerEntity extends PlantEntity implements IAnimatable, Rang
 		}
 		else if (animationTicks >= 0){
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			if (this.getTarget() != null){
 				this.attack(this.getTarget(), 0);
 			}
 			if (shot) {
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 			}
 			shot = false;
 		}

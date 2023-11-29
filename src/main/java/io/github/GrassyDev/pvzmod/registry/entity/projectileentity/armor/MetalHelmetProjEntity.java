@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.armor;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.MetalHelmetVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
@@ -185,14 +183,14 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -203,13 +201,13 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= this.getMaxAge()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= this.getMaxAge()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -263,12 +261,12 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 					} else {
 						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					}
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 					if (!(entity instanceof ZombieShieldEntity)) {
 						Vec3d vec3d = this.getPos();
 						hit = true;
-						List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+						List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
 						Iterator var10 = list.iterator();
 						while (true) {
 							LivingEntity livingEntity;
@@ -315,7 +313,7 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
 										}
 									}
 								}
-								this.world.sendEntityStatus(this, (byte) 3);
+								this.getWorld().sendEntityStatus(this, (byte) 3);
 								this.remove(RemovalReason.DISCARDED);
 							}
 						}
@@ -334,8 +332,8 @@ public class MetalHelmetProjEntity extends PvZProjectileEntity implements IAnima
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }

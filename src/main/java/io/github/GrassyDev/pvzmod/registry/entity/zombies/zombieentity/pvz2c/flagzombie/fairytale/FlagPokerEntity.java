@@ -345,10 +345,10 @@ public class FlagPokerEntity extends SummonerEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();
@@ -531,7 +531,7 @@ public class FlagPokerEntity extends SummonerEntity implements IAnimatable {
 				}
 			}
 
-            ServerWorld serverWorld = (ServerWorld) FlagPokerEntity.this.world;
+            ServerWorld serverWorld = (ServerWorld) FlagPokerEntity.this.getWorld();
             for(int b = 0; b < 1; ++b) { // 1 Screendoor
 				RandomGenerator randomGenerator = FlagPokerEntity.this.getRandom();
 				float random = MathHelper.nextBetween(randomGenerator, -4, 4);
@@ -543,9 +543,9 @@ public class FlagPokerEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagPokerEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagPokerEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagPokerEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				BrowncoatEntity screendoorEntity = (BrowncoatEntity) screen.create(FlagPokerEntity.this.world);
+				BrowncoatEntity screendoorEntity = (BrowncoatEntity) screen.create(FlagPokerEntity.this.getWorld());
 				screendoorEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				screendoorEntity.initialize(serverWorld, FlagPokerEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+				screendoorEntity.initialize(serverWorld, FlagPokerEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				screendoorEntity.setOwner(FlagPokerEntity.this);
 				if (this.flagPokerEntity.getHypno()){
 					screendoorEntity.createShield();
@@ -563,9 +563,9 @@ public class FlagPokerEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagPokerEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagPokerEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagPokerEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				BrowncoatEntity coneheadEntity = (BrowncoatEntity) cone.create(FlagPokerEntity.this.world);
+				BrowncoatEntity coneheadEntity = (BrowncoatEntity) cone.create(FlagPokerEntity.this.getWorld());
                 coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                coneheadEntity.initialize(serverWorld, FlagPokerEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                coneheadEntity.initialize(serverWorld, FlagPokerEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 coneheadEntity.setOwner(FlagPokerEntity.this);
 				if (this.flagPokerEntity.getHypno()){
 					coneheadEntity.createConeheadProp();
@@ -583,9 +583,9 @@ public class FlagPokerEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagPokerEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagPokerEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagPokerEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				BrowncoatEntity bucketheadEntity = (BrowncoatEntity) bucket.create(FlagPokerEntity.this.world);
+				BrowncoatEntity bucketheadEntity = (BrowncoatEntity) bucket.create(FlagPokerEntity.this.getWorld());
                 bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                bucketheadEntity.initialize(serverWorld, FlagPokerEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                bucketheadEntity.initialize(serverWorld, FlagPokerEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 bucketheadEntity.setOwner(FlagPokerEntity.this);
 				if (this.flagPokerEntity.getHypno()){
 					bucketheadEntity.createBucketProp();
@@ -602,9 +602,9 @@ public class FlagPokerEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagPokerEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagPokerEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagPokerEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-                BrowncoatEntity browncoatEntity = (BrowncoatEntity) coat.create(FlagPokerEntity.this.world);
+                BrowncoatEntity browncoatEntity = (BrowncoatEntity) coat.create(FlagPokerEntity.this.getWorld());
                 browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                browncoatEntity.initialize(serverWorld, FlagPokerEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                browncoatEntity.initialize(serverWorld, FlagPokerEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 browncoatEntity.setOwner(FlagPokerEntity.this);
 				((ServerWorld) world).spawnEntityAndPassengers(browncoatEntity);
             }

@@ -35,7 +35,7 @@ public class BananaTile extends TileEntity {
 	}
 
 	private void damageEntity() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -51,7 +51,7 @@ public class BananaTile extends TileEntity {
 
 			if (((livingEntity instanceof Monster &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
-							generalPvZombieEntity.isFlying())) &&
+							generalPvZombieEntity.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) &&
 					!(livingEntity instanceof ZombiePropEntity)) {
@@ -147,7 +147,7 @@ public class BananaTile extends TileEntity {
 
 	@Override
 	public void tick() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		for (LivingEntity livingEntity : list){
 			if (livingEntity instanceof BananaTile && this.squaredDistanceTo(livingEntity) <= 0.5f && livingEntity != this){
 				this.discard();

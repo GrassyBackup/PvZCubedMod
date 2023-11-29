@@ -60,7 +60,7 @@
       "type": "text",
       "text": [
         "$(br2)Wind",
-        "$(br2)Knocks back Flying Zombies that don't have protection.",
+        "$(br2)Knocks back Flying/Hovering Zombies that don't have protection.",
         "$(br2)Instantly kills Small Cloth Zombies.",
         "$(br2)Deals double the damage against Paper and Cloth, and half against Stone and Crystal."
       ]
@@ -105,7 +105,7 @@
         "$(br2)Acid",
         "$(br2)Deals continuous damage to Zombies.",
         "$(br2)Deals 8 DMG/0.5sec.",
-        "$(br2)Can only be applied to Metal, Electronic, Plant, Paper, and Acid."
+        "$(br2)Can only be applied to Metal, Electronic, Plant, Paper, and Cloth."
       ]
     },
     {

@@ -4,12 +4,15 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.jalapeno.FireTrailEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.flamingpea.ShootingFlamingPeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.pepper.ShootingPepperEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.piercingpea.FirePiercePeaEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.plasmapea.ShootingPlasmaPeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.pumpkinproj.ShootingPumpkinEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.piercingpea.FirePiercePeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.flamingpea.ShootingFlamingPeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.plasmapea.ShootingPlasmaPeaEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieObstacleEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -23,7 +26,8 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-import static io.github.GrassyDev.pvzmod.PvZCubed.*;
+import static io.github.GrassyDev.pvzmod.PvZCubed.BOUNCED;
+import static io.github.GrassyDev.pvzmod.PvZCubed.STUN;
 
 public class OilTile extends TileEntity {
 
@@ -38,7 +42,7 @@ public class OilTile extends TileEntity {
 	}
 
 	private void damageEntity() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -54,7 +58,7 @@ public class OilTile extends TileEntity {
 
 			if (!onFire && livingEntity.isOnGround() && ((livingEntity instanceof Monster &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
-							generalPvZombieEntity.isFlying())) &&
+							generalPvZombieEntity.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) &&
 					!(livingEntity instanceof ZombiePropEntity)) {
@@ -115,7 +119,7 @@ public class OilTile extends TileEntity {
 	}
 
 	private void setOnFire() {
-		List<Entity> list = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().expand(3));
+		List<Entity> list = this.getWorld().getNonSpectatingEntities(Entity.class, this.getBoundingBox().expand(3));
 		Iterator var9 = list.iterator();
 		while (true) {
 			Entity entity;
@@ -139,7 +143,7 @@ public class OilTile extends TileEntity {
 
 	public void makeFireTrail(BlockPos blockPos){
 		boolean bl = true;
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			List<Entity> tileCheck = world.getNonSpectatingEntities(Entity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(blockPos.getX(), blockPos.getY(), blockPos.getZ()));
 			for (Entity tile : tileCheck){
 				if (tile instanceof FireTrailEntity && tile.squaredDistanceTo(Vec3d.ofCenter(blockPos)) <= 0.5f) {
@@ -161,7 +165,7 @@ public class OilTile extends TileEntity {
 
 	@Override
 	public void tick() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		onFire = false;
 		for (LivingEntity livingEntity : list){
 			if (livingEntity instanceof FireTrailEntity && this.squaredDistanceTo(livingEntity) <= 0.5f){

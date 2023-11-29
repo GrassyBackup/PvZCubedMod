@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.gatlingpea.GatlingpeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.pea.ShootingPeaEntity;
@@ -15,7 +13,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -42,8 +39,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
-import java.util.EnumSet;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
@@ -105,7 +100,6 @@ public class RepeaterEntity extends PlantEntity implements RangedAttackMob, IAni
 	/** /~*~//~*AI*~//~*~/ **/
 
 	protected void initGoals() {
-		this.goalSelector.add(1, new RepeaterEntity.FireBeamGoal(this));
 	}
 
 
@@ -137,18 +131,21 @@ public class RepeaterEntity extends PlantEntity implements RangedAttackMob, IAni
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.REPEATER_SEED_PACKET);
 				}
 				this.discard();
 			}
+		}
+		if (!this.getWorld().isClient()) {
+			this.FireBeamGoal();
 		}
 		this.targetZombies(this.getPos(), 7, false, false, false);
 	}
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -171,8 +168,8 @@ public class RepeaterEntity extends PlantEntity implements RangedAttackMob, IAni
 		Item item = itemStack.getItem();
 		if (itemStack.isOf(ModItems.GATLINGPEA_SEED_PACKET) && !player.getItemCooldownManager().isCoolingDown(item)) {
 			this.playSound(PvZSounds.PLANTPLANTEDEVENT);
-			if ((this.world instanceof ServerWorld)) {
-				ServerWorld serverWorld = (ServerWorld) this.world;
+			if ((this.getWorld() instanceof ServerWorld)) {
+				ServerWorld serverWorld = (ServerWorld) this.getWorld();
 				GatlingpeaEntity plantEntity = (GatlingpeaEntity) PvZEntity.GATLINGPEA.create(world);
 				plantEntity.setTarget(this.getTarget());
 				plantEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
@@ -267,14 +264,7 @@ public class RepeaterEntity extends PlantEntity implements RangedAttackMob, IAni
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -285,84 +275,83 @@ public class RepeaterEntity extends PlantEntity implements RangedAttackMob, IAni
 		return true;
 	}
 
+
 	/** /~*~//~*GOALS*~//~*~/ **/
 
-	static class FireBeamGoal extends Goal {
-		private final RepeaterEntity plantEntity;
-		private int beamTicks;
-		private int animationTicks;
+	int beamTicks;
+	int animationTicks;
 
-		public FireBeamGoal(RepeaterEntity plantEntity) {
-			this.plantEntity = plantEntity;
-			this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
-		}
+	boolean charge = false;
 
-		public boolean canStart() {
-			LivingEntity livingEntity = this.plantEntity.getTarget();
-			return livingEntity != null && livingEntity.isAlive();
-		}
+	boolean shootSwitch = true;
+	boolean shot = false;
 
-		public boolean shouldContinue() {
-			return super.shouldContinue();
-		}
-
-		public void start() {
-			this.beamTicks = -7;
-			this.animationTicks = -16;
-			this.plantEntity.getNavigation().stop();
-			this.plantEntity.getLookControl().lookAt(this.plantEntity.getTarget(), 90.0F, 90.0F);
-			this.plantEntity.velocityDirty = true;
-		}
-
-		public void stop() {
-			this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 110);
-			this.plantEntity.setTarget((LivingEntity) null);
-		}
-
-		public void tick() {
-			LivingEntity livingEntity = this.plantEntity.getTarget();
-			this.plantEntity.getNavigation().stop();
-			this.plantEntity.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
-			if ((!this.plantEntity.canSee(livingEntity)) &&
-					this.animationTicks >= 0) {
-				this.plantEntity.setTarget((LivingEntity) null);
-			} else {
-				this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
-				++this.beamTicks;
-				++this.animationTicks;
-				if (this.beamTicks >= 0 && this.animationTicks <= -7) {
-					if (!this.plantEntity.isInsideWaterOrBubbleColumn()) {
-						ShootingPeaEntity proj = new ShootingPeaEntity(PvZEntity.PEA, this.plantEntity.world);
-						double time = (this.plantEntity.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
-						Vec3d targetPos = livingEntity.getPos();
-						double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
-						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
-						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
-						double d = this.plantEntity.squaredDistanceTo(predictedPos);
-						float df = (float)d;
-						double e = predictedPos.getX() - this.plantEntity.getX();
-						double f = (livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.plantEntity.getY() + 0.3595 : livingEntity.getY() - this.plantEntity.getY();
-						double g = predictedPos.getZ() - this.plantEntity.getZ();
-						float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
-						proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.33F, 0F);
-						proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
-						proj.setOwner(this.plantEntity);
-						proj.damageMultiplier = plantEntity.damageMultiplier;
-						if (livingEntity.isAlive()) {
-							this.beamTicks = -2;
-							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
-							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);
-							this.plantEntity.world.spawnEntity(proj);
-						}
-					}
-				}
-				else if (this.animationTicks >= 0) {
-					this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 110);
-					this.beamTicks = -7;
-					this.animationTicks = -16;
-				}
-				super.tick();
+	public void FireBeamGoal() {
+		LivingEntity livingEntity = this.getTarget();
+		++this.beamTicks;
+		++this.animationTicks;
+		if ((livingEntity != null || animationTicks < 0) && !this.getIsAsleep()) {
+			if (this.shootSwitch){
+				this.charge = false;
+				this.beamTicks = -13;
+				this.animationTicks = -30;
+				this.getNavigation().stop();
+				this.getLookControl().lookAt(this.getTarget(), 90.0F, 90.0F);
+				this.velocityDirty = true;
+				this.shootSwitch = false;
 			}
+			this.getNavigation().stop();
+			if (livingEntity != null) {
+				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
+			}
+			this.getWorld().sendEntityStatus(this, (byte) 111);
+			if (this.animationTicks >= 0) {
+				this.getWorld().sendEntityStatus(this, (byte) 110);
+				this.beamTicks = -13;
+				this.animationTicks = -30;
+				if (shot) {
+					this.getWorld().sendEntityStatus(this, (byte) 121);
+				}
+				shot = false;
+			}
+			if (this.beamTicks >= 0) {
+				double time = (livingEntity != null) ? ((this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1) : 1;
+				Vec3d targetPos = (livingEntity != null) ? livingEntity.getPos() : this.getPos();
+				double predictedPosX = (livingEntity != null) ? targetPos.getX() + (livingEntity.getVelocity().x * time) : this.getX();
+				double predictedPosZ = (livingEntity != null) ? targetPos.getZ() + (livingEntity.getVelocity().z * time) : this.getZ();
+				Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
+				double d = this.squaredDistanceTo(predictedPos);
+				float df = (float)d;
+				double e = predictedPos.getX() - this.getX();
+				double f = (livingEntity != null) ? ((livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.getY() + 0.3595 : livingEntity.getY() - this.getY()) : 0;
+				double g = predictedPos.getZ() - this.getZ();
+				float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
+				ShootingPeaEntity proj = new ShootingPeaEntity(PvZEntity.PEA, this.getWorld());
+				proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.33F, 0F);
+				proj.updatePosition(this.getX(), this.getY() + 0.75D, this.getZ());
+				proj.setOwner(this);
+				proj.damageMultiplier = damageMultiplier;
+				if (shot){
+					this.beamTicks = -30;
+				}
+				else {
+					this.beamTicks = -4;
+				}
+				shot = true;
+				this.playSound(PvZSounds.PEASHOOTEVENT, 1F, 1);
+				this.getWorld().spawnEntity(proj);
+			}
+		}
+		else if (animationTicks >= 0){
+			this.shootSwitch = true;
+			this.getWorld().sendEntityStatus(this, (byte) 110);
+			if (this.getTarget() != null){
+				this.attack(this.getTarget(), 0);
+			}
+			if (shot) {
+				this.getWorld().sendEntityStatus(this, (byte) 121);
+			}
+			shot = false;
 		}
 	}
 }

@@ -30,6 +30,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
 public abstract class TileEntity extends PathAwareEntity implements IAnimatable {
 
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -191,7 +192,7 @@ public abstract class TileEntity extends PathAwareEntity implements IAnimatable 
 
 	public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}

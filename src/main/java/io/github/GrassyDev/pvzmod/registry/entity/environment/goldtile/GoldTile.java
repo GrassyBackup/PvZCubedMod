@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.environment.goldtile;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -135,7 +133,7 @@ public class GoldTile extends TileEntity {
 			}
 
 			if (this.currentFuseTime >= this.sunProducingTime) {
-				if (!this.world.isClient && this.isAlive() && this.zombieSunCheck && !this.isInsideWaterOrBubbleColumn()){
+				if (!this.getWorld().isClient && this.isAlive() && this.zombieSunCheck && !this.isInsideWaterOrBubbleColumn()){
 					this.playSound(PvZSounds.SUNDROPEVENT, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) + 0.75F);
 					this.dropItem(ModItems.SMALLSUN);
 					this.sunProducingTime = (int) (PVZCONFIG.nestedSun.goldtileSec() * 20);
@@ -148,7 +146,7 @@ public class GoldTile extends TileEntity {
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && this.powered && !this.hasStatusEffect(DISABLE)) {
+		if (!this.getWorld().isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && this.powered && !this.hasStatusEffect(DISABLE)) {
 			if (--raycastDelay >= 0) {
 				this.produceSun();
 				raycastDelay = 60;
@@ -157,8 +155,8 @@ public class GoldTile extends TileEntity {
 	}
 
 	protected void produceSun() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(15));
-		List<GeneralPvZombieEntity> zombieList = this.world.getNonSpectatingEntities(GeneralPvZombieEntity.class, this.getBoundingBox().expand(15));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(15));
+		List<GeneralPvZombieEntity> zombieList = this.getWorld().getNonSpectatingEntities(GeneralPvZombieEntity.class, this.getBoundingBox().expand(15));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;

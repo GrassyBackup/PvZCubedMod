@@ -23,6 +23,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -78,7 +80,7 @@ public class SpringTile extends TileEntity {
 	}
 
 	private void damageEntity() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -94,13 +96,13 @@ public class SpringTile extends TileEntity {
 
 			if (!tickDown && livingEntity instanceof Monster && !(livingEntity instanceof ZombiePropEntity) && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno())) {
 				if (livingEntity.getY() < (this.getY() + 2) && livingEntity.getY() > (this.getY() - 2) &&
-						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
+						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) {
 					Vec3d vec3d = new Vec3d((double) -0.5, +0.25, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.BOUNCED, 20, 1)));
 					livingEntity.setVelocity(Vec3d.ZERO);
 					livingEntity.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
 					this.tickDown = true;
-					this.world.sendEntityStatus(this, (byte) 110);
+					this.getWorld().sendEntityStatus(this, (byte) 110);
 					break;
 				}
 			}
@@ -109,7 +111,7 @@ public class SpringTile extends TileEntity {
 
 	@Override
 	public void tick() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		for (LivingEntity livingEntity : list){
 			if (livingEntity instanceof SpringTile && this.squaredDistanceTo(livingEntity) <= 0.5f && livingEntity != this){
 				this.discard();

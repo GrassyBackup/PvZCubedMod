@@ -42,6 +42,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -103,14 +105,14 @@ public class AcidSporeEntity extends PvZProjectileEntity implements IAnimatable 
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -120,13 +122,13 @@ public class AcidSporeEntity extends PvZProjectileEntity implements IAnimatable 
 		if (hitResult.getType() != HitResult.Type.MISS && !bl) {
 			this.onCollision(hitResult);
 		}
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= sporeAge) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= sporeAge) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
@@ -143,7 +145,7 @@ public class AcidSporeEntity extends PvZProjectileEntity implements IAnimatable 
 		double f = (double)(132 & 255) / 255.0;
 
 		for(int i = 0; i < 3; ++i) {
-			this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
 		}
     }
 
@@ -204,7 +206,7 @@ public class AcidSporeEntity extends PvZProjectileEntity implements IAnimatable 
 				if (ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh").equals("metallic") || ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh").equals("electronic")) {
 					((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ACID, 60, 6)));
 				}
-				this.world.sendEntityStatus(this, (byte) 3);
+				this.getWorld().sendEntityStatus(this, (byte) 3);
 				this.remove(RemovalReason.DISCARDED);
 				break;
 			}
@@ -222,15 +224,15 @@ public class AcidSporeEntity extends PvZProjectileEntity implements IAnimatable 
 			double f = (double)(132 & 255) / 255.0;
 
 			for(int j = 0; j < 8; ++j) {
-				this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
 			}
 		}
 	}
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
     }

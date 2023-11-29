@@ -3,13 +3,14 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.ancie
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieVehicleEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -123,19 +124,19 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 6 * (this.random.range(-1, 1) * 1.5);
 				double e = this.random.nextDouble() / 6 * (this.random.range(0, 1) * 2);
 				double f = this.random.nextDouble() / 6 * (this.random.range(-1, 1) * 1.5);
-				this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 16; ++i) {
 				double d = this.random.nextDouble() / 6 * (this.random.range(-1, 1) * 1.5);
 				double e = this.random.nextDouble() / 6 * (this.random.range(0, 1) * 2);
 				double f = this.random.nextDouble() / 6 * (this.random.range(-1, 1) * 1.5);
-				this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 16; ++i) {
 				double d = this.random.nextDouble() / 6 * (this.random.range(-1, 1) * 1.5);
 				double e = this.random.nextDouble() / 6 * (this.random.range(0, 1) * 2);
 				double f = this.random.nextDouble() / 6 * (this.random.range(-1, 1) * 1.5);
-				this.world.addParticle(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 		}
 	}
@@ -242,11 +243,11 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 	public void ignite() {
 		this.dataTracker.set(IGNITED, true);
 	}
-	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
+	List<LivingEntity> checkList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
 	private void raycastExplode() {
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(3));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(3));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -283,7 +284,7 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 			}
 			if (((livingEntity instanceof Monster &&
 					zombiePropEntity4 == null &&
-					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering()) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
@@ -342,14 +343,14 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 	}
 
 	private void spawnEffectsCloud() {
-		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity.setParticleType(ParticleTypes.SNOWFLAKE);
 		areaEffectCloudEntity.setRadius(1.5F);
 		areaEffectCloudEntity.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity.setWaitTime(1);
 		areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 40);
 		areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float)areaEffectCloudEntity.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity);
+		this.getWorld().spawnEntity(areaEffectCloudEntity);
 	}
 
 
@@ -380,7 +381,7 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.ICEBERGLETTUCE_SEED_PACKET);
 				}
 				this.discard();
@@ -401,7 +402,7 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 			if (this.currentFuseTime >= this.fuseTime) {
 				this.currentFuseTime = this.fuseTime;
 				this.raycastExplode();
-				this.world.sendEntityStatus(this, (byte) 106);
+				this.getWorld().sendEntityStatus(this, (byte) 106);
 				this.playSound(PvZSounds.ICEBERGEXPLOSIONEVENT, 1F, 1F);
 				this.spawnEffectsCloud();
 				this.dead = true;
@@ -411,9 +412,9 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {
 			this.discard();
 		}
-		float time = 200 / this.world.getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();
+		float time = 200 / this.getWorld().getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();
 		if (this.age > 4 && this.age <= time && !this.getPuffshroomPermanency() && !this.hasStatusEffect(StatusEffects.GLOWING)) {
-			if (this.world.getGameRules().getBoolean(PvZCubed.PLANTS_GLOW)) {
+			if (this.getWorld().getGameRules().getBoolean(PvZCubed.PLANTS_GLOW)) {
 				this.addStatusEffect((new StatusEffectInstance(StatusEffects.GLOWING, (int) Math.floor(time), 1)));
 			}
 		}
@@ -422,7 +423,7 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}
@@ -502,7 +503,7 @@ public class IcebergLettuceEntity extends PlantEntity implements IAnimatable {
 			return this.damage(DamageSource.player(playerEntity), 9999.0F);
 		}
 		else {
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			this.playSound(PvZSounds.ICEBERGEXPLOSIONEVENT, 1F, 1F);
 			this.spawnEffectsCloud();
 			this.dead = true;

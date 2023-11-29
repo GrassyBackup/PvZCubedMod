@@ -35,6 +35,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -81,14 +83,14 @@ public class ShootingPowerBeeSpikeEntity extends PvZProjectileEntity implements 
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -99,11 +101,11 @@ public class ShootingPowerBeeSpikeEntity extends PvZProjectileEntity implements 
 			this.onCollision(hitResult);
 		}
 
-		if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
+		if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && this.age >= 58 || this.damageCounter >= 4) {
+		if (!this.getWorld().isClient && this.age >= 58 || this.damageCounter >= 4) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 	}
@@ -115,7 +117,7 @@ public class ShootingPowerBeeSpikeEntity extends PvZProjectileEntity implements 
 
 	public List<Entity> entityStore = new ArrayList<>();
 
-	protected int damageCounter = 0;
+	public int damageCounter = 0;
 
 	@Override
 	public void hitEntities() {
@@ -194,7 +196,7 @@ public class ShootingPowerBeeSpikeEntity extends PvZProjectileEntity implements 
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.remove(RemovalReason.DISCARDED);
         }
     }

@@ -202,8 +202,8 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createSarcophagusProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.SARCOPHAGUS, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.SARCOPHAGUS, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -212,12 +212,12 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 	public void createPharaoh(){
 		Vec3d vec3d2 = new Vec3d((double) 0.5, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 		if (world instanceof ServerWorld serverWorld) {
-			PharaohEntity pharaohEntity = new PharaohEntity(PvZEntity.PHARAOH, this.world);
+			PharaohEntity pharaohEntity = new PharaohEntity(PvZEntity.PHARAOH, this.getWorld());
 			Vec3d vec3d3 = new Vec3d(this.getPos().getX() + vec3d2.getX(), this.getPos().getY() + vec3d2.getY(), this.getPos().getZ() + vec3d2.getZ());
 			pharaohEntity.refreshPositionAndAngles(vec3d3.getX(), this.getY(), vec3d3.getZ(), this.bodyYaw, 0.0F);
 			pharaohEntity.setPosition(vec3d3.getX(), this.getY(), vec3d3.getZ());
 			pharaohEntity.setHeadYaw(this.getHeadYaw());
-			pharaohEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			pharaohEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			pharaohEntity.setRainbowTag(Rainbow.TRUE);
 			pharaohEntity.rainbowTicks = 40;
 			serverWorld.spawnEntityAndPassengers(pharaohEntity);
@@ -227,12 +227,12 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 	public void createHypnoPharaoh(){
 		Vec3d vec3d2 = new Vec3d((double) 1, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 		if (world instanceof ServerWorld serverWorld) {
-			PharaohEntity pharaohEntity = new PharaohEntity(PvZEntity.PHARAOHHYPNO, this.world);
+			PharaohEntity pharaohEntity = new PharaohEntity(PvZEntity.PHARAOHHYPNO, this.getWorld());
 			Vec3d vec3d3 = new Vec3d(this.getPos().getX() + vec3d2.getX(), this.getPos().getY() + vec3d2.getY(), this.getPos().getZ() + vec3d2.getZ());
 			pharaohEntity.refreshPositionAndAngles(vec3d3.getX(), this.getY(), vec3d3.getZ(), this.bodyYaw, 0.0F);
 			pharaohEntity.setPosition(vec3d3.getX(), this.getY(), vec3d3.getZ());
 			pharaohEntity.setHeadYaw(this.getHeadYaw());
-			pharaohEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			pharaohEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			pharaohEntity.setRainbowTag(Rainbow.TRUE);
 			pharaohEntity.rainbowTicks = 30;
 			serverWorld.spawnEntityAndPassengers(pharaohEntity);
@@ -409,7 +409,7 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 		else {
 			this.setCoveredTag(Covered.FALSE);
 		}
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			if (this.getTypeCount() < 13) {
 				if ((this.getVariant().equals(PharaohVariants.UNDYING) || this.getVariant().equals(PharaohVariants.UNDYINGHYPNO)) && sarcophagusEntity != null) {
 					for (int x = 0; x <= 5; ++x){
@@ -465,7 +465,7 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 					summonTicks = 160 * animationMultiplier;
 				}
 			}
-			if (this.world.isClient) {
+			if (this.getWorld().isClient) {
 				if (summonTicks == 18 * animationMultiplier){
 					this.animationTicks = 60 * animationMultiplier;
 				}
@@ -636,11 +636,11 @@ public class PharaohEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
         if (!super.damage(source, amount)) {
             return false;
-        } else if (!(this.world instanceof ServerWorld)) {
+        } else if (!(this.getWorld() instanceof ServerWorld)) {
             return false;
         }
 		else {
-            ServerWorld serverWorld = (ServerWorld)this.world;
+            ServerWorld serverWorld = (ServerWorld)this.getWorld();
             LivingEntity livingEntity = this.getTarget();
             if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
                 livingEntity = (LivingEntity)source.getAttacker();

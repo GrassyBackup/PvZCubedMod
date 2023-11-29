@@ -2,7 +2,7 @@
   "name": "Conehead Peasant Zombie",
   "icon": "pvzmod:peasantcone_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 91,
+  "sortnum": 102,
   "pages": [
     {
       "type": "text",

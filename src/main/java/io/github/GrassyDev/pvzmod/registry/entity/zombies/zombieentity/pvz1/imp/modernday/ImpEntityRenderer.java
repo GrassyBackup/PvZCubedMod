@@ -12,6 +12,14 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
@@ -33,6 +41,10 @@ public class ImpEntityRenderer extends GeoEntityRenderer<ImpEntity> {
 						new Identifier("pvzmod", "geo/imp.geo.json"));
 				map.put(ImpVariants.DEFAULTHYPNO,
 						new Identifier("pvzmod", "geo/imp.geo.json"));
+				map.put(ImpVariants.MUMMY,
+						new Identifier("pvzmod", "geo/impmummy.geo.json"));
+				map.put(ImpVariants.MUMMYHYPNO,
+						new Identifier("pvzmod", "geo/impmummy.geo.json"));
 				map.put(ImpVariants.IMPDRAGON,
 						new Identifier("pvzmod", "geo/impdragon.geo.json"));
 				map.put(ImpVariants.IMPDRAGONHYPNO,

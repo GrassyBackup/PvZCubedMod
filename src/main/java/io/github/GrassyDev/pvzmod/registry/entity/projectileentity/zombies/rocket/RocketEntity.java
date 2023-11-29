@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.rock
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.bully.basic.BullyEntity;
@@ -105,14 +103,14 @@ public class RocketEntity extends PvZProjectileEntity implements IAnimatable {
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -127,8 +125,8 @@ public class RocketEntity extends PvZProjectileEntity implements IAnimatable {
 			double d = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
 			double e = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
 			double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
-			this.world.addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
+			this.getWorld().addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
 		}
     }
 
@@ -156,7 +154,7 @@ public class RocketEntity extends PvZProjectileEntity implements IAnimatable {
 				double vx = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vy = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vz = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
             }
 
 			for (int j = 0; j < 16; ++j) {
@@ -164,7 +162,7 @@ public class RocketEntity extends PvZProjectileEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
         }
 
@@ -172,14 +170,14 @@ public class RocketEntity extends PvZProjectileEntity implements IAnimatable {
     protected void onBlockHit(BlockHitResult blockHitResult) {
 		super.onBlockHit(blockHitResult);
 		this.damageAll();
-		this.world.sendEntityStatus(this, (byte) 3);
+		this.getWorld().sendEntityStatus(this, (byte) 3);
 		this.playSound(PvZSounds.CHERRYBOMBEXPLOSIONEVENT, 0.2F, 1F);
 		this.remove(RemovalReason.DISCARDED);
 
 	}
 
 	protected void damageAll(){
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
 		Iterator var10 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -214,7 +212,7 @@ public class RocketEntity extends PvZProjectileEntity implements IAnimatable {
 						}
 					}
 					if (!(zombiePropEntity4 instanceof ZombieShieldEntity) && zombiePropEntity6 == null) {
-						float damageSplash = PVZCONFIG.nestedProjDMG.rocketDMG();
+						float damageSplash = PVZCONFIG.nestedProjDMG.rocketDMG() * damageMultiplier;
 						String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 						if ("paper".equals(zombieMaterial2)) {
 							damageSplash = damageSplash * 2;
@@ -251,14 +249,14 @@ public class RocketEntity extends PvZProjectileEntity implements IAnimatable {
 							}
 						}
 					}
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 				}
 			} else {
 				if (!world.isClient && (livingEntity instanceof GolemEntity || livingEntity instanceof VillagerEntity || livingEntity instanceof PlayerEntity)) {
-					float damageSplash = PVZCONFIG.nestedProjDMG.rocketDMG();
+					float damageSplash = PVZCONFIG.nestedProjDMG.rocketDMG() * damageMultiplier;
 					livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damageSplash);
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 				}
 			}

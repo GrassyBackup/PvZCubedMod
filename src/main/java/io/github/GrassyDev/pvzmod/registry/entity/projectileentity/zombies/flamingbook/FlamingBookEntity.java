@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.flam
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
@@ -151,14 +149,14 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -169,16 +167,16 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 120) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 120) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
-		if (!this.world.isClient && this.age > 50 && target != null) {
+		if (!this.getWorld().isClient && this.age > 50 && target != null) {
 			if (target.getHealth() > 0) {
 				this.setVelocity(0,this.getVelocity().getY(), 0);
 				this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
@@ -201,8 +199,8 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 				double d = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
 				double e = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
 				double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
-				this.world.addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
+				this.getWorld().addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
 			}
 		}
     }
@@ -260,7 +258,7 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 							} else {
 								entity.playSound(PvZSounds.FIREPEAHITEVENT, 0.2F, 1F);
 							}
-							float damage = 16;
+							float damage = 16 * damageMultiplier;
 							if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 								if (!entity.isWet() && this.getFireStage() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 									((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
@@ -301,7 +299,7 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 								}
 								((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 							}
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);
 						}
 					} else {
@@ -321,7 +319,7 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 							} else {
 								entity.playSound(PvZSounds.FIREPEAHITEVENT, 0.2F, 1F);
 							}
-							float damage = 16;
+							float damage = 16 * damageMultiplier;
 							if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
 								if (!entity.isWet() && this.getFireStage() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
 									((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
@@ -362,7 +360,7 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
 								}
 								((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
 							}
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);
 						}
 					}
@@ -386,7 +384,7 @@ public class FlamingBookEntity extends PvZProjectileEntity implements IAnimatabl
             ParticleEffect particleEffect = this.getParticleParameters();
 
             for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
 

@@ -2,7 +2,7 @@
   "name": "Retro Gatling",
   "icon": "pvzmod:retrogatling_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 147,
+  "sortnum": 148,
   "advancement": "pvzmod:make_repeater",
   "pages": [
     {
@@ -20,7 +20,7 @@
       "images": [
         "pvzmod:textures/gui/entries/retrogatling.png"
       ],
-      "title": "⭘ Appease Family",
+      "title": "✂ Spear Family",
       "border": "true",
       "text": "$(#25228d)Retro Gatlings shoot three piercing peas at a time."
     },

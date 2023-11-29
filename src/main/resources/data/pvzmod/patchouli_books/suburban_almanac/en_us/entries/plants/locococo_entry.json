@@ -11,7 +11,7 @@
         "$(#bd951a)Health: $()$(#ff0000)42",
         "$(br)$(#bd951a)Targeting Range: $()$(#ff0000)6 Blocks",
         "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)12.5s",
-        "$(br)$(#bd951a)Special: $()$(#ff0000)Smacks the nut directly in front of it. Turn page for details.",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Smacks the non-flying nut directly in front of it. Turn page for details.",
         "$(br)$(#bd951a)Loco Coco's motive for only smacking nuts around is a mystery. Is he just a self- appointed nut tyrant? Does he hate nuts so much he removed 'nut' from his name? Does he show love in a twisted way? IS HE NUTS!?!? We will never know."
       ]
     },
@@ -41,7 +41,7 @@
         "$(br)$(#bd951a)Tall-nut Smash",
         "$(br)$(#bd951a)Reusable: $()$(#ff0000)Yes",
         "$(br)$(#bd951a)Damage: $()$(#ff0000)20 DMG/3s",
-        "$(br)$(#bd951a)Damage Radius: $()$(#ff0000)2.5 Blocks, center is 1.5 blocks in front.",
+        "$(br)$(#bd951a)Damage Radius: $()$(#ff0000)Low Profile. 2.5 Blocks, center is 1.5 blocks in front.",
         "$(br)$(#bd951a)Special: $()$(#ff0000)Heavy Damage."
       ]
     },

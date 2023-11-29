@@ -46,6 +46,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -55,6 +64,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.FROZEN;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
@@ -185,8 +195,8 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createKingPieceProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.KINGPIECEGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.KINGPIECEGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -304,9 +314,9 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 
 
 	public void upgradeKnight(LivingEntity livingEntity) {
-		if (this.world instanceof ServerWorld) {
+		if (this.getWorld() instanceof ServerWorld) {
 			livingEntity.playSound(PvZSounds.KNIGHTTRANSFORMEVENT, 1F, 1.0F);
-			ServerWorld serverWorld = (ServerWorld) this.world;
+			ServerWorld serverWorld = (ServerWorld) this.getWorld();
 			PeasantEntity knightEntity;
 			if (this.getType().equals(PvZEntity.ZOMBIEKINGHYPNO)){
 				knightEntity = (PeasantEntity) PvZEntity.PEASANTKNIGHTHYPNO.create(world);
@@ -315,7 +325,7 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 				knightEntity = (PeasantEntity) PvZEntity.PEASANTKNIGHT.create(world);
 			}
 			knightEntity.refreshPositionAndAngles(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), livingEntity.getYaw(), livingEntity.getPitch());
-			knightEntity.initialize(serverWorld, this.world.getLocalDifficulty(knightEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData)null, (NbtCompound) null);
+			knightEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(knightEntity.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData)null, (NbtCompound) null);
 
 			if (knightEntity.getHypno() && this.getHypno()){
 				knightEntity.createKnightProp().setHypno(IsHypno.TRUE);
@@ -407,16 +417,16 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 	protected void mobTick() {
 		super.mobTick();
 		if (spawningTicks > 0){
-			this.world.sendEntityStatus(this, (byte) 113);
+			this.getWorld().sendEntityStatus(this, (byte) 113);
 		}
 		else {
-			this.world.sendEntityStatus(this, (byte) 114);
+			this.getWorld().sendEntityStatus(this, (byte) 114);
 		}
 		if (convertTicks > 0) {
-			this.world.sendEntityStatus(this, (byte) 115);
+			this.getWorld().sendEntityStatus(this, (byte) 115);
 		}
 		else {
-			this.world.sendEntityStatus(this, (byte) 116);
+			this.getWorld().sendEntityStatus(this, (byte) 116);
 		}
 		if (this.hasStatusEffect(PvZCubed.ICE)){
 			this.animationMultiplier = 2;
@@ -506,10 +516,10 @@ public class ZombieKingEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
         if (!super.damage(source, amount)) {
             return false;
-        } else if (!(this.world instanceof ServerWorld)) {
+        } else if (!(this.getWorld() instanceof ServerWorld)) {
             return false;
         } else {
-            ServerWorld serverWorld = (ServerWorld)this.world;
+            ServerWorld serverWorld = (ServerWorld)this.getWorld();
             LivingEntity livingEntity = this.getTarget();
             if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
                 livingEntity = (LivingEntity)source.getAttacker();

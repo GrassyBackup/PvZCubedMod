@@ -46,6 +46,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
@@ -113,7 +114,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 						double d = (double)(this.random.range(0, 255) & 255) / 255.0;
 						double e = (double)(this.random.range(0, 255) & 255) / 255.0;
 						double f = (double)(this.random.range(0, 255) & 255) / 255.0;
-						this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, d, e, f);
+						this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, d, e, f);
 					}
 				}
 				else if (this.getVariant().equals(FumeshroomVariants.TRANS)) {
@@ -127,10 +128,10 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 					double f2 = (double)(215 & 255) / 255.0;
 
 					for(int j = 0; j < 12; ++j) {
-						this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, d, e, f);
-						this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, d2, e2, f2);
+						this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, d, e, f);
+						this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, d2, e2, f2);
 						// WHITE
-						this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 1, 1, 1);
+						this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 1, 1, 1);
 					}
 				}
 				else {
@@ -140,7 +141,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 					double f = (double)(200 & 255) / 255.0;
 
 					for(int j = 0; j < 32; ++j) {
-						this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, d, e, f);
+						this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 1)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, d, e, f);
 					}
 				}
 			}
@@ -212,7 +213,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	protected void splashDamage() {
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -286,14 +287,14 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -309,7 +310,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.GLOOMSHROOM_SEED_PACKET);
 				}
 				this.discard();
@@ -319,7 +320,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -432,14 +433,7 @@ public class GloomshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

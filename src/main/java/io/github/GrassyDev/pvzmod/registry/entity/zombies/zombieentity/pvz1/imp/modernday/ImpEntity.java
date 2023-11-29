@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -123,7 +121,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 				double dx = (double) (this.random.range(0, 255) & 255) / 255.0;
 				double ex = (double) (this.random.range(0, 255) & 255) / 255.0;
 				double fx = (double) (this.random.range(0, 255) & 255) / 255.0;
-				this.world.addParticle(ParticleTypes.NOTE, this.getX() + d, this.getY() + e, this.getZ() + f, dx, ex, fx);
+				this.getWorld().addParticle(ParticleTypes.NOTE, this.getX() + d, this.getY() + e, this.getZ() + f, dx, ex, fx);
 			}
 		}
 	}
@@ -144,6 +142,10 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.IMPDRAGON)){
 			setCanBurn(CanBurn.FALSE);
 			setVariant(ImpVariants.IMPDRAGON);
+			this.initCustomGoals();
+		}
+		else if (this.getType().equals(PvZEntity.MUMMYIMP)){
+			setVariant(ImpVariants.MUMMY);
 			this.initCustomGoals();
 		}
 		else if (this.getType().equals(PvZEntity.BASSIMP)){
@@ -185,6 +187,10 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			setCanBurn(CanBurn.FALSE);
 			this.setHypno(IsHypno.TRUE);
 		}
+		else if (this.getType().equals(PvZEntity.MUMMYIMPHYPNO)){
+			setVariant(ImpVariants.MUMMYHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
 		else if (this.getType().equals(PvZEntity.BASSIMPHYPNO)){
 			setVariant(ImpVariants.BASSIMPHYPNO);
 			this.setHypno(IsHypno.TRUE);
@@ -221,8 +227,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createCrsytalShoeProp() {
 		if (world instanceof ServerWorld serverWorld) {
-			CrystalHelmetEntity propentity = new CrystalHelmetEntity(PvZEntity.CRYSTALSHOEGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			CrystalHelmetEntity propentity = new CrystalHelmetEntity(PvZEntity.CRYSTALSHOEGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -235,6 +241,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		impListHypno.add(PvZEntity.IMPHYPNO);
 		impList.add(PvZEntity.IMPDRAGON);
 		impListHypno.add(PvZEntity.IMPDRAGONHYPNO);
+		impList.add(PvZEntity.MUMMYIMP);
+		impListHypno.add(PvZEntity.MUMMYIMPHYPNO);
 		impList.add(PvZEntity.BASSIMP);
 		impListHypno.add(PvZEntity.BASSIMPHYPNO);
 		impList.add(PvZEntity.SUPERFANIMP);
@@ -260,7 +268,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 			if (imp != null){
 				imp.setFlying(Flying.TRUE);
 				imp.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-				imp.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+				imp.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				imp.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 				imp.startRiding(this);
 			}
@@ -362,6 +370,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.SUPERFANIMPHYPNO) ||
 				this.getType().equals(PvZEntity.NEWYEARIMPHYPNO) ||
 				this.getType().equals(PvZEntity.IMPDRAGONHYPNO) ||
+				this.getType().equals(PvZEntity.MUMMYIMPHYPNO) ||
 				this.getType().equals(PvZEntity.BASSIMPHYPNO) ||
 				this.getType().equals(PvZEntity.IMPTHROWERHYPNO) ||
 				this.getType().equals(PvZEntity.SCRAPIMPHYPNO) ||
@@ -423,7 +432,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 
 	private void bassExplode() {
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -472,7 +481,7 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 					this.bassExplode();
 					this.bassTime = 20;
 					this.playSound(PvZSounds.BASSPLAYEVENT, 0.125f, (float) (0.5F + Math.random()));
-					this.world.sendEntityStatus(this, (byte) 105);
+					this.getWorld().sendEntityStatus(this, (byte) 105);
 				}
 			}
 		}
@@ -755,6 +764,9 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.IMPDRAGON)){
 			hypnoType = PvZEntity.IMPDRAGONHYPNO;
 		}
+		else if (this.getType().equals(PvZEntity.MUMMYIMP)){
+			hypnoType = PvZEntity.MUMMYIMPHYPNO;
+		}
 		else if (this.getType().equals(PvZEntity.BASSIMP)){
 			hypnoType = PvZEntity.BASSIMPHYPNO;
 		}
@@ -782,6 +794,8 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 					hypnoType2 = PvZEntity.SUPERFANIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.IMPDRAGON)) {
 					hypnoType2 = PvZEntity.IMPDRAGONHYPNO;
+				} else if (entity.getType().equals(PvZEntity.MUMMYIMP)) {
+					hypnoType2 = PvZEntity.MUMMYIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.BASSIMP)) {
 					hypnoType2 = PvZEntity.BASSIMPHYPNO;
 				} else if (entity.getType().equals(PvZEntity.NEWYEARIMP)) {
@@ -804,10 +818,10 @@ public class ImpEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();

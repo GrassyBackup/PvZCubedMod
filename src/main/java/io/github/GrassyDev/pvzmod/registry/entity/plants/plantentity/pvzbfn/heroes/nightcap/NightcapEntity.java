@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.shadowtile.ShadowTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.piercespore.PierceSporeEntity;
@@ -159,7 +157,7 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 
 
 	protected List<HostileEntity> checkForZombies() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
 		List<HostileEntity> list2 = new ArrayList<>();
 		Iterator var9 = list.iterator();
 		while (true) {
@@ -199,7 +197,7 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 	/** /~*~//~**TICKING**~//~*~/ **/
 	protected List<LivingEntity> zombieList = new ArrayList<>();
 	private void damageEntity() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -255,11 +253,11 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 	private int tickDamage = 20;
 
 	public void tick() {
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			Vec3d vec3d = Vec3d.ofCenter(this.getBlockPos()).add(0, -0.5, 0);
 			List<ShadowTile> tileCheck = world.getNonSpectatingEntities(ShadowTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
 			if (tileCheck.isEmpty()) {
-				if (this.getWorld().getMoonSize() < 0.1 && this.world.isSkyVisible(this.getBlockPos())) {
+				if (this.getWorld().getMoonSize() < 0.1 && this.getWorld().isSkyVisible(this.getBlockPos())) {
 					if (serverWorld.isNight()) {
 						this.setShadowPowered(Shadow.TRUE);
 					}
@@ -271,14 +269,14 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 				this.setShadowPowered(Shadow.TRUE);
 			}
 		}
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -294,18 +292,18 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 		}
 		if (!this.checkForZombies().isEmpty()){
 			this.isAfraid = true;
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 		}
 		else {
 			this.isAfraid = false;
-			this.world.sendEntityStatus(this, (byte) 14);
+			this.getWorld().sendEntityStatus(this, (byte) 14);
 		}
 		BlockPos blockPos = this.getBlockPos();
 		if (tickDelay <= 1) {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.NIGHTCAP_SEED_PACKET);
 				}
 				this.discard();
@@ -320,7 +318,7 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 			for (int i = 0; i < 16; ++i) {
 				RandomGenerator randomGenerator = this.getRandom();
 				RandomGenerator randomGenerator2 = this.getRandom();
-				this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -2.5F, 2.5F),
+				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -2.5F, 2.5F),
 						this.getY() + (this.random.range(-1, 1)),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator2,
 								-2.5F, 2.5F), dx, ex, fx);
@@ -330,7 +328,7 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -430,14 +428,7 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -532,7 +523,7 @@ public class NightcapEntity extends PlantEntity implements IAnimatable, RangedAt
 								if (this.plantEntity.getShadowPowered()){
 									proj.setVariant(ShadowSporeVariants.SHADOW);
 								}
-								if (livingEntity.isAlive()) {
+								if (livingEntity != null && livingEntity.isAlive()) {
 									this.beamTicks = -13;
 									this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 									this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);

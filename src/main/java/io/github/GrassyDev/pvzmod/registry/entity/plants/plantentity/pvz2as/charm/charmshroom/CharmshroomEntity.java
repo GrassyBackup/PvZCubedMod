@@ -45,6 +45,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
@@ -188,11 +189,11 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 	/** /~*~//~*TICKING*~//~*~/ **/
 
 	public void tick() {
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			Vec3d vec3d = Vec3d.ofCenter(this.getBlockPos()).add(0, -0.5, 0);
 			List<ShadowFullTile> fullCheck = world.getNonSpectatingEntities(ShadowFullTile.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
 			if (fullCheck.isEmpty()) {
-				if (this.getWorld().getMoonSize() > 0.9 && this.world.isSkyVisible(this.getBlockPos())) {
+				if (this.getWorld().getMoonSize() > 0.9 && this.getWorld().isSkyVisible(this.getBlockPos())) {
 					if (serverWorld.isNight()) {
 						this.setMoonPowered(Moon.TRUE);
 					}
@@ -214,14 +215,14 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 				this.remove(RemovalReason.DISCARDED);
 			}
 		}
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -237,7 +238,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.CHARMSHROOM_SEED_PACKET);
 				}
 				this.discard();
@@ -247,7 +248,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -275,7 +276,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 					double rd = (double)(this.random.range(160, 255) & 255) / 255.0;
 					double gr = (double) (170 & 255) / 255.0;
 					double bl = (double)(this.random.range(200, 255) & 255) / 255.0;
-					this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + e * j, this.getEyeY() + f * j, this.getZ() + g * j, rd, gr, bl);
+					this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + e * j, this.getEyeY() + f * j, this.getZ() + g * j, rd, gr, bl);
 				}
 			}
 		}
@@ -363,14 +364,7 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -400,11 +394,11 @@ public class CharmshroomEntity extends PlantEntity implements IAnimatable, Range
 	public LivingEntity getBeamTarget() {
 		if (!this.hasBeamTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget != null) {
 				return this.cachedBeamTarget;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget = (LivingEntity)entity;
 					return this.cachedBeamTarget;

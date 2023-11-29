@@ -28,6 +28,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.List;
 
@@ -54,14 +63,14 @@ public class ScorchedTile extends TileEntity {
 				double d = this.random.nextDouble() / 10 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 10 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 10 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.SMOKE, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
 			}
 			for(int i = 0; i < 8; ++i) {
 				double e = this.random.nextDouble() / 10 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						particlePos.getY(),
 						particlePos.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -70,7 +79,7 @@ public class ScorchedTile extends TileEntity {
 	}
 
 	public void createImp(BlockPos blockPos, Vec3d vec3d){
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			ImpEntity zombie = (ImpEntity) PvZEntity.IMPDRAGON.create(world);
 			zombie.refreshPositionAndAngles(vec3d.getX(), vec3d.getY(), vec3d.getZ(), 0, 0);
 			zombie.initialize(serverWorld, world.getLocalDifficulty(blockPos), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
@@ -95,7 +104,7 @@ public class ScorchedTile extends TileEntity {
 		if (--dragoTick <= 0){
 			if (!hasPlant){
 				createImp(this.getBlockPos(), Vec3d.ofCenter(this.getBlockPos()));
-				this.world.sendEntityStatus(this, (byte) 115);
+				this.getWorld().sendEntityStatus(this, (byte) 115);
 			}
 			dragoTick = 360;
 		}

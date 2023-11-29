@@ -11,6 +11,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.brow
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.flagzombie.future.FlagFutureEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.jetpack.JetpackEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzbfn.zmech.ScrapMechEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.hovergoat.HoverGoatEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombiemachines.robocone.RoboConeEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -128,7 +129,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		this.setTarget(this.world.getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
+		this.setTarget(this.getWorld().getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
 		LocalDifficulty localDifficulty = world.getLocalDifficulty(this.getBlockPos());
 		double difficulty = 0;
 		if (this.getVariant().equals(GraveDifficulty.NONE)){
@@ -200,12 +201,12 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 				this.kill();
 			}
 		}
-		if (this.world.isClient && this.isSpellcasting()) {
+		if (this.getWorld().isClient && this.isSpellcasting()) {
 			float g = this.bodyYaw * 0.017453292F + MathHelper.cos((float)this.age * 0.6662F) * 0.25F;
 			float h = MathHelper.cos(g);
 			float i = MathHelper.sin(g);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (double)h * 0.6, this.getY(), this.getZ() + (double)i * 0.6, 0, 0.0125, 0);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX() - (double)h * 0.6, this.getY(), this.getZ() - (double)i * 0.6, 0, 0.0125, 0);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (double)h * 0.6, this.getY(), this.getZ() + (double)i * 0.6, 0, 0.0125, 0);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() - (double)h * 0.6, this.getY(), this.getZ() - (double)i * 0.6, 0, 0.0125, 0);
 		}
 	}
 
@@ -358,7 +359,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
         }
 
         protected void castSpell() {
-            ServerWorld serverWorld = (ServerWorld) FutureGraveEntity.this.world;
+            ServerWorld serverWorld = (ServerWorld) FutureGraveEntity.this.getWorld();
 			LocalDifficulty localDifficulty = world.getLocalDifficulty(this.futureGraveEntity.getBlockPos());
 			double difficulty = 0;
 			if (this.futureGraveEntity.getVariant().equals(GraveDifficulty.NONE)){
@@ -410,6 +411,7 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 			double probability12 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability13 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 			double probability14 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
+			double probability15 = random.nextDouble() * Math.pow(difficulty / 2, -1 * (difficulty / 2));
 
 			int zombiePos = -2 + FutureGraveEntity.this.random.nextInt(5);
 			int zombiePosZ = -2 + FutureGraveEntity.this.random.nextInt(5);
@@ -428,9 +430,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 				}
 				BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-				FutureZombieEntity FutureZombieEntity = (FutureZombieEntity)PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.world);
+				FutureZombieEntity FutureZombieEntity = (FutureZombieEntity)PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.getWorld());
 				FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+				FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 				FutureZombieEntity.setOwner(FutureGraveEntity.this);
 				FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -446,9 +448,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					FutureZombieEntity coneheadEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.world);
+					FutureZombieEntity coneheadEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.getWorld());
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(FutureGraveEntity.this);
 					coneheadEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -463,9 +465,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					FutureZombieEntity FutureZombieEntity = (FutureZombieEntity)PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.world);
+					FutureZombieEntity FutureZombieEntity = (FutureZombieEntity)PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.getWorld());
 					FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+					FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 					FutureZombieEntity.setOwner(FutureGraveEntity.this);
 					FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -483,9 +485,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						FutureZombieEntity bucketheadEntity = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.world);
+						FutureZombieEntity bucketheadEntity = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.getWorld());
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						bucketheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(FutureGraveEntity.this);
 						bucketheadEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -500,9 +502,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						FutureZombieEntity coneheadEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.world);
+						FutureZombieEntity coneheadEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.getWorld());
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(FutureGraveEntity.this);
 						coneheadEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -520,9 +522,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							FutureZombieEntity coneheadEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.world);
+							FutureZombieEntity coneheadEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.getWorld());
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							coneheadEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(FutureGraveEntity.this);
 							coneheadEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -537,9 +539,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							FutureZombieEntity FutureZombieEntity = (FutureZombieEntity)PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.world);
+							FutureZombieEntity FutureZombieEntity = (FutureZombieEntity)PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.getWorld());
 							FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+							FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 							FutureZombieEntity.setOwner(FutureGraveEntity.this);
 							FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -559,9 +561,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.world);
+						JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.getWorld());
 						jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						jetpack.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						jetpack.setOwner(FutureGraveEntity.this);
 						jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);
@@ -576,9 +578,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.world);
+						FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.getWorld());
 						FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						FutureZombieEntity.setOwner(FutureGraveEntity.this);
 						FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -598,9 +600,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.world);
+							JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.getWorld());
 							jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							jetpack.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							jetpack.setOwner(FutureGraveEntity.this);
 							jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);
@@ -615,9 +617,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							FutureZombieEntity buckethead = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.world);
+							FutureZombieEntity buckethead = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.getWorld());
 							buckethead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							buckethead.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							buckethead.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							buckethead.setOwner(FutureGraveEntity.this);
 							buckethead.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(buckethead);
@@ -636,9 +638,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							FutureZombieEntity brickhead = (FutureZombieEntity) PvZEntity.HOLOHEAD.create(FutureGraveEntity.this.world);
+							FutureZombieEntity brickhead = (FutureZombieEntity) PvZEntity.HOLOHEAD.create(FutureGraveEntity.this.getWorld());
 							brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							brickhead.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							brickhead.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							brickhead.setOwner(FutureGraveEntity.this);
 							brickhead.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -661,9 +663,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								}
 								double random = Math.random();
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FlagFutureEntity flagzombieEntity = (FlagFutureEntity) PvZEntity.FLAGFUTURE.create(FutureGraveEntity.this.world);
+								FlagFutureEntity flagzombieEntity = (FlagFutureEntity) PvZEntity.FLAGFUTURE.create(FutureGraveEntity.this.getWorld());
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								flagzombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								flagzombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(FutureGraveEntity.this);
 								flagzombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
@@ -685,9 +687,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.world);
+								JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.getWorld());
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								jetpack.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
 								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);
@@ -702,12 +704,53 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
+							}
+							extraGraveWeight += 1;
+						}
+					}
+				}
+				if (extraGraveWeight <= 2.5) {
+					if (difficulty >= 1.549 + difficultymodifier || isUnlock()) {
+						if (probability15 <= 0.15 / halfModifier * survChance) { // 15% x1 Hover Goat-3000
+							for (int p = 0; p < 1; ++p) {
+								if (!FutureGraveEntity.this.is1x1()) {
+									zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
+									zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+								}
+								if (FutureGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								HoverGoatEntity hoverGoat = (HoverGoatEntity) PvZEntity.HOVERGOAT.create(FutureGraveEntity.this.getWorld());
+								hoverGoat.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								hoverGoat.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								hoverGoat.setOwner(FutureGraveEntity.this);
+								hoverGoat.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+								serverWorld.spawnEntityAndPassengers(hoverGoat);
+							}
+							for (int b = 0; b < 2 / halfModifier; ++b) { // 100% x4 Conehead
+								if (!FutureGraveEntity.this.is1x1()) {
+									zombiePosZ = FutureGraveEntity.this.random.range(-1, 1);
+									zombiePos = FutureGraveEntity.this.random.range(-1, 1);
+								}
+								if (FutureGraveEntity.this.isChallengeGrave()) {
+									zombiePosZ = FutureGraveEntity.this.random.range(-3, 3);
+									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
+								}
+								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.getWorld());
+								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.setOwner(FutureGraveEntity.this);
+								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
+								serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
 							}
 							extraGraveWeight += 1;
 						}
@@ -726,9 +769,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								RoboConeEntity roboConeEntity = (RoboConeEntity) PvZEntity.ROBOCONE.create(FutureGraveEntity.this.world);
+								RoboConeEntity roboConeEntity = (RoboConeEntity) PvZEntity.ROBOCONE.create(FutureGraveEntity.this.getWorld());
 								roboConeEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								roboConeEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								roboConeEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								roboConeEntity.setOwner(FutureGraveEntity.this);
 								roboConeEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(roboConeEntity);
@@ -743,9 +786,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -767,9 +810,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity brickhead = (FutureZombieEntity) PvZEntity.HOLOHEAD.create(FutureGraveEntity.this.world);
+								FutureZombieEntity brickhead = (FutureZombieEntity) PvZEntity.HOLOHEAD.create(FutureGraveEntity.this.getWorld());
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								brickhead.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FutureGraveEntity.this);
 								brickhead.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -784,9 +827,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -801,9 +844,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -818,9 +861,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -842,9 +885,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								RoboConeEntity roboConeEntity = (RoboConeEntity) PvZEntity.ROBOCONE.create(FutureGraveEntity.this.world);
+								RoboConeEntity roboConeEntity = (RoboConeEntity) PvZEntity.ROBOCONE.create(FutureGraveEntity.this.getWorld());
 								roboConeEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								roboConeEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								roboConeEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								roboConeEntity.setOwner(FutureGraveEntity.this);
 								roboConeEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(roboConeEntity);
@@ -859,9 +902,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREZOMBIE.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -882,9 +925,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.world);
+							JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.getWorld());
 							jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							jetpack.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							jetpack.setOwner(FutureGraveEntity.this);
 							jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);
@@ -905,9 +948,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity brickhead = (FutureZombieEntity) PvZEntity.HOLOHEAD.create(FutureGraveEntity.this.world);
+								FutureZombieEntity brickhead = (FutureZombieEntity) PvZEntity.HOLOHEAD.create(FutureGraveEntity.this.getWorld());
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								brickhead.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(FutureGraveEntity.this);
 								brickhead.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -922,9 +965,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -946,9 +989,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								ScrapMechEntity scrapMechEntity = (ScrapMechEntity) PvZEntity.SCRAPMECH.create(FutureGraveEntity.this.world);
+								ScrapMechEntity scrapMechEntity = (ScrapMechEntity) PvZEntity.SCRAPMECH.create(FutureGraveEntity.this.getWorld());
 								scrapMechEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								scrapMechEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								scrapMechEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								scrapMechEntity.setOwner(FutureGraveEntity.this);
 								scrapMechEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(scrapMechEntity);
@@ -963,9 +1006,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.world);
+								JetpackEntity jetpack = (JetpackEntity) PvZEntity.JETPACK.create(FutureGraveEntity.this.getWorld());
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								jetpack.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
 								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);
@@ -980,9 +1023,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								JetpackEntity jetpack = (JetpackEntity) PvZEntity.BLASTRONAUT.create(FutureGraveEntity.this.world);
+								JetpackEntity jetpack = (JetpackEntity) PvZEntity.BLASTRONAUT.create(FutureGraveEntity.this.getWorld());
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								jetpack.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
 								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);
@@ -1004,9 +1047,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								JetpackEntity jetpack = (JetpackEntity) PvZEntity.BLASTRONAUT.create(FutureGraveEntity.this.world);
+								JetpackEntity jetpack = (JetpackEntity) PvZEntity.BLASTRONAUT.create(FutureGraveEntity.this.getWorld());
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								jetpack.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
 								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);
@@ -1021,9 +1064,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTURECONE.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -1038,9 +1081,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.world);
+								FutureZombieEntity FutureZombieEntity = (FutureZombieEntity) PvZEntity.FUTUREBUCKET.create(FutureGraveEntity.this.getWorld());
 								FutureZombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								FutureZombieEntity.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								FutureZombieEntity.setOwner(FutureGraveEntity.this);
 								FutureZombieEntity.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(FutureZombieEntity);
@@ -1062,9 +1105,9 @@ public class FutureGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = FutureGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = FutureGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								JetpackEntity jetpack = (JetpackEntity) PvZEntity.BLASTRONAUT.create(FutureGraveEntity.this.world);
+								JetpackEntity jetpack = (JetpackEntity) PvZEntity.BLASTRONAUT.create(FutureGraveEntity.this.getWorld());
 								jetpack.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								jetpack.initialize(serverWorld, FutureGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								jetpack.initialize(serverWorld, FutureGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								jetpack.setOwner(FutureGraveEntity.this);
 								jetpack.defenseMultiplier = FutureGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(jetpack);

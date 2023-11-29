@@ -22,7 +22,24 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
@@ -104,7 +121,7 @@ public class PokerEntity extends BrowncoatEntity {
 			--knightTicks;
 		}
 		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			if (this.getVariant().equals(BrowncoatVariants.POKERPAWN) || this.getVariant().equals(BrowncoatVariants.POKERPAWNHYPNO)) {
 				if (pawnTicks <= 0) {
 					if (this.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED, TEMP_SPEED_UUID)) {
@@ -119,7 +136,7 @@ public class PokerEntity extends BrowncoatEntity {
 				}
 			}
 		}
-		if (!this.world.isClient()){
+		if (!this.getWorld().isClient()){
 			if (this.getVariant().equals(BrowncoatVariants.POKERKNIGHT) || this.getVariant().equals(BrowncoatVariants.POKERKNIGHTHYPNO)) {
 				--flyDelay;
 				if (knightTicks <= 0){
@@ -134,7 +151,7 @@ public class PokerEntity extends BrowncoatEntity {
 				}
 			}
 		}
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			if (this.getVariant().equals(BrowncoatVariants.POKERTOWER) || this.getVariant().equals(BrowncoatVariants.POKERTOWERHYPNO)) {
 				boolean stop = false;
 				for (float x = 0; x <= 6f; ++x) {

@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.torchwood.TorchwoodEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
@@ -90,14 +88,14 @@ public class PiercePeaEntity extends PvZProjectileEntity implements IAnimatable 
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -108,15 +106,15 @@ public class PiercePeaEntity extends PvZProjectileEntity implements IAnimatable 
 			this.onCollision(hitResult);
 		}
 
-		if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
+		if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && this.age >= maxAge || this.damageCounter >= 3) {
+		if (!this.getWorld().isClient && this.age >= maxAge || this.damageCounter >= 3) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && checkTorchwood(this.getPos()) != null) {
+		if (!this.getWorld().isClient && checkTorchwood(this.getPos()) != null) {
 			if (checkTorchwood(this.getPos()) != torchwoodMemory && !checkTorchwood(this.getPos()).isWet()) {
 				FirePiercePeaEntity shootingFlamingPeaEntity = (FirePiercePeaEntity) PvZEntity.FIREPIERCEPEA.create(world);
 				shootingFlamingPeaEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
@@ -147,7 +145,7 @@ public class PiercePeaEntity extends PvZProjectileEntity implements IAnimatable 
 	}
 	public List<Entity> entityStore = new ArrayList<>();
 
-	protected int damageCounter = 0;
+	public int damageCounter = 0;
 
 	@Override
 	public void hitEntities() {
@@ -216,7 +214,7 @@ public class PiercePeaEntity extends PvZProjectileEntity implements IAnimatable 
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.remove(RemovalReason.DISCARDED);
         }
     }

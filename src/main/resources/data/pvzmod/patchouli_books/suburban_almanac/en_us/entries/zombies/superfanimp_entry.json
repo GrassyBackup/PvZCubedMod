@@ -2,7 +2,7 @@
   "name": "Super-Fan Imp",
   "icon": "pvzmod:superfanimp_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 100,
+  "sortnum": 113,
   "pages": [
     {
       "type": "text",

@@ -53,6 +53,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -62,6 +71,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -397,11 +407,11 @@ public class ZomblobEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
         if (!super.damage(source, amount)) {
             return false;
-        } else if (!(this.world instanceof ServerWorld)) {
+        } else if (!(this.getWorld() instanceof ServerWorld)) {
             return false;
         }
 		else {
-            ServerWorld serverWorld = (ServerWorld)this.world;
+            ServerWorld serverWorld = (ServerWorld)this.getWorld();
             LivingEntity livingEntity = this.getTarget();
             if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
                 livingEntity = (LivingEntity)source.getAttacker();
@@ -472,7 +482,7 @@ public class ZomblobEntity extends PvZombieEntity implements IAnimatable {
 				if (this.getType().equals(PvZEntity.ZOMBLOBBIGHYPNO)) {
 					type = PvZEntity.ZOMBLOBHYPNO;
 				}
-				if (this.world instanceof ServerWorld serverWorld) {
+				if (this.getWorld() instanceof ServerWorld serverWorld) {
 					for (int x = -1; x <= 1; x += 2) {
 						Vec3d vec3d = new Vec3d((double) 0, 0, x).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 						BlockPos blockPos = this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
@@ -493,7 +503,7 @@ public class ZomblobEntity extends PvZombieEntity implements IAnimatable {
 				if (this.getType().equals(PvZEntity.ZOMBLOBHYPNO)) {
 					type = PvZEntity.ZOMBLOBSMALLHYPNO;
 				}
-				if (this.world instanceof ServerWorld serverWorld) {
+				if (this.getWorld() instanceof ServerWorld serverWorld) {
 					for (int x = -1; x <= 1; x += 2) {
 						Vec3d vec3d = new Vec3d((double) 0, 0, x).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 						BlockPos blockPos = this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());

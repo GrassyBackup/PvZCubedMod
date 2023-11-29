@@ -18,7 +18,24 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class RiftTile extends TileEntity {
 
@@ -56,11 +73,11 @@ public class RiftTile extends TileEntity {
 
 	public void createBass(){
 		if (world instanceof ServerWorld serverWorld) {
-			SpeakerVehicleEntity zombie = new SpeakerVehicleEntity(PvZEntity.SPEAKER, this.world);
+			SpeakerVehicleEntity zombie = new SpeakerVehicleEntity(PvZEntity.SPEAKER, this.getWorld());
 			zombie.refreshPositionAndAngles(this.getX(), this.getY() + 3, this.getZ(), this.getYaw(), 0.0F);
 			serverWorld.spawnEntityAndPassengers(zombie);
-			BassZombieEntity zombie2 = new BassZombieEntity(PvZEntity.BASS, this.world);
-			zombie2.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			BassZombieEntity zombie2 = new BassZombieEntity(PvZEntity.BASS, this.getWorld());
+			zombie2.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			zombie2.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			zombie2.startRiding(zombie);
 			serverWorld.spawnEntityAndPassengers(zombie2);
@@ -69,16 +86,17 @@ public class RiftTile extends TileEntity {
 
 	public void createGargolith(){
 		if (world instanceof ServerWorld serverWorld) {
-			RockObstacleEntity zombie = new RockObstacleEntity(PvZEntity.GARGOLITHOBSTACLE, this.world);
+			RockObstacleEntity zombie = new RockObstacleEntity(PvZEntity.GARGOLITHOBSTACLE, this.getWorld());
 			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
+			zombie.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			serverWorld.spawnEntityAndPassengers(zombie);
 		}
 	}
 
 	public void createBrowncoat(){
 		if (world instanceof ServerWorld serverWorld) {
-			BrowncoatEntity zombie = new BrowncoatEntity(PvZEntity.BROWNCOAT, this.world);
-			zombie.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			BrowncoatEntity zombie = new BrowncoatEntity(PvZEntity.BROWNCOAT, this.getWorld());
+			zombie.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
 			serverWorld.spawnEntityAndPassengers(zombie);
 		}

@@ -13,7 +13,9 @@ public enum GargantuarVariants {
 	UNICORNGARGANTUAR(6),
 	UNICORNGARGANTUARHYPNO(7),
 	GARGOLITH(8),
-	GARGOLITHHYPNO(9);
+	GARGOLITHHYPNO(9),
+	MUMMY(10),
+	MUMMYHYPNO(11);
 
 	private static final GargantuarVariants[] BY_ID = Arrays.stream(values()).sorted(Comparator.
 			comparingInt(GargantuarVariants::getId)).toArray(GargantuarVariants[]::new);

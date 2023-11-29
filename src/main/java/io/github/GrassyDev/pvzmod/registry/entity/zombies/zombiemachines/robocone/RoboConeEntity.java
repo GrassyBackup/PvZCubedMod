@@ -46,6 +46,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -55,6 +64,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
@@ -223,15 +233,15 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 						this.getNavigation().stop();
 				this.setTarget(CollidesWithPlant(0.1f, 0f));
 				this.setStealthTag(Stealth.FALSE);
-				this.world.sendEntityStatus(this, (byte) 117);
+				this.getWorld().sendEntityStatus(this, (byte) 117);
 			}
 			else if (this.CollidesWithPlayer(1.5f) != null && !this.CollidesWithPlayer(1.5f).isCreative()){
 				this.setTarget(CollidesWithPlayer(1.5f));
 				this.setStealthTag(Stealth.FALSE);
-				this.world.sendEntityStatus(this, (byte) 117);
+				this.getWorld().sendEntityStatus(this, (byte) 117);
 			}
 			else {
-				this.world.sendEntityStatus(this, (byte) 118);
+				this.getWorld().sendEntityStatus(this, (byte) 118);
 			}
 		}
 	}
@@ -240,12 +250,12 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 		super.mobTick();
 		if (this.hasStatusEffect(PvZCubed.DISABLE)){
 			this.isDisabled = true;
-			this.world.sendEntityStatus(this, (byte) 73);
+			this.getWorld().sendEntityStatus(this, (byte) 73);
 		}
 		else {
 			this.isDisabled = false;
 			this.disableTicks = 60;
-			this.world.sendEntityStatus(this, (byte) 74);
+			this.getWorld().sendEntityStatus(this, (byte) 74);
 		}
 	}
 
@@ -318,7 +328,7 @@ public class RoboConeEntity extends MachinePvZombieEntity implements IAnimatable
 		if (this.getHypno()) {
 			type = PvZEntity.FUTURECONEHYPNO;
 		}
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			BlockPos blockPos = this.getBlockPos().add(this.getX(), 0, this.getZ());
 			FutureZombieEntity zombie = (FutureZombieEntity) type.create(world);
 			zombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);

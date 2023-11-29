@@ -43,6 +43,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -52,6 +61,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -203,14 +213,14 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -221,13 +231,13 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 60) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 60) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
@@ -238,9 +248,9 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 			double dd = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);
 			double ee = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);;
 			double ff = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);;
-			this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), dd, ee, ff);
-			this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), d, e, f);
-			this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
+			this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), dd, ee, ff);
+			this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
 		}
 		if (this.hasBeamTarget()) {
 			if (this.beamTicks < this.getWarmupTime()) {
@@ -273,7 +283,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 					j += d + this.random.nextDouble() * d;
 					double random = this.random.nextDouble();
 					if (random <= 0.5) {
-						this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+						this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 								anchorEntity.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 								anchorEntity.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 					}
@@ -294,7 +304,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 					j += d + this.random.nextDouble() * d;
 					double random = this.random.nextDouble();
 					if (random <= 0.5) {
-						this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity2.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+						this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity2.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 								anchorEntity2.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 								anchorEntity2.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 					}
@@ -315,7 +325,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 					j += d + this.random.nextDouble() * d;
 					double random = this.random.nextDouble();
 					if (random <= 0.5) {
-						this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity3.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+						this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity3.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 								anchorEntity3.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 								anchorEntity3.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 					}
@@ -336,14 +346,14 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 					j += d + this.random.nextDouble() * d;
 					double random = this.random.nextDouble();
 					if (random <= 0.5) {
-						this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity4.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+						this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity4.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 								anchorEntity4.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 								anchorEntity4.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 					}
 				}
 			}
 		}
-		if (!this.world.isClient && checkTorchwood(this.getPos()) != null) {
+		if (!this.getWorld().isClient && checkTorchwood(this.getPos()) != null) {
 			if (checkTorchwood(this.getPos()) != torchwoodMemory && !checkTorchwood(this.getPos()).isWet()) {
 				ShootingPlasmaPeaEntity plasmaPeaEntity = (ShootingPlasmaPeaEntity) PvZEntity.PLASMAPEA.create(world);
 				plasmaPeaEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
@@ -370,7 +380,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	protected int lightningCounter;
 
 	public void lightning(LivingEntity origin){
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, origin.getBoundingBox().expand(10.0));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, origin.getBoundingBox().expand(10.0));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -415,7 +425,7 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 				}
 				damaged.damage(DamageSource.thrownProjectile(this, this), 0);
 				setSparkTarget(damaged.getId());
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 				if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 					this.lightningCounter -= 2;
 				}
@@ -555,15 +565,15 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 					double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 					double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 					double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, livingEntity.getX() + (this.random.range(-1, 1)), livingEntity.getY() + 0.5 + (this.random.range(-1, 1)), livingEntity.getZ() + (this.random.range(-1, 1)), d, e, f);
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, livingEntity.getX() + (this.random.range(-1, 1)), livingEntity.getY() + 0.5 + (this.random.range(-1, 1)), livingEntity.getZ() + (this.random.range(-1, 1)), d, e, f);
 				}
 			}
 		}
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -650,11 +660,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getBeamTarget() {
 		if (!this.hasBeamTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget != null) {
 				return this.cachedBeamTarget;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget = (LivingEntity)entity;
 					return this.cachedBeamTarget;
@@ -676,11 +686,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getElectricBeamTarget() {
 		if (!this.hasElectricBeamTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget2 != null) {
 				return this.cachedBeamTarget2;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget2 = (LivingEntity)entity;
 					return this.cachedBeamTarget2;
@@ -702,11 +712,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getBeamTarget2() {
 		if (!this.hasBeamTarget2()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget3 != null) {
 				return this.cachedBeamTarget3;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID2));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID2));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget3 = (LivingEntity)entity;
 					return this.cachedBeamTarget3;
@@ -728,11 +738,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getElectricBeamTarget2() {
 		if (!this.hasElectricBeamTarget2()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget4 != null) {
 				return this.cachedBeamTarget4;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID2));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID2));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget4 = (LivingEntity)entity;
 					return this.cachedBeamTarget4;
@@ -754,11 +764,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getBeamTarget3() {
 		if (!this.hasBeamTarget3()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget5 != null) {
 				return this.cachedBeamTarget5;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID3));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID3));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget5 = (LivingEntity)entity;
 					return this.cachedBeamTarget5;
@@ -780,11 +790,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getElectricBeamTarget3() {
 		if (!this.hasElectricBeamTarget3()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget6 != null) {
 				return this.cachedBeamTarget6;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID3));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID3));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget6 = (LivingEntity)entity;
 					return this.cachedBeamTarget6;
@@ -806,11 +816,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getBeamTarget4() {
 		if (!this.hasBeamTarget4()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget7 != null) {
 				return this.cachedBeamTarget7;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID4));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID4));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget7 = (LivingEntity)entity;
 					return this.cachedBeamTarget7;
@@ -832,11 +842,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getElectricBeamTarget4() {
 		if (!this.hasElectricBeamTarget4()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget8 != null) {
 				return this.cachedBeamTarget8;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID4));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID4));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget8 = (LivingEntity)entity;
 					return this.cachedBeamTarget8;
@@ -858,11 +868,11 @@ public class ShootingElectricPeaEntity extends PvZProjectileEntity implements IA
 	public LivingEntity getSparkTarget() {
 		if (!this.hasSparkTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedSparkTarget != null) {
 				return this.cachedSparkTarget;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(SPARK_TARGET));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(SPARK_TARGET));
 				if (entity instanceof LivingEntity) {
 					this.cachedSparkTarget = (LivingEntity)entity;
 					return this.cachedSparkTarget;

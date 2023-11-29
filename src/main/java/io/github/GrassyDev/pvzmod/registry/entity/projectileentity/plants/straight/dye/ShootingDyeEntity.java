@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.strai
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
@@ -43,6 +41,15 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -53,6 +60,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -233,14 +242,14 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -251,8 +260,8 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
@@ -263,7 +272,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 		if (this.getVariant().equals(DyeVariants.ARMA)){
 			this.maxAge = 120;
 			this.setNoGravity(false);
-			if (!this.world.isClient && this.age > 50 && target != null) {
+			if (!this.getWorld().isClient && this.age > 50 && target != null) {
 				if (target.getHealth() > 0) {
 					this.setVelocity(0,this.getVelocity().getY(), 0);
 					this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
@@ -278,8 +287,8 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 			}
 		}
 
-        if (!this.world.isClient && this.age >= maxAge) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= maxAge) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
@@ -314,7 +323,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 					j += d + this.random.nextDouble() * d;
 					double random = this.random.nextDouble();
 					if (random <= 0.5) {
-						this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+						this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 								anchorEntity.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 								anchorEntity.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 					}
@@ -335,7 +344,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 					j += d + this.random.nextDouble() * d;
 					double random = this.random.nextDouble();
 					if (random <= 0.5) {
-						this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity2.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+						this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity2.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 								anchorEntity2.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 								anchorEntity2.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 					}
@@ -356,7 +365,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 					j += d + this.random.nextDouble() * d;
 					double random = this.random.nextDouble();
 					if (random <= 0.5) {
-						this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity3.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+						this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity3.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 								anchorEntity3.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 								anchorEntity3.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 					}
@@ -377,7 +386,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 					j += d + this.random.nextDouble() * d;
 					double random = this.random.nextDouble();
 					if (random <= 0.5) {
-						this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity4.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
+						this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, anchorEntity4.getX() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + e * j,
 								anchorEntity4.getEyeY() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + f * j,
 								anchorEntity4.getZ() + (this.random.nextFloat() / 5 * this.random.range(-1, 1)) + g * j, 0, 0, 0);
 					}
@@ -385,14 +394,14 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 			}
 		}
 
-		if (!this.world.isClient && enemiesHit >= 3 && this.getVariant().equals(DyeVariants.SPEAR)) {
-			this.world.sendEntityStatus(this, (byte) 3);
+		if (!this.getWorld().isClient && enemiesHit >= 3 && this.getVariant().equals(DyeVariants.SPEAR)) {
+			this.getWorld().sendEntityStatus(this, (byte) 3);
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && enemiesHit > 0 && this.getVariant().equals(DyeVariants.FILAMENT)){
+		if (!this.getWorld().isClient && enemiesHit > 0 && this.getVariant().equals(DyeVariants.FILAMENT)){
 			if (--lightningDespawn <= 0){
-				this.world.sendEntityStatus(this, (byte) 3);
+				this.getWorld().sendEntityStatus(this, (byte) 3);
 				this.remove(RemovalReason.DISCARDED);
 			}
 		}
@@ -405,7 +414,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	protected int lightningCounter;
 
 	public void lightning(LivingEntity origin){
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, origin.getBoundingBox().expand(10.0));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, origin.getBoundingBox().expand(10.0));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -450,7 +459,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 				}
 				damaged.damage(DamageSource.thrownProjectile(this, this), 0);
 				setSparkTarget(damaged.getId());
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 				if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")){
 					this.lightningCounter -= 2;
 				}
@@ -481,11 +490,12 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
     protected Item getDefaultItem() {
         return null;
     }
+	public List<Entity> entityStore = new ArrayList<>();
 
 	@Override
 	public void hitEntities() {
 		super.hitEntities();
-		if (!this.getVariant().equals(DyeVariants.ARMA) && (this.enemiesHit < 3 && !this.getVariant().equals(DyeVariants.CONCEAL))) {
+		if (!this.getVariant().equals(DyeVariants.ARMA) && !(this.enemiesHit >= 3 && this.getVariant().equals(DyeVariants.CONCEAL))) {
 			boolean hit = false;
 			Iterator var9 = hitEntities.iterator();
 			while (true) {
@@ -507,252 +517,269 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 						zombiePropEntity3 = zpe;
 					}
 				}
+				Entity et = null;
+				for (Entity entityHitList : entityStore) {
+					if (entityHitList == entity) {
+						et = entity;
+						break;
+					}
+				}
+				if (this.getVariant().equals(DyeVariants.CONCEAL)){
+					enemiesHit = 0;
+				}
 				if (!world.isClient && entity instanceof Monster monster &&
 						!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
 						!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 						!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 						!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth() && !this.getVariant().equals(DyeVariants.ENLIGHTEN)) &&
 						!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !hit) {
-					if (this.getVariant().equals(DyeVariants.FILAMENT)) {
-						this.setElectricBeamTargetId(this.getId());
-						this.setHypnoBeamTarget(entity.getId());
-					}
-					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
-					SoundEvent sound;
-					sound = switch (zombieMaterial) {
-						case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
-						case "plastic" -> PvZSounds.CONEHITEVENT;
-						case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
-						default -> PvZSounds.PEAHITEVENT;
-					};
-					entity.playSound(sound, 0.2F, 1F);
-					entity.playSound(SoundEvents.ENTITY_GENERIC_SPLASH, 0.2F, 1F);
-					float damage = PVZCONFIG.nestedProjDMG.peaDMG();
-					if (this.getVariant().equals(DyeVariants.CONCEAL) || this.getVariant().equals(DyeVariants.ENLIGHTEN)) {
-						damage = damage - 2f;
-					}
-					if (this.getVariant().equals(DyeVariants.APPEASE) || this.getVariant().equals(DyeVariants.PEPPER) || this.getVariant().equals(DyeVariants.ARMA)) {
-						damage = damage + 2f;
-					}
-					if (this.getVariant().equals(DyeVariants.ENFORCE)) {
-						damage = damage + 6f;
-					}
-					if (this.getVariant().equals(DyeVariants.REINFORCE)) {
-						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 10, 5)));
-					}
-					if (this.getVariant().equals(DyeVariants.AILMENT)) {
-						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 1)));
-					}
-					if (this.getVariant().equals(DyeVariants.CONTAIN)){
-						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.GENERICSLOW, 10, 1)));
-					}
-					if (this.getVariant().equals(DyeVariants.WINTER)) {
-						if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
-							damage = damage / 2;
-						}
-						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 60, 1)));
-					} else if (this.getVariant().equals(DyeVariants.PEPPER) || this.getVariant().equals(DyeVariants.BOMBARD)) {
-						if (!entity.isWet() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
-							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
-							entity.setOnFireFor(4);
-							if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
-								generalPvZombieEntity.fireSplashTicks = 10;
-							}
-						}
-						if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
-							damage = damage * 2;
-						}
-						if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
-							damage = damage / 2;
-						}
-						if (((LivingEntity) entity).hasStatusEffect(PvZCubed.WET) || entity.isWet() || (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) {
-							damage = damage / 2;
-						}
-					} else if (this.getVariant().equals(DyeVariants.ENCHANT)) {
-						boolean hasHelmet = false;
-						for (Entity entity1 : entity.getPassengerList()) {
-							if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
-								hasHelmet = true;
-							}
-						}
-						if (!hasHelmet && !(entity instanceof ZombiePropEntity) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
-							damage = damage * 2;
-						}
-						if ("crystal".equals(zombieMaterial)) {
-							damage = damage * 2;
-						}
-					} else if (this.getVariant().equals(DyeVariants.FILAMENT)) {
-						this.setElectricBeamTargetId(this.getId());
-						this.setHypnoBeamTarget(entity.getId());
-						if (entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
-							damage = damage * 2;
-						}
-						if ("electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
-							damage = damage / 2;
-						}
-						if ("rubber".equals(zombieMaterial)) {
-							damage = 0;
-						}
-					} else {
-						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 30, 1)));
-						entity.extinguish();
-						if ("paper".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
-							damage = damage * 2;
-						} else if ("plant".equals(zombieMaterial)) {
-							damage = damage / 2;
-						}
-					}
-					if (damage > ((LivingEntity) entity).getHealth() &&
-							!(entity instanceof ZombieShieldEntity) &&
-							entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-						float damage2 = damage - ((LivingEntity) entity).getHealth();
+					if (et == null) {
 						if (this.getVariant().equals(DyeVariants.FILAMENT)) {
-							this.lightningCounter = 3;
-							if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")) {
-								this.lightningCounter -= 2;
-							} else if (zombieMaterial.equals("rubber")) {
-								this.lightningCounter = 0;
-							}
-							this.lightning((LivingEntity) entity);
-							this.lightningCounter = 3;
-							entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage);
-							generalPvZombieEntity.damage(PvZCubed.LIGHTNING_DAMAGE, damage2);
-							entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
-							generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
-							this.enemiesHit = 123;
-						} else {
-							entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
-							generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
+							this.setElectricBeamTargetId(this.getId());
+							this.setHypnoBeamTarget(entity.getId());
 						}
-					} else {
-						if (this.getVariant().equals(DyeVariants.FILAMENT)) {
-							this.lightningCounter = 3;
-							if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")) {
-								this.lightningCounter -= 2;
-							} else if (zombieMaterial.equals("rubber")) {
-								this.lightningCounter = 0;
-							}
-							this.lightning((LivingEntity) entity);
-							this.lightningCounter = 3;
-							entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage);
-							entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
-							this.enemiesHit = 123;
-						} else {
-							entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
+						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+						SoundEvent sound;
+						sound = switch (zombieMaterial) {
+							case "metallic", "electronic" -> PvZSounds.BUCKETHITEVENT;
+							case "plastic" -> PvZSounds.CONEHITEVENT;
+							case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
+							default -> PvZSounds.PEAHITEVENT;
+						};
+						entity.playSound(sound, 0.2F, 1F);
+						entity.playSound(SoundEvents.ENTITY_GENERIC_SPLASH, 0.2F, 1F);
+						float damage = PVZCONFIG.nestedProjDMG.peaDMG();
+						if (this.getVariant().equals(DyeVariants.CONCEAL) || this.getVariant().equals(DyeVariants.ENLIGHTEN)) {
+							damage = damage - 2f;
 						}
-					}
-					if (!this.getVariant().equals(DyeVariants.CONCEAL) && !this.getVariant().equals(DyeVariants.SPEAR) && !this.getVariant().equals(DyeVariants.FILAMENT)) {
-						this.world.sendEntityStatus(this, (byte) 3);
-						this.remove(RemovalReason.DISCARDED);
-					}
-					++enemiesHit;
-					if (!(entity instanceof ZombieShieldEntity) && !this.getVariant().equals(DyeVariants.SPEAR) && !this.getVariant().equals(DyeVariants.CONCEAL) && !this.getVariant().equals(DyeVariants.ENFORCE) && !this.getVariant().equals(DyeVariants.FILAMENT)) {
-						Vec3d vec3d = this.getPos();
-						hit = true;
-						List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
-						Iterator var10 = list.iterator();
-						while (true) {
-							LivingEntity livingEntity;
-							do {
-								do {
-									if (!var10.hasNext()) {
-										return;
-									}
-
-									livingEntity = (LivingEntity) var10.next();
-								} while (livingEntity == this.getOwner());
-							} while (entity.squaredDistanceTo(livingEntity) > 2.25);
-
-							if (livingEntity instanceof Monster &&
-									!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-											&& (generalPvZombieEntity.getHypno()))) {
-								if (livingEntity != entity) {
-									String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
-									float damage3 = PVZCONFIG.nestedProjDMG.dyeDMG() * damageMultiplier;
-									if (this.getVariant().equals(DyeVariants.BOMBARD) || this.getVariant().equals(DyeVariants.ENLIGHTEN)) {
-										damage3 = damage3 + 2f;
-									}
-									if (this.getVariant().equals(DyeVariants.AILMENT)) {
-										livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 1)));
-									}
-									if (this.getVariant().equals(DyeVariants.CONTAIN)) {
-										livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.GENERICSLOW, 10, 1)));
-									}
-									if (this.getVariant().equals(DyeVariants.WINTER)) {
-										if ("crystal".equals(zombieMaterial2) || "gold".equals(zombieMaterial2) || "cloth".equals(zombieMaterial2)) {
-											damage3 = damage3 / 2;
-										}
-										livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 60, 1)));
-									} else if (this.getVariant().equals(DyeVariants.PEPPER) || this.getVariant().equals(DyeVariants.BOMBARD)) {
-										if (!livingEntity.isWet() && !livingEntity.hasStatusEffect(PvZCubed.WET)) {
-											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
-											livingEntity.setOnFireFor(4);
-											if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
-												generalPvZombieEntity.fireSplashTicks = 10;
-											}
-										}
-										if ("paper".equals(zombieMaterial2) || "plant".equals(zombieMaterial2) || "cloth".equals(zombieMaterial2) || "gold".equals(zombieMaterial2)) {
-											damage3 = damage3 * 2;
-										}
-										if ("rubber".equals(zombieMaterial2) || "crystal".equals(zombieMaterial2)) {
-											damage3 = damage3 / 2;
-										}
-										if (livingEntity.hasStatusEffect(PvZCubed.WET) || livingEntity.isWet() || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) {
-											damage3 = damage3 / 2;
-										}
-									} else if (this.getVariant().equals(DyeVariants.ENCHANT)) {
-										boolean hasHelmet = false;
-										for (Entity entity1 : livingEntity.getPassengerList()) {
-											if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
-												hasHelmet = true;
-											}
-										}
-										if (!hasHelmet && !(livingEntity instanceof ZombiePropEntity) && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
-											damage3 = damage3 * 2;
-										}
-										if ("crystal".equals(zombieMaterial2)) {
-											damage3 = damage3 * 2;
-										}
-									} else {
-										livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 30, 1)));
-										livingEntity.extinguish();
-										if ("paper".equals(zombieMaterial2) || "stone".equals(zombieMaterial2)) {
-											damage3 = damage3 * 2;
-										} else if ("plant".equals(zombieMaterial2)) {
-											damage3 = damage3 / 2;
-										}
-									}
-									ZombiePropEntity zombiePropEntity4 = null;
-									for (Entity entity1 : livingEntity.getPassengerList()) {
-										if (entity1 instanceof ZombiePropEntity zpe) {
-											zombiePropEntity4 = zpe;
-										}
-									}
-									ZombiePropEntity zombiePropEntity6 = null;
-									if (livingEntity.hasVehicle()) {
-										for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
-											if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
-												zombiePropEntity6 = zpe;
-											}
-										}
-									}
-									if (!(zombiePropEntity4 instanceof ZombieShieldEntity)) {
-										if (zombiePropEntity4 == null && zombiePropEntity6 == null) {
-											if (damage3 > livingEntity.getHealth() &&
-													!(livingEntity instanceof ZombieShieldEntity) &&
-													livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-												float damage4 = damage3 - livingEntity.getHealth();
-												livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
-												generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage4);
-											} else {
-												livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
-											}
-										}
-									}
+						if (this.getVariant().equals(DyeVariants.APPEASE) || this.getVariant().equals(DyeVariants.PEPPER) || this.getVariant().equals(DyeVariants.ARMA)) {
+							damage = damage + 2f;
+						}
+						if (this.getVariant().equals(DyeVariants.ENFORCE)) {
+							damage = damage + 6f;
+						}
+						if (this.getVariant().equals(DyeVariants.REINFORCE)) {
+							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 10, 5)));
+						}
+						if (this.getVariant().equals(DyeVariants.AILMENT)) {
+							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 1)));
+						}
+						if (this.getVariant().equals(DyeVariants.CONTAIN)) {
+							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.GENERICSLOW, 10, 1)));
+						}
+						if (this.getVariant().equals(DyeVariants.WINTER)) {
+							if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
+								damage = damage / 2;
+							}
+							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 60, 1)));
+						} else if (this.getVariant().equals(DyeVariants.PEPPER) || this.getVariant().equals(DyeVariants.BOMBARD)) {
+							if (!entity.isWet() && !((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
+								((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
+								entity.setOnFireFor(4);
+								if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+									generalPvZombieEntity.fireSplashTicks = 10;
 								}
-								if (!this.getVariant().equals(DyeVariants.CONCEAL) && !this.getVariant().equals(DyeVariants.SPEAR)) {
-									this.world.sendEntityStatus(this, (byte) 3);
-									this.remove(RemovalReason.DISCARDED);
+							}
+							if ("paper".equals(zombieMaterial) || "plant".equals(zombieMaterial) || "cloth".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
+								damage = damage * 2;
+							}
+							if ("rubber".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
+								damage = damage / 2;
+							}
+							if (((LivingEntity) entity).hasStatusEffect(PvZCubed.WET) || entity.isWet() || (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) {
+								damage = damage / 2;
+							}
+						} else if (this.getVariant().equals(DyeVariants.ENCHANT)) {
+							boolean hasHelmet = false;
+							for (Entity entity1 : entity.getPassengerList()) {
+								if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+									hasHelmet = true;
+								}
+							}
+							if (!hasHelmet && !(entity instanceof ZombiePropEntity) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+								damage = damage * 2;
+							}
+							if ("crystal".equals(zombieMaterial)) {
+								damage = damage * 2;
+							}
+						} else if (this.getVariant().equals(DyeVariants.FILAMENT)) {
+							this.setElectricBeamTargetId(this.getId());
+							this.setHypnoBeamTarget(entity.getId());
+							if (entity.isWet() || ((LivingEntity) entity).hasStatusEffect(PvZCubed.WET)) {
+								damage = damage * 2;
+							}
+							if ("electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
+								damage = damage / 2;
+							}
+							if ("rubber".equals(zombieMaterial)) {
+								damage = 0;
+							}
+						} else {
+							((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 30, 1)));
+							entity.extinguish();
+							if ("paper".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+								damage = damage * 2;
+							} else if ("plant".equals(zombieMaterial)) {
+								damage = damage / 2;
+							}
+						}
+						if (damage > ((LivingEntity) entity).getHealth() &&
+								!(entity instanceof ZombieShieldEntity) &&
+								entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+							float damage2 = damage - ((LivingEntity) entity).getHealth();
+							if (this.getVariant().equals(DyeVariants.FILAMENT)) {
+								this.lightningCounter = 3;
+								if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")) {
+									this.lightningCounter -= 2;
+								} else if (zombieMaterial.equals("rubber")) {
+									this.lightningCounter = 0;
+								}
+								this.lightning((LivingEntity) entity);
+								this.lightningCounter = 3;
+								entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage);
+								generalPvZombieEntity.damage(PvZCubed.LIGHTNING_DAMAGE, damage2);
+								entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
+								generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
+								this.enemiesHit = 123;
+								entityStore.add((LivingEntity) entity);
+							} else {
+								entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
+								generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
+								entityStore.add((LivingEntity) entity);
+							}
+						} else {
+							if (this.getVariant().equals(DyeVariants.FILAMENT)) {
+								this.lightningCounter = 3;
+								if (zombieMaterial.equals("plastic") || zombieMaterial.equals("plant")) {
+									this.lightningCounter -= 2;
+								} else if (zombieMaterial.equals("rubber")) {
+									this.lightningCounter = 0;
+								}
+								this.lightning((LivingEntity) entity);
+								this.lightningCounter = 3;
+								entity.damage(PvZCubed.LIGHTNING_DAMAGE, damage);
+								entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), 0);
+								this.enemiesHit = 123;
+								entityStore.add((LivingEntity) entity);
+							} else {
+								entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
+								entityStore.add((LivingEntity) entity);
+							}
+						}
+						if (!this.getVariant().equals(DyeVariants.CONCEAL) && !this.getVariant().equals(DyeVariants.SPEAR) && !this.getVariant().equals(DyeVariants.FILAMENT)) {
+							this.getWorld().sendEntityStatus(this, (byte) 3);
+							this.remove(RemovalReason.DISCARDED);
+						}
+						++enemiesHit;
+						entityStore.add((LivingEntity) entity);
+						if (!(entity instanceof ZombieShieldEntity) && !this.getVariant().equals(DyeVariants.SPEAR) && !this.getVariant().equals(DyeVariants.CONCEAL) && !this.getVariant().equals(DyeVariants.ENFORCE) && !this.getVariant().equals(DyeVariants.FILAMENT)) {
+							Vec3d vec3d = this.getPos();
+							hit = true;
+							List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+							Iterator var10 = list.iterator();
+							while (true) {
+								LivingEntity livingEntity;
+								do {
+									do {
+										if (!var10.hasNext()) {
+											return;
+										}
+
+										livingEntity = (LivingEntity) var10.next();
+									} while (livingEntity == this.getOwner());
+								} while (entity.squaredDistanceTo(livingEntity) > 2.25);
+
+								if (livingEntity instanceof Monster &&
+										!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
+												&& (generalPvZombieEntity.getHypno()))) {
+									if (livingEntity != entity) {
+										String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
+										float damage3 = PVZCONFIG.nestedProjDMG.dyeDMG() * damageMultiplier;
+										if (this.getVariant().equals(DyeVariants.BOMBARD) || this.getVariant().equals(DyeVariants.ENLIGHTEN)) {
+											damage3 = damage3 + 2f;
+										}
+										if (this.getVariant().equals(DyeVariants.AILMENT)) {
+											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.PVZPOISON, 60, 1)));
+										}
+										if (this.getVariant().equals(DyeVariants.CONTAIN)) {
+											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.GENERICSLOW, 10, 1)));
+										}
+										if (this.getVariant().equals(DyeVariants.WINTER)) {
+											if ("crystal".equals(zombieMaterial2) || "gold".equals(zombieMaterial2) || "cloth".equals(zombieMaterial2)) {
+												damage3 = damage3 / 2;
+											}
+											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 60, 1)));
+										} else if (this.getVariant().equals(DyeVariants.PEPPER) || this.getVariant().equals(DyeVariants.BOMBARD)) {
+											if (!livingEntity.isWet() && !livingEntity.hasStatusEffect(PvZCubed.WET)) {
+												livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WARM, 60, 1)));
+												livingEntity.setOnFireFor(4);
+												if (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity) {
+													generalPvZombieEntity.fireSplashTicks = 10;
+												}
+											}
+											if ("paper".equals(zombieMaterial2) || "plant".equals(zombieMaterial2) || "cloth".equals(zombieMaterial2) || "gold".equals(zombieMaterial2)) {
+												damage3 = damage3 * 2;
+											}
+											if ("rubber".equals(zombieMaterial2) || "crystal".equals(zombieMaterial2)) {
+												damage3 = damage3 / 2;
+											}
+											if (livingEntity.hasStatusEffect(PvZCubed.WET) || livingEntity.isWet() || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) {
+												damage3 = damage3 / 2;
+											}
+										} else if (this.getVariant().equals(DyeVariants.ENCHANT)) {
+											boolean hasHelmet = false;
+											for (Entity entity1 : livingEntity.getPassengerList()) {
+												if (entity1 instanceof ZombiePropEntity zpe && !(zpe instanceof ZombieShieldEntity)) {
+													hasHelmet = true;
+												}
+											}
+											if (!hasHelmet && !(livingEntity instanceof ZombiePropEntity) && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
+												damage3 = damage3 * 2;
+											}
+											if ("crystal".equals(zombieMaterial2)) {
+												damage3 = damage3 * 2;
+											}
+										} else {
+											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 30, 1)));
+											livingEntity.extinguish();
+											if ("paper".equals(zombieMaterial2) || "stone".equals(zombieMaterial2)) {
+												damage3 = damage3 * 2;
+											} else if ("plant".equals(zombieMaterial2)) {
+												damage3 = damage3 / 2;
+											}
+										}
+										ZombiePropEntity zombiePropEntity4 = null;
+										for (Entity entity1 : livingEntity.getPassengerList()) {
+											if (entity1 instanceof ZombiePropEntity zpe) {
+												zombiePropEntity4 = zpe;
+											}
+										}
+										ZombiePropEntity zombiePropEntity6 = null;
+										if (livingEntity.hasVehicle()) {
+											for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
+												if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
+													zombiePropEntity6 = zpe;
+												}
+											}
+										}
+										if (!(zombiePropEntity4 instanceof ZombieShieldEntity)) {
+											if (zombiePropEntity4 == null && zombiePropEntity6 == null) {
+												if (damage3 > livingEntity.getHealth() &&
+														!(livingEntity instanceof ZombieShieldEntity) &&
+														livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
+													float damage4 = damage3 - livingEntity.getHealth();
+													livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+													generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage4);
+												} else {
+													livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
+												}
+											}
+										}
+									}
+									if (!this.getVariant().equals(DyeVariants.CONCEAL) && !this.getVariant().equals(DyeVariants.SPEAR)) {
+										this.getWorld().sendEntityStatus(this, (byte) 3);
+										this.remove(RemovalReason.DISCARDED);
+									}
 								}
 							}
 						}
@@ -809,7 +836,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 					}
 					hit = true;
 					Vec3d vec3d = this.getPos();
-					List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
+					List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
 					Iterator var10 = list.iterator();
 					while (true) {
 						LivingEntity livingEntity;
@@ -856,7 +883,7 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 									}
 								}
 							}
-							this.world.sendEntityStatus(this, (byte) 3);
+							this.getWorld().sendEntityStatus(this, (byte) 3);
 							this.remove(RemovalReason.DISCARDED);
 						}
 					}
@@ -884,44 +911,44 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 					double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 					double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 					double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, livingEntity.getX() + (this.random.range(-1, 1)), livingEntity.getY() + 0.5 + (this.random.range(-1, 1)), livingEntity.getZ() + (this.random.range(-1, 1)), d, e, f);
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, livingEntity.getX() + (this.random.range(-1, 1)), livingEntity.getY() + 0.5 + (this.random.range(-1, 1)), livingEntity.getZ() + (this.random.range(-1, 1)), d, e, f);
 				}
 			}
 		}
         if (status == 3) {
 
 			if (this.getVariant().equals(DyeVariants.APPEASE) || this.getVariant().equals(DyeVariants.ENFORCE)) {
-				this.world.addParticle(ParticleTypes.ITEM_SLIME, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+				this.getWorld().addParticle(ParticleTypes.ITEM_SLIME, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 			else if (this.getVariant().equals(DyeVariants.CONCEAL) || this.getVariant().equals(DyeVariants.ENCHANT)) {
-				this.world.addParticle(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+				this.getWorld().addParticle(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 			else if (this.getVariant().equals(DyeVariants.AILMENT)) {
 				double d = (double)(180 & 255) / 255.0;
 				double e = (double)(30 & 255) / 255.0;
 				double f = (double)(200 & 255) / 255.0;
 				for(int j = 0; j < 16; ++j) {
-					this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
+					this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
 				}
 			}
 			else if (this.getVariant().equals(DyeVariants.BOMBARD) || this.getVariant().equals(DyeVariants.PEPPER)) {
 				for (int i = 0; i < 16; ++i) {
-					this.world.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+					this.getWorld().addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 				}
 			}
 			else if (this.getVariant().equals(DyeVariants.ENLIGHTEN) || this.getVariant().equals(DyeVariants.FILAMENT)) {
 				for (int i = 0; i < 16; ++i) {
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 				}
 			}
 			else if (this.getVariant().equals(DyeVariants.WINTER)) {
 				for (int i = 0; i < 16; ++i) {
-					this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+					this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 				}
 			}
 			else {
 				for (int i = 0; i < 16; ++i) {
-					this.world.addParticle(ParticleTypes.WATER_SPLASH, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+					this.getWorld().addParticle(ParticleTypes.WATER_SPLASH, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 				}
 			}
         }
@@ -929,8 +956,8 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -1017,11 +1044,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getBeamTarget() {
 		if (!this.hasBeamTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget != null) {
 				return this.cachedBeamTarget;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget = (LivingEntity)entity;
 					return this.cachedBeamTarget;
@@ -1043,11 +1070,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getElectricBeamTarget() {
 		if (!this.hasElectricBeamTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget2 != null) {
 				return this.cachedBeamTarget2;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget2 = (LivingEntity)entity;
 					return this.cachedBeamTarget2;
@@ -1069,11 +1096,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getBeamTarget2() {
 		if (!this.hasBeamTarget2()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget3 != null) {
 				return this.cachedBeamTarget3;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID2));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID2));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget3 = (LivingEntity)entity;
 					return this.cachedBeamTarget3;
@@ -1095,11 +1122,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getElectricBeamTarget2() {
 		if (!this.hasElectricBeamTarget2()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget4 != null) {
 				return this.cachedBeamTarget4;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID2));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID2));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget4 = (LivingEntity)entity;
 					return this.cachedBeamTarget4;
@@ -1121,11 +1148,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getBeamTarget3() {
 		if (!this.hasBeamTarget3()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget5 != null) {
 				return this.cachedBeamTarget5;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID3));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID3));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget5 = (LivingEntity)entity;
 					return this.cachedBeamTarget5;
@@ -1147,11 +1174,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getElectricBeamTarget3() {
 		if (!this.hasElectricBeamTarget3()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget6 != null) {
 				return this.cachedBeamTarget6;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID3));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID3));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget6 = (LivingEntity)entity;
 					return this.cachedBeamTarget6;
@@ -1173,11 +1200,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getBeamTarget4() {
 		if (!this.hasBeamTarget4()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget7 != null) {
 				return this.cachedBeamTarget7;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID4));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(HYPNO_BEAM_TARGET_ID4));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget7 = (LivingEntity)entity;
 					return this.cachedBeamTarget7;
@@ -1199,11 +1226,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getElectricBeamTarget4() {
 		if (!this.hasElectricBeamTarget4()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedBeamTarget8 != null) {
 				return this.cachedBeamTarget8;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID4));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(ELECTRIC_BEAM_TARGET_ID4));
 				if (entity instanceof LivingEntity) {
 					this.cachedBeamTarget8 = (LivingEntity)entity;
 					return this.cachedBeamTarget8;
@@ -1225,11 +1252,11 @@ public class ShootingDyeEntity extends PvZProjectileEntity implements IAnimatabl
 	public LivingEntity getSparkTarget() {
 		if (!this.hasSparkTarget()) {
 			return null;
-		} else if (this.world.isClient) {
+		} else if (this.getWorld().isClient) {
 			if (this.cachedSparkTarget != null) {
 				return this.cachedSparkTarget;
 			} else {
-				Entity entity = this.world.getEntityById((Integer)this.dataTracker.get(SPARK_TARGET));
+				Entity entity = this.getWorld().getEntityById((Integer)this.dataTracker.get(SPARK_TARGET));
 				if (entity instanceof LivingEntity) {
 					this.cachedSparkTarget = (LivingEntity)entity;
 					return this.cachedSparkTarget;

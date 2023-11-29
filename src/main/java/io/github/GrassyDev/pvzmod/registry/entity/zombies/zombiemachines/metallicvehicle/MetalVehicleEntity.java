@@ -45,6 +45,15 @@ import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -54,6 +63,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.List;
 
@@ -100,14 +110,14 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 16; ++i) {
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (this.random.range(-1, 1)),
 						this.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -436,8 +446,8 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 
 	public void createZomboniPassenger() {
 		if (world instanceof ServerWorld serverWorld) {
-			ZomboniEntity zomboniEntity = new ZomboniEntity(PvZEntity.ZOMBONI, this.world);
-			zomboniEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			ZomboniEntity zomboniEntity = new ZomboniEntity(PvZEntity.ZOMBONI, this.getWorld());
+			zomboniEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			zomboniEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			zomboniEntity.startRiding(this);
 		}
@@ -445,27 +455,27 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 
 	public void createBobsledPassenger() {
 		if (world instanceof ServerWorld serverWorld) {
-			BobsledRiderEntity bobsledEntity = new BobsledRiderEntity(PvZEntity.BOBSLED, this.world);
+			BobsledRiderEntity bobsledEntity = new BobsledRiderEntity(PvZEntity.BOBSLED, this.getWorld());
 			bobsledEntity.setPersonality(BobsledPersonalityVariants.LEADER);
-			bobsledEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			bobsledEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			bobsledEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			bobsledEntity.startRiding(this, true);
 
-			BobsledRiderEntity bobsledEntity2 = new BobsledRiderEntity(PvZEntity.BOBSLED, this.world);
+			BobsledRiderEntity bobsledEntity2 = new BobsledRiderEntity(PvZEntity.BOBSLED, this.getWorld());
 			bobsledEntity2.setPersonality(BobsledPersonalityVariants.MOVER);
-			bobsledEntity2.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			bobsledEntity2.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			bobsledEntity2.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			bobsledEntity2.startRiding(this, true);
 
-			BobsledRiderEntity bobsledEntity3 = new BobsledRiderEntity(PvZEntity.BOBSLED, this.world);
+			BobsledRiderEntity bobsledEntity3 = new BobsledRiderEntity(PvZEntity.BOBSLED, this.getWorld());
 			bobsledEntity3.setPersonality(BobsledPersonalityVariants.YOUNG);
-			bobsledEntity3.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			bobsledEntity3.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			bobsledEntity3.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			bobsledEntity3.startRiding(this, true);
 
-			BobsledRiderEntity bobsledEntity4 = new BobsledRiderEntity(PvZEntity.BOBSLED, this.world);
+			BobsledRiderEntity bobsledEntity4 = new BobsledRiderEntity(PvZEntity.BOBSLED, this.getWorld());
 			bobsledEntity4.setPersonality(BobsledPersonalityVariants.DEFAULT);
-			bobsledEntity4.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			bobsledEntity4.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			bobsledEntity4.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			bobsledEntity4.startRiding(this, true);
 		}
@@ -505,7 +515,7 @@ public class MetalVehicleEntity extends ZombieVehicleEntity implements IAnimatab
 	@Override
 	public void onDeath(DamageSource source) {
 		if (this.getType().equals(PvZEntity.ZOMBONIVEHICLE)) {
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			this.playSound(PvZSounds.CHERRYBOMBEXPLOSIONEVENT, 1F, 1F);
 		}
 		else {

@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.strai
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.torchwood.TorchwoodEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.flamingpea.ShootingFlamingPeaEntity;
@@ -63,6 +61,8 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
 	public boolean canHitFlying;
+
+	public boolean lowProf;
 
 	public int maxAge = 60;
 
@@ -123,6 +123,7 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
         super(entityType, world);
 		this.setNoGravity(true);
 		this.canHitFlying = false;
+		this.lowProf = false;
     }
 
     public ShootingPeaEntity(World world, LivingEntity owner) {
@@ -144,14 +145,14 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -162,16 +163,16 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= maxAge) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= maxAge) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
-		if (!this.world.isClient && checkTorchwood(this.getPos()) != null) {
+		if (!this.getWorld().isClient && checkTorchwood(this.getPos()) != null) {
 			if (checkTorchwood(this.getPos()) != torchwoodMemory && !checkTorchwood(this.getPos()).isWet()) {
 				ShootingFlamingPeaEntity shootingFlamingPeaEntity = (ShootingFlamingPeaEntity) PvZEntity.FIREPEA.create(world);
 				shootingFlamingPeaEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
@@ -180,6 +181,7 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 				shootingFlamingPeaEntity.maxAge = this.maxAge;
 				shootingFlamingPeaEntity.setOwner(this.getOwner());
 				shootingFlamingPeaEntity.canHitFlying = this.canHitFlying;
+				shootingFlamingPeaEntity.lowProfile = this.lowProf;
 				shootingFlamingPeaEntity.damageMultiplier = damageMultiplier;
 				world.spawnEntity(shootingFlamingPeaEntity);
 				this.remove(RemovalReason.DISCARDED);
@@ -233,6 +235,7 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
+					!((entity instanceof GeneralPvZombieEntity zombie1 && zombie1.isHovering()) && this.lowProf) &&
 					(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) || this.canHitFlying) &&
 					(!(ZOMBIE_SIZE.get(entity.getType()).orElse("medium").equals("small") && this.canHitFlying))) {
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
@@ -254,7 +257,7 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
 				} else {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 				}
-				this.world.sendEntityStatus(this, (byte) 3);
+				this.getWorld().sendEntityStatus(this, (byte) 3);
 				this.remove(RemovalReason.DISCARDED);
 				break;
 			}
@@ -278,15 +281,15 @@ public class ShootingPeaEntity extends PvZProjectileEntity implements IAnimatabl
             ParticleEffect particleEffect = this.getParticleParameters();
 
             for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }

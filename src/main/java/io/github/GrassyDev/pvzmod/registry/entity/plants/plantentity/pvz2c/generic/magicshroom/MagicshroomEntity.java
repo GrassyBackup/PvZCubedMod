@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.og.gambleshroom.GambleshroomEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.card.ShootingCardEntity;
@@ -47,6 +45,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.*;
 
@@ -186,7 +185,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 
 
 	protected List<HostileEntity> checkForZombiesHAT() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
 		List<HostileEntity> list2 = new ArrayList<>();
 		Iterator var9 = list.iterator();
 		while (true) {
@@ -222,14 +221,14 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 
 
 	public void tick() {
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -250,7 +249,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.MAGICSHROOM_SEED_PACKET);
 				}
 				this.discard();
@@ -268,7 +267,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -291,8 +290,8 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 		Item item = itemStack.getItem();
 		if (itemStack.isOf(ModItems.GAMBLESHROOM_SEED_PACKET) && !player.getItemCooldownManager().isCoolingDown(item)) {
 			this.playSound(PvZSounds.PLANTPLANTEDEVENT);
-			if ((this.world instanceof ServerWorld)) {
-				ServerWorld serverWorld = (ServerWorld) this.world;
+			if ((this.getWorld() instanceof ServerWorld)) {
+				ServerWorld serverWorld = (ServerWorld) this.getWorld();
 				GambleshroomEntity gambleshroomEntity = (GambleshroomEntity) PvZEntity.GAMBLESHROOM.create(world);
 				gambleshroomEntity.setTarget(this.getTarget());
 				gambleshroomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
@@ -385,14 +384,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -460,7 +452,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 					++this.animationTicks;
 					++this.beamTicks;
 					Vec3d vec3d2 = Vec3d.ZERO;
-					if (livingEntity.isAlive()){
+					if (livingEntity != null && livingEntity.isAlive()){
 						vec3d2 = new Vec3d((double) 1, 0.0, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					}
 					Vec3d vec3d3 = Vec3d.ofCenter(livingEntity.getBlockPos());
@@ -469,7 +461,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 					if (this.shootingHat && list.isEmpty()) {
 						this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 117);
 						if (this.beamTicks >= 0 && this.animationTicks >= -5) {
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 14);
 								MagichatEntity hat = (MagichatEntity) PvZEntity.MAGICHAT.create(this.plantEntity.world);
 								hat.refreshPositionAndAngles(blockpos.getX(), livingEntity.getY(), blockpos.getZ(), 0, 0);
@@ -509,7 +501,7 @@ public class MagicshroomEntity extends PlantEntity implements IAnimatable, Range
 								proj.setOwner(this.plantEntity);
 								proj.damageMultiplier = plantEntity.damageMultiplier;
 								++this.cardsShot;
-								if (livingEntity.isAlive()) {
+								if (livingEntity != null && livingEntity.isAlive()) {
 									this.beamTicks = -1;
 									this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.125F, 1);
 									this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);

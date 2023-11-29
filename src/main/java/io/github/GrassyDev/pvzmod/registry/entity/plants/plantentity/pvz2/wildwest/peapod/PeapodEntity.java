@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.pea.ShootingPeaEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.PeapodCountVariants;
@@ -246,7 +244,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.PEAPOD_SEED_PACKET);
 				}
 				this.discard();
@@ -257,7 +255,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -389,14 +387,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -471,8 +462,9 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 						proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.33F, 0F);
 						proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.33D, this.plantEntity.getZ());
 						proj.setOwner(this.plantEntity);
+						proj.lowProf = true;
 						proj.damageMultiplier = plantEntity.damageMultiplier;
-						if (livingEntity.isAlive()) {
+						if (livingEntity != null && livingEntity.isAlive()) {
 							this.beamTicks = -16;
 							this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);
 							this.plantEntity.world.spawnEntity(proj);
@@ -490,8 +482,9 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 							proj3.setVelocity(e3 * (double) h3, f3 * (double) h3, g3 * (double) h3, 0.33F, 0F);
 							proj3.updatePosition(this.plantEntity.getX() + vec3d3.x, this.plantEntity.getY() + 0.3, this.plantEntity.getZ() + vec3d3.z);
 							proj3.setOwner(this.plantEntity);
+							proj3.lowProf = true;
 							proj3.damageMultiplier = plantEntity.damageMultiplier;
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								if (this.plantEntity.getVariant().equals(PeapodVariants.PLURAL)){
 									proj3.setVariant(ShootingPeaVariants.BLACK);
 								}
@@ -512,9 +505,10 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 							float h2 = MathHelper.sqrt(MathHelper.sqrt(df2)) * 0.5F;
 							proj2.setVelocity(e2 * (double) h2, f2 * (double) h2, g2 * (double) h2, 0.33F, 0);
 							proj2.updatePosition(this.plantEntity.getX() + vec3d2.x, this.plantEntity.getY() + 0.3, this.plantEntity.getZ() + vec3d2.z);
+							proj2.lowProf = true;
 							proj2.setOwner(this.plantEntity);
 							proj2.damageMultiplier = plantEntity.damageMultiplier;
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								if (this.plantEntity.getVariant().equals(PeapodVariants.PLURAL)){
 									proj2.setVariant(ShootingPeaVariants.PURPLE);
 								}
@@ -535,7 +529,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 							proj4.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 							proj4.setOwner(this.plantEntity);
 							proj4.damageMultiplier = plantEntity.damageMultiplier;
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								if (this.plantEntity.getVariant().equals(PeapodVariants.PLURAL)){
 									proj4.setVariant(ShootingPeaVariants.BLUE);
 								}
@@ -557,7 +551,7 @@ public class PeapodEntity extends PlantEntity implements RangedAttackMob, IAnima
 							proj5.setOwner(this.plantEntity);
 							proj5.canHitFlying = true;
 							proj5.damageMultiplier = plantEntity.damageMultiplier;
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								if (this.plantEntity.getVariant().equals(PeapodVariants.PLURAL)){
 									proj5.setVariant(ShootingPeaVariants.CYAN);
 								}

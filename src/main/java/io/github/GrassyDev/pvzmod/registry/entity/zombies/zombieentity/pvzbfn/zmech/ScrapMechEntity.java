@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
@@ -120,7 +118,7 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 			if (target != null) {
 				for (int i = 0; i < 128; ++i) {
 					double e = (double) MathHelper.nextBetween(randomGenerator, 5F, 20F);
-					this.world.addParticle(ParticleTypes.WATER_SPLASH, target.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+					this.getWorld().addParticle(ParticleTypes.WATER_SPLASH, target.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 							target.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 3F),
 							target.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 							0, e, 0);
@@ -145,14 +143,14 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 16; ++i) {
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (this.random.range(-1, 1)),
 						this.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -301,9 +299,10 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 
 	//Launch Basket
 	public void tryShoot(Entity target) {
-		LaserEntity proj = new LaserEntity(PvZEntity.LASER, this.world);
+		LaserEntity proj = new LaserEntity(PvZEntity.LASER, this.getWorld());
 		List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(this.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) + 1));
 		double targetDist = 0;
+		proj.damageMultiplier = this.damageMultiplier;
 		for (LivingEntity livingEntity : list){
 			if (livingEntity instanceof PlantEntity plantEntity && !(plantEntity instanceof GardenChallengeEntity) && !(plantEntity instanceof GardenEntity) && !plantEntity.getImmune() && !(PLANT_LOCATION.get(plantEntity.getType()).orElse("normal").equals("flying"))){
 				if (targetDist == 0){
@@ -353,7 +352,7 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 
 			proj.setOwner(this);
 			this.playSound(PvZSounds.MECHSHOOTEVENT, 1F, 1);
-			this.world.spawnEntity(proj);
+			this.getWorld().spawnEntity(proj);
 		}
 	}
 
@@ -370,7 +369,7 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 		double squaredDist;
 		squaredDist = 9;
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -408,22 +407,22 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 	}
 
 	private void spawnEffectsCloud() {
-		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity.setParticleType(ParticleTypes.FLAME);
 		areaEffectCloudEntity.setRadius(6F);
 		areaEffectCloudEntity.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity.setWaitTime(5);
 		areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 35);
 		areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float) areaEffectCloudEntity.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity);
-		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		this.getWorld().spawnEntity(areaEffectCloudEntity);
+		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity2.setParticleType(ParticleTypes.SMOKE);
 		areaEffectCloudEntity2.setRadius(2F);
 		areaEffectCloudEntity2.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity2.setWaitTime(5);
 		areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 80);
 		areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float)areaEffectCloudEntity2.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity2);
+		this.getWorld().spawnEntity(areaEffectCloudEntity2);
 	}
 
 	public void tick() {
@@ -443,7 +442,7 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 		--deathTicks;
 		if (deathTicks == 2){
 			this.raycastExplode();
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			this.playSound(PvZSounds.CHERRYBOMBEXPLOSIONEVENT, 0.5F, 1F);
 			this.spawnEffectsCloud();
 		}
@@ -474,12 +473,12 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 	public void mobTick() {
 		if (this.hasStatusEffect(PvZCubed.DISABLE)){
 			this.isDisabled = true;
-			this.world.sendEntityStatus(this, (byte) 73);
+			this.getWorld().sendEntityStatus(this, (byte) 73);
 		}
 		else {
 			this.isDisabled = false;
 			this.disableTicks = 60;
-			this.world.sendEntityStatus(this, (byte) 74);
+			this.getWorld().sendEntityStatus(this, (byte) 74);
 		}
 		if (!this.inDyingAnimation) {
 			super.mobTick();
@@ -487,11 +486,11 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 				if (this.animationTicksLeft <= 0) {
 					this.animationMultiplier = 2;
 					this.isIced = true;
-					this.world.sendEntityStatus(this, (byte) 71);
+					this.getWorld().sendEntityStatus(this, (byte) 71);
 				}
 			} else {
 				this.isIced = false;
-				this.world.sendEntityStatus(this, (byte) 72);
+				this.getWorld().sendEntityStatus(this, (byte) 72);
 				this.animationMultiplier = 1;
 			}
 			if (this.animationTicksLeft <= 0) {
@@ -502,7 +501,7 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 						if (random <= 0.01 && getTarget() != null && !this.inLaunchAnimation) {
 							this.launchAnimation = 50 * animationMultiplier;
 							this.inLaunchAnimation = true;
-							this.world.sendEntityStatus(this, (byte) 104);
+							this.getWorld().sendEntityStatus(this, (byte) 104);
 						}
 					}
 				}
@@ -514,11 +513,11 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 					--launchAnimation;
 					tryShoot(getTarget());
 					this.inLaunchAnimation = true;
-					this.world.sendEntityStatus(this, (byte) 104);
+					this.getWorld().sendEntityStatus(this, (byte) 104);
 				}
 				else {
 					this.inLaunchAnimation = false;
-					this.world.sendEntityStatus(this, (byte) 103);
+					this.getWorld().sendEntityStatus(this, (byte) 103);
 				}
 			}
 			if (this.animationTicksLeft == 40 * animationMultiplier && !inLaunchAnimation) {
@@ -540,10 +539,10 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 			if (this.animationTicksLeft > 0) {
 				this.getNavigation().stop();
 				--this.animationTicksLeft;
-				this.world.sendEntityStatus(this, (byte) 113);
+				this.getWorld().sendEntityStatus(this, (byte) 113);
 			}
 			if (this.animationTicksLeft <= 0) {
-				this.world.sendEntityStatus(this, (byte) 112);
+				this.getWorld().sendEntityStatus(this, (byte) 112);
 			}
 		}
 	}
@@ -560,7 +559,7 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (this.getHypno()){
 			player.startRiding(this, true);
-			return ActionResult.success(this.world.isClient);
+			return ActionResult.success(this.getWorld().isClient);
 		}
 		else {
 			return ActionResult.FAIL;
@@ -587,8 +586,8 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 
 	public void createProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.DEFENSIVEENDGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.DEFENSIVEENDGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -643,7 +642,7 @@ public class ScrapMechEntity extends MachinePvZombieEntity implements IAnimatabl
 			if (this.getHypno()) {
 				type = PvZEntity.SCRAPIMPHYPNO;
 			}
-			if (this.world instanceof ServerWorld serverWorld) {
+			if (this.getWorld() instanceof ServerWorld serverWorld) {
 				BlockPos blockPos = this.getBlockPos().add(this.getX(), 0, this.getZ());
 				ImpEntity imp = (ImpEntity) type.create(world);
 				imp.refreshPositionAndAngles(this.getX(), this.getY() + 2, this.getZ(), 0, 0);

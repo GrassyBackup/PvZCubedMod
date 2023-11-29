@@ -54,6 +54,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -63,6 +72,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
@@ -347,10 +357,10 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();
@@ -518,7 +528,7 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 				coat = PvZEntity.FUTUREHYPNO;
 			}
 
-            ServerWorld serverWorld = (ServerWorld) FlagFutureEntity.this.world;
+            ServerWorld serverWorld = (ServerWorld) FlagFutureEntity.this.getWorld();
             for(int b = 0; b < 1; ++b) { // 1 Screendoor
 				RandomGenerator randomGenerator = FlagFutureEntity.this.getRandom();
 				float random = MathHelper.nextBetween(randomGenerator, -4, 4);
@@ -530,9 +540,9 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				FutureZombieEntity screendoorEntity = (FutureZombieEntity) screen.create(FlagFutureEntity.this.world);
+				FutureZombieEntity screendoorEntity = (FutureZombieEntity) screen.create(FlagFutureEntity.this.getWorld());
 				screendoorEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				screendoorEntity.initialize(serverWorld, FlagFutureEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+				screendoorEntity.initialize(serverWorld, FlagFutureEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				screendoorEntity.setOwner(FlagFutureEntity.this);
 				if (this.flagzombieEntity.getHypno()){
 					screendoorEntity.createShield();
@@ -550,9 +560,9 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				FutureZombieEntity coneheadEntity = (FutureZombieEntity) cone.create(FlagFutureEntity.this.world);
+				FutureZombieEntity coneheadEntity = (FutureZombieEntity) cone.create(FlagFutureEntity.this.getWorld());
                 coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                coneheadEntity.initialize(serverWorld, FlagFutureEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                coneheadEntity.initialize(serverWorld, FlagFutureEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 coneheadEntity.setOwner(FlagFutureEntity.this);
 				if (this.flagzombieEntity.getHypno()){
 					coneheadEntity.createConeheadProp();
@@ -570,9 +580,9 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				FutureZombieEntity bucketheadEntity = (FutureZombieEntity) bucket.create(FlagFutureEntity.this.world);
+				FutureZombieEntity bucketheadEntity = (FutureZombieEntity) bucket.create(FlagFutureEntity.this.getWorld());
                 bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                bucketheadEntity.initialize(serverWorld, FlagFutureEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                bucketheadEntity.initialize(serverWorld, FlagFutureEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 bucketheadEntity.setOwner(FlagFutureEntity.this);
 				if (this.flagzombieEntity.getHypno()){
 					bucketheadEntity.createBucketProp();
@@ -590,9 +600,9 @@ public class FlagFutureEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagFutureEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagFutureEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagFutureEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				FutureZombieEntity browncoatEntity = (FutureZombieEntity) coat.create(FlagFutureEntity.this.world);
+				FutureZombieEntity browncoatEntity = (FutureZombieEntity) coat.create(FlagFutureEntity.this.getWorld());
                 browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                browncoatEntity.initialize(serverWorld, FlagFutureEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                browncoatEntity.initialize(serverWorld, FlagFutureEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 browncoatEntity.setOwner(FlagFutureEntity.this);
 				((ServerWorld) world).spawnEntityAndPassengers(browncoatEntity);
             }

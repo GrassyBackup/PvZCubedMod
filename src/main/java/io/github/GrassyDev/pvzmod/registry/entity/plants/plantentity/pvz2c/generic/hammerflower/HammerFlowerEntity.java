@@ -36,6 +36,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -45,6 +54,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
@@ -104,7 +114,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 					double d = livingEntity.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
 					double e = livingEntity.getY();
 					double f = livingEntity.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
-					this.world.addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+					this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
 				}
 			}
 		}
@@ -116,7 +126,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 
 	@Nullable
 	public LivingEntity getBeamTarget() {
-		return (LivingEntity) this.world.getEntityById((Integer)this.dataTracker.get(ZOMB_ID));
+		return (LivingEntity) this.getWorld().getEntityById((Integer)this.dataTracker.get(ZOMB_ID));
 	}
 
 
@@ -185,14 +195,14 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.PEAPOD_SEED_PACKET);
 				}
 				this.discard();
 			}
 		}
 		this.targetZombies(this.getPos(), 3, false, false, true);
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			if (this.getTarget() != null) {
 				this.setZombId(this.getTarget().getId());
 			}
@@ -202,7 +212,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -307,14 +317,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 	 * //~*~//~DAMAGE HANDLER~//~*~//
 	 **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -341,7 +344,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		String zombieSize = PvZCubed.ZOMBIE_SIZE.get(damaged.getType()).orElse("medium");
 		if (!hasHelmet && !zombieSize.equals("big") && !zombieSize.equals("gargantuar")){
 			((LivingEntity) damaged).addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 1)));
-			this.world.sendEntityStatus(this, (byte) 120);
+			this.getWorld().sendEntityStatus(this, (byte) 120);
 			target.playSound(SoundEvents.BLOCK_NETHERRACK_BREAK, 0.3F, (float) (0.5F + Math.random()));
 		}
 		String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(damaged.getType()).orElse("flesh");
@@ -393,13 +396,13 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 			if (livingEntity != null) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			if (this.animationTicks >= 0) {
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				this.beamTicks = -10;
 				this.animationTicks = -30;
 				if (shot) {
-					this.world.sendEntityStatus(this, (byte) 121);
+					this.getWorld().sendEntityStatus(this, (byte) 121);
 				}
 				shot = false;
 			}
@@ -409,7 +412,7 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 						this.smack(livingEntity);
 					}
 					this.beamTicks = -30;
-					this.world.sendEntityStatus(this, (byte) 111);
+					this.getWorld().sendEntityStatus(this, (byte) 111);
 					this.playSound(PvZSounds.PEASHOOTEVENT, 1F, 1);
 					shot = true;
 				}
@@ -417,12 +420,12 @@ public class HammerFlowerEntity extends PlantEntity implements IAnimatable, Rang
 		}
 		else if (animationTicks >= 0){
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			if (this.getTarget() != null){
 				this.attack(this.getTarget(), 0);
 			}
 			if (shot) {
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 			}
 			shot = false;
 		}

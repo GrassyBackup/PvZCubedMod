@@ -15,6 +15,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.List;
 
 public class ShadowTile extends TileEntity {
@@ -49,7 +51,7 @@ public class ShadowTile extends TileEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.age > 1 && !this.world.isClient()){
+		if (this.age > 1 && !this.getWorld().isClient()){
 			Vec3d vec3d = Vec3d.ofCenter(this.getBlockPos()).add(0, -0.5, 0);
 			List<GloomVineEntity> gloom = world.getNonSpectatingEntities(GloomVineEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ()));
 			if (gloom.isEmpty()){

@@ -35,6 +35,15 @@ import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -44,6 +53,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.Iterator;
 import java.util.List;
@@ -122,14 +132,14 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 16; ++i) {
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (this.random.range(-1, 1)),
 						this.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -330,7 +340,7 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 			squaredDist = 9;
 		}
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -368,22 +378,22 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 	}
 
 	private void spawnEffectsCloud() {
-		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity.setParticleType(ParticleTypes.SMOKE);
 		areaEffectCloudEntity.setRadius(6F);
 		areaEffectCloudEntity.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity.setWaitTime(5);
 		areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 35);
 		areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float) areaEffectCloudEntity.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity);
-		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		this.getWorld().spawnEntity(areaEffectCloudEntity);
+		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity2.setParticleType(ParticleTypes.SMALL_FLAME);
 		areaEffectCloudEntity2.setRadius(2F);
 		areaEffectCloudEntity2.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity2.setWaitTime(5);
 		areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 80);
 		areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float)areaEffectCloudEntity2.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity2);
+		this.getWorld().spawnEntity(areaEffectCloudEntity2);
 	}
 
 	public boolean tryAttack(Entity target) {
@@ -400,7 +410,7 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 
 	private boolean isBeingRainedOn() {
 		BlockPos blockPos = this.getBlockPos();
-		return this.world.hasRain(blockPos) || this.world.hasRain(new BlockPos((double)blockPos.getX(), this.getBoundingBox().maxY, (double)blockPos.getZ()));
+		return this.getWorld().hasRain(blockPos) || this.getWorld().hasRain(new BlockPos((double)blockPos.getX(), this.getBoundingBox().maxY, (double)blockPos.getZ()));
 	}
 	private float getAttackDamage(){
 		return (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
@@ -428,7 +438,7 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 				this.playSound(SoundEvents.ENTITY_CREEPER_PRIMED, 1.0F, 0.5F);
 				for(int j = 0; j < 4; ++j) {
 					double e = (double)MathHelper.nextBetween(randomGenerator, 0.025F, 0.075F);
-					this.world.addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY() + 1, this.getZ(), 0, e, 0);
+					this.getWorld().addParticle(ParticleTypes.SMALL_FLAME, this.getX(), this.getY() + 1, this.getZ(), 0, e, 0);
 				}
 			}
 
@@ -439,7 +449,7 @@ public class SuperFanImpEntity extends ImpEntity implements IAnimatable {
 
 			if (this.currentFuseTime >= this.fuseTime && this.isAlive()) {
 				this.currentFuseTime = this.fuseTime;
-				this.world.sendEntityStatus(this, (byte) 106);
+				this.getWorld().sendEntityStatus(this, (byte) 106);
 				this.raycastExplode();
 				this.playSound(PvZSounds.CHERRYBOMBEXPLOSIONEVENT, 1F, 1F);
 				this.spawnEffectsCloud();

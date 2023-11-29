@@ -33,6 +33,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -42,6 +51,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -172,10 +182,10 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 			this.chomperAudioDelay = 3;
 			if (this.meleeSpeed > 0.3) {
 				this.meleeSpeed -= 0.1f;
-				this.world.sendEntityStatus(this, (byte) 119);
+				this.getWorld().sendEntityStatus(this, (byte) 119);
 			}
 			this.attackTicksLeft = MathHelper.floor(30 * meleeSpeed);
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			if (bananaCount <= 6) {
 				++this.bananaCount;
 			}
@@ -214,7 +224,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.BANANASAURUS_SEED_PACKET);
 				}
 				this.discard();
@@ -222,7 +232,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 		}
 		this.targetZombies(this.getPos(), 2, false, false, !checkForZombiesMelee().isEmpty());
 		LivingEntity target = this.getTarget();
-		if (target != null && !this.world.isClient()) {
+		if (target != null && !this.getWorld().isClient()) {
 			if (target.squaredDistanceTo(this) <= 25 && this.attackTicksLeft <= 0) {
 				this.isBurst = true;
 				this.smack(target);
@@ -231,21 +241,21 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 			}
 		}
 		if (target == null || target.squaredDistanceTo(this) > 25) {
-			if (!this.world.isClient()) {
+			if (!this.getWorld().isClient()) {
 				if (this.meleeSpeed < 1) {
 					this.meleeSpeed += 0.1f;
-					this.world.sendEntityStatus(this, (byte) 121);
+					this.getWorld().sendEntityStatus(this, (byte) 121);
 				}
 			}
 		}
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.FireBeamGoal();
 		}
 	}
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -255,7 +265,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 	}
 
 	protected List<HostileEntity> checkForZombiesMelee() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(6));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(6));
 		List<HostileEntity> list2 = new ArrayList<>();
 		Iterator var9 = list.iterator();
 		while (true) {
@@ -369,14 +379,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 	 * //~*~//~DAMAGE HANDLER~//~*~//
 	 **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -452,7 +455,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 							proj.setVelocity(vec3d2.x, -3.9200000762939453 + 28 / (h * 2.2), vec3d2.z, 0.5F, 0F);
 							proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 							proj.setOwner(this.plantEntity);
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								this.beamTicks = -7;
 								this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 								this.plantEntity.world.spawnEntity(proj);
@@ -494,7 +497,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 			if (livingEntity != null) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			if (this.beamTicks >= 0 && this.animationTicks <= -10) {
 				for (int x = 0; x <= this.bananaCount; ++x) {
 					if (this.bananaCount > 0) {
@@ -505,19 +508,19 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 						double xr = (double) MathHelper.nextBetween(randomGenerator, 0F, 30F);
 						double zr = (double) MathHelper.nextBetween(randomGenerator, -5f, 5f);
 						Vec3d vec3d2 = new Vec3d((double) xr, 0.0, zr).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-						BananaProjEntity proj = new BananaProjEntity(PvZEntity.BANANAPROJ, this.world);
+						BananaProjEntity proj = new BananaProjEntity(PvZEntity.BANANAPROJ, this.getWorld());
 						float h = MathHelper.sqrt(MathHelper.sqrt(100)) * 0.5F;
 						proj.setVelocity(vec3d2.x, -3.9200000762939453 + 28 / (h * 2.2), vec3d2.z, 0.4F, 0F);
 						proj.updatePosition(this.getX(), this.getY() + 0.75D, this.getZ());
 						proj.setOwner(this);
 						this.beamTicks = -14;
-						this.world.sendEntityStatus(this, (byte) 111);
-						this.world.spawnEntity(proj);
+						this.getWorld().sendEntityStatus(this, (byte) 111);
+						this.getWorld().spawnEntity(proj);
 						shot = true;
 					}
 				}
 			} else if (this.animationTicks >= 0) {
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				this.beamTicks = -14;
 				this.animationTicks = -32;
 				this.bananaCount = 0;
@@ -530,7 +533,7 @@ public class BananasaurusEntity extends PlantEntity implements IAnimatable, Rang
 			}
 			shot = false;
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			if (this.getTarget() != null){
 				this.attack(this.getTarget(), 0);
 			}

@@ -22,7 +22,6 @@ import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -147,7 +146,7 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	public void tick() {
 		super.tick();
-		if (!this.world.isClient()){
+		if (!this.getWorld().isClient()){
 			if (this.getIsAltFire()){
 				--exhaustTicks;
 			}
@@ -156,14 +155,14 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 				exhaustTicks = 300;
 			}
 		}
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -187,20 +186,20 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.BURSTSHROOM_SEED_PACKET);
 				}
 				this.discard();
 			}
 		}
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.FireBeamGoal();
 		}
 	}
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -314,14 +313,7 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 
 
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -334,7 +326,7 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 
 	protected void splashDamage() {
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -416,14 +408,14 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 						Vec3d bottomright = new Vec3d((double) -1, 0.0, 1).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 						Vec3d right = new Vec3d((double) 0, 0.0, 1).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 						Vec3d frontright = new Vec3d((double) 1, 0.0, 1).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-						List<LivingEntity> frontList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(front));
-						List<LivingEntity> frontleftList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(frontleft));
-						List<LivingEntity> leftList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(left));
-						List<LivingEntity> bottomleftList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(bottomleft));
-						List<LivingEntity> bottomList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(bottom));
-						List<LivingEntity> bottomrightList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(bottomright));
-						List<LivingEntity> rightList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(right));
-						List<LivingEntity> frontrightList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(frontright));
+						List<LivingEntity> frontList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(front));
+						List<LivingEntity> frontleftList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(frontleft));
+						List<LivingEntity> leftList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(left));
+						List<LivingEntity> bottomleftList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(bottomleft));
+						List<LivingEntity> bottomList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(bottom));
+						List<LivingEntity> bottomrightList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(bottomright));
+						List<LivingEntity> rightList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(right));
+						List<LivingEntity> frontrightList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().offset(frontright));
 						if (livingEntity.squaredDistanceTo(this) <= 1){
 							Vec3d livingEntityVec = new Vec3d((double) -1, 0.0, 0).rotateY(-livingEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 							livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.BOUNCED, 20, 1)));
@@ -530,18 +522,18 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 			if (livingEntity != null) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			this.isFiring = true;
 			this.setImmune(Immune.TRUE);
 			if (this.animationTicks >= 0) {
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				this.isFiring = false;
 				this.setImmune(Immune.FALSE);
 				this.beamTicks = -15;
 				this.animationTicks = -30;
 				if (shot) {
 					this.setAltfire(AltFire.TRUE);
-					this.world.sendEntityStatus(this, (byte) 121);
+					this.getWorld().sendEntityStatus(this, (byte) 121);
 				}
 				shot = false;
 			}
@@ -549,7 +541,7 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 				if (!this.isInsideWaterOrBubbleColumn()) {
 					splashDamage();
 					this.beamTicks = -30;
-					this.world.sendEntityStatus(this, (byte) 111);
+					this.getWorld().sendEntityStatus(this, (byte) 111);
 					this.isFiring = true;
 					this.setImmune(Immune.TRUE);
 					this.playSound(PvZSounds.FIREPEAHITEVENT, 5F, 1);
@@ -560,7 +552,7 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 		}
 		else if (animationTicks >= 0){
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			this.isFiring = false;
 			this.setImmune(Immune.FALSE);
 			if (this.getTarget() != null){
@@ -568,7 +560,7 @@ public class BurstshroomEntity extends PlantEntity implements IAnimatable, Range
 			}
 			if (shot) {
 				this.setAltfire(AltFire.TRUE);
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 			}
 			shot = false;
 		}

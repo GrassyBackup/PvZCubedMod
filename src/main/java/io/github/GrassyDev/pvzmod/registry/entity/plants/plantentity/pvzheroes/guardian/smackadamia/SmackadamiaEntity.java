@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
@@ -132,7 +130,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 	public void smack(Entity target) {
 		int i = this.attackTicksLeft;
 		if ((target instanceof GeneralPvZombieEntity generalPvZombieEntity &&
-				(generalPvZombieEntity.isFlying() || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("gargantuar") || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("big")|| ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("tall"))
+				(generalPvZombieEntity.isFlying() || generalPvZombieEntity.isHovering() || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("gargantuar") || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("big")|| ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("tall"))
 				&& target.squaredDistanceTo(this) <= 25) ||
 		this.squaredDistanceTo(target) <= 1.5625) {
 			ZombiePropEntity passenger = null;
@@ -147,7 +145,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 			}
 			if (i <= 0) {
 				this.attackTicksLeft = 20;
-				this.world.sendEntityStatus(this, (byte) 106);
+				this.getWorld().sendEntityStatus(this, (byte) 106);
 				boolean bl = damaged.damage(DamageSource.mob(this), this.getAttackDamage());
 				if (bl) {
 					this.applyDamageEffects(this, target);
@@ -191,7 +189,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 		super.tick();
 		this.targetZombies(this.getPos(), 2, false, true, true);
 		if (!(this.getTarget() instanceof GeneralPvZombieEntity generalPvZombieEntity &&
-				(generalPvZombieEntity.isFlying() || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("gargantuar") || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("big")|| ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("tall")))){
+				(generalPvZombieEntity.isFlying() || generalPvZombieEntity.isHovering() || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("gargantuar") || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("big")|| ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("tall")))){
 			if (this.getTarget() != null && this.getTarget().squaredDistanceTo(this) > 1.5625){
 				this.setTarget(null);
 			}
@@ -215,7 +213,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));
 				onWater = fluidState.getFluid() == Fluids.WATER;
 				if (!blockPos2.equals(blockPos) || (!(fluidState.getFluid() == Fluids.WATER) && !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-					if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 						this.dropItem(ModItems.SMACKADAMIA_SEED_PACKET);
 					}
 					this.discard();
@@ -226,7 +224,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -238,7 +236,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 	@Override
 	protected void mobTick() {
 		super.mobTick();
-		if (this.getTarget() instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.isFlying() || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("gargantuar") || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("big")|| ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("tall"))){
+		if (this.getTarget() instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.isFlying() || generalPvZombieEntity.isHovering() || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("gargantuar") || ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("big")|| ZOMBIE_SIZE.get(generalPvZombieEntity.getType()).orElse("medium").equals("tall"))){
 			world.sendEntityStatus(this, (byte) 108);
 		}
 		else {
@@ -341,14 +339,7 @@ public class SmackadamiaEntity extends PlantEntity implements IAnimatable {
 	 * //~*~//~DAMAGE HANDLER~//~*~//
 	 **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

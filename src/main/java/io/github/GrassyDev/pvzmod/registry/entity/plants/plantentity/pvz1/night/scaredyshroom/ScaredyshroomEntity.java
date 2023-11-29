@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.spore.SporeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.ScaredyshroomVariants;
@@ -45,6 +43,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.*;
 
@@ -184,7 +183,7 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 
 
 	protected List<HostileEntity> checkForZombies() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
 		List<HostileEntity> list2 = new ArrayList<>();
 		Iterator var9 = list.iterator();
 		while (true) {
@@ -220,14 +219,14 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 	/** /~*~//~**TICKING**~//~*~/ **/
 
 	public void tick() {
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -238,10 +237,10 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 			this.targetZombies(this.getPos(), 10, false, false, false);
 		}
 		if (!this.checkForZombies().isEmpty()){
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 		}
 		else {
-			this.world.sendEntityStatus(this, (byte) 14);
+			this.getWorld().sendEntityStatus(this, (byte) 14);
 		}
 		super.tick();
 		this.checkForZombies();
@@ -250,7 +249,7 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.SCAREDYSHROOM_SEED_PACKET);
 				}
 				this.discard();
@@ -260,7 +259,7 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -377,14 +376,7 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -466,7 +458,7 @@ public class ScaredyshroomEntity extends PlantEntity implements IAnimatable, Ran
 								proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 								proj.setOwner(this.plantEntity);
 								proj.damageMultiplier = plantEntity.damageMultiplier;
-								if (livingEntity.isAlive()) {
+								if (livingEntity != null && livingEntity.isAlive()) {
 									this.beamTicks = -13;
 									this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 									this.plantEntity.playSound(PvZSounds.PEASHOOTEVENT, 0.2F, 1);

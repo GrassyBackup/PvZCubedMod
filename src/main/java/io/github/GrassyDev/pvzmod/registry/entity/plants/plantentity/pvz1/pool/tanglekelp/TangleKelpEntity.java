@@ -32,6 +32,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -41,6 +50,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -102,7 +112,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		if (status == 107) {
 			for(int i = 0; i < 128; ++i) {
 				double e = (double) MathHelper.nextBetween(randomGenerator, 5F, 20F);
-				this.world.addParticle(ParticleTypes.WATER_SPLASH, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.WATER_SPLASH, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						this.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 3F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						0, e, 0);
@@ -111,7 +121,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		if (status == 100) {
 			for(int i = 0; i < 64; ++i) {
 				double e = (double) MathHelper.nextBetween(randomGenerator, 5F, 20F);
-				this.world.addParticle(ParticleTypes.WATER_SPLASH, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.WATER_SPLASH, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						this.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 1F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						0, e, 0);
@@ -164,10 +174,10 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 			super.setPosition((double) MathHelper.floor(x) + 0.5, (double)MathHelper.floor(y + 0.5), (double)MathHelper.floor(z) + 0.5);
 		}
 
-		if (this.age > 1 && !this.world.isClient()) {
+		if (this.age > 1 && !this.getWorld().isClient()) {
 			if (this.animationTicksLeft <= 0) {
 				BlockPos blockPos2 = this.getBlockPos();
-				if (!this.world.isClient()) {
+				if (!this.getWorld().isClient()) {
 					if (!blockPos2.equals(blockPos)) {
 						this.discard();
 					}
@@ -227,7 +237,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) && !this.hasVehicle())) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.TANGLEKELP_SEED_PACKET);
 				}
 				this.discard();
@@ -263,7 +273,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 					onWater = true;
 				}
 				if (!blockPos2.equals(blockPos) || (!(fluidState.getFluid() == Fluids.WATER) && !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.TANGLEKELP_SEED_PACKET);
 				}
 				this.discard();
@@ -310,10 +320,10 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 		if (this.animationTicksLeft > 0) {
 			this.stopAnimation = false;
 			--this.animationTicksLeft;
-			this.world.sendEntityStatus(this, (byte) 113);
+			this.getWorld().sendEntityStatus(this, (byte) 113);
 		}
 		else{
-			this.world.sendEntityStatus(this, (byte) 112);
+			this.getWorld().sendEntityStatus(this, (byte) 112);
 		}
 	}
 
@@ -393,14 +403,7 @@ public class TangleKelpEntity extends PlantEntity implements IAnimatable {
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

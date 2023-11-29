@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.kong
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import net.fabricmc.api.EnvType;
@@ -146,18 +144,18 @@ public class HeavenlyPeachEntity extends PlantEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		if (!this.world.isClient()){
+		if (!this.getWorld().isClient()){
 			minusCount();
 		}
 		if (this.getTypeCount() <= 0){
 			this.kill();
 		}
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(7));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(7));
 		if (--healticks <= 0 ){
 			for (LivingEntity livingEntity : list){
 				if ((livingEntity instanceof PlantEntity || (livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno())) && livingEntity.squaredDistanceTo(this) <= 6.25){
 					livingEntity.heal(8);
-					this.world.sendEntityStatus(livingEntity, (byte) 69);
+					this.getWorld().sendEntityStatus(livingEntity, (byte) 69);
 				}
 			}
 			healticks = 20;
@@ -167,7 +165,7 @@ public class HeavenlyPeachEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}
@@ -246,14 +244,7 @@ public class HeavenlyPeachEntity extends PlantEntity implements IAnimatable {
 		}
 	}
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

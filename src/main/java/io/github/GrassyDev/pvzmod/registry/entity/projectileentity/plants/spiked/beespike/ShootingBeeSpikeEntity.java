@@ -39,6 +39,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -86,14 +88,14 @@ public class ShootingBeeSpikeEntity extends PvZProjectileEntity implements IAnim
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -104,15 +106,15 @@ public class ShootingBeeSpikeEntity extends PvZProjectileEntity implements IAnim
 			this.onCollision(hitResult);
 		}
 
-		if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
+		if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && this.age >= 58 || this.damageCounter >= 3) {
+		if (!this.getWorld().isClient && this.age >= 58 || this.damageCounter >= 3) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && checkFilamint(this.getPos()) != null) {
+		if (!this.getWorld().isClient && checkFilamint(this.getPos()) != null) {
 			ShootingPowerBeeSpikeEntity powerSpike = (ShootingPowerBeeSpikeEntity) PvZEntity.POWERBEESPIKE.create(world);
 			powerSpike.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
 			powerSpike.setVelocity(this.getVelocity());
@@ -145,7 +147,7 @@ public class ShootingBeeSpikeEntity extends PvZProjectileEntity implements IAnim
 
 	public List<Entity> entityStore = new ArrayList<>();
 
-	protected int damageCounter = 0;
+	public int damageCounter = 0;
 
 	@Override
 	public void hitEntities() {
@@ -219,7 +221,7 @@ public class ShootingBeeSpikeEntity extends PvZProjectileEntity implements IAnim
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.remove(RemovalReason.DISCARDED);
         }
     }

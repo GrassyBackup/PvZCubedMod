@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -59,6 +57,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -68,6 +75,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -164,6 +172,10 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 			createPyramidProp();
 			this.initCustomGoals();
 		}
+		else if (this.getType().equals(PvZEntity.TOMBRAISER)){
+			setVariant(BrowncoatVariants.TOMB);
+			this.initCustomGoals();
+		}
 		else if (this.getType().equals(PvZEntity.POKERPAWN)){
 			this.setCanHypno(CanHypno.FALSE);
 			setVariant(BrowncoatVariants.POKERPAWN);
@@ -253,6 +265,10 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 			setVariant(BrowncoatVariants.PYRAMIDHEADHYPNO);
 			this.setHypno(IsHypno.TRUE);
 		}
+		else if (this.getType().equals(PvZEntity.TOMBRAISERHYPNO)){
+			setVariant(BrowncoatVariants.TOMBHYPNO);
+			this.setHypno(IsHypno.TRUE);
+		}
 		else if (this.getType().equals(PvZEntity.POKERPAWNHYPNO)){
 			setVariant(BrowncoatVariants.POKERPAWNHYPNO);
 			this.setHypno(IsHypno.TRUE);
@@ -314,8 +330,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createConeheadProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.CONEHEADGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.CONEHEADGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -323,8 +339,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createPokerPawnProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERPAWNGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERPAWNGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -332,8 +348,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createPokerKnightProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERKNIGHTGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERKNIGHTGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -341,8 +357,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createPokerTowerProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERTOWERGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERTOWERGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -350,8 +366,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createPokerBishopProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERBISHOPGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			PlasticHelmetEntity propentity = new PlasticHelmetEntity(PvZEntity.POKERBISHOPGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -359,8 +375,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createBucketProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.BUCKETGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.BUCKETGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -368,8 +384,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createHelmetProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.HELMETGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.HELMETGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -377,8 +393,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public ZombiePropEntity createKnightProp() {
 		if (world instanceof ServerWorld serverWorld) {
-			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.KNIGHTGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.KNIGHTGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 			return propentity;
@@ -389,8 +405,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createBrickProp() {
 		if (world instanceof ServerWorld serverWorld) {
-			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.BRICKGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.BRICKGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -398,8 +414,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createHoloProp() {
 		if (world instanceof ServerWorld serverWorld) {
-			CrystalHelmetEntity propentity = new CrystalHelmetEntity(PvZEntity.HOLOGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			CrystalHelmetEntity propentity = new CrystalHelmetEntity(PvZEntity.HOLOGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -407,8 +423,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createPyramidProp() {
 		if (world instanceof ServerWorld serverWorld) {
-			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.PYRAMIDGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.PYRAMIDGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -416,8 +432,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createTowerProp() {
 		if (world instanceof ServerWorld serverWorld) {
-			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.TOWERGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.TOWERGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -425,17 +441,17 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createBowlProp() {
 		if (world instanceof ServerWorld serverWorld) {
-			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.BOWLGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			StoneHelmetEntity propentity = new StoneHelmetEntity(PvZEntity.BOWLGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
 	}
 
 	public void createShield() {
-		MetalShieldEntity metalShieldEntity = new MetalShieldEntity(PvZEntity.SCREENDOORSHIELD, this.world);
+		MetalShieldEntity metalShieldEntity = new MetalShieldEntity(PvZEntity.SCREENDOORSHIELD, this.getWorld());
 		if (world instanceof ServerWorld serverWorld) {
-			metalShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			metalShieldEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 		}
 		metalShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 		metalShieldEntity.startRiding(this);
@@ -443,17 +459,17 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createPaperShield(){
 		if (world instanceof ServerWorld serverWorld) {
-			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.BOOKSHIELD, this.world);
+			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.BOOKSHIELD, this.getWorld());
 			newspaperShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
-			newspaperShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			newspaperShieldEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			newspaperShieldEntity.startRiding(this);
 		}
 	}
 
 	public void createSergeantShield() {
 		if (world instanceof ServerWorld serverWorld) {
-			MetalShieldEntity metalShieldEntity = new MetalShieldEntity(PvZEntity.SERGEANTSHIELDGEAR, this.world);
-			metalShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			MetalShieldEntity metalShieldEntity = new MetalShieldEntity(PvZEntity.SERGEANTSHIELDGEAR, this.getWorld());
+			metalShieldEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			metalShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			metalShieldEntity.startRiding(this);
 		}
@@ -461,8 +477,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createObstacle() {
 		if (world instanceof ServerWorld serverWorld) {
-			MetalObstacleEntity metalObstacleEntity = new MetalObstacleEntity(PvZEntity.TRASHCANBIN, this.world);
-			metalObstacleEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			MetalObstacleEntity metalObstacleEntity = new MetalObstacleEntity(PvZEntity.TRASHCANBIN, this.getWorld());
+			metalObstacleEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			metalObstacleEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			metalObstacleEntity.startRiding(this);
 		}
@@ -571,6 +587,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 				this.getType().equals(PvZEntity.MUMMYCONEHYPNO) ||
 				this.getType().equals(PvZEntity.MUMMYBUCKETHYPNO) ||
 				this.getType().equals(PvZEntity.PYRAMIDHEADHYPNO) ||
+				this.getType().equals(PvZEntity.TOMBRAISERHYPNO) ||
 				this.getType().equals(PvZEntity.POKERHYPNO) ||
 				this.getType().equals(PvZEntity.POKERCONEHYPNO) ||
 				this.getType().equals(PvZEntity.POKERBUCKETHYPNO) ||
@@ -655,7 +672,7 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 						this.getNavigation().stop();
 			this.getNavigation().stop();
 		}
-		if (!(this.getHypno()) && !this.world.isClient()){
+		if (!(this.getHypno()) && !this.getWorld().isClient()){
 			if (this.getType().equals(PvZEntity.SARGEANT) ||
 					this.getType().equals(PvZEntity.SARGEANTBOWL) ||
 					this.getType().equals(PvZEntity.SARGEANTHELMET) ||
@@ -959,6 +976,9 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 		else if (this.getType().equals(PvZEntity.PYRAMIDHEAD)){
 			hypnoType = PvZEntity.PYRAMIDHEADHYPNO;
 		}
+		else if (this.getType().equals(PvZEntity.TOMBRAISER)){
+			hypnoType = PvZEntity.TOMBRAISERHYPNO;
+		}
 		else if (this.getType().equals(PvZEntity.POKER)){
 			hypnoType = PvZEntity.POKERHYPNO;
 		}
@@ -1012,11 +1032,11 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
         if (!super.damage(source, amount)) {
             return false;
-        } else if (!(this.world instanceof ServerWorld)) {
+        } else if (!(this.getWorld() instanceof ServerWorld)) {
             return false;
         }
 		else {
-            ServerWorld serverWorld = (ServerWorld)this.world;
+            ServerWorld serverWorld = (ServerWorld)this.getWorld();
             LivingEntity livingEntity = this.getTarget();
             if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
                 livingEntity = (LivingEntity)source.getAttacker();
@@ -1036,8 +1056,8 @@ public class BrowncoatEntity extends PvZombieEntity implements IAnimatable {
                 }
 				for (Entity entity1 : this.getPassengerList()) {
 					if (entity1 instanceof ZombiePropEntity zpe) {
-						ZombiePropEntity zombiePropEntity = new ZombiePropEntity((EntityType<? extends ZombiePropEntity>) zpe.getType(), this.world);
-						zombiePropEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						ZombiePropEntity zombiePropEntity = new ZombiePropEntity((EntityType<? extends ZombiePropEntity>) zpe.getType(), this.getWorld());
+						zombiePropEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						zombiePropEntity.setHypno(IsHypno.TRUE);
 						zombiePropEntity.setHealth(zpe.getHealth());
 						zombiePropEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);

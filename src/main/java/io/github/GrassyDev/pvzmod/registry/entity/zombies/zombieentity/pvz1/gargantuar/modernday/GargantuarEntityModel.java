@@ -25,6 +25,9 @@ public class GargantuarEntityModel extends AnimatedGeoModel<GargantuarEntity> {
 		else if (object.getVariant().equals(GargantuarVariants.GARGOLITH) || object.getVariant().equals(GargantuarVariants.GARGOLITHHYPNO)){
 			identifier = new Identifier("pvzmod", "textures/entity/gargantuar/gargolith.png");
 		}
+		else if (object.getVariant().equals(GargantuarVariants.MUMMY) || object.getVariant().equals(GargantuarVariants.MUMMYHYPNO)){
+			identifier = new Identifier("pvzmod", "textures/entity/gargantuar/mummygargantuar.png");
+		}
 		else if (object.getVariant().equals(GargantuarVariants.DEFENSIVEEND) || object.getVariant().equals(GargantuarVariants.DEFENSIVEENDHYPNO)){
 			identifier = new Identifier("pvzmod", "textures/entity/gargantuar/defensiveend.png");
 			if (object.gear1less){

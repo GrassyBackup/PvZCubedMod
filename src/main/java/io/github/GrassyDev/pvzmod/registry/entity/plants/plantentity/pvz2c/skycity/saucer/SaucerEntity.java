@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
 import net.fabricmc.api.EnvType;
@@ -98,19 +96,19 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 				double f2 = this.random.nextDouble() / 2 * 0.75;
 				double d3 = this.random.nextDouble() / 2 * 0.75;
 				double f3 = this.random.nextDouble() / 2 * 0.75;
-				this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						d, 0, f);
-				this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						d1, 0, f1 * -1);
-				this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						d2 * -1, 0, f2 * -1);
-				this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						d3 * -1, 0, f3);
@@ -167,7 +165,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 	 **/
 
 	private void damageEntity() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -232,7 +230,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 		super.tick();
 		targetZombies(this.getPos(), 4, true, true, true);
 		if (attacking) {
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 			if (--tickPermanency <= 0) {
 				this.discard();
 			}
@@ -259,7 +257,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 				FluidState fluidState = world.getFluidState(this.getBlockPos().add(0, -0.5, 0));
 				onWater = fluidState.getFluid() == Fluids.WATER;
 				if (!blockPos2.equals(blockPos) || (!(fluidState.getFluid() == Fluids.WATER) && !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-					if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 						this.dropItem(ModItems.SAUCER_SEED_PACKET);
 					}
 					this.discard();
@@ -270,7 +268,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -379,14 +377,7 @@ public class SaucerEntity extends PlantEntity implements IAnimatable {
 	 * //~*~//~DAMAGE HANDLER~//~*~//
 	 **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

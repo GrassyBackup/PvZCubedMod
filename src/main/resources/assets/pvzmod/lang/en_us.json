@@ -144,6 +144,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.impatyensS": "Impatyens Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.jalapenoS": "Jalapeno Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.jumpingbeanS": "Jumping Bean Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.knightpeaS": "Pea of Valiance Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.lightningreedS": "Lightning Reed Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.lilypadS": "Lily Pad Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.loquatS": "Loquat Seed",
@@ -175,6 +176,7 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.shamrockS": "Shamrock Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.scaredyshroomS": "Scaredy-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.seashroomS": "Sea-shroom Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.seapeaS": "Sea Pea Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.shadowShroomS": "Shadow-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smackadamiaSv2": "Smackadamia Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.smallnutS": "Small-nut Seed",
@@ -308,6 +310,7 @@
   "text.config.pvz3-config.option.nestedZombieHealth.defensiveendH": "Defensive End Health",
   "text.config.pvz3-config.option.nestedZombieHealth.cursedgargolithH": "Cursed Gargolith Health",
   "text.config.pvz3-config.option.nestedZombieHealth.unicorngargantuarH": "Unicorn Gargantuar Health",
+  "text.config.pvz3-config.option.nestedZombieHealth.hovergoatH": "Hover Goat-3000 Health",
   "text.config.pvz3-config.option.nestedZombieHealth.impH": "Imp Health",
   "text.config.pvz3-config.option.nestedZombieHealth.impdragonH": "Imp Dragon Health",
   "text.config.pvz3-config.option.nestedZombieHealth.bassimpH": "Rainbow Bass Imp Health",
@@ -629,6 +632,12 @@
   "item.pvzmod.chester_seed_packet.flavour": "™",
   "entity.pvzmod.cheesetile": "Cheese Tile",
 
+  "entity.pvzmod.vampireflower": "Vampire Flower",
+  "item.pvzmod.vampireflower_seed_packet": "☀ Vampire Flower Seed Packet",
+  "item.pvzmod.vampireflower_seed_packet.flavour": "Always cast as the female lead in adaptations",
+  "item.pvzmod.vampireflower_seed_packet.flavour2": "of YA vampire novels. From twinlight,",
+  "item.pvzmod.vampireflower_seed_packet.flavour3": "to GL, to... Vampire Bowling?",
+
   "entity.pvzmod.retrogatling": "Retro Gatling",
   "item.pvzmod.retrogatling_seed_packet": "✂ Retro Gatling Seed Packet",
   "item.pvzmod.retrogatling_seed_packet.flavour": "There is no problem that cannot",
@@ -934,6 +943,17 @@
   "item.pvzmod.bellflower_seed_packet.flavour2": "Jingle all the zombies.\"",
   "item.pvzmod.jingle": "Jingle",
 
+  "entity.pvzmod.knightpea": "Pea of Valiance",
+  "item.pvzmod.knightpea_seed_packet": "✂ Pea of Valiance Seed Packet",
+  "item.pvzmod.knightpea_seed_packet.flavour": "Specialist in sword swallowing.",
+  "item.pvzmod.knightpea_seed_packet.flavour2": "Your interpretation is correct either way.",
+  "item.pvzmod.swordproj": "Sword",
+  "item.pvzmod.powerswordproj": "Powered Sword",
+
+  "entity.pvzmod.seapea": "Sea Pea",
+  "item.pvzmod.seapea_seed_packet": "⭘ Sea Pea Seed Packet",
+  "item.pvzmod.seapea_seed_packet.flavour": "Something smells fishy...",
+
   "entity.pvzmod.nightcap": "Night Cap",
   "item.pvzmod.nightcap_seed_packet": "☁ Night Cap Seed Packet",
   "item.pvzmod.nightcap_seed_packet.flavour": "\"This. Means. SPORE.\"",
@@ -1053,6 +1073,14 @@
   "item.pvzmod.imp_egg": "Imp",
   "entity.pvzmod.imp_hypnotized": "Hypnotized Imp",
 
+  "entity.pvzmod.mummygargantuar": "Mummified Gargantuar",
+  "item.pvzmod.mummygargantuar_egg": "Mummified Gargantuar",
+  "entity.pvzmod.mummygargantuar_hypnotized": "Hypnotized Mummified Gargantuar",
+
+  "entity.pvzmod.mummyimp": "Mummy Imp",
+  "item.pvzmod.mummyimp_egg": "Mummy Imp",
+  "entity.pvzmod.mummyimp_hypnotized": "Hypnotized Mummy Imp",
+
   "entity.pvzmod.trashcan": "Trash Can Zombie",
   "item.pvzmod.trashcan_egg": "Trash Can Zombie",
   "entity.pvzmod.trashcanbin": "Trash Can",
@@ -1078,6 +1106,10 @@
   "entity.pvzmod.mummybucket": "Buckethead Mummy Zombie",
   "item.pvzmod.mummybucket_egg": "Buckethead Mummy Zombie",
   "entity.pvzmod.mummybucket_hypnotized": "Hypnotized Buckethead Mummy Zombie",
+
+  "entity.pvzmod.tombraiser": "Tomb Raiser",
+  "item.pvzmod.tombraiser_egg": "Tomb Raiser",
+  "entity.pvzmod.tombraiser_hypnotized": "Hypnotized Tomb Raiser",
 
   "entity.pvzmod.explorer": "Explorer Zombie",
   "item.pvzmod.explorer_egg": "Explorer Zombie",
@@ -1281,6 +1313,10 @@
   "item.pvzmod.soldier_egg": "Foot Soldier",
   "entity.pvzmod.soldiergear": "Foot Soldier Helmet",
   "entity.pvzmod.soldier_hypnotized": "Hypnotized Foot Soldier",
+
+  "entity.pvzmod.hovergoat": "Hover Goat-3000",
+  "item.pvzmod.hovergoat_egg": "Hover Goat-3000",
+  "entity.pvzmod.hovergoat_hypnotized": "Hypnotized Hover Goat-3000",
 
   "entity.pvzmod.scientist": "Scientist Zombie",
   "item.pvzmod.scientist_egg": "Scientist Zombie",

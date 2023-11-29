@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.gravestones.GraveEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
@@ -135,7 +133,7 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 				double vx = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vy = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double vz = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
 			}
 
 			for (int j = 0; j < 32; ++j) {
@@ -143,7 +141,7 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 4 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 0);
 				double f = this.random.nextDouble() / 4 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
 
 			for (int j = 0; j < 108; ++j) {
@@ -151,7 +149,7 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(-1, 0);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
 
 			for (int j = 0; j < 108; ++j) {
@@ -159,7 +157,7 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(-1, 0);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
 		}
 	}
@@ -231,8 +229,8 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createSoldierProp(){
 		if (world instanceof ServerWorld serverWorld) {
-			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.SOLDIERGEAR, this.world);
-			propentity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			MetalHelmetEntity propentity = new MetalHelmetEntity(PvZEntity.SOLDIERGEAR, this.getWorld());
+			propentity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			propentity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			propentity.startRiding(this);
 		}
@@ -362,7 +360,7 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.FireBeamGoal();
 		}
 		boolean canFly = false;
@@ -383,12 +381,12 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 		if (!this.hasPassengers()){
 			canFly = true;
 		}
-		if (this.getAttacking() == null && !(this.getHypno()) && !this.world.isClient()){
+		if (this.getAttacking() == null && !(this.getHypno()) && !this.getWorld().isClient()){
 			for (float x = 0; x <= 4; ++x) {
 				if ((this.CollidesWithPlant(x, 0f) != null || this.hasStatusEffect(FROZEN)) && !this.hasStatusEffect(PvZCubed.BOUNCED) && this.getZPGStage() && !this.inLaunchAnimation && (canFly || this.hasStatusEffect(FROZEN))) {
 					Vec3d vec3d = new Vec3d(1, 0.7, 0.0).rotateY(-this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					this.addVelocity(vec3d.getX(), vec3d.getY(), vec3d.getZ());
-					this.world.sendEntityStatus(this, (byte) 109);
+					this.getWorld().sendEntityStatus(this, (byte) 109);
 					this.setZPGStage(ZPGStage.NOZPG);
 					this.playSound(PvZSounds.SOLDIERJUMPEVENT, 0.75f, 1);
 					if (livingEntity != null){
@@ -398,7 +396,7 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 				}
 				else if (this.CollidesWithPlant(x, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && this.getZPGStage() && !canFly) {
 					this.inLaunchAnimation = true;
-					this.world.sendEntityStatus(this, (byte) 113);
+					this.getWorld().sendEntityStatus(this, (byte) 113);
 				}
 			}
 			for (float x = 0; x <= 1; ++x) {
@@ -494,10 +492,10 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();
@@ -590,15 +588,15 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 			if (livingEntity != null) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			if (this.animationTicks >= 0) {
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				this.inLaunchAnimation = false;
-				this.world.sendEntityStatus(this, (byte) 112);
+				this.getWorld().sendEntityStatus(this, (byte) 112);
 				this.beamTicks = -12;
 				this.animationTicks = -30;
 				if (shot) {
-					this.world.sendEntityStatus(this, (byte) 121);
+					this.getWorld().sendEntityStatus(this, (byte) 121);
 				}
 				shot = false;
 			}
@@ -620,24 +618,25 @@ public class SoldierEntity extends PvZombieEntity implements IAnimatable {
 				}
 				double g = predictedPos.getZ() - this.getZ();
 				float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
-				ZPGEntity proj = new ZPGEntity(PvZEntity.ZPG, this.world);
+				ZPGEntity proj = new ZPGEntity(PvZEntity.ZPG, this.getWorld());
+				proj.damageMultiplier = this.damageMultiplier;
 				proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.85F, 0F);
 				proj.updatePosition(this.getX(), this.getY() + 0.5D, this.getZ());
 				proj.setOwner(this);
 				this.beamTicks = -30;
 				this.playSound(PvZSounds.SOLDIERZPGEVENT, 0.75F, 1);
 				this.playSound(PvZSounds.ZPGAMBIENTEVENT, 1F, 1);
-				this.world.spawnEntity(proj);
+				this.getWorld().spawnEntity(proj);
 				this.setZPGStage(ZPGStage.NOZPG);
 			}
 		}
 		else if (animationTicks >= 0){
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			this.inLaunchAnimation = false;
-			this.world.sendEntityStatus(this, (byte) 112);
+			this.getWorld().sendEntityStatus(this, (byte) 112);
 			if (shot) {
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 			}
 			shot = false;
 		}

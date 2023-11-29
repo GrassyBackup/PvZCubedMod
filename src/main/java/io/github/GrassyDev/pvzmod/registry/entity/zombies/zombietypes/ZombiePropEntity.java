@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.gargantuar.modernday.GargantuarEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -76,6 +74,15 @@ public class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 		LivingEntity vehicle = (LivingEntity) this.getVehicle();
 		if (vehicle instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying()){
 			this.setFlying(Flying.TRUE);
+		}
+		else if (vehicle instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.isFlying()){
+			this.setFlying(Flying.FALSE);
+		}
+		if (vehicle instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isHovering()){
+			this.setHover(Hover.TRUE);
+		}
+		else if (vehicle instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.isHovering()){
+			this.setHover(Hover.FALSE);
 		}
 		if (this.getRecentDamageSource() == PvZCubed.HYPNO_DAMAGE && !(this instanceof ZombieShieldEntity) &&
 		vehicle instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())){
@@ -183,7 +190,7 @@ public class ZombiePropEntity extends GeneralPvZombieEntity implements Monster {
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (this.getHypno() && this.getVehicle() instanceof GargantuarEntity gargantuarEntity){
 			player.startRiding(gargantuarEntity, true);
-			return ActionResult.success(this.world.isClient);
+			return ActionResult.success(this.getWorld().isClient);
 		}
 		else {
 			return ActionResult.FAIL;

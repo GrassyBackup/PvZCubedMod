@@ -137,22 +137,22 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1) * 2);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX(), this.getY(), this.getZ(), d, e, f);
-				this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX(), this.getY(), this.getZ(), d * -1, e, f * -1);
-				this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX(), this.getY(), this.getZ(), d * -1, e, f);
-				this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX(), this.getY(), this.getZ(), d, e, f * -1);
+				this.getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX(), this.getY(), this.getZ(), d * -1, e, f * -1);
+				this.getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX(), this.getY(), this.getZ(), d * -1, e, f);
+				this.getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX(), this.getY(), this.getZ(), d, e, f * -1);
 			}
 			for(int i = 0; i < 8; ++i) {
 				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1) * 0.33;
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1) * 2);
 				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1) * 0.33;
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 8; ++i) {
 				RandomGenerator randomGenerator = this.getRandom();
 				double e = this.random.nextDouble() / 2 * (this.random.range(-1, 1) * 0.5);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (this.random.range(-1, 1)),
 						this.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -165,7 +165,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 				double d = this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
 				double e = this.getY();
 				double f = this.getZ() + (double)MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
-				this.world.addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+				this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
 			}
 		}
 		if (status == 109) {
@@ -257,11 +257,11 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 	public void ignite() {
 		this.dataTracker.set(IGNITED, true);
 	}
-	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
+	List<LivingEntity> checkList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
 	private void raycastExplode() {
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2.5));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2.5));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -347,7 +347,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 	private void spawnEffectsCloud() {
 		Collection<StatusEffectInstance> collection = this.getStatusEffects();
 		if (!collection.isEmpty()) {
-			AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+			AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 			areaEffectCloudEntity.setRadius(3.5F);
 			areaEffectCloudEntity.setRadiusOnUse(-0.5F);
 			areaEffectCloudEntity.setWaitTime(10);
@@ -360,7 +360,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 				areaEffectCloudEntity.addEffect(new StatusEffectInstance(statusEffectInstance));
 			}
 
-			this.world.spawnEntity(areaEffectCloudEntity);
+			this.getWorld().spawnEntity(areaEffectCloudEntity);
 		}
 
 	}
@@ -391,7 +391,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.POTATOMINE_SEED_PACKET);
 				}
 				this.discard();
@@ -408,8 +408,8 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 		}
 		if (this.isAlive() && this.potatoPreparingTime <= 0 && this.potatoAnimationTime > 0 && !this.getPotatoStage()) {
 			--this.potatoAnimationTime;
-			this.world.sendEntityStatus(this, (byte) 109);
-			this.world.sendEntityStatus(this, (byte) 108);
+			this.getWorld().sendEntityStatus(this, (byte) 109);
+			this.getWorld().sendEntityStatus(this, (byte) 108);
 		}
 		if (this.isAlive() && this.potatoPreparingTime <= 0 && this.potatoAnimationTime > 0 && !this.getPotatoStage() && this.playSoundRise) {
 			this.playSound(PvZSounds.ENTITYRISINGEVENT, 1.0F, 1.0F);
@@ -417,7 +417,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 		}
 		if (this.isAlive() && this.potatoAnimationTime <= 0) {
 			this.setPotatoStage(PotatoStage.PREPARED);
-			this.world.sendEntityStatus(this, (byte) 107);
+			this.getWorld().sendEntityStatus(this, (byte) 107);
 		}
 		if (this.isAlive() && this.getPotatoStage()) {
 			if (this.getIgnited()) {
@@ -440,7 +440,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 				this.currentFuseTime = this.fuseTime;
 				this.raycastExplode();
 				this.removeStatusEffect(StatusEffects.RESISTANCE);
-				this.world.sendEntityStatus(this, (byte) 80);
+				this.getWorld().sendEntityStatus(this, (byte) 80);
 				this.playSound(PvZSounds.POTATOMINEEXPLOSIONEVENT, 1F, 1F);
 				this.spawnEffectsCloud();
 				this.dead = true;
@@ -454,7 +454,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}
@@ -548,7 +548,7 @@ public class PotatomineEntity extends PlantEntity implements IAnimatable {
 		else if (this.getPotatoStage()) {
 			this.raycastExplode();
 			this.removeStatusEffect(StatusEffects.RESISTANCE);
-			this.world.sendEntityStatus(this, (byte) 80);
+			this.getWorld().sendEntityStatus(this, (byte) 80);
 			this.playSound(PvZSounds.POTATOMINEEXPLOSIONEVENT, 1F, 1F);
 			this.spawnEffectsCloud();
 			this.dead = true;

@@ -12,6 +12,14 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
@@ -33,6 +41,10 @@ public class GargantuarEntityRenderer extends GeoEntityRenderer<GargantuarEntity
 						new Identifier("pvzmod", "geo/gargantuar.geo.json"));
 				map.put(GargantuarVariants.GARGANTUARHYPNO,
 						new Identifier("pvzmod", "geo/gargantuar.geo.json"));
+				map.put(GargantuarVariants.MUMMY,
+						new Identifier("pvzmod", "geo/mummygargantuar.geo.json"));
+				map.put(GargantuarVariants.MUMMYHYPNO,
+						new Identifier("pvzmod", "geo/mummygargantuar.geo.json"));
 				map.put(GargantuarVariants.UNICORNGARGANTUAR,
 						new Identifier("pvzmod", "geo/unicorngargantuar.geo.json"));
 				map.put(GargantuarVariants.UNICORNGARGANTUARHYPNO,

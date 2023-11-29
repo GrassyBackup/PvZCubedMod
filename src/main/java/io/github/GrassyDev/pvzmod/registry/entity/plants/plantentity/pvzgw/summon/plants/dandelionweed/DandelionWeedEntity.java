@@ -32,6 +32,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -41,6 +50,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -78,13 +88,13 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 		}
 		if (status == 106) {
 			for(int i = 0; i < 16; ++i) {
-				this.world.addParticle(ParticleTypes.CRIT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
-				this.world.addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
-				this.world.addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
-				this.world.addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
-				this.world.addParticle(ParticleTypes.CRIT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
-				this.world.addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
-				this.world.addParticle(ParticleTypes.CRIT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.CRIT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.CRIT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.CRIT, this.getX() + (this.random.range(-2, 2)) * 0.85F, this.getY() + (this.random.range(-1, 3)) * 0.5F, this.getZ() + (this.random.range(-2, 2)) * 0.85F, 0, 0, 0);
 			}
 		}
 	}
@@ -128,7 +138,7 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 
 	protected void splashDamage() {
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2).expand(0, 2, 0).offset(0, 1, 0));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2).expand(0, 2, 0).offset(0, 1, 0));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -205,7 +215,7 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.DANDELIONWEED_SEED_PACKET);
 				}
 				this.discard();
@@ -216,7 +226,7 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -303,14 +313,7 @@ public class DandelionWeedEntity extends PlantEntity implements IAnimatable, Ran
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.zombies.soun
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
@@ -100,14 +98,14 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-			BlockState blockState = this.world.getBlockState(blockPos);
+			BlockState blockState = this.getWorld().getBlockState(blockPos);
 			if (blockState.isOf(Blocks.NETHER_PORTAL)) {
 				this.setInNetherPortal(blockPos);
 				bl = true;
 			} else if (blockState.isOf(Blocks.END_GATEWAY)) {
-				BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-					EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+					EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
 				}
 
 				bl = true;
@@ -118,13 +116,13 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 			this.onCollision(hitResult);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 20) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 20) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -158,7 +156,7 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 					zombiePropEntity3 = zpe;
 				}
 			}
-			float damage = PVZCONFIG.nestedProjDMG.soundwaveDMG();
+			float damage = PVZCONFIG.nestedProjDMG.soundwaveDMG() * damageMultiplier;
 			if (this.getOwner() instanceof GeneralPvZombieEntity owner && owner.getHypno()){
 				if (!world.isClient && entity instanceof Monster monster &&
 						!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
@@ -184,7 +182,7 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 					} else {
 						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					}
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 					break;
 				}
@@ -214,14 +212,14 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 					} else {
 						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					}
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 				}
 				if (entity instanceof LilyPadEntity && entity.hasPassengers()) {
 
 				} else if (!world.isClient && !(entity instanceof PlantEntity plantEntity && plantEntity.getImmune()) && (entity instanceof GolemEntity || entity instanceof VillagerEntity || entity instanceof PlayerEntity) && !(entity instanceof PlantEntity plantEntity2 && PLANT_LOCATION.get(plantEntity2.getType()).orElse("normal").equals("flying")) && !(entity.getVehicle() instanceof BubblePadEntity)) {
 					entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
-					this.world.sendEntityStatus(this, (byte) 3);
+					this.getWorld().sendEntityStatus(this, (byte) 3);
 					this.remove(RemovalReason.DISCARDED);
 					break;
 				}
@@ -252,15 +250,15 @@ public class SoundwaveEntity extends PvZProjectileEntity implements IAnimatable 
 				double d1 = this.random.range(-1, 1);
 				double e2 = this.random.range(0, 1);
 				double f3 = this.random.range(-1, 1);
-                this.world.addParticle(particleEffect, this.getX() + d1, this.getY() + e2, this.getZ() + f3, d, e, f);
+                this.getWorld().addParticle(particleEffect, this.getX() + d1, this.getY() + e2, this.getZ() + f3, d, e, f);
             }
         }
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }

@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.icetile.IceTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.scorchedtile.ScorchedTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
@@ -173,16 +171,16 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 	}
 
 	private float boxOffset;
-	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
+	List<LivingEntity> checkList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
 	private void raycastExplode() {
 		Vec3d vec3d2 = new Vec3d((double) 0, 0.0, boxOffset).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1, 4, 1).offset(vec3d2).offset(0, -1.5, 0));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1, 4, 1).offset(vec3d2).offset(0, -1.5, 0));
 		Vec3d vec3d3 = this.getBoundingBox().offset(vec3d2).getCenter();
 		IceTile iceTile = (IceTile) PvZEntity.ICETILE.create(world);
 		iceTile.refreshPositionAndAngles(vec3d3.getX(), this.getY(), vec3d3.getZ(), 0, 0);
 		iceTile.setHeadYaw(0);
-		List<IceTile> listFlames = this.world.getNonSpectatingEntities(IceTile.class, iceTile.getBoundingBox());
+		List<IceTile> listFlames = this.getWorld().getNonSpectatingEntities(IceTile.class, iceTile.getBoundingBox());
 		if (listFlames.isEmpty()) {
 			world.spawnEntity(iceTile);
 		}
@@ -212,7 +210,7 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 				livingEntity.discard();
 			}
 			if (((livingEntity instanceof Monster &&
-					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) &&
+					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering()) &&
 						!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && checkList != null && !checkList.contains(livingEntity))) {
@@ -292,7 +290,7 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.CHILLYPEPPER_SEED_PACKET);
 				}
 				this.discard();
@@ -308,7 +306,7 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 				this.playSound(SoundEvents.ENTITY_CREEPER_PRIMED, 1.0F, 0.5F);
 				for(int j = 0; j < 16; ++j) {
 					double e = (double)MathHelper.nextBetween(randomGenerator, 0.025F, 0.075F);
-					this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + 0.75, this.getZ(), 0, e, 0);
+					this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + 0.75, this.getZ(), 0, e, 0);
 				}
 			}
 
@@ -326,7 +324,7 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 					this.boxOffset = (float) u;
 					this.raycastExplode();
 				}
-				this.world.sendEntityStatus(this, (byte) 106);
+				this.getWorld().sendEntityStatus(this, (byte) 106);
 				this.dead = true;
 				this.remove(RemovalReason.DISCARDED);
 			}
@@ -336,7 +334,7 @@ public class ChillyPepperEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}

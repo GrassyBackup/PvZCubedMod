@@ -3,13 +3,15 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.farfu
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz2.jetpack.JetpackEntity;
-import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.*;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvzgw.hovergoat.HoverGoatEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombiePropEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieShieldEntity;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.ZombieVehicleEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -122,7 +124,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 4 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 4 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 4 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (this.random.range(-2, 2)), this.getY() + (this.random.range(0, 2)), this.getZ() + (this.random.range(-2, 2)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (this.random.range(-2, 2)), this.getY() + (this.random.range(0, 2)), this.getZ() + (this.random.range(-2, 2)), d, e, f);
 			}
 		}
 	}
@@ -205,11 +207,11 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 	public void ignite() {
 		this.dataTracker.set(IGNITED, true);
 	}
-	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
+	List<LivingEntity> checkList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
 	private void raycastExplode() {
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -244,7 +246,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 				if (livingEntity instanceof OilTile oilTile){
 					oilTile.makeFireTrail(oilTile.getBlockPos());
 				}
-				if (IS_MACHINE.get(livingEntity.getType()).orElse(false).equals(false) && !(livingEntity instanceof JetpackEntity)) {
+				if (IS_MACHINE.get(livingEntity.getType()).orElse(false).equals(false) && !(livingEntity instanceof JetpackEntity) && !(livingEntity instanceof HoverGoatEntity)) {
 					if (!(livingEntity instanceof ZombieVehicleEntity) && !livingEntity.hasStatusEffect(FROZEN) && !livingEntity.hasStatusEffect(DISABLE)) {
 						livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.STUN, 100, 5)));
 					}
@@ -330,7 +332,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.EMPEACH_SEED_PACKET);
 				}
 				this.discard();
@@ -346,7 +348,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 				RandomGenerator randomGenerator = this.getRandom();
 				for(int j = 0; j < 32; ++j) {
 					double e = (double)MathHelper.nextBetween(randomGenerator, 0.025F, 0.075F);
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY() + 2.25, this.getZ(), 0, e, 0);
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY() + 2.25, this.getZ(), 0, e, 0);
 				}
 			}
 
@@ -356,7 +358,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 			}
 			if (this.currentFuseTime == 3) {
 				this.raycastExplode();
-				this.world.sendEntityStatus(this, (byte) 106);
+				this.getWorld().sendEntityStatus(this, (byte) 106);
 				this.playSound(PvZSounds.EMPEACHEXPLOSIONEVENT, 1F, 1F);
 			}
 
@@ -371,7 +373,7 @@ public class EMPeachEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}

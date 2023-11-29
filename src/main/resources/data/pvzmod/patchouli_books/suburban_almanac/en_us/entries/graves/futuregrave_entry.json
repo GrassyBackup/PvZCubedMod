@@ -7,7 +7,7 @@
     {
       "type": "text",
       "text": [
-        "$(#bd951a)Health: $()$(#ff0000)240",
+        "$(#bd951a)Health: $()$(#ff0000)240 (Stone)",
         "$(br)$(#bd951a)Zombie Spawn Rate: $()$(#ff0000)25s",
         "$(br)$(#bd951a)Spawn Condition: $()$(#ff0000)Common. Unlocked at 1.6 Local Difficulty.",
         "$(br)$(#bd951a)Time Chance: $()$(#ff0000)25% Sun Bombs, 30% Night.",
@@ -35,7 +35,8 @@
         "pvzmod:zombies/robocone_entry",
         "pvzmod:zombies/holohead_entry",
         "pvzmod:zombies/scrapmech_entry",
-        "pvzmod:zombies/scrapimp_entry"
+        "pvzmod:zombies/scrapimp_entry",
+        "pvzmod:zombies/knightpea_entry"
       ],
       "title": "Spawnable Zombies"
     }

@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.zombies.PapershieldVariants;
@@ -90,14 +88,14 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 				double d = this.random.nextDouble() / 10 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 10 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 10 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.SMOKE, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, particlePos.getX(), particlePos.getY(), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, particlePos.getX(), particlePos.getY() + this.random.range(0, 1), particlePos.getZ(), d, e, f);
 			}
 			for(int i = 0; i < 16; ++i) {
 				double e = this.random.nextDouble() / 10 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						particlePos.getY(),
 						particlePos.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -169,7 +167,7 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 
 	private boolean isBeingRainedOn() {
 		BlockPos blockPos = this.getBlockPos();
-		return this.world.hasRain(blockPos) || this.world.hasRain(new BlockPos((double)blockPos.getX(), this.getBoundingBox().maxY, (double)blockPos.getZ()));
+		return this.getWorld().hasRain(blockPos) || this.getWorld().hasRain(new BlockPos((double)blockPos.getX(), this.getBoundingBox().maxY, (double)blockPos.getZ()));
 	}
 
 	public void tick() {
@@ -214,7 +212,7 @@ public class NewspaperShieldEntity extends ZombieShieldEntity implements IAnimat
 					this.setStealthTag(Stealth.FALSE);
 				}
 				else if (this.CollidesWithPlant(0.1f, 0f) == null) {
-							this.world.sendEntityStatus(this, (byte) 115);
+							this.getWorld().sendEntityStatus(this, (byte) 115);
 						}
 					} else if (!this.hasStatusEffect(PvZCubed.BOUNCED)) {
 						this.setVelocity(0, -0.3, 0);

@@ -78,7 +78,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 	}
 
 	private void damageEntity() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -96,7 +96,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && (!livingEntity.isWet() && !livingEntity.hasStatusEffect(PvZCubed.WET) && !(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.canBurn())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
-							generalPvZombieEntity.isFlying()))) {
+							generalPvZombieEntity.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering()))) {
 				ZombiePropEntity zombiePropEntity2 = null;
 				ZombiePropEntity zombiePropEntity3 = null;
 				for (Entity entity1 : livingEntity.getPassengerList()) {
@@ -163,7 +163,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 		RandomGenerator randomGenerator = this.getRandom();
 		for(int i = 0; i < 3; ++i) {
 			double e = this.random.nextDouble() / 4 * ((this.random.range(0, 1)) + 0.1f);
-			this.world.addParticle(ParticleTypes.FLAME, this.getX()  + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+			this.getWorld().addParticle(ParticleTypes.FLAME, this.getX()  + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 					this.getY(), this.getZ() + (double)MathHelper.nextBetween(randomGenerator,
 							-0.5F, 0.5F), 0, e, 0);
 		}
@@ -179,7 +179,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 		if (!this.isAiDisabled() && this.isAlive()) {
 			setPosition(this.getX(), this.getY(), this.getZ());
 		}
-		if (this.world instanceof ServerWorld) {
+		if (this.getWorld() instanceof ServerWorld) {
 			if (this.age <= ageMax) {
 				if (--tickDamage <= 0) {
 					this.damageEntity();
@@ -194,7 +194,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 			playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH);
 			this.discard();
 		}
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			List<GeneralPvZombieEntity> list = world.getNonSpectatingEntities(GeneralPvZombieEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(5));
 			for (GeneralPvZombieEntity generalPvZombieEntity : list) {
 				if (generalPvZombieEntity.squaredDistanceTo(this) < 36) {
@@ -223,7 +223,7 @@ public class FireTrailEntity extends PathAwareEntity implements IAnimatable {
 
 	public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}

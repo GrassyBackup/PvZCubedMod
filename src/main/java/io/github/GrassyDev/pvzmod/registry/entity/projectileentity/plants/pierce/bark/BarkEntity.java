@@ -30,6 +30,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -82,13 +84,13 @@ public class BarkEntity extends PvZProjectileEntity implements IAnimatable {
 
     public void tick() {
 		super.tick();
-		if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-			this.world.sendEntityStatus(this, (byte) 3);
+		if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+			this.getWorld().sendEntityStatus(this, (byte) 3);
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && this.age >= 7) {
-			this.world.sendEntityStatus(this, (byte) 3);
+		if (!this.getWorld().isClient && this.age >= 7) {
+			this.getWorld().sendEntityStatus(this, (byte) 3);
 			this.remove(RemovalReason.DISCARDED);
 		}
 	}
@@ -170,8 +172,8 @@ public class BarkEntity extends PvZProjectileEntity implements IAnimatable {
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
     }

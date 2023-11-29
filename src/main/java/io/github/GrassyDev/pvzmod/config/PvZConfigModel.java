@@ -271,6 +271,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float jumpingbeanS = 20f;
 		@RestartRequired
+		public float knightpeaS = 20.0f;
+		@RestartRequired
 		public float lightningreedS = 12.5f;
 		@RestartRequired
 		public float lilypadS = 0f;
@@ -323,13 +325,13 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float saucerS = 30f;
 		@RestartRequired
-		public float shadowShroomS = 5f;
-		@RestartRequired
-		public float superchomperS = 30.0f;
-		@RestartRequired
 		public float scaredyshroomS = 5.0f;
 		@RestartRequired
+		public float seapeaS = 12.5f;
+		@RestartRequired
 		public float seashroomS = 10.0f;
+		@RestartRequired
+		public float shadowShroomS = 5f;
 		@RestartRequired
 		public float shamrockS = 5.0f;
 		@RestartRequired
@@ -359,6 +361,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float sunshroomS = 5.0f;
 		@RestartRequired
+		public float superchomperS = 30.0f;
+		@RestartRequired
 		public float tallnutSv2 = 25.0f;
 		@RestartRequired
 		public float tanglekelpS = 25.0f;
@@ -368,6 +372,8 @@ public class PvZConfigModel {
 		public float torchwoodS = 37.5f;
 		@RestartRequired
 		public float tulimpeterS = 20.0f;
+		@RestartRequired
+		public float vampireflowerS = 15f;
 		@RestartRequired
 		public float twinsunflowerS = 35.0f;
 		@RestartRequired
@@ -445,6 +451,7 @@ public class PvZConfigModel {
 		public float spitDMG = 2f;
 		public float smooshProjDMG = 12f;
 		public float sporeDMG = 2f;
+		public float swordDMG = 6f;
 
 		public float basketBallDMG = 4f;
 		public float laserDMG = 32f;
@@ -546,6 +553,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double gargantuarH = 360D;
 		@RestartRequired
+		public double mummygargantuarH = 420D;
+		@RestartRequired
 		public double defensiveendH = 360D;
 		@RestartRequired
 		public double cursedgargolithH = 260D;
@@ -553,6 +562,8 @@ public class PvZConfigModel {
 		public double unicorngargantuarH = 360D;
 		@RestartRequired
 		public double hawkerpusherH = 50D;
+		@RestartRequired
+		public double hoverGoatH = 75D;
 		@RestartRequired
 		public double impH = 20D;
 		@RestartRequired
@@ -572,27 +583,29 @@ public class PvZConfigModel {
 		@RestartRequired
 		public double newspaperH = 27D;
 		@RestartRequired
-		public double octoH = 91D;
-		@RestartRequired
-		public double scrapmechH = 290D;
-		@RestartRequired
-		public double scientistH = 27D;
-		@RestartRequired
 		public double sundayH = 50D;
+		@RestartRequired
+		public double octoH = 91D;
 		@RestartRequired
 		public double poleH = 50D;
 		@RestartRequired
 		public double pharaohH = 50D;
 		@RestartRequired
-		public double pumpkincarH = 210D;
-		@RestartRequired
 		public double undyingPharaohH = 65D;
 		@RestartRequired
+		public double pumpkincarH = 210D;
+		@RestartRequired
 		public double roboconeH = 250D;
+		@RestartRequired
+		public double scrapmechH = 290D;
+		@RestartRequired
+		public double scientistH = 27D;
 		@RestartRequired
 		public double snorkelH = 50D;
 		@RestartRequired
 		public double soldierH = 50D;
+		@RestartRequired
+		public double tombraiserH = 75D;
 		@RestartRequired
 		public double zombiekingH = 100D;
 		@RestartRequired
@@ -676,6 +689,9 @@ public class PvZConfigModel {
 		public double gargolithObstH = 360D;
 		@RestartRequired
 		public double imptabletObstH = 65D;
+
+		@RestartRequired
+		public double egyptTombstoneH = 90D;
 
 		@RestartRequired
 		public double hawkerObstH = 90D;

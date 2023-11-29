@@ -1,11 +1,10 @@
 package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.oc.bully.basketballcarrier;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
@@ -19,7 +18,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -233,9 +231,10 @@ public class BasketballCarrierEntity extends BullyEntity implements IAnimatable 
 
 	//Launch Basket
 	public void tryLaunch(Entity target) {
-		ShootingBasketballEntity basketballEntity = new ShootingBasketballEntity(PvZEntity.BASKETBALLPROJ, this.world);
+		ShootingBasketballEntity basketballEntity = new ShootingBasketballEntity(PvZEntity.BASKETBALLPROJ, this.getWorld());
 		List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(this.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) + 1));
 		double targetDist = 0;
+		basketballEntity.damageMultiplier = this.damageMultiplier;
 		LivingEntity garden = null;
 		for (LivingEntity livingEntity : list){
 			if (livingEntity instanceof GardenChallengeEntity){
@@ -292,7 +291,7 @@ public class BasketballCarrierEntity extends BullyEntity implements IAnimatable 
 
 			basketballEntity.setOwner(this);
 			this.playSound(PvZSounds.PEASHOOTEVENT, 1F, 1);
-			this.world.spawnEntity(basketballEntity);
+			this.getWorld().spawnEntity(basketballEntity);
 		}
 	}
 
@@ -320,18 +319,18 @@ public class BasketballCarrierEntity extends BullyEntity implements IAnimatable 
 		if (random <= 0.0075 && zombieObstacleEntity.isPresent() && getTarget() != null && this.squaredDistanceTo(this.getTarget()) <= 225 && !this.inLaunchAnimation) {
 			this.launchAnimation = 80 * animationMultiplier;
 			this.inLaunchAnimation = true;
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 		}
 		if (this.launchAnimation > 0) {
 			this.getNavigation().stop();
 			--launchAnimation;
 			tryLaunch(getTarget());
 			this.inLaunchAnimation = true;
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 		}
 		else {
 			this.inLaunchAnimation = false;
-			this.world.sendEntityStatus(this, (byte) 103);
+			this.getWorld().sendEntityStatus(this, (byte) 103);
 		}
 	}
 

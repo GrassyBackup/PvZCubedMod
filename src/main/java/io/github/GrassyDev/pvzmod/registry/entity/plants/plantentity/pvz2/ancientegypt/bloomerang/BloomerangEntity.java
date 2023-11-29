@@ -130,7 +130,7 @@ public class BloomerangEntity extends PlantEntity implements IAnimatable, Ranged
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.BLOOMERANG_SEED_PACKET);
 				}
 				this.discard();
@@ -141,7 +141,7 @@ public class BloomerangEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -218,14 +218,7 @@ public class BloomerangEntity extends PlantEntity implements IAnimatable, Ranged
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -305,7 +298,7 @@ public class BloomerangEntity extends PlantEntity implements IAnimatable, Ranged
 						proj.setVelocity(e * (double)h, f * (double)h, g * (double)h, 0.33F, 0F);
 						proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 						proj.setOwner(this.plantEntity);
-						if (livingEntity.isAlive()) {
+						if (livingEntity != null && livingEntity.isAlive()) {
 							this.beamTicks = -2;
 							++projCount;
 							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
@@ -325,7 +318,7 @@ public class BloomerangEntity extends PlantEntity implements IAnimatable, Ranged
 						proj3.updatePosition(this.plantEntity.getX() + vec3d2.x, this.plantEntity.getY() + 0.5, this.plantEntity.getZ() + vec3d2.z);
 						proj3.setOwner(this.plantEntity);
 						proj3.right = true;
-						if (livingEntity.isAlive()) {
+						if (livingEntity != null && livingEntity.isAlive()) {
 							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 							this.plantEntity.world.spawnEntity(proj3);
 						}
@@ -343,7 +336,7 @@ public class BloomerangEntity extends PlantEntity implements IAnimatable, Ranged
 						proj2.updatePosition(this.plantEntity.getX() + vec3d5.x, this.plantEntity.getY() + 0.5, this.plantEntity.getZ() + vec3d5.z);
 						proj2.setOwner(this.plantEntity);
 						proj2.left = true;
-						if (livingEntity.isAlive()) {
+						if (livingEntity != null && livingEntity.isAlive()) {
 							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 							this.plantEntity.world.spawnEntity(proj2);
 						}

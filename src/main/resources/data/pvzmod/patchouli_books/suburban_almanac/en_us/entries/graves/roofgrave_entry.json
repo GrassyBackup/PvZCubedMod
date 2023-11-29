@@ -7,7 +7,7 @@
     {
       "type": "text",
       "text": [
-        "$(#bd951a)Health: $()$(#ff0000)230",
+        "$(#bd951a)Health: $()$(#ff0000)230 (Stone)",
         "$(br)$(#bd951a)Zombie Spawn Rate: $()$(#ff0000)30s",
         "$(br)$(#bd951a)Spawn Condition: $()$(#ff0000)Uncommon. Unlocked at 1.8 Local Difficulty.",
         "$(br)$(#bd951a)Time Chance: $()$(#ff0000)25% Night.",

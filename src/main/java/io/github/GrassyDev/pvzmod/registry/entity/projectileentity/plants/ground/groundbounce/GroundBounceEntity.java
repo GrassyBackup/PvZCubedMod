@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.groun
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -100,12 +98,12 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 		if (this.isInsideWaterOrBubbleColumn()){
 			this.remove(RemovalReason.DISCARDED);
 		}
-		RandomGenerator randomGenerator = this.world.getRandom();
+		RandomGenerator randomGenerator = this.getWorld().getRandom();
 		int l = MathHelper.floor(this.getPos().x);
 		int m = MathHelper.floor(this.getPos().y - (double)0.25);
 		int n = MathHelper.floor(this.getPos().z);
 		BlockPos blockPos2 = new BlockPos(l, m, n);
-		if (!this.world.getBlockState(blockPos2).isAir() && !this.world.getBlockState(blockPos2).getMaterial().isLiquid()) {
+		if (!this.getWorld().getBlockState(blockPos2).isAir() && !this.getWorld().getBlockState(blockPos2).getMaterial().isLiquid()) {
 			this.setVelocity(this.getVelocity().getX(), 0, this.getVelocity().getZ());
 			this.canBounce = true;
 			this.airTicks = 10;
@@ -119,16 +117,16 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 			double d = this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
 			double e = this.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 0.5F);
 			double f = this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
-			this.world.addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, this.world.getBlockState(blockPos2)), d, e, f, 0.0, 2, 0.0);
+			this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, this.getWorld().getBlockState(blockPos2)), d, e, f, 0.0, 2, 0.0);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 40) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 40) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -169,7 +167,7 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
-					(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) && this.canBounce && !hit) {
+					(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !(entity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) && this.canBounce && !hit) {
 				splashDamage();
 				bounceZombies(entity.getPos());
 				hit = true;
@@ -180,13 +178,13 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 
 	protected void onBlockHit(BlockHitResult blockHitResult) {
 		super.onBlockHit(blockHitResult);
-		if (!this.world.isClient) {
+		if (!this.getWorld().isClient) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 	}
 
 	protected void splashDamage() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(2));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -214,7 +212,7 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 					if (!world.isClient &&
 							!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
-							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
+							!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) {
 						String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(livingEntity.getType()).orElse("flesh");
 						SoundEvent sound;
 						sound = switch (zombieMaterial) {
@@ -241,7 +239,7 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 	}
 
 	protected void bounceZombies(Vec3d pos) {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(3));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(3));
 		Iterator var9 = list.iterator();
 		while (true) {
 			HostileEntity hostileEntity;
@@ -254,7 +252,7 @@ public class GroundBounceEntity extends PvZProjectileEntity implements IAnimatab
 
 			if (!(hostileEntity instanceof ZombiePropEntity) && !(hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno())) {
 				if (hostileEntity.getY() < (this.getY() + 2) && hostileEntity.getY() > (this.getY() - 2) &&
-						!(hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying())) {
+						!(hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isFlying()) && !(hostileEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) {
 					Vec3d vec3d = new Vec3d((double) -1, +0.5, 0).rotateY(-hostileEntity.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					hostileEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.BOUNCED, 20, 1)));
 					hostileEntity.setVelocity(Vec3d.ZERO);

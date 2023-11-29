@@ -7,6 +7,15 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +48,8 @@ public abstract class PvZProjectileEntity extends ThrownItemEntity {
 	public List<Entity> moreEntities = new ArrayList<>();
 
 	public void hitEntities(){
-		List<Entity> hit = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, -0.5, 0));
-		List<TileEntity> tileHit = this.world.getNonSpectatingEntities(TileEntity.class, this.getBoundingBox().expand(0, 2, 0));
+		List<Entity> hit = this.getWorld().getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, -0.5, 0));
+		List<TileEntity> tileHit = this.getWorld().getNonSpectatingEntities(TileEntity.class, this.getBoundingBox().expand(0, 2, 0));
 		hit.addAll(moreEntities);
 		hitEntities.addAll(tileHit);
 		for (Entity entity : hit){

@@ -54,6 +54,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -63,6 +72,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PLANT_LOCATION;
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
@@ -349,10 +359,10 @@ public class FlagSargeantEntity extends SummonerEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();
@@ -520,7 +530,7 @@ public class FlagSargeantEntity extends SummonerEntity implements IAnimatable {
 				coat = PvZEntity.SARGEANTHYPNO;
 			}
 
-            ServerWorld serverWorld = (ServerWorld) FlagSargeantEntity.this.world;
+            ServerWorld serverWorld = (ServerWorld) FlagSargeantEntity.this.getWorld();
             for(int b = 0; b < 1; ++b) { // 1 Screendoor
 				RandomGenerator randomGenerator = FlagSargeantEntity.this.getRandom();
 				float random = MathHelper.nextBetween(randomGenerator, -4, 4);
@@ -532,9 +542,9 @@ public class FlagSargeantEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagSargeantEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagSargeantEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagSargeantEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				SargeantEntity screendoorEntity = (SargeantEntity) screen.create(FlagSargeantEntity.this.world);
+				SargeantEntity screendoorEntity = (SargeantEntity) screen.create(FlagSargeantEntity.this.getWorld());
 				screendoorEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				screendoorEntity.initialize(serverWorld, FlagSargeantEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+				screendoorEntity.initialize(serverWorld, FlagSargeantEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				screendoorEntity.setOwner(FlagSargeantEntity.this);
 				if (this.FlagSargeantEntity.getHypno()){
 					screendoorEntity.createHelmetProp();
@@ -553,9 +563,9 @@ public class FlagSargeantEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagSargeantEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagSargeantEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagSargeantEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				SargeantEntity coneheadEntity = (SargeantEntity) cone.create(FlagSargeantEntity.this.world);
+				SargeantEntity coneheadEntity = (SargeantEntity) cone.create(FlagSargeantEntity.this.getWorld());
                 coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                coneheadEntity.initialize(serverWorld, FlagSargeantEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                coneheadEntity.initialize(serverWorld, FlagSargeantEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 coneheadEntity.setOwner(FlagSargeantEntity.this);
 				if (this.FlagSargeantEntity.getHypno()){
 					coneheadEntity.createBowlProp();
@@ -573,9 +583,9 @@ public class FlagSargeantEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagSargeantEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagSargeantEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagSargeantEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				SargeantEntity bucketheadEntity = (SargeantEntity) bucket.create(FlagSargeantEntity.this.world);
+				SargeantEntity bucketheadEntity = (SargeantEntity) bucket.create(FlagSargeantEntity.this.getWorld());
                 bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                bucketheadEntity.initialize(serverWorld, FlagSargeantEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                bucketheadEntity.initialize(serverWorld, FlagSargeantEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 bucketheadEntity.setOwner(FlagSargeantEntity.this);
 				if (this.FlagSargeantEntity.getHypno()){
 					bucketheadEntity.createHelmetProp();
@@ -593,9 +603,9 @@ public class FlagSargeantEntity extends SummonerEntity implements IAnimatable {
 					vec3d = new Vec3d((double)-2 - FlagSargeantEntity.this.random.range(0, 1), 0.0, 0.0).rotateY(-FlagSargeantEntity.this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					blockPos = FlagSargeantEntity.this.getBlockPos().add(vec3d.getX(), 0, vec3d.getZ());
 				}
-				SargeantEntity browncoatEntity = (SargeantEntity) coat.create(FlagSargeantEntity.this.world);
+				SargeantEntity browncoatEntity = (SargeantEntity) coat.create(FlagSargeantEntity.this.getWorld());
                 browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-                browncoatEntity.initialize(serverWorld, FlagSargeantEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+                browncoatEntity.initialize(serverWorld, FlagSargeantEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
                 browncoatEntity.setOwner(FlagSargeantEntity.this);
 				((ServerWorld) world).spawnEntityAndPassengers(browncoatEntity);
             }

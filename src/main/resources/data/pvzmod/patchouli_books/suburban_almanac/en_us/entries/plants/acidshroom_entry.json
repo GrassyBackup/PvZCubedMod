@@ -2,7 +2,7 @@
   "name": "Acid Goop-shroom",
   "icon": "pvzmod:acidshroom_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 148,
+  "sortnum": 149,
   "advancement": "pvzmod:make_seashroom",
   "pages": [
     {

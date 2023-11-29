@@ -53,6 +53,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -62,6 +71,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -165,18 +175,18 @@ public class NewspaperEntity extends PvZombieEntity implements IAnimatable {
 
 	public void createShield(){
 		if (world instanceof ServerWorld serverWorld) {
-			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.NEWSPAPERSHIELD, this.world);
+			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.NEWSPAPERSHIELD, this.getWorld());
 			newspaperShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
-			newspaperShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			newspaperShieldEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			newspaperShieldEntity.startRiding(this);
 		}
 	}
 
 	public void createSundayShield(){
 		if (world instanceof ServerWorld serverWorld) {
-			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.SUNDAYEDITIONSHIELD, this.world);
+			NewspaperShieldEntity newspaperShieldEntity = new NewspaperShieldEntity(PvZEntity.SUNDAYEDITIONSHIELD, this.getWorld());
 			newspaperShieldEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
-			newspaperShieldEntity.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			newspaperShieldEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			newspaperShieldEntity.startRiding(this);
 		}
 	}
@@ -348,7 +358,7 @@ public class NewspaperEntity extends PvZombieEntity implements IAnimatable {
 		EntityAttributeInstance maxSpeedAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
 		EntityAttributeInstance maxStrengthAttribute = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 		if (this.getFirstPassenger() == null){
-			this.world.sendEntityStatus(this, (byte) 120);
+			this.getWorld().sendEntityStatus(this, (byte) 120);
 			if (this.speedSwitch) {
 				this.playSound(NEWSPAPERANGRYEVENT, 1, 1);
 				this.setRainbowTag(Rainbow.TRUE);
@@ -361,7 +371,7 @@ public class NewspaperEntity extends PvZombieEntity implements IAnimatable {
 			}
 		}
 		else if (this.getFirstPassenger() instanceof ZombieShieldEntity) {
-			this.world.sendEntityStatus(this, (byte) 122);
+			this.getWorld().sendEntityStatus(this, (byte) 122);
 			if (!this.speedSwitch){
 				assert maxSpeedAttribute != null;
 				maxSpeedAttribute.removeModifier(MAX_SPEED_UUID);
@@ -494,10 +504,10 @@ public class NewspaperEntity extends PvZombieEntity implements IAnimatable {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();

@@ -45,6 +45,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
 import java.util.Objects;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
@@ -123,7 +124,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 
 	public void tick() {
 		super.tick();
-		this.setTarget(this.world.getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
+		this.setTarget(this.getWorld().getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
 		LocalDifficulty localDifficulty = world.getLocalDifficulty(this.getBlockPos());
 		double difficulty = 0;
 		if (this.getVariant().equals(GraveDifficulty.NONE)){
@@ -195,13 +196,13 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 				this.kill();
 			}
 		}
-		if (this.world.isClient && this.isSpellcasting()) {
+		if (this.getWorld().isClient && this.isSpellcasting()) {
 			Spell spell = this.getSpell();
 			float g = this.bodyYaw * 0.017453292F + MathHelper.cos((float)this.age * 0.6662F) * 0.25F;
 			float h = MathHelper.cos(g);
 			float i = MathHelper.sin(g);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (double)h * 0.6, this.getY(), this.getZ() + (double)i * 0.6, 0, 0.0125, 0);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX() - (double)h * 0.6, this.getY(), this.getZ() - (double)i * 0.6, 0, 0.0125, 0);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (double)h * 0.6, this.getY(), this.getZ() + (double)i * 0.6, 0, 0.0125, 0);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() - (double)h * 0.6, this.getY(), this.getZ() - (double)i * 0.6, 0, 0.0125, 0);
 		}
 	}
 
@@ -360,7 +361,7 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 
         protected void castSpell() {
 			graveWeight = 0;
-            ServerWorld serverWorld = (ServerWorld) MausoleumGraveEntity.this.world;
+            ServerWorld serverWorld = (ServerWorld) MausoleumGraveEntity.this.getWorld();
 			LocalDifficulty localDifficulty = world.getLocalDifficulty(this.mausoleumGraveEntity.getBlockPos());
 			double difficulty = 0;
 			if (this.mausoleumGraveEntity.getVariant().equals(GraveDifficulty.NONE)){
@@ -430,9 +431,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 				}
 				BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-				SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+				SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.getWorld());
 				SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+				SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 				SargeantEntity.setOwner(MausoleumGraveEntity.this);
 				SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
@@ -448,9 +449,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					SargeantEntity coneheadEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.world);
+					SargeantEntity coneheadEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.getWorld());
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(MausoleumGraveEntity.this);
 					coneheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -465,9 +466,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+					SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.getWorld());
 					SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+					SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 					SargeantEntity.setOwner(MausoleumGraveEntity.this);
 					SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
@@ -485,9 +486,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						SargeantEntity bucketheadEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
+						SargeantEntity bucketheadEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.getWorld());
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						bucketheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(MausoleumGraveEntity.this);
 						bucketheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -502,9 +503,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						SargeantEntity coneheadEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.world);
+						SargeantEntity coneheadEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.getWorld());
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(MausoleumGraveEntity.this);
 						coneheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -522,9 +523,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							SargeantEntity coneheadEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.world);
+							SargeantEntity coneheadEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.getWorld());
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							coneheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(MausoleumGraveEntity.this);
 							coneheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -539,9 +540,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+							SargeantEntity SargeantEntity = (SargeantEntity)PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.getWorld());
 							SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+							SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 							SargeantEntity.setOwner(MausoleumGraveEntity.this);
 							SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
@@ -561,9 +562,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						SargeantEntity bucketheadEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
+						SargeantEntity bucketheadEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.getWorld());
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						bucketheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(MausoleumGraveEntity.this);
 						bucketheadEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -578,9 +579,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+						SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.getWorld());
 						SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						SargeantEntity.setOwner(MausoleumGraveEntity.this);
 						SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
@@ -600,9 +601,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.world);
+							SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.getWorld());
 							brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							brickhead.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							brickhead.setOwner(MausoleumGraveEntity.this);
 							brickhead.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -624,9 +625,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FlagSargeantEntity flagzombieEntity = (FlagSargeantEntity) PvZEntity.FLAGSARGEANT.create(MausoleumGraveEntity.this.world);
+								FlagSargeantEntity flagzombieEntity = (FlagSargeantEntity) PvZEntity.FLAGSARGEANT.create(MausoleumGraveEntity.this.getWorld());
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								flagzombieEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								flagzombieEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(MausoleumGraveEntity.this);
 								flagzombieEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
@@ -648,9 +649,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity bookburner = (SargeantEntity) PvZEntity.BOOKBURNER.create(MausoleumGraveEntity.this.world);
+								SargeantEntity bookburner = (SargeantEntity) PvZEntity.BOOKBURNER.create(MausoleumGraveEntity.this.getWorld());
 								bookburner.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								bookburner.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								bookburner.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								bookburner.setOwner(MausoleumGraveEntity.this);
 								bookburner.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(bookburner);
@@ -665,9 +666,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.getWorld());
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
 								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
@@ -689,9 +690,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.world);
+								SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.getWorld());
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(MausoleumGraveEntity.this);
 								brickhead.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -706,9 +707,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.world);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANT.create(MausoleumGraveEntity.this.getWorld());
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
 								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
@@ -723,9 +724,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.world);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTBOWL.create(MausoleumGraveEntity.this.getWorld());
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
 								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
@@ -740,9 +741,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.getWorld());
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
 								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);
@@ -763,9 +764,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							SargeantEntity bookburner = (SargeantEntity) PvZEntity.BOOKBURNER.create(MausoleumGraveEntity.this.world);
+							SargeantEntity bookburner = (SargeantEntity) PvZEntity.BOOKBURNER.create(MausoleumGraveEntity.this.getWorld());
 							bookburner.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							bookburner.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							bookburner.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							bookburner.setOwner(MausoleumGraveEntity.this);
 							bookburner.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(bookburner);
@@ -786,9 +787,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.world);
+								SargeantEntity brickhead = (SargeantEntity) PvZEntity.SARGEANTSHIELD.create(MausoleumGraveEntity.this.getWorld());
 								brickhead.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								brickhead.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								brickhead.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								brickhead.setOwner(MausoleumGraveEntity.this);
 								brickhead.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 							serverWorld.spawnEntityAndPassengers(brickhead);
@@ -803,9 +804,9 @@ public class MausoleumGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = MausoleumGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = MausoleumGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.world);
+								SargeantEntity SargeantEntity = (SargeantEntity) PvZEntity.SARGEANTHELMET.create(MausoleumGraveEntity.this.getWorld());
 								SargeantEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								SargeantEntity.initialize(serverWorld, MausoleumGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								SargeantEntity.setOwner(MausoleumGraveEntity.this);
 								SargeantEntity.defenseMultiplier = MausoleumGraveEntity.this.defenseMultiplier;
 				serverWorld.spawnEntityAndPassengers(SargeantEntity);

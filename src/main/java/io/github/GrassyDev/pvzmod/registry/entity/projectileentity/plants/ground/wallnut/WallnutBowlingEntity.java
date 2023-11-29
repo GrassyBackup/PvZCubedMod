@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.groun
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.projectiles.ShootingPeaVariants;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
@@ -138,12 +136,12 @@ public class WallnutBowlingEntity extends PvZProjectileEntity implements IAnimat
 		if (this.isInsideWaterOrBubbleColumn()){
 			this.remove(RemovalReason.DISCARDED);
 		}
-		RandomGenerator randomGenerator = this.world.getRandom();
+		RandomGenerator randomGenerator = this.getWorld().getRandom();
 		int l = MathHelper.floor(this.getPos().x);
 		int m = MathHelper.floor(this.getPos().y - (double)0.25);
 		int n = MathHelper.floor(this.getPos().z);
 		BlockPos blockPos2 = new BlockPos(l, m, n);
-		if (!this.world.getBlockState(blockPos2).isAir() && !this.world.getBlockState(blockPos2).getMaterial().isLiquid()) {
+		if (!this.getWorld().getBlockState(blockPos2).isAir() && !this.getWorld().getBlockState(blockPos2).getMaterial().isLiquid()) {
 			float difference = 0;
 			if (right){
 				difference = -45f;
@@ -165,16 +163,16 @@ public class WallnutBowlingEntity extends PvZProjectileEntity implements IAnimat
 			double d = this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
 			double e = this.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 0.5F);
 			double f = this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.7F, 0.7F);
-			this.world.addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, this.world.getBlockState(blockPos2)), d, e, f, 0.0, 2, 0.0);
+			this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, this.getWorld().getBlockState(blockPos2)), d, e, f, 0.0, 2, 0.0);
 		}
 
-        if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.world.isClient && this.age >= 60) {
-            this.world.sendEntityStatus(this, (byte) 3);
+        if (!this.getWorld().isClient && this.age >= 60) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -215,7 +213,7 @@ public class WallnutBowlingEntity extends PvZProjectileEntity implements IAnimat
 					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
 					!(entity instanceof SnorkelEntity snorkelEntity && snorkelEntity.isInvisibleSnorkel()) && !(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) &&
-					(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying())) && this.canBounce && prevZombie != entity) {
+					(!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) && !(entity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) && this.canBounce && prevZombie != entity) {
 				String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 				SoundEvent sound;
 				sound = switch (zombieMaterial) {
@@ -266,7 +264,7 @@ public class WallnutBowlingEntity extends PvZProjectileEntity implements IAnimat
 
 	protected void onBlockHit(BlockHitResult blockHitResult) {
 		super.onBlockHit(blockHitResult);
-		if (!this.world.isClient) {
+		if (!this.getWorld().isClient) {
 			this.remove(RemovalReason.DISCARDED);
 		}
 	}

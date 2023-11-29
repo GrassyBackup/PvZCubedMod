@@ -29,6 +29,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -39,6 +48,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -147,14 +157,14 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tick() {
 		--this.attractTicks;
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -170,13 +180,13 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.MAGNETSHROOM_SEED_PACKET);
 				}
 				this.discard();
 			}
 		}
-		List<Entity> helmets = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, 0, 0));
+		List<Entity> helmets = this.getWorld().getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, 0, 0));
 		List<Entity> helmets2 = new ArrayList<>();
 		for (Entity entity : helmets){
 			if (entity instanceof MetalHelmetProjEntity metalHelmetProjEntity){
@@ -188,17 +198,17 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 		}
 		if (helmets2.isEmpty()){
 			this.magnetized = false;
-			this.world.sendEntityStatus(this, (byte) 108);
+			this.getWorld().sendEntityStatus(this, (byte) 108);
 		}
 		else {
 			this.magnetized = true;
-			this.world.sendEntityStatus(this, (byte) 109);
+			this.getWorld().sendEntityStatus(this, (byte) 109);
 		}
 	}
 
 	@Override
 	public void onDeath(DamageSource source) {
-		List<Entity> helmets = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, 0, 0));
+		List<Entity> helmets = this.getWorld().getNonSpectatingEntities(Entity.class, this.getBoundingBox().stretch(0, 0, 0));
 		for (Entity entity : helmets){
 			if (entity instanceof MetalHelmetProjEntity metalHelmetProjEntity){
 				if (metalHelmetProjEntity.getOwner() == this){
@@ -212,7 +222,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -303,14 +313,7 @@ public class MagnetshroomEntity extends PlantEntity implements IAnimatable, Rang
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

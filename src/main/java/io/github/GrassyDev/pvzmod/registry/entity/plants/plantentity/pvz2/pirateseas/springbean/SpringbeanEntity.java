@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2.pirat
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1c.endless.oxygen.bubble.BubblePadEntity;
@@ -148,9 +146,9 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 
 	protected List<HostileEntity> checkForZombies(float distance) {
 		this.onlyFlying = true;
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(3));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(3));
 		List<HostileEntity> list2 = new ArrayList<>();
-		List<GargantuarEntity> list3 = this.world.getNonSpectatingEntities(GargantuarEntity.class, this.getBoundingBox().expand(1));
+		List<GargantuarEntity> list3 = this.getWorld().getNonSpectatingEntities(GargantuarEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
 			HostileEntity hostileEntity;
@@ -163,7 +161,7 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 				if (this.squaredDistanceTo(hostileEntity) < distance || !list3.isEmpty()) {
 					if (hostileEntity.getY() < (this.getY() + 2) && hostileEntity.getY() > (this.getY() - 2)) {
 						list2.add(hostileEntity);
-						if (hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && !generalPvZombieEntity.isFlying()) {
+						if (hostileEntity instanceof GeneralPvZombieEntity generalPvZombieEntity && (!generalPvZombieEntity.isFlying() && !generalPvZombieEntity.isHovering())) {
 							this.onlyFlying = false;
 						}
 						return list2;
@@ -175,7 +173,7 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 
 
 	protected void bounceZombies() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(3));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(3));
 		Iterator var9 = list.iterator();
 		while (true) {
 			HostileEntity hostileEntity;
@@ -228,13 +226,13 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 		super.tick();
 		if (!this.checkForZombies(6.25f).isEmpty() && !this.bounced && !this.getIsAsleep()){
 			this.isAfraid = true;
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 			this.setLowprof(LowProf.TRUE);
 		}
 		else if (!this.getIsAsleep()) {
 			this.isAfraid = false;
 			this.animationScare = 30;
-			this.world.sendEntityStatus(this, (byte) 14);
+			this.getWorld().sendEntityStatus(this, (byte) 14);
 			if (this.bounceAnimation <= 0) {
 				this.setLowprof(LowProf.FALSE);
 			}
@@ -248,7 +246,7 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 		--bounceAnimation;
 		if (animationScare <= 0 && this.isAfraid && !this.getIsAsleep()){
 			if (!this.checkForZombies(0.2025f).isEmpty() && !this.onlyFlying){
-				this.world.sendEntityStatus(this, (byte) 111);
+				this.getWorld().sendEntityStatus(this, (byte) 111);
 				this.isFiring = true;
 			}
 			if (bounceAnimation == 24) {
@@ -256,8 +254,8 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 				this.playSound(PvZSounds.POLEVAULTEVENT, 0.5f, 1.5f);
 				this.isAfraid = false;
 				this.animationScare = 30;
-				this.world.sendEntityStatus(this, (byte) 14);
-				this.world.sendEntityStatus(this, (byte) 112);
+				this.getWorld().sendEntityStatus(this, (byte) 14);
+				this.getWorld().sendEntityStatus(this, (byte) 112);
 				this.bounced = true;
 			}
 		}
@@ -265,8 +263,8 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 			this.setLowprof(LowProf.FALSE);
 			this.bounced = false;
 			this.setIsAsleep(IsAsleep.TRUE);
-			this.world.sendEntityStatus(this, (byte) 110);
-			this.world.sendEntityStatus(this, (byte) 113);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 113);
 		}
 		if (this.getIsAsleep()){
 			--this.asleepTicks;
@@ -279,10 +277,10 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 			this.isFiring = false;
 			this.isAfraid = false;
 			this.animationScare = 30;
-			this.world.sendEntityStatus(this, (byte) 14);
+			this.getWorld().sendEntityStatus(this, (byte) 14);
 			this.bounced = false;
-			this.world.sendEntityStatus(this, (byte) 110);
-			this.world.sendEntityStatus(this, (byte) 113);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 113);
 			this.setIsAsleep(IsAsleep.FALSE);
 		}
 		BlockPos blockPos = this.getBlockPos();
@@ -290,7 +288,7 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.SPRINGBEAN_SEED_PACKET);
 				}
 				this.discard();
@@ -300,7 +298,7 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -386,14 +384,7 @@ public class SpringbeanEntity extends PlantEntity implements IAnimatable, Ranged
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

@@ -35,6 +35,15 @@ import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -45,6 +54,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.Iterator;
 import java.util.List;
@@ -122,42 +132,42 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 2 * (this.random.range(-1, 1) * 1.5);
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1) * 2);
 				double f = this.random.nextDouble() / 2 * (this.random.range(-1, 1) * 1.5);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 256; ++i) {
 				double d = this.random.nextDouble() / 2 * (this.random.range(-1, 1) * 1.5);
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1) * 2);
 				double f = this.random.nextDouble() / 2 * (this.random.range(-1, 1) * 1.5);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 256; ++i) {
 				double d = this.random.nextDouble() / 2 * (this.random.range(-1, 1) * 1.5);
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1) * 2);
 				double f = this.random.nextDouble() / 2 * (this.random.range(-1, 1) * 1.5);
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 128; ++i) {
 				double e = (double)MathHelper.nextBetween(randomGenerator, 0.04F, 0.06F);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() +  (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() +  (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (double)MathHelper.nextBetween(randomGenerator, 0F, 4.5F),
 						this.getZ() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						0, e, 0);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (double)MathHelper.nextBetween(randomGenerator, 0F, 4.5F),
 						this.getZ() + (double)MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						0, e, 0);
 			}
 			for (int i = 0; i < 128; ++i){
 				double e = (double)MathHelper.nextBetween(randomGenerator, 0.04F, 0.06F);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -3F, 3F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -3F, 3F),
 						this.getY() + 5,
 						this.getZ() + (double)MathHelper.nextBetween(randomGenerator, -3F, 3F),
 						0, e, 0);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -4F, 4F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -4F, 4F),
 						this.getY() + (this.random.range(3, 7)),
 						this.getZ() + (double)MathHelper.nextBetween(randomGenerator, -4F, 4F),
 						0, e, 0);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -5F, 5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double)MathHelper.nextBetween(randomGenerator, -5F, 5F),
 						this.getY() + 5,
 						this.getZ() + (double)MathHelper.nextBetween(randomGenerator, -5F, 5F),
 						0, e, 0);
@@ -171,19 +181,19 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 				double f2 = this.random.nextDouble() / 2 * 0.75;
 				double d3 = this.random.nextDouble() / 2 * 0.75;
 				double f3 = this.random.nextDouble() / 2 * 0.75;
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						this.getY() + MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						d, 0, f);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						this.getY() + MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						d1, 0, f1 * -1);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						this.getY() + MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						d2 * -1, 0, f2 * -1);
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						this.getY() + MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 						this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						d3 * -1, 0, f3);
@@ -249,11 +259,11 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 	public void ignite() {
 		this.dataTracker.set(IGNITED, true);
 	}
-	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
+	List<LivingEntity> checkList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
 	private void raycastExplode() {
 		Vec3d vec3d = this.getPos();
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(10));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(10));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -354,14 +364,14 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 	}
 
 	private void spawnEffectsCloud() {
-		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity2.setColor(0xFF66FF);
 		areaEffectCloudEntity2.setRadius(6F);
 		areaEffectCloudEntity2.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity2.setWaitTime(5);
 		areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 6);
 		areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float)areaEffectCloudEntity2.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity2);
+		this.getWorld().spawnEntity(areaEffectCloudEntity2);
 	}
 
 
@@ -388,14 +398,14 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 	}
 
 	public void tick() {
-		if (!this.world.isClient && !this.getCofee()) {
-			if ((this.world.getAmbientDarkness() >= 2 ||
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
-					this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
+		if (!this.getWorld().isClient && !this.getCofee()) {
+			if ((this.getWorld().getAmbientDarkness() >= 2 ||
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2 ||
+					this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS)))) {
 				this.setIsAsleep(IsAsleep.FALSE);
-			} else if (this.world.getAmbientDarkness() < 2 &&
-					this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
-					!this.world.getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
+			} else if (this.getWorld().getAmbientDarkness() < 2 &&
+					this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2 &&
+					!this.getWorld().getBiome(this.getBlockPos()).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) {
 				this.setIsAsleep(IsAsleep.TRUE);
 			}
 		}
@@ -411,7 +421,7 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.PERFOOMSHROOM_SEED_PACKET);
 				}
 				this.discard();
@@ -445,7 +455,7 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 			if (this.currentFuseTime >= this.fuseTime && !this.getIsAsleep()) {
 				this.currentFuseTime = this.fuseTime;
 				this.raycastExplode();
-				this.world.sendEntityStatus(this, (byte) 106);
+				this.getWorld().sendEntityStatus(this, (byte) 106);
 				this.playSound(PvZSounds.DOOMSHROOMEXPLOSIONEVENT, 1F, 1F);
 				this.spawnEffectsCloud();
 				this.dead = true;
@@ -456,7 +466,7 @@ public class PerfoomshroomEntity extends PlantEntity implements IAnimatable {
 
     public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}

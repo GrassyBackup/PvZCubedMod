@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.upgrades.twinsunflower.TwinSunflowerEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.SunflowerVariants;
@@ -208,14 +206,14 @@ public class SunflowerEntity extends PlantEntity implements IAnimatable {
 			}
 
 			if (this.currentFuseTime >= this.sunProducingTime) {
-				if (!this.world.isClient && this.isAlive() && this.zombieSunCheck && !this.isInsideWaterOrBubbleColumn()){
+				if (!this.getWorld().isClient && this.isAlive() && this.zombieSunCheck && !this.isInsideWaterOrBubbleColumn()){
 					this.playSound(PvZSounds.SUNDROPEVENT, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) + 0.75F);
-					if (this.world.getAmbientDarkness() >= 2 ||
-							this.world.getLightLevel(LightType.SKY, this.getBlockPos()) < 2){
+					if (this.getWorld().getAmbientDarkness() >= 2 ||
+							this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) < 2){
 						this.dropItem(ModItems.SMALLSUN);
 					}
-					else if (this.world.getAmbientDarkness() < 2 &&
-							this.world.getLightLevel(LightType.SKY, this.getBlockPos()) >= 2) {
+					else if (this.getWorld().getAmbientDarkness() < 2 &&
+							this.getWorld().getLightLevel(LightType.SKY, this.getBlockPos()) >= 2) {
 						this.dropItem(ModItems.SUN);
 					}
 					this.sunProducingTime = (int) (PVZCONFIG.nestedSun.sunflowerSec() * 20);
@@ -228,21 +226,21 @@ public class SunflowerEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && !this.hasStatusEffect(DISABLE)) {
+		if (!this.getWorld().isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn() && !this.hasStatusEffect(DISABLE)) {
 			if (--raycastDelay >= 0){
 				this.produceSun();
 				raycastDelay = 60;
 			}
 		}
 
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
 
 	protected void produceSun() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(15));
-		List<GeneralPvZombieEntity> zombieList = this.world.getNonSpectatingEntities(GeneralPvZombieEntity.class, this.getBoundingBox().expand(15));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(15));
+		List<GeneralPvZombieEntity> zombieList = this.getWorld().getNonSpectatingEntities(GeneralPvZombieEntity.class, this.getBoundingBox().expand(15));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -285,8 +283,8 @@ public class SunflowerEntity extends PlantEntity implements IAnimatable {
 		Item item = itemStack.getItem();
 		if (itemStack.isOf(ModItems.TWINSUNFLOWER_SEED_PACKET) && !player.getItemCooldownManager().isCoolingDown(item)) {
 			this.playSound(PvZSounds.PLANTPLANTEDEVENT);
-			if ((this.world instanceof ServerWorld)) {
-				ServerWorld serverWorld = (ServerWorld) this.world;
+			if ((this.getWorld() instanceof ServerWorld)) {
+				ServerWorld serverWorld = (ServerWorld) this.getWorld();
 				TwinSunflowerEntity twinSunflowerEntity = (TwinSunflowerEntity) PvZEntity.TWINSUNFLOWER.create(world);
 				twinSunflowerEntity.setTarget(this.getTarget());
 				twinSunflowerEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
@@ -442,14 +440,7 @@ public class SunflowerEntity extends PlantEntity implements IAnimatable {
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

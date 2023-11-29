@@ -16,7 +16,24 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public abstract class SummonerEntity extends GeneralPvZombieEntity implements Monster {
 
@@ -110,10 +127,10 @@ public abstract class SummonerEntity extends GeneralPvZombieEntity implements Mo
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();
@@ -141,7 +158,7 @@ public abstract class SummonerEntity extends GeneralPvZombieEntity implements Mo
 	}
 
 	public boolean isSpellcasting() {
-		if (this.world.isClient) {
+		if (this.getWorld().isClient) {
 			return (Byte)this.dataTracker.get(SPELL) > 0;
 		} else {
 			return this.spellTicks > 0;
@@ -154,7 +171,7 @@ public abstract class SummonerEntity extends GeneralPvZombieEntity implements Mo
 	}
 
 	protected SummonerEntity.Spell getSpell() {
-		return !this.world.isClient ? this.spell : SummonerEntity.Spell.byId((Byte)this.dataTracker.get(SPELL));
+		return !this.getWorld().isClient ? this.spell : SummonerEntity.Spell.byId((Byte)this.dataTracker.get(SPELL));
 	}
 
 	protected void mobTick() {

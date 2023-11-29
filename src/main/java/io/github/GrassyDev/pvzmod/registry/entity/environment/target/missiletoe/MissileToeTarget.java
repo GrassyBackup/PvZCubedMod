@@ -12,6 +12,15 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.List;
 
@@ -77,7 +86,7 @@ public class MissileToeTarget extends TileEntity {
 		if (!hasTargetID()){
 			this.discard();
 		}
-		List<PlantEntity> targetList = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(30));
+		List<PlantEntity> targetList = this.getWorld().getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(30));
 		boolean targetIdBool = false;
 		for (PlantEntity plantEntity : targetList){
 			if (plantEntity.getId() == getTargetID()){
@@ -89,10 +98,10 @@ public class MissileToeTarget extends TileEntity {
 		}
 		if (canShoot) {
 			if (--shootTick == 0) {
-				MissileToeProjEntity proj = new MissileToeProjEntity(PvZEntity.MISSILETOEPROJ, this.world);
+				MissileToeProjEntity proj = new MissileToeProjEntity(PvZEntity.MISSILETOEPROJ, this.getWorld());
 				proj.updatePosition(this.getX(), this.getY() + 5, this.getZ());
 				proj.setOwner(this);
-				this.world.spawnEntity(proj);
+				this.getWorld().spawnEntity(proj);
 			}
 			if (shootTick <= -60) {
 				this.discard();

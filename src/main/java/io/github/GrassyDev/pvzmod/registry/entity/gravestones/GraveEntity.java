@@ -33,7 +33,24 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +100,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 
 	@Override
 	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
-		if (this.world.getGameRules().getBoolean(PvZCubed.SHOULD_ZOMBIE_DROP)){
+		if (this.getWorld().getGameRules().getBoolean(PvZCubed.SHOULD_ZOMBIE_DROP)){
 			super.dropLoot(source, causedByPlayer);
 		}
 	}
@@ -141,7 +158,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 		if (this.isInfinite()){
 			this.setPersistent();
 		}
-		if (this.world.getGameRules().getBoolean(PvZCubed.SPECIAL_ZOMBIE) || PVZCONFIG.nestedSpawns.specialZombieSpawn()) {
+		if (this.getWorld().getGameRules().getBoolean(PvZCubed.SPECIAL_ZOMBIE) || PVZCONFIG.nestedSpawns.specialZombieSpawn()) {
 			double random = Math.random();
 			if (random <= 0.25) {
 				this.setUnlockSpecial(UnlockSpecial.TRUE);
@@ -446,7 +463,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 	}
 
 	public void tick() {
-		if (!this.world.isClient() && this.getTarget() == null) {
+		if (!this.getWorld().isClient() && this.getTarget() == null) {
 			ServerWorldAccess serverWorldAccess = (ServerWorldAccess) this.getWorld();
 			if (serverWorldAccess != null) {
 				this.setTarget(this.getClosestGarden(checkGarden(this.getPos(), serverWorldAccess), TargetPredicate.DEFAULT, this, this.getX(), this.getY(), this.getZ()));
@@ -536,10 +553,10 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) {
 			return false;
-		} else if (!(this.world instanceof ServerWorld)) {
+		} else if (!(this.getWorld() instanceof ServerWorld)) {
 			return false;
 		} else {
-			ServerWorld serverWorld = (ServerWorld)this.world;
+			ServerWorld serverWorld = (ServerWorld)this.getWorld();
 			LivingEntity livingEntity = this.getTarget();
 			if (livingEntity == null && source.getAttacker() instanceof LivingEntity) {
 				livingEntity = (LivingEntity)source.getAttacker();
@@ -549,7 +566,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 	}
 
 	public boolean isSpellcasting() {
-		if (this.world.isClient) {
+		if (this.getWorld().isClient) {
 			return (Byte)this.dataTracker.get(SPELL) > 0;
 		} else {
 			return this.spellTicks > 0;
@@ -562,7 +579,7 @@ public abstract class GraveEntity extends PathAwareEntity implements Monster {
 	}
 
 	protected GraveEntity.Spell getSpell() {
-		return !this.world.isClient ? this.spell : GraveEntity.Spell.byId((Byte)this.dataTracker.get(SPELL));
+		return !this.getWorld().isClient ? this.spell : GraveEntity.Spell.byId((Byte)this.dataTracker.get(SPELL));
 	}
 
 	protected void mobTick() {

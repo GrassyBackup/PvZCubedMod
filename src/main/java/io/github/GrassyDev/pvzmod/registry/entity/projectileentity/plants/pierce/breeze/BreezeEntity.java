@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierc
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.PvZProjectileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.snorkel.SnorkelEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
@@ -89,13 +87,13 @@ public class BreezeEntity extends PvZProjectileEntity implements IAnimatable {
 
     public void tick() {
 		super.tick();
-		if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-			this.world.sendEntityStatus(this, (byte) 3);
+		if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+			this.getWorld().sendEntityStatus(this, (byte) 3);
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && this.age >= 7) {
-			this.world.sendEntityStatus(this, (byte) 3);
+		if (!this.getWorld().isClient && this.age >= 7) {
+			this.getWorld().sendEntityStatus(this, (byte) 3);
 			this.remove(RemovalReason.DISCARDED);
 		}
 
@@ -105,7 +103,7 @@ public class BreezeEntity extends PvZProjectileEntity implements IAnimatable {
 			double e = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);
 			double f = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);
 			double g = (double) MathHelper.nextBetween(randomGenerator, 0.25F, 0.66F);
-			this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + g, this.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + g, this.getZ(), d, e, f);
 		}
 	}
 
@@ -180,7 +178,7 @@ public class BreezeEntity extends PvZProjectileEntity implements IAnimatable {
 					case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 					default -> PvZSounds.PEAHITEVENT;
 				};
-				if (entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying() && et == null) {
+				if (((entity instanceof GeneralPvZombieEntity generalPvZombieEntity1 && generalPvZombieEntity1.isFlying()) || (entity instanceof GeneralPvZombieEntity zombie1 && zombie1.isHovering())) && et == null) {
 					Vec3d vec3d = new Vec3d((double) 0.01875, 0.0, 0.0).rotateY(-this.getYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 					if (this.getOwner() != null) {
 						vec3d = new Vec3d((double) 0.01875, 0.0, 0.0).rotateY(-this.getOwner().getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
@@ -220,13 +218,13 @@ public class BreezeEntity extends PvZProjectileEntity implements IAnimatable {
 			double e = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);
 			double f = (double) MathHelper.nextBetween(randomGenerator, -0.05F, 0.05F);
 			double g = (double) MathHelper.nextBetween(randomGenerator, 0.25F, 0.66F);
-			this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + g, this.getZ(), d, e, f);
+			this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + g, this.getZ(), d, e, f);
 		}
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
     }

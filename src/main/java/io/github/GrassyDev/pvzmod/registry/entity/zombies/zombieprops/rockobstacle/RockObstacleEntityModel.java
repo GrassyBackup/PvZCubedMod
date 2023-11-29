@@ -10,7 +10,7 @@ public class RockObstacleEntityModel extends AnimatedGeoModel<RockObstacleEntity
     public Identifier getModelResource(RockObstacleEntity object)
     {
 		Identifier identifier;
-		identifier = new Identifier("pvzmod", "geo/gargolith.geo.json");
+		identifier = new Identifier("pvzmod", "geo/egypttombstone.geo.json");
 		if (object.getType().equals(PvZEntity.GARGOLITHOBSTACLE)) {
 			identifier = new Identifier("pvzmod", "geo/gargolith.geo.json");
 		}
@@ -24,7 +24,7 @@ public class RockObstacleEntityModel extends AnimatedGeoModel<RockObstacleEntity
     public Identifier getTextureResource(RockObstacleEntity object)
 	{
 		Identifier identifier;
-		identifier = new Identifier("pvzmod", "textures/entity/gargantuar/gargolith.png");
+		identifier = new Identifier("pvzmod", "textures/entity/tombstone/egypttombstone.png");
 		if (object.getType().equals(PvZEntity.GARGOLITHOBSTACLE)) {
 			identifier = new Identifier("pvzmod", "textures/entity/gargantuar/gargolith.png");
 		}

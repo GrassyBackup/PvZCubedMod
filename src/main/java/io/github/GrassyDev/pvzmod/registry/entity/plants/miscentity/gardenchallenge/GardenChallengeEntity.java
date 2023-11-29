@@ -26,6 +26,7 @@ import io.github.GrassyDev.pvzmod.registry.entity.variants.challenge.ChallengeWe
 import io.github.GrassyDev.pvzmod.registry.entity.variants.challenge.TypeOfWorld;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.GraveDifficulty;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.graves.RiftVariants;
+import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieprops.rockobstacle.RockObstacleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes.GeneralPvZombieEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -558,8 +559,8 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				graveEntity.discard();
 			}
 		}
-		List<WeatherTile> weatherTiles = this.world.getNonSpectatingEntities(WeatherTile.class, this.getBoundingBox().expand(25, 5, 25));
-		List<TimeTile> timeTiles = this.world.getNonSpectatingEntities(TimeTile.class, this.getBoundingBox().expand(25, 5, 25));
+		List<WeatherTile> weatherTiles = this.getWorld().getNonSpectatingEntities(WeatherTile.class, this.getBoundingBox().expand(25, 5, 25));
+		List<TimeTile> timeTiles = this.getWorld().getNonSpectatingEntities(TimeTile.class, this.getBoundingBox().expand(25, 5, 25));
 		for (WeatherTile weatherTile : weatherTiles){
 			weatherTile.discard();
 		}
@@ -594,8 +595,8 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					this.dropItem(Items.NETHERITE_SCRAP);
 				}
 			}
-			List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
-			List<GraveEntity> list2 = this.world.getNonSpectatingEntities(GraveEntity.class, this.getBoundingBox().expand(25, 5, 25));
+			List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
+			List<GraveEntity> list2 = this.getWorld().getNonSpectatingEntities(GraveEntity.class, this.getBoundingBox().expand(25, 5, 25));
 			for (HostileEntity hostileEntity : list){
 				hostileEntity.discard();
 			}
@@ -613,7 +614,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 	int blockBreakCooldown;
 
 	public void tick() {
-		List<PlantEntity> list = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(25, 5, 25));
+		List<PlantEntity> list = this.getWorld().getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(25, 5, 25));
 		for (PlantEntity plantEntity : list) {
 			float multiplierTimes = 1;
 			plantEntity.damageMultiplier = 1;
@@ -646,7 +647,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			default -> maxWaves = 1;
 		};
 		this.waveBar.setPercent(this.getWaveCount() / maxWaves);
-		if (this.getY() <= this.world.getBottomY() + 10){
+		if (this.getY() <= this.getWorld().getBottomY() + 10){
 			this.kill();
 		}
 		if (this.age > 1) {
@@ -664,7 +665,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			weatherTile.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
 			weatherTile.setPersistent();
 			weatherTile.setHeadYaw(0);
-			if (this.world instanceof ServerWorld serverWorld) {
+			if (this.getWorld() instanceof ServerWorld serverWorld) {
 				weatherTile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				serverWorld.spawnEntityAndPassengers(weatherTile);
 			}
@@ -675,7 +676,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			timeTile.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
 			timeTile.setPersistent();
 			timeTile.setHeadYaw(0);
-			if (this.world instanceof ServerWorld serverWorld) {
+			if (this.getWorld() instanceof ServerWorld serverWorld) {
 				timeTile.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				serverWorld.spawnEntityAndPassengers(timeTile);
 			}
@@ -683,7 +684,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 		}
 		if (this.currentTime != null) {
 			if (this.currentTime.getTime().equals(ChallengeTime.DROUGHT)) {
-				List<HostileEntity> list2 = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
+				List<HostileEntity> list2 = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(25, 5, 25));
 				for (HostileEntity hostileEntity : list2) {
 					if (!hostileEntity.isWet()) {
 						hostileEntity.removeStatusEffect(PvZCubed.WET);
@@ -702,7 +703,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				double d = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
 				double e = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
 				double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d, e, f);
 			}
 			this.setWaveticks(this.getWaveTicks() + 1);
 		}
@@ -749,6 +750,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 	protected List<BlockPos> rift1Spots = new ArrayList<>();
 	protected List<BlockPos> rift2Spots = new ArrayList<>();
 	protected List<BlockPos> rift3Spots = new ArrayList<>();
+	protected List<BlockPos> egyptSpots = new ArrayList<>();
 	protected List<BlockPos> world2Favorable = new ArrayList<>();
 	protected List<BlockPos> world3Favorable = new ArrayList<>();
 	protected List<BlockPos> world4Favorable = new ArrayList<>();
@@ -760,9 +762,9 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 	protected TypeOfWorld addedWorld = TypeOfWorld.BASIC;
 
 	public void checkEntities(){
-		List<Entity> check2Remove = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().expand(25, 5, 25));
-		firsWorldCheck = this.world.getNonSpectatingEntities(GraveEntity.class, this.getBoundingBox());
-		List<Entity> check = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox());
+		List<Entity> check2Remove = this.getWorld().getNonSpectatingEntities(Entity.class, this.getBoundingBox().expand(25, 5, 25));
+		firsWorldCheck = this.getWorld().getNonSpectatingEntities(GraveEntity.class, this.getBoundingBox());
+		List<Entity> check = this.getWorld().getNonSpectatingEntities(Entity.class, this.getBoundingBox());
 		for (Entity entity : check){
 			if (entity instanceof WeatherTile weatherTile){
 				currentWeather = weatherTile;
@@ -811,7 +813,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			}
 		}
 
-		checkEntities = this.world.getNonSpectatingEntities(Entity.class, this.getBoundingBox().expand(20, 6, 20));
+		checkEntities = this.getWorld().getNonSpectatingEntities(Entity.class, this.getBoundingBox().expand(20, 6, 20));
 		for (GraveEntity graveEntity : currentWorlds){
 			if (graveEntity != null) {
 				graveEntity.decorative = true;
@@ -992,7 +994,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				}
 				this.addWorld(entityType);
 
-				if (this.world instanceof ServerWorld) {
+				if (this.getWorld() instanceof ServerWorld) {
 					double nightChance = 0;
 					double bombChance = 0;
 					double droughtChance = 0;
@@ -1234,10 +1236,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 							else {
 								getPos = rift3Spots.get(this.random.range(0, rift3Spots.size() -1));
 							}
-							if (this.world instanceof ServerWorld serverWorld) {
-								RiftTile riftTile = (RiftTile) PvZEntity.RIFTTILE.create(this.world);
+							if (this.getWorld() instanceof ServerWorld serverWorld) {
+								RiftTile riftTile = (RiftTile) PvZEntity.RIFTTILE.create(this.getWorld());
 								riftTile.refreshPositionAndAngles(getPos, 0.0F, 0.0F);
-								riftTile.initialize(serverWorld, this.world.getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								riftTile.initialize(serverWorld, this.getWorld().getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								riftTile.setVariant(RiftVariants.BASS);
 								serverWorld.spawnEntityAndPassengers(riftTile);
 							}
@@ -1266,23 +1268,34 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 							else{
 								getPos = rift2Spots.get(this.random.range(0, rift2Spots.size() -1));
 							}
-							if (this.world instanceof ServerWorld serverWorld) {
-								RiftTile riftTile = (RiftTile) PvZEntity.RIFTTILE.create(this.world);
+							if (this.getWorld() instanceof ServerWorld serverWorld) {
+								RiftTile riftTile = (RiftTile) PvZEntity.RIFTTILE.create(this.getWorld());
 								riftTile.refreshPositionAndAngles(getPos, 0.0F, 0.0F);
-								riftTile.initialize(serverWorld, this.world.getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								riftTile.initialize(serverWorld, this.getWorld().getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								riftTile.setVariant(RiftVariants.GARGOLITH);
 								serverWorld.spawnEntityAndPassengers(riftTile);
 							}
 						}
 					}
 				}
-				if (this.world instanceof ServerWorld serverWorld && this.currentWeather != null && this.currentWeather.getWeather().equals(ChallengeWeather.THUNDER)) {
+				if (graveEntities.contains(PvZEntity.EGYPTGRAVESTONE)) {
+					for (int x = 0; x <= Math.min(this.getWaveCount() + this.getTierCount() / 2, 6); ++x){
+						BlockPos getPos = egyptSpots.get(this.random.range(0, egyptSpots.size() -1));
+						if (this.getWorld() instanceof ServerWorld serverWorld) {
+							RockObstacleEntity tombstone = (RockObstacleEntity) PvZEntity.EGYPTTOMBSTONE.create(this.getWorld());
+							tombstone.refreshPositionAndAngles(getPos, 0.0F, 0.0F);
+							tombstone.initialize(serverWorld, this.getWorld().getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							serverWorld.spawnEntityAndPassengers(tombstone);
+						}
+					}
+				}
+				if (this.getWorld() instanceof ServerWorld serverWorld && this.currentWeather != null && this.currentWeather.getWeather().equals(ChallengeWeather.THUNDER)) {
 					if (this.currentWeather.getWeather().equals(ChallengeWeather.RAIN)) {
 						for (int x = 0; x <= 2; ++x) {
 							BlockPos waterPos = waterSpots.get(this.random.range(0, waterSpots.size() - 1));
-							WaterTile waterTile = (WaterTile) PvZEntity.WATERTILE.create(this.world);
+							WaterTile waterTile = (WaterTile) PvZEntity.WATERTILE.create(this.getWorld());
 							waterTile.refreshPositionAndAngles(waterPos, 0.0F, 0.0F);
-							waterTile.initialize(serverWorld, this.world.getLocalDifficulty(waterPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							waterTile.initialize(serverWorld, this.getWorld().getLocalDifficulty(waterPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							waterTile.setPersistent();
 							serverWorld.spawnEntityAndPassengers(waterTile);
 						}
@@ -1290,28 +1303,28 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					if (this.currentWeather.getWeather().equals(ChallengeWeather.THUNDER)) {
 						for (int x = 0; x <= 3; ++x) {
 							BlockPos waterPos = waterSpots.get(this.random.range(0, waterSpots.size() - 1));
-							WaterTile waterTile = (WaterTile) PvZEntity.WATERTILE.create(this.world);
+							WaterTile waterTile = (WaterTile) PvZEntity.WATERTILE.create(this.getWorld());
 							waterTile.refreshPositionAndAngles(waterPos, 0.0F, 0.0F);
-							waterTile.initialize(serverWorld, this.world.getLocalDifficulty(waterPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							waterTile.initialize(serverWorld, this.getWorld().getLocalDifficulty(waterPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							waterTile.setPersistent();
 							serverWorld.spawnEntityAndPassengers(waterTile);
 						}
 					}
 				}
-				if (this.world instanceof ServerWorld serverWorld && this.currentTime != null && this.currentTime.getTime().equals(ChallengeTime.BOMB)) {
+				if (this.getWorld() instanceof ServerWorld serverWorld && this.currentTime != null && this.currentTime.getTime().equals(ChallengeTime.BOMB)) {
 					for (int x = 0; x <= 3; ++x) {
 						BlockPos waterPos = waterSpots.get(this.random.range(0, waterSpots.size() - 1));
 						BlockPos sunPos = waterPos.add(0, 3, 0);
-						SunBombEntity sunBomb = (SunBombEntity) PvZEntity.SUNBOMB.create(this.world);
+						SunBombEntity sunBomb = (SunBombEntity) PvZEntity.SUNBOMB.create(this.getWorld());
 						sunBomb.refreshPositionAndAngles(sunPos, 0.0F, 0.0F);
-						sunBomb.initialize(serverWorld, this.world.getLocalDifficulty(sunPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						sunBomb.initialize(serverWorld, this.getWorld().getLocalDifficulty(sunPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						sunBomb.setPersistent();
 						serverWorld.spawnEntityAndPassengers(sunBomb);
 					}
 					BlockPos getPos = spawnableSpots.get(this.random.range(0, spawnableSpots.size() -1));
-					FutureGraveEntity graveEntity = (FutureGraveEntity) PvZEntity.FUTUREGRAVESTONE.create(this.world);
+					FutureGraveEntity graveEntity = (FutureGraveEntity) PvZEntity.FUTUREGRAVESTONE.create(this.getWorld());
 					graveEntity.refreshPositionAndAngles(getPos, 0.0F, 0.0F);
-					graveEntity.initialize(serverWorld, this.world.getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					graveEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					if (this.getTierCount() >= 3){
 						graveEntity.setVariant(GraveDifficulty.HARD);
 						graveEntity.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
@@ -1328,10 +1341,10 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					serverWorld.spawnEntityAndPassengers(graveEntity);
 				}
 				BlockPos getPos = spawnableSpots.get(this.random.range(0, spawnableSpots.size() -1));
-				if (this.world instanceof ServerWorld serverWorld) {
-					GraveEntity graveEntity = (GraveEntity) PvZEntity.BASICGRAVESTONE.create(this.world);
+				if (this.getWorld() instanceof ServerWorld serverWorld) {
+					GraveEntity graveEntity = (GraveEntity) PvZEntity.BASICGRAVESTONE.create(this.getWorld());
 					graveEntity.refreshPositionAndAngles(getPos, 0.0F, 0.0F);
-					graveEntity.initialize(serverWorld, this.world.getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					graveEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(getPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					if (this.getTierCount() >= 3){
 						graveEntity.setVariant(GraveDifficulty.HARD);
 						graveEntity.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
@@ -1349,9 +1362,9 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					if (!graveEntities.isEmpty()) {
 						if (graveEntities.contains(PvZEntity.POOLGRAVESTONE)) {
 							BlockPos getPos2 = spawnableSpots.get(this.random.range(0, spawnableSpots.size() - 1));
-							GraveEntity graveEntity2 = (GraveEntity) PvZEntity.POOLGRAVESTONE.create(this.world);
+							GraveEntity graveEntity2 = (GraveEntity) PvZEntity.POOLGRAVESTONE.create(this.getWorld());
 							graveEntity2.refreshPositionAndAngles(getPos2, 0.0F, 0.0F);
-							graveEntity2.initialize(serverWorld, this.world.getLocalDifficulty(getPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							graveEntity2.initialize(serverWorld, this.getWorld().getLocalDifficulty(getPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							if (this.getTierCount() >= 3){
 								graveEntity2.setVariant(GraveDifficulty.MEDHARD);
 								graveEntity2.defenseMultiplier = 1;
@@ -1369,9 +1382,9 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						}
 						EntityType<?> entityType = graveEntities.get(random.range(0, graveEntities.size() - 1));
 						BlockPos getPos2 = spawnableSpots.get(this.random.range(0, spawnableSpots.size() - 1));
-						GraveEntity graveEntity2 = (GraveEntity) entityType.create(this.world);
+						GraveEntity graveEntity2 = (GraveEntity) entityType.create(this.getWorld());
 						graveEntity2.refreshPositionAndAngles(getPos2, 0.0F, 0.0F);
-						graveEntity2.initialize(serverWorld, this.world.getLocalDifficulty(getPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						graveEntity2.initialize(serverWorld, this.getWorld().getLocalDifficulty(getPos2), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						if (this.getTierCount() >= 3){
 							graveEntity2.setVariant(GraveDifficulty.HARD);
 							graveEntity2.setUnlockSpecial(GraveEntity.UnlockSpecial.TRUE);
@@ -1411,19 +1424,19 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 		if (this.getWaveInProgress() && this.getWaveTicks() >= 60){
 			this.setWaveinprogress(WaveInProgress.FALSE);
 		}
-		if (this.getWaveInProgress() && this.world instanceof ServerWorld serverWorld){
+		if (this.getWaveInProgress() && this.getWorld() instanceof ServerWorld serverWorld){
 			if (getWaveTicks() == 20 && this.getTier().equals(ChallengeTiers.ONE)){
-				GraveEntity graveEntity = (GraveEntity) PvZEntity.BASICGRAVESTONE.create(this.world);
+				GraveEntity graveEntity = (GraveEntity) PvZEntity.BASICGRAVESTONE.create(this.getWorld());
 				BlockPos blockPos = new BlockPos(this.getBlockPos().getX() + 10, this.getBlockPos().getY(), this.getBlockPos().getZ() + 10);
 				graveEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				graveEntity.initialize(serverWorld, this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+				graveEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				serverWorld.spawnEntityAndPassengers(graveEntity);
 			}
 			if (getWaveTicks() == 20 && this.getTier().equals(ChallengeTiers.TWO)){
-				GraveEntity graveEntity = (GraveEntity) PvZEntity.NIGHTGRAVESTONE.create(this.world);
+				GraveEntity graveEntity = (GraveEntity) PvZEntity.NIGHTGRAVESTONE.create(this.getWorld());
 				BlockPos blockPos = new BlockPos(this.getBlockPos().getX() + 10, this.getBlockPos().getY(), this.getBlockPos().getZ() + 10);
 				graveEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				graveEntity.initialize(serverWorld, this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+				graveEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				serverWorld.spawnEntityAndPassengers(graveEntity);
 			}
 		}**/
@@ -1525,7 +1538,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			this.cooldown = 10;
 			this.addWave();
 			this.setWaveinprogress(WaveInProgress.TRUE);
-			if (currentTime != null && this.world instanceof ServerWorld serverWorld){
+			if (currentTime != null && this.getWorld() instanceof ServerWorld serverWorld){
 				if ((currentTime.getTime().equals(ChallengeTime.FULLMOON) || currentTime.getTime().equals(ChallengeTime.NEWMOON) || currentTime.getTime().equals(ChallengeTime.HALFMOON)) &&
 						serverWorld.isDay()){
 					long l = serverWorld.getLevelProperties().getTimeOfDay() + 24000L;
@@ -1545,7 +1558,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					serverWorld.setTimeOfDay(l - l % 24000L);
 				}
 			}
-			if (currentWeather != null && this.world instanceof ServerWorld serverWorld){
+			if (currentWeather != null && this.getWorld() instanceof ServerWorld serverWorld){
 				if (currentWeather.getWeather().equals(ChallengeWeather.CLOUD)) {
 					serverWorld.setWeather(0, 0, false, false);
 				}
@@ -1562,8 +1575,8 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 	}
 
 	public void addWorld(EntityType<?> entityType){
-		if (this.world instanceof ServerWorld serverWorld) {
-			GraveEntity graveEntity = (GraveEntity) entityType.create(this.world);
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
+			GraveEntity graveEntity = (GraveEntity) entityType.create(this.getWorld());
 			BlockPos blockPos = this.getBlockPos();
 			boolean bl = true;
 			if (currentWorlds.get(0) == null) {
@@ -1603,7 +1616,7 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 			}
 			if (bl) {
 				graveEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				graveEntity.initialize(serverWorld, this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+				graveEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 				graveEntity.setAiDisabled(true);
 				graveEntity.decorative = true;
 				serverWorld.spawnEntityAndPassengers(graveEntity);
@@ -1856,11 +1869,11 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				BlockPos blockPos72 = new BlockPos(blockPos22.getX(), blockPos22.getY(), blockPos22.getZ() + z);
 				BlockPos blockPos73 = new BlockPos(blockPos22.getX(), blockPos22.getY() - 1, blockPos22.getZ() + z);
 				BlockPos blockPos74 = new BlockPos(blockPos22.getX(), blockPos22.getY() + 1, blockPos22.getZ() + z);
-				if (!this.world.getBlockState(blockPos7).isAir() ||
-						!this.world.getBlockState(blockPos8).isAir() ||
-						!this.world.getBlockState(blockPos9).isAir() ||
-						!this.world.getBlockState(blockPos10).isAir() ||
-						!this.world.getBlockState(blockPos11).isAir()) {
+				if (!this.getWorld().getBlockState(blockPos7).isAir() ||
+						!this.getWorld().getBlockState(blockPos8).isAir() ||
+						!this.getWorld().getBlockState(blockPos9).isAir() ||
+						!this.getWorld().getBlockState(blockPos10).isAir() ||
+						!this.getWorld().getBlockState(blockPos11).isAir()) {
 					this.removeBlock(blockPos7, false);
 					this.removeBlock(blockPos8, false);
 					this.removeBlock(blockPos9, false);
@@ -1869,49 +1882,49 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				}
 				if (((z & 1) == 0)) {
 					if ((x & 1) == 0) {
-						if (!this.world.getBlockState(blockPos72).equals(ModBlocks.GRASS_TILE.getDefaultState())) {
-							this.world.setBlockState(blockPos72, ModBlocks.GRASS_TILE.getDefaultState());
-							this.world.setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
+						if (!this.getWorld().getBlockState(blockPos72).equals(ModBlocks.GRASS_TILE.getDefaultState())) {
+							this.getWorld().setBlockState(blockPos72, ModBlocks.GRASS_TILE.getDefaultState());
+							this.getWorld().setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
 						}
 					} else {
-						if (!this.world.getBlockState(blockPos72).equals(ModBlocks.DARK_GRASS_TILE.getDefaultState())) {
-							this.world.setBlockState(blockPos72, ModBlocks.DARK_GRASS_TILE.getDefaultState());
-							this.world.setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
+						if (!this.getWorld().getBlockState(blockPos72).equals(ModBlocks.DARK_GRASS_TILE.getDefaultState())) {
+							this.getWorld().setBlockState(blockPos72, ModBlocks.DARK_GRASS_TILE.getDefaultState());
+							this.getWorld().setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
 						}
 						if ((x == 7 || x == -7) && z >= -7 && z <= 7){
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.GREEN_WOOL.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.GREEN_WOOL.getDefaultState());
-								this.world.setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.GREEN_WOOL.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.GREEN_WOOL.getDefaultState());
+								this.getWorld().setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
 							}
 						}
 					}
 				} else {
 					if ((x & 1) == 0) {
-						if (!this.world.getBlockState(blockPos72).equals(ModBlocks.DARK_GRASS_TILE.getDefaultState())) {
-							this.world.setBlockState(blockPos72, ModBlocks.DARK_GRASS_TILE.getDefaultState());
-							this.world.setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
+						if (!this.getWorld().getBlockState(blockPos72).equals(ModBlocks.DARK_GRASS_TILE.getDefaultState())) {
+							this.getWorld().setBlockState(blockPos72, ModBlocks.DARK_GRASS_TILE.getDefaultState());
+							this.getWorld().setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
 						}
 						if ((z == 7 || z == -7) && x >= -7 && x <= 7){
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.GREEN_WOOL.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.GREEN_WOOL.getDefaultState());
-								this.world.setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.GREEN_WOOL.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.GREEN_WOOL.getDefaultState());
+								this.getWorld().setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
 							}
 						}
 					} else {
-						if (!this.world.getBlockState(blockPos72).equals(ModBlocks.GRASS_TILE.getDefaultState())) {
-							this.world.setBlockState(blockPos72, ModBlocks.GRASS_TILE.getDefaultState());
-							this.world.setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
+						if (!this.getWorld().getBlockState(blockPos72).equals(ModBlocks.GRASS_TILE.getDefaultState())) {
+							this.getWorld().setBlockState(blockPos72, ModBlocks.GRASS_TILE.getDefaultState());
+							this.getWorld().setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
 						}
 						if ((x == 7 || x == -7) && z >= -7 && z <= 7){
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.LIME_WOOL.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.LIME_WOOL.getDefaultState());
-								this.world.setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.LIME_WOOL.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.LIME_WOOL.getDefaultState());
+								this.getWorld().setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
 							}
 						}
 						if ((z == 7 || z == -7) && x >= -7 && x <= 7){
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.LIME_WOOL.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.LIME_WOOL.getDefaultState());
-								this.world.setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.LIME_WOOL.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.LIME_WOOL.getDefaultState());
+								this.getWorld().setBlockState(blockPos73, Blocks.DIRT.getDefaultState());
 							}
 						}
 					}
@@ -1970,75 +1983,109 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.getWorld2().equals(TypeOfWorld.BASIC)) {
 								if ((x >= 8) && z > -8 && z < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world2Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world2Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world2Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world2Block.getDefaultState());
+									}
+									if (this.getWorld2().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld2().equals(TypeOfWorld.POOL)){
 									if ((x >= 8) && z > -3 && z < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld3().equals(TypeOfWorld.BASIC)) {
 								if ((x >= 8) && z <= -8) {
-									if (!this.world.getBlockState(blockPos72).equals(world3Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world3Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world3Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world3Block.getDefaultState());
+									}
+									if (this.getWorld3().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
+									}
+									if (this.getWorld3().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										this.egyptSpots.add(testPos);
 									}
 								}
 								if (this.getWorld3().equals(TypeOfWorld.POOL)){
 									if ((x >= 9) && z <= -9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld5().equals(TypeOfWorld.BASIC)) {
 								if ((z <= -8) && x <= -8) {
-									if (!this.world.getBlockState(blockPos72).equals(world5Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world5Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world5Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world5Block.getDefaultState());
+									}
+									if (this.getWorld5().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld5().equals(TypeOfWorld.POOL)){
 									if ((z <= -9) && x <= -9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld6().equals(TypeOfWorld.BASIC)) {
 								if ((x <= -8) && z > -8 && z < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world6Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world6Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world6Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world6Block.getDefaultState());
+									}
+									if (this.getWorld6().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld6().equals(TypeOfWorld.POOL)){
 									if ((x <= -8) && z > -3 && z < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld7().equals(TypeOfWorld.BASIC)) {
 								if ((x <= -8) && z >= 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world7Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world7Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world7Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world7Block.getDefaultState());
+									}
+									if (this.getWorld7().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld7().equals(TypeOfWorld.POOL)){
 									if ((x <= -9) && z >= 9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
@@ -2046,75 +2093,105 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						} else {
 							if (!this.getWorld2().equals(TypeOfWorld.BASIC)) {
 								if ((x >= 8) && z > -8 && z < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world2BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world2BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world2BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world2BlockDark.getDefaultState());
+									}
+									if (this.getWorld2().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld2().equals(TypeOfWorld.POOL)){
 									if ((x >= 8) && z > -3 && z < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld3().equals(TypeOfWorld.BASIC)) {
 								if ((x >= 8) && z <= -8) {
-									if (!this.world.getBlockState(blockPos72).equals(world3BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world3BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world3BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world3BlockDark.getDefaultState());
+									}
+									if (this.getWorld3().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld3().equals(TypeOfWorld.POOL)){
 									if ((x >= 9) && z <= -9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld5().equals(TypeOfWorld.BASIC)) {
 								if ((z <= -8) && x <= -8) {
-									if (!this.world.getBlockState(blockPos72).equals(world5BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world5BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world5BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world5BlockDark.getDefaultState());
+									}
+									if (this.getWorld5().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld5().equals(TypeOfWorld.POOL)){
 									if ((z <= -9) && x <= -9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld6().equals(TypeOfWorld.BASIC)) {
 								if ((x <= -8) && z > -8 && z < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world6BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world6BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world6BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world6BlockDark.getDefaultState());
+									}
+									if (this.getWorld6().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld6().equals(TypeOfWorld.POOL)){
 									if ((x <= -8) && z > -3 && z < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld7().equals(TypeOfWorld.BASIC)) {
 								if ((x <= -8) && z >= 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world7BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world7BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world7BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world7BlockDark.getDefaultState());
+									}
+									if (this.getWorld7().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld7().equals(TypeOfWorld.POOL)){
 									if ((x <= -9) && z >= 9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
@@ -2124,75 +2201,105 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.getWorld2().equals(TypeOfWorld.BASIC)) {
 								if ((x >= 8) && z > -8 && z < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world2BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world2BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world2BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world2BlockDark.getDefaultState());
+									}
+									if (this.getWorld2().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld2().equals(TypeOfWorld.POOL)){
 									if ((x >= 8) && z > -3 && z < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld3().equals(TypeOfWorld.BASIC)) {
 								if ((x >= 8) && z <= -8) {
-									if (!this.world.getBlockState(blockPos72).equals(world3BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world3BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world3BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world3BlockDark.getDefaultState());
+									}
+									if (this.getWorld3().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld3().equals(TypeOfWorld.POOL)){
 									if ((x >= 9) && z <= -9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld5().equals(TypeOfWorld.BASIC)) {
 								if ((z <= -8) && x <= -8) {
-									if (!this.world.getBlockState(blockPos72).equals(world5BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world5BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world5BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world5BlockDark.getDefaultState());
+									}
+									if (this.getWorld5().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld5().equals(TypeOfWorld.POOL)){
 									if ((z <= -9) && x <= -9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld6().equals(TypeOfWorld.BASIC)) {
 								if ((x <= -8) && z > -8 && z < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world6BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world6BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world6BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world6BlockDark.getDefaultState());
+									}
+									if (this.getWorld6().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld6().equals(TypeOfWorld.POOL)){
 									if ((x <= -8) && z > -3 && z < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld7().equals(TypeOfWorld.BASIC)) {
 								if ((x <= -8) && z >= 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world7BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world7BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world7BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world7BlockDark.getDefaultState());
+									}
+									if (this.getWorld7().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld7().equals(TypeOfWorld.POOL)){
 									if ((x <= -9) && z >= 9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
@@ -2200,75 +2307,105 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						} else {
 							if (!this.getWorld2().equals(TypeOfWorld.BASIC)) {
 								if ((x >= 8) && z > -8 && z < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world2Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world2Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world2Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world2Block.getDefaultState());
+									}
+									if (this.getWorld2().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld2().equals(TypeOfWorld.POOL)){
 									if ((x >= 8) && z > -3 && z < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld3().equals(TypeOfWorld.BASIC)) {
 								if ((x >= 8) && z <= -8) {
-									if (!this.world.getBlockState(blockPos72).equals(world3Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world3Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world3Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world3Block.getDefaultState());
+									}
+									if (this.getWorld3().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld3().equals(TypeOfWorld.POOL)){
 									if ((x >= 9) && z <= -9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld5().equals(TypeOfWorld.BASIC)) {
 								if ((z <= -8) && x <= -8) {
-									if (!this.world.getBlockState(blockPos72).equals(world5Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world5Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world5Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world5Block.getDefaultState());
+									}
+									if (this.getWorld5().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld5().equals(TypeOfWorld.POOL)){
 									if ((z <= -9) && x <= -9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld6().equals(TypeOfWorld.BASIC)) {
 								if ((x <= -8) && z > -8 && z < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world6Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world6Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world6Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world6Block.getDefaultState());
+									}
+									if (this.getWorld6().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld6().equals(TypeOfWorld.POOL)){
 									if ((x <= -8) && z > -3 && z < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld7().equals(TypeOfWorld.BASIC)) {
 								if ((x <= -8) && z >= 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world7Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world7Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world7Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world7Block.getDefaultState());
+									}
+									if (this.getWorld7().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld7().equals(TypeOfWorld.POOL)){
 									if ((x <= -9) && z >= 9) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
@@ -2281,30 +2418,42 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.getWorld4().equals(TypeOfWorld.BASIC)) {
 								if ((z <= -8) && x > -8 && x < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world4Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world4Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world4Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world4Block.getDefaultState());
+									}
+									if (this.getWorld4().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld4().equals(TypeOfWorld.POOL)){
 									if ((z <= -8) && x > -3 && x < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld8().equals(TypeOfWorld.BASIC)) {
 								if ((z >= 8) && x > -8 && x < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world8Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world8Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world8Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world8Block.getDefaultState());
+									}
+									if (this.getWorld8().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld8().equals(TypeOfWorld.POOL)){
 									if ((z >= 8) && x > -3 && x < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
@@ -2312,30 +2461,42 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						} else {
 							if (!this.getWorld4().equals(TypeOfWorld.BASIC)) {
 								if ((z <= -8) && x > -8 && x < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world4BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world4BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world4BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world4BlockDark.getDefaultState());
+									}
+									if (this.getWorld4().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld4().equals(TypeOfWorld.POOL)){
 									if ((z <= -8) && x > -3 && x < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld8().equals(TypeOfWorld.BASIC)) {
 								if ((z >= 8) && x > -8 && x < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world8BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world8BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world8BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world8BlockDark.getDefaultState());
+									}
+									if (this.getWorld8().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld8().equals(TypeOfWorld.POOL)){
 									if ((z >= 8) && x > -3 && x < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
@@ -2345,30 +2506,42 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						if ((x & 1) == 0) {
 							if (!this.getWorld4().equals(TypeOfWorld.BASIC)) {
 								if ((z <= -8) && x > -8 && x < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world4BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world4BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world4BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world4BlockDark.getDefaultState());
+									}
+									if (this.getWorld4().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld4().equals(TypeOfWorld.POOL)){
 									if ((z <= -8) && x > -3 && x < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld8().equals(TypeOfWorld.BASIC)) {
 								if ((z >= 8) && x > -8 && x < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world8BlockDark.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world8BlockDark.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world8BlockDark.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world8BlockDark.getDefaultState());
+									}
+									if (this.getWorld8().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld8().equals(TypeOfWorld.POOL)){
 									if ((z >= 8) && x > -3 && x < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.DARK_UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
@@ -2376,30 +2549,42 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 						} else {
 							if (!this.getWorld4().equals(TypeOfWorld.BASIC)) {
 								if ((z <= -8) && x > -8 && x < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world4Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world4Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world4Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world4Block.getDefaultState());
+									}
+									if (this.getWorld4().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld4().equals(TypeOfWorld.POOL)){
 									if ((z <= -8) && x > -3 && x < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
 							}
 							if (!this.getWorld8().equals(TypeOfWorld.BASIC)) {
 								if ((z >= 8) && x > -8 && x < 8) {
-									if (!this.world.getBlockState(blockPos72).equals(world8Block.getDefaultState())) {
-										this.world.setBlockState(blockPos72, world8Block.getDefaultState());
+									if (!this.getWorld().getBlockState(blockPos72).equals(world8Block.getDefaultState())) {
+										this.getWorld().setBlockState(blockPos72, world8Block.getDefaultState());
+									}
+									if (this.getWorld8().equals(TypeOfWorld.EGYPT)){
+										BlockPos testPos = new BlockPos(blockPos72.getX(), blockPos72.getY() + 1, blockPos72.getZ());
+										if (!egyptSpots.contains(testPos)) {
+											this.egyptSpots.add(testPos);
+										}
 									}
 								}
 								if (this.getWorld8().equals(TypeOfWorld.POOL)){
 									if ((z >= 8) && x > -3 && x < 3) {
-										if (!this.world.getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
-											this.world.setBlockState(blockPos72, Blocks.WATER.getDefaultState());
-											this.world.setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
+										if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.WATER.getDefaultState())) {
+											this.getWorld().setBlockState(blockPos72, Blocks.WATER.getDefaultState());
+											this.getWorld().setBlockState(blockPos73, ModBlocks.UNDERWATER_TILE.getDefaultState());
 										}
 									}
 								}
@@ -2410,22 +2595,22 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				if (x <= -23 || x >= 23) {
 					if (((z & 1) == 0)) {
 						if ((x & 1) == 0) {
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
 							}
 						} else {
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
 							}
 						}
 					} else {
 						if ((x & 1) == 0) {
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
 							}
 						} else {
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
 							}
 						}
 					}
@@ -2433,22 +2618,22 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				else if (z <= -23 || z >= 23) {
 					if (((z & 1) == 0)) {
 						if ((x & 1) == 0) {
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
 							}
 						} else {
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
 							}
 						}
 					} else {
 						if ((x & 1) == 0) {
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.COARSE_DIRT.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.COARSE_DIRT.getDefaultState());
 							}
 						} else {
-							if (!this.world.getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
-								this.world.setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
+							if (!this.getWorld().getBlockState(blockPos72).equals(Blocks.PODZOL.getDefaultState())) {
+								this.getWorld().setBlockState(blockPos72, Blocks.PODZOL.getDefaultState());
 							}
 						}
 					}
@@ -2490,11 +2675,11 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 					}
 				}
 			}
-			if (!this.world.getBlockState(blockPos2).isAir() ||
-					!this.world.getBlockState(blockPos3).isAir() ||
-					!this.world.getBlockState(blockPos4).isAir() ||
-					!this.world.getBlockState(blockPos5).isAir() ||
-					!this.world.getBlockState(blockPos6).isAir()) {
+			if (!this.getWorld().getBlockState(blockPos2).isAir() ||
+					!this.getWorld().getBlockState(blockPos3).isAir() ||
+					!this.getWorld().getBlockState(blockPos4).isAir() ||
+					!this.getWorld().getBlockState(blockPos5).isAir() ||
+					!this.getWorld().getBlockState(blockPos6).isAir()) {
 				this.removeBlock(blockPos2, false);
 				this.removeBlock(blockPos3, false);
 				this.removeBlock(blockPos4, false);
@@ -2502,64 +2687,64 @@ public class GardenChallengeEntity extends PlantEntity implements IAnimatable, R
 				this.removeBlock(blockPos6, false);
 			}
 			BlockPos blockPos = new BlockPos(this.getBlockPos().getX(), this.getBlockPos().getY() - 1, this.getBlockPos().getZ());
-			if (!this.world.getBlockState(blockPos).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPos, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPos).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPos, Blocks.RED_WOOL.getDefaultState());
 			}
 			BlockPos blockPosr2 = new BlockPos(this.getBlockPos().getX() + 1, this.getBlockPos().getY() - 1, this.getBlockPos().getZ());
-			if (!this.world.getBlockState(blockPosr2).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPosr2, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosr2).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosr2, Blocks.RED_WOOL.getDefaultState());
 			}
 			BlockPos blockPosr3 = new BlockPos(this.getBlockPos().getX() + 1, this.getBlockPos().getY() - 1, this.getBlockPos().getZ() + 1);
-			if (!this.world.getBlockState(blockPosr3).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPosr3, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosr3).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosr3, Blocks.RED_WOOL.getDefaultState());
 			}
 			BlockPos blockPosr4 = new BlockPos(this.getBlockPos().getX(), this.getBlockPos().getY() - 1, this.getBlockPos().getZ() + 1);
-			if (!this.world.getBlockState(blockPosr4).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPosr4, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosr4).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosr4, Blocks.RED_WOOL.getDefaultState());
 			}
 			BlockPos blockPosr5 = new BlockPos(this.getBlockPos().getX() - 1, this.getBlockPos().getY() - 1, this.getBlockPos().getZ());
-			if (!this.world.getBlockState(blockPosr5).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPosr5, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosr5).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosr5, Blocks.RED_WOOL.getDefaultState());
 			}
 			BlockPos blockPosr6 = new BlockPos(this.getBlockPos().getX() - 1, this.getBlockPos().getY() - 1, this.getBlockPos().getZ() - 1);
-			if (!this.world.getBlockState(blockPosr6).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPosr6, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosr6).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosr6, Blocks.RED_WOOL.getDefaultState());
 			}
 			BlockPos blockPosr7 = new BlockPos(this.getBlockPos().getX(), this.getBlockPos().getY() - 1, this.getBlockPos().getZ() - 1);
-			if (!this.world.getBlockState(blockPosr7).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPosr7, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosr7).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosr7, Blocks.RED_WOOL.getDefaultState());
 			}
 			BlockPos blockPosr8 = new BlockPos(this.getBlockPos().getX() + 1, this.getBlockPos().getY() - 1, this.getBlockPos().getZ() - 1);
-			if (!this.world.getBlockState(blockPosr8).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPosr8, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosr8).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosr8, Blocks.RED_WOOL.getDefaultState());
 			}
 			BlockPos blockPosr9 = new BlockPos(this.getBlockPos().getX() - 1, this.getBlockPos().getY() - 1, this.getBlockPos().getZ() + 1);
-			if (!this.world.getBlockState(blockPosr9).equals(Blocks.RED_WOOL.getDefaultState())) {
-				this.world.setBlockState(blockPosr9, Blocks.RED_WOOL.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosr9).equals(Blocks.RED_WOOL.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosr9, Blocks.RED_WOOL.getDefaultState());
 			}
 
 			BlockPos blockPosTop = new BlockPos(this.getBlockPos().getX() + 2, this.getBlockPos().getY() -1, this.getBlockPos().getZ() + 2);
 			BlockPos blockPosTop2 = new BlockPos(this.getBlockPos().getX() + 2, this.getBlockPos().getY() -1, this.getBlockPos().getZ() - 2);
 			BlockPos blockPosTop3 = new BlockPos(this.getBlockPos().getX() - 2, this.getBlockPos().getY() -1, this.getBlockPos().getZ() + 2);
 			BlockPos blockPosTop4 = new BlockPos(this.getBlockPos().getX() - 2, this.getBlockPos().getY() -1, this.getBlockPos().getZ() - 2);
-			if (!this.world.getBlockState(blockPosTop).equals(Blocks.CRAFTING_TABLE.getDefaultState())) {
-				this.world.setBlockState(blockPosTop, Blocks.CRAFTING_TABLE.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosTop).equals(Blocks.CRAFTING_TABLE.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosTop, Blocks.CRAFTING_TABLE.getDefaultState());
 			}
-			if (!this.world.getBlockState(blockPosTop2).equals(Blocks.CRAFTING_TABLE.getDefaultState())) {
-				this.world.setBlockState(blockPosTop2, Blocks.CRAFTING_TABLE.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosTop2).equals(Blocks.CRAFTING_TABLE.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosTop2, Blocks.CRAFTING_TABLE.getDefaultState());
 			}
-			if (!this.world.getBlockState(blockPosTop3).equals(Blocks.CRAFTING_TABLE.getDefaultState())) {
-				this.world.setBlockState(blockPosTop3, Blocks.CRAFTING_TABLE.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosTop3).equals(Blocks.CRAFTING_TABLE.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosTop3, Blocks.CRAFTING_TABLE.getDefaultState());
 			}
-			if (!this.world.getBlockState(blockPosTop4).equals(Blocks.CRAFTING_TABLE.getDefaultState())) {
-				this.world.setBlockState(blockPosTop4, Blocks.CRAFTING_TABLE.getDefaultState());
+			if (!this.getWorld().getBlockState(blockPosTop4).equals(Blocks.CRAFTING_TABLE.getDefaultState())) {
+				this.getWorld().setBlockState(blockPosTop4, Blocks.CRAFTING_TABLE.getDefaultState());
 			}
 		}
 	}
 
 	public void removeBlock(BlockPos pos, boolean move) {
-		FluidState fluidState = this.world.getFluidState(pos);
-		this.world.setBlockState(pos, Fluids.EMPTY.getDefaultState().getBlockState(), Block.NOTIFY_ALL | (move ? Block.MOVED : 0));
+		FluidState fluidState = this.getWorld().getFluidState(pos);
+		this.getWorld().setBlockState(pos, Fluids.EMPTY.getDefaultState().getBlockState(), Block.NOTIFY_ALL | (move ? Block.MOVED : 0));
 	}
 
 

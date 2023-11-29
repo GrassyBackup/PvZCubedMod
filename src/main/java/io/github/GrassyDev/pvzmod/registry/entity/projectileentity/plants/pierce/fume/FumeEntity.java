@@ -39,6 +39,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -124,13 +126,13 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 
     public void tick() {
 		super.tick();
-		if (!this.world.isClient && this.isInsideWaterOrBubbleColumn()) {
-			this.world.sendEntityStatus(this, (byte) 3);
+		if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
+			this.getWorld().sendEntityStatus(this, (byte) 3);
 			this.remove(RemovalReason.DISCARDED);
 		}
 
-		if (!this.world.isClient && this.age >= 7) {
-			this.world.sendEntityStatus(this, (byte) 3);
+		if (!this.getWorld().isClient && this.age >= 7) {
+			this.getWorld().sendEntityStatus(this, (byte) 3);
 			this.remove(RemovalReason.DISCARDED);
 		}
 
@@ -140,7 +142,7 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 				double d = (double)(this.random.range(0, 255) & 255) / 255.0;
 				double e = (double)(this.random.range(0, 255) & 255) / 255.0;
 				double f = (double)(this.random.range(0, 255) & 255) / 255.0;
-				this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
 			}
 		}
 		else if (this.getVariant().equals(FumeVariants.TRANS)){
@@ -154,10 +156,10 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 			double f2 = (double)(215 & 255) / 255.0;
 
 			for(int j = 0; j < 4; ++j) {
-				this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
-				this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d2, e2, f2);
+				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d2, e2, f2);
 				// WHITE
-				this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), 1, 1, 1);
+				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), 1, 1, 1);
 			}
 		}
 		else {
@@ -166,7 +168,7 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 			double e = (double)(30 & 255) / 255.0;
 			double f = (double)(200 & 255) / 255.0;
 			for(int j = 0; j < 8; ++j) {
-				this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
 			}
 		}
 	}
@@ -254,14 +256,14 @@ public class FumeEntity extends PvZProjectileEntity implements IAnimatable {
 			double f = (double) (200 & 255) / 255.0;
 
 			for (int j = 0; j < 8; ++j) {
-				this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
 			}
 		}
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }
     }

@@ -41,6 +41,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -50,6 +59,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.Objects;
 
@@ -129,7 +139,7 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 	public void tick() {
 		super.tick();
 		if (this.getTarget() == null) {
-			this.setTarget(this.world.getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
+			this.setTarget(this.getWorld().getClosestPlayer(this.getX(), this.getY(), this.getZ(), 100, true));
 		}
 		LocalDifficulty localDifficulty = world.getLocalDifficulty(this.getBlockPos());
 		double difficulty = 0;
@@ -202,12 +212,12 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 				this.kill();
 			}
 		}
-		if (this.world.isClient && this.isSpellcasting()) {
+		if (this.getWorld().isClient && this.isSpellcasting()) {
 			float g = this.bodyYaw * 0.017453292F + MathHelper.cos((float)this.age * 0.6662F) * 0.25F;
 			float h = MathHelper.cos(g);
 			float i = MathHelper.sin(g);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (double)h * 0.6, this.getY(), this.getZ() + (double)i * 0.6, 0, 0.0125, 0);
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX() - (double)h * 0.6, this.getY(), this.getZ() - (double)i * 0.6, 0, 0.0125, 0);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (double)h * 0.6, this.getY(), this.getZ() + (double)i * 0.6, 0, 0.0125, 0);
+			this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() - (double)h * 0.6, this.getY(), this.getZ() - (double)i * 0.6, 0, 0.0125, 0);
 		}
 	}
 
@@ -360,7 +370,7 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
         }
 
         protected void castSpell() {
-			ServerWorld serverWorld = (ServerWorld) RoofGraveEntity.this.world;
+			ServerWorld serverWorld = (ServerWorld) RoofGraveEntity.this.getWorld();
 			LocalDifficulty localDifficulty = world.getLocalDifficulty(this.roofGraveEntity.getBlockPos());
 			double difficulty = 0;
 			if (this.roofGraveEntity.getVariant().equals(GraveDifficulty.NONE)) {
@@ -422,9 +432,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 					zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 				}
 				BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-				BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.world);
+				BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.getWorld());
 				browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-				browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+				browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 				browncoatEntity.setOwner(RoofGraveEntity.this);
 				browncoatEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -440,9 +450,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
+					BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.getWorld());
 					coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+					coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 					coneheadEntity.setOwner(RoofGraveEntity.this);
 					coneheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -457,9 +467,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 						zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 					}
 					BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-					BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.world);
+					BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.getWorld());
 					browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-					browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+					browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 					browncoatEntity.setOwner(RoofGraveEntity.this);
 					browncoatEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -477,9 +487,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.world);
+						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.getWorld());
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						bucketheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(RoofGraveEntity.this);
 						bucketheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -494,9 +504,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
+						BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.getWorld());
 						coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						coneheadEntity.setOwner(RoofGraveEntity.this);
 						coneheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -514,9 +524,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
+							BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.getWorld());
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(RoofGraveEntity.this);
 							coneheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -531,9 +541,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.world);
+							BrowncoatEntity browncoatEntity = (BrowncoatEntity)PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.getWorld());
 							browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
+							browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData)null, (NbtCompound)null);
 							browncoatEntity.setOwner(RoofGraveEntity.this);
 							browncoatEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -553,9 +563,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.world);
+						BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.getWorld());
 						bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						bucketheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						bucketheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						bucketheadEntity.setOwner(RoofGraveEntity.this);
 						bucketheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -570,9 +580,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 							zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 						}
 						BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-						BrowncoatEntity browncoatEntity = (BrowncoatEntity) PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.world);
+						BrowncoatEntity browncoatEntity = (BrowncoatEntity) PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.getWorld());
 						browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-						browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+						browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 						browncoatEntity.setOwner(RoofGraveEntity.this);
 						browncoatEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -592,9 +602,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.world);
+							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.getWorld());
 							bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							bucketheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							bucketheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							bucketheadEntity.setOwner(RoofGraveEntity.this);
 							bucketheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -609,9 +619,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
+							BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.getWorld());
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(RoofGraveEntity.this);
 							coneheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -630,9 +640,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.world);
+							BrowncoatEntity bucketheadEntity = (BrowncoatEntity) PvZEntity.BUCKETHEAD.create(RoofGraveEntity.this.getWorld());
 							bucketheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							bucketheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							bucketheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							bucketheadEntity.setOwner(RoofGraveEntity.this);
 							bucketheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 						serverWorld.spawnEntityAndPassengers(bucketheadEntity);
@@ -647,9 +657,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 								zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 							}
 							BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-							BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
+							BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.getWorld());
 							coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-							coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+							coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 							coneheadEntity.setOwner(RoofGraveEntity.this);
 							coneheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -680,9 +690,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									flagType = PvZEntity.FLAGZOMBIE;
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								FlagzombieEntity flagzombieEntity = (FlagzombieEntity) flagType.create(RoofGraveEntity.this.world);
+								FlagzombieEntity flagzombieEntity = (FlagzombieEntity) flagType.create(RoofGraveEntity.this.getWorld());
 								flagzombieEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								flagzombieEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								flagzombieEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								flagzombieEntity.setOwner(RoofGraveEntity.this);
 								flagzombieEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(flagzombieEntity);
@@ -704,9 +714,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								BasketballCarrierEntity basketball = (BasketballCarrierEntity) PvZEntity.BASKETBALLCARRIER.create(RoofGraveEntity.this.world);
+								BasketballCarrierEntity basketball = (BasketballCarrierEntity) PvZEntity.BASKETBALLCARRIER.create(RoofGraveEntity.this.getWorld());
 								basketball.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								basketball.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								basketball.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								basketball.setOwner(RoofGraveEntity.this);
 								basketball.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(basketball);
@@ -721,9 +731,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
+								BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.getWorld());
 								coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								coneheadEntity.setOwner(RoofGraveEntity.this);
 								coneheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -745,9 +755,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								ImpEntity imp = (ImpEntity) PvZEntity.IMP.create(RoofGraveEntity.this.world);
+								ImpEntity imp = (ImpEntity) PvZEntity.IMP.create(RoofGraveEntity.this.getWorld());
 								imp.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								imp.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								imp.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								imp.setOwner(RoofGraveEntity.this);
 								imp.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(imp);
@@ -762,9 +772,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								BrowncoatEntity browncoatEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.world);
+								BrowncoatEntity browncoatEntity = (BrowncoatEntity) PvZEntity.CONEHEAD.create(RoofGraveEntity.this.getWorld());
 								browncoatEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								browncoatEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								browncoatEntity.setOwner(RoofGraveEntity.this);
 								browncoatEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(browncoatEntity);
@@ -786,9 +796,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								BasketballCarrierEntity basketball = (BasketballCarrierEntity) PvZEntity.BASKETBALLCARRIER.create(RoofGraveEntity.this.world);
+								BasketballCarrierEntity basketball = (BasketballCarrierEntity) PvZEntity.BASKETBALLCARRIER.create(RoofGraveEntity.this.getWorld());
 								basketball.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								basketball.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								basketball.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								basketball.setOwner(RoofGraveEntity.this);
 								basketball.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(basketball);
@@ -803,9 +813,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.world);
+								BrowncoatEntity coneheadEntity = (BrowncoatEntity) PvZEntity.BROWNCOAT.create(RoofGraveEntity.this.getWorld());
 								coneheadEntity.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								coneheadEntity.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								coneheadEntity.setOwner(RoofGraveEntity.this);
 								coneheadEntity.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 					serverWorld.spawnEntityAndPassengers(coneheadEntity);
@@ -827,9 +837,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								GargantuarEntity gargantuar = (GargantuarEntity) PvZEntity.GARGANTUAR.create(RoofGraveEntity.this.world);
+								GargantuarEntity gargantuar = (GargantuarEntity) PvZEntity.GARGANTUAR.create(RoofGraveEntity.this.getWorld());
 								gargantuar.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								gargantuar.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								gargantuar.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								gargantuar.setOwner(RoofGraveEntity.this);
 								gargantuar.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(gargantuar);
@@ -844,9 +854,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 									zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 								}
 								BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-								ImpEntity imp = (ImpEntity) PvZEntity.IMP.create(RoofGraveEntity.this.world);
+								ImpEntity imp = (ImpEntity) PvZEntity.IMP.create(RoofGraveEntity.this.getWorld());
 								imp.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-								imp.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+								imp.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 								imp.setOwner(RoofGraveEntity.this);
 								imp.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 								serverWorld.spawnEntityAndPassengers(imp);
@@ -863,9 +873,9 @@ public class RoofGraveEntity extends GraveEntity implements IAnimatable {
 										zombiePos = RoofGraveEntity.this.random.range(-3, 3);
 									}
 									BlockPos blockPos = RoofGraveEntity.this.getBlockPos().add(zombiePos, 0.1, zombiePosZ);
-									GargantuarEntity gargantuar = (GargantuarEntity) PvZEntity.GARGANTUAR.create(RoofGraveEntity.this.world);
+									GargantuarEntity gargantuar = (GargantuarEntity) PvZEntity.GARGANTUAR.create(RoofGraveEntity.this.getWorld());
 									gargantuar.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
-									gargantuar.initialize(serverWorld, RoofGraveEntity.this.world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+									gargantuar.initialize(serverWorld, RoofGraveEntity.this.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 									gargantuar.setOwner(RoofGraveEntity.this);
 									gargantuar.defenseMultiplier = RoofGraveEntity.this.defenseMultiplier;
 									serverWorld.spawnEntityAndPassengers(gargantuar);

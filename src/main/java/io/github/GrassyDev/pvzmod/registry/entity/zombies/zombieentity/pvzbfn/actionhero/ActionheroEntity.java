@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.lilypad.LilyPadEntity;
@@ -206,7 +204,7 @@ public class ActionheroEntity extends BullyEntity implements IAnimatable {
 		if (this.getAttacking() == null && !(this.getHypno())){
 			if (this.CollidesWithPlant(0.1f, 0f) != null && !this.hasStatusEffect(PvZCubed.BOUNCED) && !(this.CollidesWithPlant(0.1f, 0f) instanceof LilyPadEntity) && this.getPoleStage() && !this.isFlying()){
 				this.riding = true;
-				this.world.sendEntityStatus(this, (byte) 101);
+				this.getWorld().sendEntityStatus(this, (byte) 101);
 				this.ridingTicks = 160;
 				this.setFlying(Flying.TRUE);
 				this.setPoleStage(PoleStage.NOPOLE);
@@ -234,21 +232,22 @@ public class ActionheroEntity extends BullyEntity implements IAnimatable {
 				this.setStealthTag(Stealth.FALSE);
 			}
 		}
-		if (!this.world.isClient() && --ridingTicks <= 0){
+		if (!this.getWorld().isClient() && --ridingTicks <= 0){
 			this.riding = false;
 			this.setFlying(Flying.FALSE);
-			this.world.sendEntityStatus(this, (byte) 102);
+			this.getWorld().sendEntityStatus(this, (byte) 102);
 		}
-		if (!this.world.isClient() && this.riding && this.isAlive()){
+		if (!this.getWorld().isClient() && this.riding && this.isAlive()){
 			if (--rocketTicks <= 0){
 				Vec3d vec3d2 = new Vec3d((double) 0.2, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
 				rocketTicks = 10;
-				RocketEntity proj = new RocketEntity(PvZEntity.ROCKETPROJ, this.world);
+				RocketEntity proj = new RocketEntity(PvZEntity.ROCKETPROJ, this.getWorld());
+				proj.damageMultiplier = this.damageMultiplier;
 				proj.setVelocity(0, -0.1, 0, 0F, 0F);
 				proj.updatePosition(this.getX() + vec3d2.x, this.getY() + 2D, this.getZ() + vec3d2.z);
 				proj.setOwner(this);
 				this.playSound(PvZSounds.ZPGAMBIENTEVENT, 1F, 1);
-				this.world.spawnEntity(proj);
+				this.getWorld().spawnEntity(proj);
 			}
 		}
 	}

@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.oiltile.OilTile;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.snowtile.SnowTile;
@@ -132,7 +130,7 @@ public abstract class PlantEntity extends GolemEntity {
 				double d = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 2 * this.random.range(0, 3);
 				double f = this.random.nextDouble() / 2.5 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + 0.5 + e, this.getZ() + f, d, e, f);
+				this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + 0.5 + e, this.getZ() + f, d, e, f);
 			}
 		}
 	}
@@ -405,7 +403,7 @@ public abstract class PlantEntity extends GolemEntity {
 				hasZombie = true;
 			}
 		}
-		if (!this.world.isClient() && !this.hasStatusEffect(DISABLE)) {
+		if (!this.getWorld().isClient() && !this.hasStatusEffect(DISABLE)) {
 			for (LivingEntity hostileEntity : list) {
 				if (hostileEntity.isAlive() && this.getVisibilityCache().canSee(hostileEntity) &&
 						!(hostileEntity instanceof GraveEntity && targetNotObstacle) &&
@@ -962,7 +960,7 @@ public abstract class PlantEntity extends GolemEntity {
 					double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
 					double e = this.random.nextDouble() * this.random.range(0, 2);
 					double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-					this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + e, this.getZ() + f, d, e + 0.1, f);
+					this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() + d, this.getY() + e, this.getZ() + f, d, e + 0.1, f);
 				}
 			}
 		}
@@ -1015,7 +1013,7 @@ public abstract class PlantEntity extends GolemEntity {
 				double d = this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.4F, 0.4F);
 				double e = this.getY() + 0.3;
 				double f = this.getZ() + (double) MathHelper.nextBetween(randomGenerator, -0.4F, 0.4F);
-				this.world.addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+				this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
 			}
 		}
 		super.onDeath(source);
@@ -1024,7 +1022,7 @@ public abstract class PlantEntity extends GolemEntity {
 
 	@Override
 	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
-		if (this.world.getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_DROP)){
+		if (this.getWorld().getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_DROP)){
 			super.dropLoot(source, causedByPlayer);
 		}
 	}
@@ -1041,7 +1039,7 @@ public abstract class PlantEntity extends GolemEntity {
 		ZombiePropEntity setGear3 = null;
 
 		if (livingEntity != null){
-			List<LivingEntity> magnetList = this.world.getNonSpectatingEntities(LivingEntity.class, livingEntity.getBoundingBox().expand(2));
+			List<LivingEntity> magnetList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, livingEntity.getBoundingBox().expand(2));
 			EntityType<?> entityType = null;
 			EntityType<?> entityType2 = null;
 			EntityType<?> entityType3 = null;
@@ -1054,10 +1052,10 @@ public abstract class PlantEntity extends GolemEntity {
 				}
 			}
 			if (livingEntity instanceof BassZombieEntity bassZombieEntity && bassZombieEntity.hasVehicle() && bassZombieEntity.getVehicle() instanceof SpeakerVehicleEntity){
-				setGear = new MetalHelmetEntity(PvZEntity.BASSGEAR, this.world);
+				setGear = new MetalHelmetEntity(PvZEntity.BASSGEAR, this.getWorld());
 			}
 			if (livingEntity instanceof ImpEntity impEntity && impEntity.getType().equals(PvZEntity.SCRAPIMP)){
-				setGear = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.world);
+				setGear = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.getWorld());
 				setGear.setHealth(impEntity.getHealth());
 			}
 			if (magnetoshroom) {
@@ -1076,20 +1074,20 @@ public abstract class PlantEntity extends GolemEntity {
 					if (entity instanceof BassZombieEntity bassZombieEntity && bassZombieEntity.hasVehicle() && bassZombieEntity.getVehicle() instanceof SpeakerVehicleEntity
 							&& entity.squaredDistanceTo(livingEntity) <= 4 && entity != livingEntity){
 						if (setGear2 == null) {
-							setGear2 = new MetalHelmetEntity(PvZEntity.BASSGEAR, this.world);
+							setGear2 = new MetalHelmetEntity(PvZEntity.BASSGEAR, this.getWorld());
 							livingEntity2 = (LivingEntity) entity;
 						} else if (setGear3 == null) {
-							setGear3 = new MetalHelmetEntity(PvZEntity.BASSGEAR, this.world);
+							setGear3 = new MetalHelmetEntity(PvZEntity.BASSGEAR, this.getWorld());
 							livingEntity3 = (LivingEntity) entity;
 						}
 					}
 					if (entity.getType().equals(PvZEntity.SCRAPIMP) && entity.squaredDistanceTo(livingEntity) <= 4 && entity != livingEntity){
 						if (setGear2 == null) {
-							setGear2 = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.world);
+							setGear2 = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.getWorld());
 							livingEntity2 = (LivingEntity) entity;
 							setGear2.setHealth(livingEntity2.getHealth());
 						} else if (setGear3 == null) {
-							setGear3 = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.world);
+							setGear3 = new MetalHelmetEntity(PvZEntity.SCRAPIMPGEAR, this.getWorld());
 							livingEntity3 = (LivingEntity) entity;
 							setGear3.setHealth(livingEntity3.getHealth());
 						}
@@ -1272,7 +1270,7 @@ public abstract class PlantEntity extends GolemEntity {
 			if (livingEntity.getType().equals(PvZEntity.SCRAPIMP)){
 				livingEntity.kill();
 			}
-			((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
+			((ServerWorld) this.getWorld()).spawnEntityAndPassengers(helmetProjEntity);
 		}
 		if (magnetoshroom) {
 			if (setGear2 != null) {
@@ -1296,7 +1294,7 @@ public abstract class PlantEntity extends GolemEntity {
 				if (livingEntity2.getType().equals(PvZEntity.SCRAPIMP)){
 					livingEntity2.kill();
 				}
-				((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
+				((ServerWorld) this.getWorld()).spawnEntityAndPassengers(helmetProjEntity);
 			}
 			if (setGear3 != null) {
 				MetalHelmetProjEntity helmetProjEntity = (MetalHelmetProjEntity) PvZEntity.METALHELMETPROJ.create(world);
@@ -1319,7 +1317,7 @@ public abstract class PlantEntity extends GolemEntity {
 				if (livingEntity3.getType().equals(PvZEntity.SCRAPIMP)){
 					livingEntity3.kill();
 				}
-				((ServerWorld) this.world).spawnEntityAndPassengers(helmetProjEntity);
+				((ServerWorld) this.getWorld()).spawnEntityAndPassengers(helmetProjEntity);
 			}
 		}
 	}
@@ -1330,7 +1328,7 @@ public abstract class PlantEntity extends GolemEntity {
 	public HitResult amphibiousRaycast(double maxDistance) {
 		Vec3d vec3d1 = this.getPos();
 		Vec3d vec3d2 = new Vec3d(vec3d1.x, vec3d1.y - maxDistance, vec3d1.z);
-		return this.world.raycast(new RaycastContext(vec3d1, vec3d2, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.ANY, this));
+		return this.getWorld().raycast(new RaycastContext(vec3d1, vec3d2, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.ANY, this));
 	}
 
 	public static boolean checkPlant(Vec3d pos, ServerWorldAccess world, EntityType<?> type) {
@@ -1349,6 +1347,20 @@ public abstract class PlantEntity extends GolemEntity {
 
 		public PlantData(boolean tryLilyPad) {
 			this.tryLilyPad = tryLilyPad;
+		}
+	}
+
+
+	@Override
+	protected void applyDamage(DamageSource source, float amount) {
+		if (source.getSource() instanceof GeneralPvZombieEntity generalPvZombieEntity){
+			super.applyDamage(source, amount * generalPvZombieEntity.damageMultiplier);
+		}
+		else if (source.getSource() instanceof PlayerEntity){
+			super.applyDamage(source, Integer.MAX_VALUE);
+		}
+		else {
+			super.applyDamage(source, amount);
 		}
 	}
 
@@ -1458,14 +1470,6 @@ public abstract class PlantEntity extends GolemEntity {
 
 		/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-		public boolean handleAttack(Entity attacker) {
-			if (attacker instanceof PlayerEntity) {
-				PlayerEntity playerEntity = (PlayerEntity) attacker;
-				return this.damage(DamageSource.player(playerEntity), 9999.0F);
-			} else {
-				return false;
-			}
-		}
 
 		public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 			if (fallDistance > 0F) {

@@ -7,7 +7,7 @@
     {
       "type": "text",
       "text": [
-        "$(#bd951a)Health: $()$(#ff0000)200",
+        "$(#bd951a)Health: $()$(#ff0000)200 (Stone)",
         "$(br)$(#bd951a)Zombie Spawn Rate: $()$(#ff0000)15s",
         "$(br)$(#bd951a)Spawn Condition: $()$(#ff0000)Uncommon.",
         "$(br)$(#bd951a)Time Chance: $()$(#ff0000)30% Drought.",

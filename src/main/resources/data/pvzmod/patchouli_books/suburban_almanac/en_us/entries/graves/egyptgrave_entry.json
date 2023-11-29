@@ -7,7 +7,7 @@
     {
       "type": "text",
       "text": [
-        "$(#bd951a)Health: $()$(#ff0000)200",
+        "$(#bd951a)Health: $()$(#ff0000)200 (Stone)",
         "$(br)$(#bd951a)Zombie Spawn Rate: $()$(#ff0000)15s",
         "$(br)$(#bd951a)Spawn Condition: $()$(#ff0000)Common.",
         "$(br)$(#bd951a)Time Chance: $()$(#ff0000)40% Drought, 25% Night.",
@@ -32,10 +32,13 @@
         "pvzmod:zombies/mummybucket_entry",
         "pvzmod:zombies/pyramidhead_entry",
         "pvzmod:zombies/explorer_entry",
+        "pvzmod:zombies/tombraiser_entry",
         "pvzmod:zombies/torchlight_entry",
         "pvzmod:zombies/pharaoh_entry",
         "pvzmod:zombies/undying_entry",
-        "pvzmod:zombies/cursedgargolith_entry"
+        "pvzmod:zombies/cursedgargolith_entry",
+        "pvzmod:zombies/mummygargantuar_entry",
+        "pvzmod:zombies/mummyimp_entry"
       ],
       "title": "Spawnable Zombies"
     }

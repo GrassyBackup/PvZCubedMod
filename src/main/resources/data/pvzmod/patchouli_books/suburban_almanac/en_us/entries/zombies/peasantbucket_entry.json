@@ -2,7 +2,7 @@
   "name": "Buckethead Peasant Zombie",
   "icon": "pvzmod:peasantbucket_egg",
   "category": "pvzmod:zombie_category",
-  "sortnum": 93,
+  "sortnum": 104,
   "pages": [
     {
       "type": "text",
@@ -46,7 +46,8 @@
       "title": "Recommended Plants",
       "entries": [
         "pvzmod:plants/pepperpult_entry",
-        "pvzmod:plants/narcissus_entry"
+        "pvzmod:plants/narcissus_entry",
+        "pvzmod:plants/vampireflower_entry"
       ]
     },
     {

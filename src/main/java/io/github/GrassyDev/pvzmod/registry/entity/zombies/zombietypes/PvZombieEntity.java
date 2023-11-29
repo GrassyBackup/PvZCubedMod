@@ -2,10 +2,10 @@ package io.github.GrassyDev.pvzmod.registry.entity.zombies.zombietypes;
 
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.world.World;
+
 
 public abstract class PvZombieEntity extends GeneralPvZombieEntity implements Monster {
 

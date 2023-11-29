@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.pierce.jingle.JingleEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.straight.hypnoproj.HypnoProjEntity;
@@ -102,7 +100,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 		}
 		if (status == 116) {
 			for(int i = 0; i < 128; ++i) {
-				this.world.addParticle(ParticleTypes.WAX_ON, this.getX() + (this.random.range(-4, 4)), this.getY() + (this.random.range(-4, 4)), this.getZ() + (this.random.range(-4, 4)), 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.WAX_ON, this.getX() + (this.random.range(-4, 4)), this.getY() + (this.random.range(-4, 4)), this.getZ() + (this.random.range(-4, 4)), 0, 0, 0);
 			}
 		}
 	}
@@ -174,7 +172,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 
 
 	protected List<HostileEntity> checkForZombiesHEAL() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(10));
 		List<HostileEntity> list2 = new ArrayList<>();
 		Iterator var9 = list.iterator();
 		while (true) {
@@ -194,7 +192,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 
 
 	protected List<HostileEntity> checkForZombiesHYPNO() {
-		List<HostileEntity> list = this.world.getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(15));
+		List<HostileEntity> list = this.getWorld().getNonSpectatingEntities(HostileEntity.class, this.getBoundingBox().expand(15));
 		List<HostileEntity> list2 = new ArrayList<>();
 		Iterator var9 = list.iterator();
 		while (true) {
@@ -212,7 +210,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 
 
 	protected List<PlantEntity> healPlants() {
-		List<PlantEntity> list = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(5));
+		List<PlantEntity> list = this.getWorld().getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().expand(5));
 		Iterator var9 = list.iterator();
 		while (true) {
 			PlantEntity plantEntity;
@@ -249,7 +247,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.TULIMPETER_SEED_PACKET);
 				}
 				this.discard();
@@ -260,7 +258,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -346,14 +344,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -448,7 +439,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 							proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 							proj.setOwner(this.plantEntity);
 							proj.damageMultiplier = plantEntity.damageMultiplier;
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								this.beamTicks = -13;
 								this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 								this.plantEntity.playSound(SoundEvents.BLOCK_NOTE_BLOCK_FLUTE, 0.2F, (this.plantEntity.random.nextFloat() - this.plantEntity.random.nextFloat()) + 0.75F);
@@ -475,7 +466,7 @@ public class TulimpeterEntity extends PlantEntity implements IAnimatable, Ranged
 							proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 							proj.setOwner(this.plantEntity);
 							proj.damageMultiplier = plantEntity.damageMultiplier;
-							if (livingEntity.isAlive()) {
+							if (livingEntity != null && livingEntity.isAlive()) {
 								this.beamTicks = -13;
 								this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);
 								this.plantEntity.playSound(SoundEvents.BLOCK_NOTE_BLOCK_FLUTE, 0.2F, (this.plantEntity.random.nextFloat() - this.plantEntity.random.nextFloat()) + 0.75F);

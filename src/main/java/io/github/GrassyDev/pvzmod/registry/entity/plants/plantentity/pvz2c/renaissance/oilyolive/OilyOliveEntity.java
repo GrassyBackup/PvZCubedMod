@@ -54,6 +54,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -132,7 +133,7 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 				double d = this.random.nextDouble() / 4 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 4 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 4 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.ITEM_SLIME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.ITEM_SLIME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 		}
 	}
@@ -239,10 +240,10 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 	public void ignite() {
 		this.dataTracker.set(IGNITED, true);
 	}
-	List<LivingEntity> checkList = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
+	List<LivingEntity> checkList = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().shrink(0.5, 0, 0));
 
 	private void raycastExplode() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(3));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(3));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -320,7 +321,7 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 	}
 
 	public void createOilTile(BlockPos blockPos){
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			List<TileEntity> tileCheck = world.getNonSpectatingEntities(TileEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(blockPos.getX(), blockPos.getY(), blockPos.getZ()).expand(-0.5f, -0.5f, -0.5f));
 			tileCheck.removeIf(tile -> tile instanceof MissileToeTarget);
 			tileCheck.removeIf(tile -> tile instanceof BananaTile);
@@ -336,22 +337,22 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 	}
 
 	private void spawnEffectsCloud() {
-		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity.setParticleType(ParticleTypes.ITEM_SLIME);
 		areaEffectCloudEntity.setRadius(1.5F);
 		areaEffectCloudEntity.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity.setWaitTime(2);
 		areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 35);
 		areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float) areaEffectCloudEntity.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity);
-		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
+		this.getWorld().spawnEntity(areaEffectCloudEntity);
+		AreaEffectCloudEntity areaEffectCloudEntity2 = new AreaEffectCloudEntity(this.getWorld(), this.getX(), this.getY(), this.getZ());
 		areaEffectCloudEntity2.setParticleType(ParticleTypes.ITEM_SLIME);
 		areaEffectCloudEntity2.setRadius(1F);
 		areaEffectCloudEntity2.setRadiusOnUse(-0.5F);
 		areaEffectCloudEntity2.setWaitTime(2);
 		areaEffectCloudEntity2.setDuration(areaEffectCloudEntity2.getDuration() / 80);
 		areaEffectCloudEntity2.setRadiusGrowth(-areaEffectCloudEntity2.getRadius() / (float)areaEffectCloudEntity2.getDuration());
-		this.world.spawnEntity(areaEffectCloudEntity2);
+		this.getWorld().spawnEntity(areaEffectCloudEntity2);
 	}
 
 
@@ -376,7 +377,7 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.OILYOLIVE_SEED_PACKET);
 				}
 				this.discard();
@@ -400,7 +401,7 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 				this.addStatusEffect((new StatusEffectInstance(StatusEffects.RESISTANCE, 999999999, 999999999)));
 				for(int j = 0; j < 4; ++j) {
 					double e = (double)MathHelper.nextBetween(randomGenerator, 0.025F, 0.075F);
-					this.world.addParticle(ParticleTypes.ITEM_SLIME, this.getX(), this.getY() + 0.75, this.getZ(), 0, e, 0);
+					this.getWorld().addParticle(ParticleTypes.ITEM_SLIME, this.getX(), this.getY() + 0.75, this.getZ(), 0, e, 0);
 				}
 			}
 
@@ -415,7 +416,7 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 				this.raycastExplode();
 				this.createOilTile(this.getBlockPos());
 				this.removeStatusEffect(StatusEffects.RESISTANCE);
-				this.world.sendEntityStatus(this, (byte) 106);
+				this.getWorld().sendEntityStatus(this, (byte) 106);
 				this.playSound(SoundEvents.BLOCK_SLIME_BLOCK_BREAK, 0.7F, 1F);
 				this.spawnEffectsCloud();
 				this.dead = true;
@@ -425,9 +426,9 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 		if (this.age >= 900 && !this.getPuffshroomPermanency()) {
 			this.discard();
 		}
-		float time = 200 / this.world.getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();
+		float time = 200 / this.getWorld().getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();
 		if (this.age > 4 && this.age <= time && !this.getPuffshroomPermanency() && !this.hasStatusEffect(StatusEffects.GLOWING)) {
-			if (this.world.getGameRules().getBoolean(PvZCubed.PLANTS_GLOW)) {
+			if (this.getWorld().getGameRules().getBoolean(PvZCubed.PLANTS_GLOW)) {
 				this.addStatusEffect((new StatusEffectInstance(StatusEffects.GLOWING, (int) Math.floor(time), 1)));
 			}
 		}
@@ -436,7 +437,7 @@ public class OilyOliveEntity extends PlantEntity implements IAnimatable {
 
 	public void tickMovement() {
         super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.clearStatusEffects();
 			this.discard();
 		}

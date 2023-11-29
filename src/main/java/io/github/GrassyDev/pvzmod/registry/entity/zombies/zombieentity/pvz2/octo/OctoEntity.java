@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.garden.GardenEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.miscentity.gardenchallenge.GardenChallengeEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
@@ -219,9 +217,10 @@ public class OctoEntity extends BullyEntity implements IAnimatable {
 
 	//Launch Basket
 	public void tryLaunch(Entity target) {
-		ShootingOctoEntity octo = new ShootingOctoEntity(PvZEntity.OCTOPROJ, this.world);
+		ShootingOctoEntity octo = new ShootingOctoEntity(PvZEntity.OCTOPROJ, this.getWorld());
 		List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(this.getPos()).expand(this.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) + 1));
 		double targetDist = 0;
+		octo.damageMultiplier = this.damageMultiplier;
 		for (LivingEntity livingEntity : list){
 			if (livingEntity instanceof PlantEntity plantEntity && !(plantEntity instanceof GardenChallengeEntity) && !(plantEntity instanceof GardenEntity) && !plantEntity.getImmune() && !(PLANT_LOCATION.get(plantEntity.getType()).orElse("normal").equals("flying"))){
 				if (targetDist == 0){
@@ -259,7 +258,7 @@ public class OctoEntity extends BullyEntity implements IAnimatable {
 
 			octo.setOwner(this);
 			this.playSound(PvZSounds.PEASHOOTEVENT, 1F, 1);
-			this.world.spawnEntity(octo);
+			this.getWorld().spawnEntity(octo);
 		}
 	}
 
@@ -276,18 +275,18 @@ public class OctoEntity extends BullyEntity implements IAnimatable {
 		if (random <= 0.00625 && getTarget() != null && this.squaredDistanceTo(this.getTarget()) <= 625 && !this.inLaunchAnimation) {
 			this.launchAnimation = 80 * animationMultiplier;
 			this.inLaunchAnimation = true;
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 		}
 		if (this.launchAnimation > 0) {
 			this.getNavigation().stop();
 			--launchAnimation;
 			tryLaunch(getTarget());
 			this.inLaunchAnimation = true;
-			this.world.sendEntityStatus(this, (byte) 104);
+			this.getWorld().sendEntityStatus(this, (byte) 104);
 		}
 		else {
 			this.inLaunchAnimation = false;
-			this.world.sendEntityStatus(this, (byte) 103);
+			this.getWorld().sendEntityStatus(this, (byte) 103);
 		}
 	}
 

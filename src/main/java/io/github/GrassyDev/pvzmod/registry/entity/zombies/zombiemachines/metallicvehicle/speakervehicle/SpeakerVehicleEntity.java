@@ -4,8 +4,6 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.potatomine.PotatomineEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.night.gravebuster.GravebusterEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.spikeweed.SpikeweedEntity;
@@ -96,14 +94,14 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 				double d = this.random.nextDouble() / 8 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 8 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 8 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
-				this.world.addParticle(ParticleTypes.FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
+				this.getWorld().addParticle(ParticleTypes.FLAME, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(-1, 1)), this.getZ() + (this.random.range(-1, 1)), d, e, f);
 			}
 			for(int i = 0; i < 1; ++i) {
 				double e = this.random.nextDouble() / 2 * (this.random.range(0, 1));
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (double) MathHelper.nextBetween(randomGenerator, -0.5F, 0.5F),
 						this.getY() + (this.random.range(-1, 1)),
 						this.getZ()  + (double)MathHelper.nextBetween(randomGenerator,
 								-0.5F, 0.5F), 0, e, 0);
@@ -139,7 +137,7 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 		}
 		this.getNavigation().stop();
 		if (this.hasStatusEffect(DISABLE)) {
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 		}
 		if (this.hasPassengers() && this.getFirstPassenger() instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.getHypno()) {
 			this.setHypno(IsHypno.TRUE);
@@ -193,13 +191,14 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 				double f = 0;
 				double g = predictedPos.getZ() - this.getZ();
 				float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
-				SoundwaveEntity proj = new SoundwaveEntity(PvZEntity.SOUNDWAVE, this.world);
+				SoundwaveEntity proj = new SoundwaveEntity(PvZEntity.SOUNDWAVE, this.getWorld());
+				proj.damageMultiplier = this.damageMultiplier;
 				proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.85F, 0F);
 				proj.updatePosition(this.getX(), this.getY() + 0.5D, this.getZ());
 				proj.setOwner(this);
 				this.launchTicks = 60;
 				this.playSound(PvZSounds.BASSPLAYEVENT, 0.4F, 1f);
-				this.world.spawnEntity(proj);
+				this.getWorld().spawnEntity(proj);
 			}
 		}
 		if (this.onGround) {
@@ -256,8 +255,8 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 
 	public void createBassPassenger() {
 		if (world instanceof ServerWorld serverWorld) {
-			BassZombieEntity zombie2 = new BassZombieEntity(PvZEntity.BASS, this.world);
-			zombie2.initialize(serverWorld, this.world.getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
+			BassZombieEntity zombie2 = new BassZombieEntity(PvZEntity.BASS, this.getWorld());
+			zombie2.initialize(serverWorld, this.getWorld().getLocalDifficulty(this.getBlockPos()), SpawnReason.MOB_SUMMONED, (EntityData) null, (NbtCompound) null);
 			zombie2.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.bodyYaw, 0.0F);
 			zombie2.startRiding(this);
 		}
@@ -268,7 +267,7 @@ public class SpeakerVehicleEntity extends ZombieVehicleEntity implements IAnimat
 	@Override
 	public void onDeath(DamageSource source) {
 		for (int x = 0; x <= 32; ++x) {
-			this.world.sendEntityStatus(this, (byte) 106);
+			this.getWorld().sendEntityStatus(this, (byte) 106);
 		}
 		this.playSound(PvZSounds.CHERRYBOMBEXPLOSIONEVENT, 1F, 1F);
 		super.onDeath(source);

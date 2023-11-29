@@ -5,8 +5,6 @@ import io.github.GrassyDev.pvzmod.registry.ModBlocks;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.damage.HypnoDamage;
 import io.github.GrassyDev.pvzmod.registry.entity.damage.LightningDamage;
 import io.github.GrassyDev.pvzmod.registry.entity.statuseffects.*;
@@ -219,9 +217,10 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.BEAUTYSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.CHARMSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.MAGNETOSHROOM_SEED_PACKET));
-				stacks.add(new ItemStack(ModItems.CHESTER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.RETROGATLING_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.CHESTER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ACIDSHROOM_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.VAMPIREFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DANDELIONWEED_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.PERFOOMSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SMALLNUT_SEED_PACKET));
@@ -238,6 +237,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.JUMPINGBEAN_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BELLFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SUNFLOWERSEED_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.KNIGHTPEA_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.SEAPEA_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.NIGHTCAP_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DOOMROSE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DOGWOOD_SEED_PACKET));
@@ -274,6 +275,8 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.ICESPIKE));
 				stacks.add(new ItemStack(ModItems.POWERICESPIKE));
 				stacks.add(new ItemStack(ModItems.FRISBEE));
+				stacks.add(new ItemStack(ModItems.SWORDPROJ));
+				stacks.add(new ItemStack(ModItems.POWERSWORDPROJ));
 				stacks.add(new ItemStack(ModItems.PIERCEPEA));
 				stacks.add(new ItemStack(ModItems.FIREPIERCEPEA));
 				stacks.add(new ItemStack(ModItems.ACIDFUME));
@@ -315,8 +318,11 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.MUMMYCONEEGG));
 				stacks.add(new ItemStack(ModItems.MUMMYBUCKETEGG));
 				stacks.add(new ItemStack(ModItems.EXPLOREREGG));
+				stacks.add(new ItemStack(ModItems.TOMBRAISEREGG));
 				stacks.add(new ItemStack(ModItems.UNDYINGEGG));
 				stacks.add(new ItemStack(ModItems.PHARAOHEGG));
+				stacks.add(new ItemStack(ModItems.MUMMYGARGANTUAREGG));
+				stacks.add(new ItemStack(ModItems.MUMMYIMPEGG));
 				stacks.add(new ItemStack(ModItems.TORCHLIGHTEGG));
 				stacks.add(new ItemStack(ModItems.PYRAMIDHEADEGG));
 				stacks.add(new ItemStack(ModItems.FUTUREZOMBIEEGG));
@@ -363,6 +369,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.PIGGYEGG));
 				stacks.add(new ItemStack(ModItems.SOLDIEREGG));
 				stacks.add(new ItemStack(ModItems.SCIENTISTEGG));
+				stacks.add(new ItemStack(ModItems.HOVERGOATEGG));
 				stacks.add(new ItemStack(ModItems.ZOMBLOBEGG));
 				stacks.add(new ItemStack(ModItems.DEFENSIVEENDEGG));
 				stacks.add(new ItemStack(ModItems.CURSEDGARGOLITHEGG));

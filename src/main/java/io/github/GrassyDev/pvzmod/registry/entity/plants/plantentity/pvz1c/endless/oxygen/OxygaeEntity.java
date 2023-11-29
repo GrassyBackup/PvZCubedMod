@@ -47,6 +47,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
 import java.util.List;
 import java.util.Objects;
 
@@ -197,7 +198,7 @@ public class OxygaeEntity extends PlantEntity implements IAnimatable {
 					onWater = true;
 				}
 				if (!blockPos2.equals(blockPos) || (!(fluidState.getFluid() == Fluids.WATER) && !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-					if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+					if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 						this.dropItem(ModItems.OXYGAE_SEED_PACKET);
 					}
 					this.discard();
@@ -227,9 +228,9 @@ public class OxygaeEntity extends PlantEntity implements IAnimatable {
     }
 
 	public void createBubbleTile(BlockPos blockPos){
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			boolean bl = true;
-			List<PlantEntity> plantCheck = this.world.getNonSpectatingEntities(PlantEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(blockPos.getX(), blockPos.getY(), blockPos.getZ()).expand(1));
+			List<PlantEntity> plantCheck = this.getWorld().getNonSpectatingEntities(PlantEntity.class, PvZEntity.PEASHOOTER.getDimensions().getBoxAt(blockPos.getX(), blockPos.getY(), blockPos.getZ()).expand(1));
 			for (PlantEntity plantEntity : plantCheck){
 				if ((plantEntity instanceof BubblePadEntity || plantEntity instanceof LilyPadEntity) && Vec3d.ofCenter(blockPos).squaredDistanceTo(plantEntity.getPos()) <= 0.5f) {
 					bl = false;
@@ -347,14 +348,7 @@ public class OxygaeEntity extends PlantEntity implements IAnimatable {
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {

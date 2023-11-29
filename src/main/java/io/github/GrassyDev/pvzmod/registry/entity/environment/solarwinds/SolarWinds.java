@@ -36,6 +36,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+
+
 import java.util.List;
 import java.util.Objects;
 
@@ -177,10 +179,10 @@ public class SolarWinds extends TileEntity {
 				double d = this.random.nextDouble() / 10 * this.random.range(-1, 1);
 				double e = this.random.nextDouble() / 10 * this.random.range(0, 1);
 				double f = this.random.nextDouble() / 10 * this.random.range(-1, 1);
-				this.world.addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						particlePos.getY() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						particlePos.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F), d, e, f);
-				this.world.addParticle(ParticleTypes.POOF, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
+				this.getWorld().addParticle(ParticleTypes.POOF, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						particlePos.getY() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F),
 						particlePos.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1F, 1F), d, e, f);
 			}
@@ -190,7 +192,7 @@ public class SolarWinds extends TileEntity {
 			double d = this.random.nextDouble() / 10 * this.random.range(-2, 2);
 			double e = this.random.nextDouble() / 10 * this.random.range(0, 2);
 			double f = this.random.nextDouble() / 10 * this.random.range(-2, 2);
-			this.world.addParticle(ParticleTypes.PORTAL, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F),
+			this.getWorld().addParticle(ParticleTypes.PORTAL, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F),
 					particlePos.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 					particlePos.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F), d, e, f);
 		}
@@ -199,7 +201,7 @@ public class SolarWinds extends TileEntity {
 			double d = this.random.nextDouble() / 10 * this.random.range(-1, 1);
 			double e = this.random.nextDouble() / 30 * this.random.range(-1, 1);
 			double f = this.random.nextDouble() / 10 * this.random.range(-1, 1);
-			this.world.addParticle(ParticleTypes.SMOKE, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F),
+			this.getWorld().addParticle(ParticleTypes.SMOKE, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F),
 					particlePos.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 					particlePos.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F), d, e, f);
 		}
@@ -208,7 +210,7 @@ public class SolarWinds extends TileEntity {
 			double d = this.random.nextDouble() / 30 * this.random.range(-2, 2);
 			double e = this.random.nextDouble() / 30 * this.random.range(0, 2);
 			double f = this.random.nextDouble() / 30 * this.random.range(-2, 2);
-			this.world.addParticle(ParticleTypes.WAX_ON, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F),
+			this.getWorld().addParticle(ParticleTypes.WAX_ON, particlePos.getX() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F),
 					particlePos.getY() + (double) MathHelper.nextBetween(randomGenerator, 0F, 1.5F),
 					particlePos.getZ() + (double) MathHelper.nextBetween(randomGenerator, -1.5F, 1.5F), d, e, f);
 		}

@@ -3,8 +3,6 @@ package io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz2c.gene
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.zombies.zombieentity.pvz1.browncoat.modernday.BrowncoatEntity;
 import net.fabricmc.api.EnvType;
@@ -16,7 +14,6 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -37,6 +34,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAttackMob {
 
@@ -60,13 +58,13 @@ public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAt
 		if (status == 116){
 			for(int i = 0; i < 128; ++i) {
 				double random = Math.random();
-				this.world.addParticle(ParticleTypes.DRAGON_BREATH, this.getX() + ((this.random.range(-1, 1)) * random), this.getY() + + ((this.random.range(0, 2)) * random), this.getZ() + ((this.random.range(-1, 1)) * random), 0, 0, 0);
+				this.getWorld().addParticle(ParticleTypes.DRAGON_BREATH, this.getX() + ((this.random.range(-1, 1)) * random), this.getY() + + ((this.random.range(0, 2)) * random), this.getZ() + ((this.random.range(-1, 1)) * random), 0, 0, 0);
 			}
 		}
 		if (status == 117){
 			for(int i = 0; i < 32; ++i) {
-				this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(0, 3)), this.getZ() + (this.random.range(-1, 1)), 0, 0.2, 0);
-				this.world.addParticle(ParticleTypes.POOF, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(0, 3)), this.getZ() + (this.random.range(-1, 1)), 0, 0.2, 0);
+				this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(0, 3)), this.getZ() + (this.random.range(-1, 1)), 0, 0.2, 0);
+				this.getWorld().addParticle(ParticleTypes.POOF, this.getX() + (this.random.range(-1, 1)), this.getY() + (this.random.range(0, 3)), this.getZ() + (this.random.range(-1, 1)), 0, 0.2, 0);
 			}
 		}
 	}
@@ -138,14 +136,14 @@ public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAt
 	public void tick() {
 		super.tick();
 		if (this.age < 3){
-			this.world.sendEntityStatus(this, (byte) 116);
+			this.getWorld().sendEntityStatus(this, (byte) 116);
 		}
 		BlockPos blockPos = this.getBlockPos();
 	}
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -217,14 +215,7 @@ public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAt
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -238,13 +229,13 @@ public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAt
 	@Override
 	public void onDeath(DamageSource source) {
 		double random = Math.random();
-		if (this.world instanceof ServerWorld serverWorld) {
+		if (this.getWorld() instanceof ServerWorld serverWorld) {
 			if (random <= 0.33) {
 				Vec3d blockPos = Vec3d.ofCenter(this.getBlockPos());
 				BrowncoatEntity zombie = (BrowncoatEntity) PvZEntity.BROWNCOATHYPNO.create(world);
 				zombie.refreshPositionAndAngles(blockPos.getX(), this.getY(), blockPos.getZ(), 0, 0);
 				zombie.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
-				((ServerWorld) this.world).spawnEntityAndPassengers(zombie);
+				((ServerWorld) this.getWorld()).spawnEntityAndPassengers(zombie);
 			}
 			else if (random <= 0.66) {
 				Vec3d blockPos = Vec3d.ofCenter(this.getBlockPos());
@@ -252,7 +243,7 @@ public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAt
 				zombie.refreshPositionAndAngles(blockPos.getX(), this.getY(), blockPos.getZ(), 0, 0);
 				zombie.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				zombie.createConeheadProp();
-				((ServerWorld) this.world).spawnEntityAndPassengers(zombie);
+				((ServerWorld) this.getWorld()).spawnEntityAndPassengers(zombie);
 			}
 			else {
 				Vec3d blockPos = Vec3d.ofCenter(this.getBlockPos());
@@ -260,11 +251,11 @@ public class MagichatEntity extends PlantEntity implements IAnimatable, RangedAt
 				zombie.refreshPositionAndAngles(blockPos.getX(), this.getY(), blockPos.getZ(), 0, 0);
 				zombie.initialize(serverWorld, world.getLocalDifficulty(this.getBlockPos()), SpawnReason.SPAWN_EGG, (EntityData) null, (NbtCompound) null);
 				zombie.createConeheadProp();
-				((ServerWorld) this.world).spawnEntityAndPassengers(zombie);
+				((ServerWorld) this.getWorld()).spawnEntityAndPassengers(zombie);
 			}
 		}
 		this.playSound(PvZSounds.MAGICHATZOMBIEEVENT, 3, 1);
-		this.world.sendEntityStatus(this, (byte) 117);
+		this.getWorld().sendEntityStatus(this, (byte) 117);
 		super.onDeath(source);
 		this.discard();
 	}

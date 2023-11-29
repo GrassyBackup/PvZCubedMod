@@ -4,8 +4,6 @@ import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.ModItems;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
 import io.github.GrassyDev.pvzmod.registry.PvZSounds;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.PlantEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.day.wallnutentity.WallnutEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.plants.plantentity.pvz1.pool.tallnut.TallnutEntity;
@@ -154,20 +152,20 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 			BlockPos blockPos2 = this.getBlockPos();
 			BlockState blockState = this.getLandingBlockState();
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.LOCOCOCO_SEED_PACKET);
 				}
 				this.discard();
 			}
 		}
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.FireBeamGoal();
 		}
 	}
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 
@@ -272,14 +270,7 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 	 * //~*~//~DAMAGE HANDLER~//~*~//
 	 **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -303,7 +294,7 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 		++this.beamTicks;
 		++this.animationTicks;
 		Vec3d front = new Vec3d((double) 1, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-		List<PlantEntity> frontList = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().offset(front).shrink(0.5, 0.5, 0.5));
+		List<PlantEntity> frontList = this.getWorld().getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox().offset(front).shrink(0.5, 0.5, 0.5));
 		double dist = 0;
 		LivingEntity plant = null;
 		for (PlantEntity plantEntity : frontList) {
@@ -323,7 +314,7 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 			}
 		}
 		Vec3d frontBox = new Vec3d((double) 5, 0.0, 0).rotateY(-this.getHeadYaw() * (float) (Math.PI / 180.0) - ((float) (Math.PI / 2)));
-		List<GeneralPvZombieEntity> zombieList = this.world.getNonSpectatingEntities(GeneralPvZombieEntity.class, this.getBoundingBox().offset(frontBox).expand(5));
+		List<GeneralPvZombieEntity> zombieList = this.getWorld().getNonSpectatingEntities(GeneralPvZombieEntity.class, this.getBoundingBox().offset(frontBox).expand(5));
 		zombieList.removeIf(Entity::hasVehicle);
 		if ((livingEntity != null || animationTicks < 0) && !this.getIsAsleep() && plant != null &&
 				!(plant instanceof WallnutEntity && zombieList.size() < 6) &&
@@ -341,30 +332,30 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 			if (livingEntity != null) {
 				this.getLookControl().lookAt(livingEntity, 90.0F, 90.0F);
 			}
-			this.world.sendEntityStatus(this, (byte) 111);
+			this.getWorld().sendEntityStatus(this, (byte) 111);
 			if (this.animationTicks >= 0) {
-				this.world.sendEntityStatus(this, (byte) 110);
+				this.getWorld().sendEntityStatus(this, (byte) 110);
 				this.beamTicks = -15;
 				this.animationTicks = -30;
 				if (shot) {
 					charge = false;
-					this.world.sendEntityStatus(this, (byte) 121);
+					this.getWorld().sendEntityStatus(this, (byte) 121);
 				}
 				shot = false;
 			}
 			if (this.beamTicks >= 0) {
 				if (!this.isInsideWaterOrBubbleColumn()) {
 					if (plant instanceof WallnutEntity wallnutEntity){
-						WallnutBowlingEntity proj = new WallnutBowlingEntity(PvZEntity.WALLNUTBOWLING, this.world);
-						double time = (this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
-						Vec3d targetPos = livingEntity.getPos();
-						double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
-						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						WallnutBowlingEntity proj = new WallnutBowlingEntity(PvZEntity.WALLNUTBOWLING, this.getWorld());
+						double time = (livingEntity != null) ? ((this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1) : 1;
+						Vec3d targetPos = (livingEntity != null) ? livingEntity.getPos() : this.getPos();
+						double predictedPosX = (livingEntity != null) ? targetPos.getX() + (livingEntity.getVelocity().x * time) : this.getX();
+						double predictedPosZ = (livingEntity != null) ? targetPos.getZ() + (livingEntity.getVelocity().z * time) : this.getZ();
 						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 						double d = this.squaredDistanceTo(predictedPos);
 						float df = (float)d;
 						double e = predictedPos.getX() - this.getX();
-						double f = (livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.getY() + 0.3595 : livingEntity.getY() - this.getY();
+						double f = (livingEntity != null) ? ((livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.getY() + 0.3595 : livingEntity.getY() - this.getY()) : 0;
 						double g = predictedPos.getZ() - this.getZ();
 						float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
 						proj.setVelocity(e * (double)h, f * (double)h, g * (double)h, 0.33F, 0F);
@@ -377,15 +368,15 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 							proj.setVariant(ShootingPeaVariants.PURPLE);
 						}
 						proj.damageMultiplier = damageMultiplier;
-						this.world.spawnEntity(proj);
+						this.getWorld().spawnEntity(proj);
 						plant.discard();
 					}
 					if (plant instanceof TallnutEntity tallnutEntity){
 						tallnutEntity.fall = true;
-						this.world.sendEntityStatus(tallnutEntity, (byte) 101);
+						this.getWorld().sendEntityStatus(tallnutEntity, (byte) 101);
 					}
 					if (plant instanceof SmallNutEntity){
-						SmallNutProjEntity proj = new SmallNutProjEntity(PvZEntity.SMALLNUTPROJ, this.world);
+						SmallNutProjEntity proj = new SmallNutProjEntity(PvZEntity.SMALLNUTPROJ, this.getWorld());
 						double time = (livingEntity != null) ? ((this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1) : 1;
 						Vec3d targetPos = (livingEntity != null) ? livingEntity.getPos() : this.getPos();
 						double predictedPosX = (livingEntity != null) ? targetPos.getX() + (livingEntity.getVelocity().x * time) : this.getX();
@@ -402,11 +393,11 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 						proj.setOwner(this);
 						proj.damageMultiplier = damageMultiplier;
 						proj.getTarget(this.getTarget());
-						this.world.spawnEntity(proj);
+						this.getWorld().spawnEntity(proj);
 						plant.discard();
 					}
 					if (plant instanceof PeanutEntity peanut && peanut.getCrack().equals(PeanutEntity.Crack.HIGH)){
-						PeaNutProjEntity proj = new PeaNutProjEntity(PvZEntity.PEANUTPROJ, this.world);
+						PeaNutProjEntity proj = new PeaNutProjEntity(PvZEntity.PEANUTPROJ, this.getWorld());
 						double time = (livingEntity != null) ? ((this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1) : 1;
 						Vec3d targetPos = (livingEntity != null) ? livingEntity.getPos() : this.getPos();
 						double predictedPosX = (livingEntity != null) ? targetPos.getX() + (livingEntity.getVelocity().x * time) : this.getX();
@@ -423,20 +414,20 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 						proj.setOwner(this);
 						proj.damageMultiplier = damageMultiplier;
 						proj.getTarget(this.getTarget());
-						this.world.spawnEntity(proj);
+						this.getWorld().spawnEntity(proj);
 						plant.discard();
 					}
 					else if (plant instanceof PeanutEntity peanut){
-						PeanutBowlingEntity proj = new PeanutBowlingEntity(PvZEntity.PEANUTBOWLING, this.world);
-						double time = (this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1;
-						Vec3d targetPos = livingEntity.getPos();
-						double predictedPosX = targetPos.getX() + (livingEntity.getVelocity().x * time);
-						double predictedPosZ = targetPos.getZ() + (livingEntity.getVelocity().z * time);
+						PeanutBowlingEntity proj = new PeanutBowlingEntity(PvZEntity.PEANUTBOWLING, this.getWorld());
+						double time = (livingEntity != null) ? ((this.squaredDistanceTo(livingEntity) > 36) ? 50 : 1) : 1;
+						Vec3d targetPos = (livingEntity != null) ? livingEntity.getPos() : this.getPos();
+						double predictedPosX = (livingEntity != null) ? targetPos.getX() + (livingEntity.getVelocity().x * time) : this.getX();
+						double predictedPosZ = (livingEntity != null) ? targetPos.getZ() + (livingEntity.getVelocity().z * time) : this.getZ();
 						Vec3d predictedPos = new Vec3d(predictedPosX, targetPos.getY(), predictedPosZ);
 						double d = this.squaredDistanceTo(predictedPos);
 						float df = (float)d;
 						double e = predictedPos.getX() - this.getX();
-						double f = (livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.getY() + 0.3595 : livingEntity.getY() - this.getY();
+						double f = (livingEntity != null) ? ((livingEntity.isInsideWaterOrBubbleColumn()) ? livingEntity.getY() - this.getY() + 0.3595 : livingEntity.getY() - this.getY()) : 0;
 						double g = predictedPos.getZ() - this.getZ();
 						float h = MathHelper.sqrt(MathHelper.sqrt(df)) * 0.5F;
 						proj.setVelocity(e * (double)h, f * (double)h, g * (double)h, 0.33F, 0F);
@@ -446,11 +437,11 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 							proj.setVariant(ShootingPeaVariants.BLACK);
 						}
 						proj.damageMultiplier = damageMultiplier;
-						this.world.spawnEntity(proj);
+						this.getWorld().spawnEntity(proj);
 						plant.discard();
 					}
 					this.beamTicks = -30;
-					this.world.sendEntityStatus(this, (byte) 111);
+					this.getWorld().sendEntityStatus(this, (byte) 111);
 					this.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, 1F, 1);
 					shot = true;
 				}
@@ -458,13 +449,13 @@ public class LocoCocoEntity extends PlantEntity implements IAnimatable, RangedAt
 		}
 		else if (animationTicks >= 0){
 			this.shootSwitch = true;
-			this.world.sendEntityStatus(this, (byte) 110);
+			this.getWorld().sendEntityStatus(this, (byte) 110);
 			if (this.getTarget() != null){
 				this.attack(this.getTarget(), 0);
 			}
 			if (shot) {
 				charge = false;
-				this.world.sendEntityStatus(this, (byte) 121);
+				this.getWorld().sendEntityStatus(this, (byte) 121);
 			}
 			shot = false;
 		}

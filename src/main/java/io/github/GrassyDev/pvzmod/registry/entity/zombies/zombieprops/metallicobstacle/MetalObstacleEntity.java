@@ -28,6 +28,15 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -37,6 +46,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -97,7 +107,7 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 					double d = this.random.nextDouble() / 10 * this.random.range(-1, 1);
 					double e = this.random.nextDouble() / 1200 * this.random.range(0, 1);
 					double f = this.random.nextDouble() / 10 * this.random.range(-1, 1);
-					this.world.addParticle(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY() + 0.75, this.getZ(), d, e + 0.1, f);
+					this.getWorld().addParticle(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY() + 0.75, this.getZ(), d, e + 0.1, f);
 				}
 			}
 			else {
@@ -105,7 +115,7 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 					double d = this.random.nextDouble() / 4 * this.random.range(-1, 1);
 					double e = this.random.nextDouble() / 4 * this.random.range(0, 1);
 					double f = this.random.nextDouble() / 4 * this.random.range(-1, 1);
-					this.world.addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + d, this.getY() + 0.75 + e, this.getZ() + f, d, e + 0.1, f);
+					this.getWorld().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + d, this.getY() + 0.75 + e, this.getZ() + f, d, e + 0.1, f);
 				}
 			}
 		}
@@ -241,7 +251,7 @@ public class MetalObstacleEntity extends ZombieObstacleEntity implements IAnimat
 
 	protected List<LivingEntity> zombieList = new ArrayList<>();
 	private void healEntity() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(4));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(4));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;

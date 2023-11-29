@@ -30,6 +30,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -39,6 +48,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 
 import java.util.EnumSet;
 import java.util.List;
@@ -143,16 +153,16 @@ public class CoconutCannonEntity extends PlantEntity implements IAnimatable, Ran
 			BlockPos blockPos5 = this.getBlockPos().add(0.5, 0, 0);
 			BlockPos blockPos6 = this.getBlockPos().add(-0.5, 0, -0.5);
 			BlockState blockState = this.getLandingBlockState();
-			BlockState blockState3 = this.world.getBlockState(this.getSteppingPosition().add(-0.5, 0, 0));
-			BlockState blockState4 = this.world.getBlockState(this.getSteppingPosition().add(0, 0, -0.5));
-			BlockState blockState5 = this.world.getBlockState(this.getSteppingPosition().add(0.5, 0, 0));
-			BlockState blockState6 = this.world.getBlockState(this.getSteppingPosition().add(-0.5, 0, -0.5));
+			BlockState blockState3 = this.getWorld().getBlockState(this.getSteppingPosition().add(-0.5, 0, 0));
+			BlockState blockState4 = this.getWorld().getBlockState(this.getSteppingPosition().add(0, 0, -0.5));
+			BlockState blockState5 = this.getWorld().getBlockState(this.getSteppingPosition().add(0.5, 0, 0));
+			BlockState blockState6 = this.getWorld().getBlockState(this.getSteppingPosition().add(-0.5, 0, -0.5));
 			if ((!blockPos2.equals(blockPos) || !blockState.hasSolidTopSurface(world, this.getBlockPos(), this) ||
 					!blockState3.hasSolidTopSurface(world, blockPos3, this) ||
 					!blockState4.hasSolidTopSurface(world, blockPos4, this) ||
 					!blockState6.hasSolidTopSurface(world, blockPos4, this) ||
 					!blockState5.hasSolidTopSurface(world, blockPos5, this)) && !this.hasVehicle()) {
-				if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
+				if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && !this.naturalSpawn && this.age <= 10 && !this.dead){
 					this.dropItem(ModItems.COCONUTCANNON_SEED_PACKET);
 				}
 				this.discard();
@@ -170,7 +180,7 @@ public class CoconutCannonEntity extends PlantEntity implements IAnimatable, Ran
 				this.getVehicle() instanceof BubblePadEntity){
 			this.discard();
 		}
-		List<PlantEntity> list = this.world.getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox());
+		List<PlantEntity> list = this.getWorld().getNonSpectatingEntities(PlantEntity.class, this.getBoundingBox());
 		for (PlantEntity plantEntity : list){
 			if (plantEntity != this){
 				plantEntity.discard();
@@ -184,13 +194,13 @@ public class CoconutCannonEntity extends PlantEntity implements IAnimatable, Ran
 		}
 		--rechargeTime;
 		if (rechargeTime <= 0){
-			this.world.sendEntityStatus(this, (byte) 88);
+			this.getWorld().sendEntityStatus(this, (byte) 88);
 		}
 	}
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
@@ -219,7 +229,7 @@ public class CoconutCannonEntity extends PlantEntity implements IAnimatable, Ran
 			this.discard();
 			return ActionResult.SUCCESS;
 		}
-		else if (!this.world.isClient) {
+		else if (!this.getWorld().isClient) {
 			if (rechargeTime <= 0 && !this.isFiring && this.getTarget() != null) {
 				startShooting = true;
 				return ActionResult.SUCCESS;
@@ -278,14 +288,7 @@ public class CoconutCannonEntity extends PlantEntity implements IAnimatable, Ran
 
 	/** /~*~//~*DAMAGE HANDLER*~//~*~/ **/
 
-	public boolean handleAttack(Entity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) attacker;
-			return this.damage(DamageSource.player(playerEntity), 9999.0F);
-		} else {
-			return false;
-		}
-	}
+
 
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		if (fallDistance > 0F) {
@@ -373,7 +376,7 @@ public class CoconutCannonEntity extends PlantEntity implements IAnimatable, Ran
 						proj.setVelocity(e * (double) h, f * (double) h, g * (double) h, 0.66F, 0F);
 						proj.updatePosition(this.plantEntity.getX(), this.plantEntity.getY() + 0.75D, this.plantEntity.getZ());
 						proj.setOwner(this.plantEntity);
-						if (livingEntity.isAlive()) {
+						if (livingEntity != null && livingEntity.isAlive()) {
 							this.beamTicks = -30;
 							this.plantEntity.attacked = true;
 							this.plantEntity.world.sendEntityStatus(this.plantEntity, (byte) 111);

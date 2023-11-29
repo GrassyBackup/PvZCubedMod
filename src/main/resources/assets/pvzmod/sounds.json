@@ -249,6 +249,11 @@
       "pvzmod:gargantuar_smash"
     ]
   },
+  "tombraiser.lick": {
+    "sounds": [
+      "pvzmod:tombraiser_lick"
+    ]
+  },
   "soldier.prep": {
     "sounds": [
       "pvzmod:soldier_prep"

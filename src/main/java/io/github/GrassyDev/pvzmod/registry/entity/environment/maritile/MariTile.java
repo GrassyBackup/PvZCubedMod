@@ -1,5 +1,6 @@
 package io.github.GrassyDev.pvzmod.registry.entity.environment.maritile;
 
+import blue.endless.jankson.annotation.Nullable;
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.entity.environment.TileEntity;
 import io.github.GrassyDev.pvzmod.registry.entity.variants.plants.PeapodCountVariants;
@@ -19,7 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -93,7 +93,7 @@ public class MariTile extends TileEntity {
 	List<LivingEntity> checkList = new ArrayList<>();
 
 	private void damageEntity() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		Iterator var9 = list.iterator();
 		while (true) {
 			LivingEntity livingEntity;
@@ -123,7 +123,7 @@ public class MariTile extends TileEntity {
 			if (((livingEntity instanceof Monster &&
 					zombiePropEntity4 == null &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity &&
-							generalPvZombieEntity.isFlying())) &&
+							generalPvZombieEntity.isFlying()) && !(livingEntity instanceof GeneralPvZombieEntity zombie && zombie.isHovering())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity2 && checkList.contains(generalPvZombieEntity2.getOwner())) &&
 					!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 							&& (generalPvZombieEntity.getHypno()))) && !checkList.contains(livingEntity) && !(livingEntity instanceof ZombiePropEntity) && livingEntity.isAlive()) {
@@ -177,7 +177,7 @@ public class MariTile extends TileEntity {
 
 	@Override
 	public void tick() {
-		List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
+		List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(1));
 		for (LivingEntity livingEntity : list){
 			if (livingEntity instanceof MariTile mariTile && this.squaredDistanceTo(livingEntity) <= 0.5f && livingEntity != this){
 				if (mariTile.getTypeCount() <= this.getTypeCount()){
@@ -194,7 +194,7 @@ public class MariTile extends TileEntity {
 			this.discard();
 		}
 		BlockPos blockPos = this.getBlockPos();
-		if (!this.world.isClient()) {
+		if (!this.getWorld().isClient()) {
 			this.damageEntity();
 		}
 	}

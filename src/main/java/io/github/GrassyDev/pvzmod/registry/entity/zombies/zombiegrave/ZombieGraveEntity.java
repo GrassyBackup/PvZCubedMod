@@ -43,6 +43,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 
+
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
 public class ZombieGraveEntity extends ZombieObstacleEntity implements IAnimatable {
@@ -183,7 +184,7 @@ public class ZombieGraveEntity extends ZombieObstacleEntity implements IAnimatab
 			}
 
 			if (this.currentFuseTime >= this.sunProducingTime) {
-				if (!this.world.isClient && this.isAlive() && this.zombieSunCheck && !this.isInsideWaterOrBubbleColumn()){
+				if (!this.getWorld().isClient && this.isAlive() && this.zombieSunCheck && !this.isInsideWaterOrBubbleColumn()){
 					this.playSound(PvZSounds.SUNDROPEVENT, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) - 0.125f);
 					this.dropItem(ModItems.BRAIN);
 					this.sunProducingTime = (int) (PVZCONFIG.nestedSun.zombiegraveSec() * 20);
@@ -196,10 +197,10 @@ public class ZombieGraveEntity extends ZombieObstacleEntity implements IAnimatab
 
 	public void tickMovement() {
 		super.tickMovement();
-		if (!this.world.isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn()) {
+		if (!this.getWorld().isClient && this.isAlive() && --this.sunProducingTime <= 0 && !this.isInsideWaterOrBubbleColumn()) {
 			this.zombieSunCheck = true;
 		}
-		if (!this.world.isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
+		if (!this.getWorld().isClient && this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.deathTime == 0) {
 			this.discard();
 		}
 	}
