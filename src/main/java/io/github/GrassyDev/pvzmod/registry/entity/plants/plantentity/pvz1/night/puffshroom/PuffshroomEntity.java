@@ -23,7 +23,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -43,7 +42,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
 
 import java.util.EnumSet;
 import java.util.List;
@@ -339,16 +337,16 @@ public class PuffshroomEntity extends PlantEntity implements IAnimatable, Ranged
 			return (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) &&
 					!checkPlant(Vec3d.ofCenter(pos), world, type) &&
 					pos.getY() > 50 &&
-					!world.getBlockState(blockPos).getBlock().hasDynamicBounds() && world.getAmbientDarkness() >= 2 ||
+					(!world.getBlockState(blockPos).getBlock().hasDynamicBounds() && world.getAmbientDarkness() >= 2 ||
 					world.getLightLevel(LightType.SKY, pos) < 2 ||
-					(world.getBiome(blockPos).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants());
+					(world.getBiome(blockPos).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants()));
 		}
 		else {
 			return (!world.getBlockState(blockPos).isOf(Blocks.AIR) && !world.getBlockState(blockPos).isOf(Blocks.CAVE_AIR) &&
 					!checkPlant(Vec3d.ofCenter(pos), world, type) &&
-					!world.getBlockState(blockPos).getBlock().hasDynamicBounds() && world.getAmbientDarkness() >= 2 ||
+					(!world.getBlockState(blockPos).getBlock().hasDynamicBounds() && world.getAmbientDarkness() >= 2 ||
 					world.getLightLevel(LightType.SKY, pos) < 2 ||
-					(world.getBiome(blockPos).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants());
+					(world.getBiome(blockPos).getKey().equals(Optional.ofNullable(BiomeKeys.MUSHROOM_FIELDS))) && Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PvZCubed.SHOULD_PLANT_SPAWN) && PVZCONFIG.nestedSpawns.spawnPlants()));
 		}
 	}
 
