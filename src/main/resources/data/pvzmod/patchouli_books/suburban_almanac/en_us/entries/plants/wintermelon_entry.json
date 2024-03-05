@@ -1,0 +1,41 @@
+{
+  "name": "Winter Melon",
+  "icon": "pvzmod:wintermelon_seed_packet",
+  "category": "pvzmod:plant_category",
+  "sortnum": 37,
+  "advancement": "pvzmod:make_melonpult",
+  "pages": [
+    {
+      "type": "text",
+      "text": [
+        "$(#bd951a)Health: $()$(#ff0000)50",
+        "$(br)$(#bd951a)Damage: $()$(#ff0000)14 DMG/2.5s, 8 DMG (Splash)",
+        "$(br)$(#bd951a)Splash Radius: $()$(#ff0000)2 Blocks",
+        "$(br)$(#bd951a)Range: $()$(#ff0000)30 Blocks (Lobbed)",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)25s $(#bd951a)Stale: $()$(#ff0000)1.5%",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Heavy Damage. Wets and Chills Zombies.",
+        "$(br2)$(#bd951a)Winter Melon tries to calm his nerves. He hears zombies approach. Will he make it? Will anyone make it?"
+      ]
+    },
+    {
+      "type": "image",
+      "images": [
+        "pvzmod:textures/gui/entries/wintermelon.png"
+      ],
+      "title": "❄ Winter Family",
+      "border": "true",
+      "text": "$(#25228d)Winter Melons do heavy damage and slow groups of zombies."
+    },
+    {
+      "type": "crafting",
+      "recipe": "pvzmod:plants/winter/wintermelon"
+    },
+    {
+      "type": "text",
+      "title": "References",
+      "text": [
+        "$(br)$(#bd951a)Plants vs. Zombies: $()$(#ff0000)Winter Melon"
+      ]
+    }
+  ]
+}

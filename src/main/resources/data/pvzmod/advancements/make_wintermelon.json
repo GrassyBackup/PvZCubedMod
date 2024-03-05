@@ -1,16 +1,16 @@
 {
   "display": {
     "icon": {
-      "item": "pvzmod:cabbagepult_seed_packet"
+      "item": "pvzmod:wintermelon_seed_packet"
     },
-    "title": "The Artillery",
-    "description": "Craft a Cabbage-pult",
-    "frame": "task",
+    "title": "Strategy? What's a 'strategy?'",
+    "description": "Craft a Winter Melon",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": false
+    "hidden": true
   },
-  "parent": "pvzmod:start_pvz",
+  "parent": "pvzmod:make_melonpult",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",
@@ -18,7 +18,7 @@
         "items": [
           {
             "items": [
-              "pvzmod:cabbagepult_seed_packet"
+              "pvzmod:wintermelon_seed_packet"
             ],
             "count": {
               "min": 1,
@@ -30,11 +30,6 @@
     }
   },
   "rewards": {
-    "recipes": [
-      "pvzmod:plants/pepper/pepperpult",
-      "pvzmod:plants/winter/icebergpult",
-      "pvzmod:plants/arma/melonslice"
-    ],
-    "experience": 25
+    "experience": 100
   }
 }

@@ -1,4 +1,4 @@
-package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.iceberg;
+package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.slice;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -17,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
@@ -30,9 +29,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -44,12 +40,11 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnimatable {
+public class ShootingSliceEntity extends PvZProjectileEntity implements IAnimatable {
 
 	private String controllerName = "projectilecontroller";
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -73,18 +68,18 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 		return PlayState.CONTINUE;
 	}
 
-    public ShootingIcebergEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    public ShootingSliceEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
 		this.setNoGravity(false);
     }
 
-    public ShootingIcebergEntity(World world, LivingEntity owner) {
+    public ShootingSliceEntity(World world, LivingEntity owner) {
         super(EntityType.SNOWBALL, owner, world);
     }
 
     @Environment(EnvType.CLIENT)
-    public ShootingIcebergEntity(World world, double x, double y, double z, float yaw, float pitch, int interpolation, boolean interpolate, int id, UUID uuid) {
-        super(PvZEntity.PEPPERPROJ, world);
+    public ShootingSliceEntity(World world, double x, double y, double z, float yaw, float pitch, int interpolation, boolean interpolate, int id, UUID uuid) {
+        super(PvZEntity.SLICE, world);
         updatePosition(x, y, z);
         updateTrackedPositionAndAngles(x, y, z, yaw, pitch, interpolation, interpolate);
 		setId(id);
@@ -98,7 +93,6 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
     public void tick() {
         super.tick();
 		HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
-		RandomGenerator randomGenerator = this.random;
 		boolean bl = false;
 		if (hitResult.getType() == HitResult.Type.BLOCK) {
 			BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
@@ -121,12 +115,12 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 		}
 
         if (!this.getWorld().isClient && this.isInsideWaterOrBubbleColumn()) {
-			this.getWorld().sendEntityStatus(this, (byte)3);
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 
         if (!this.getWorld().isClient && this.age >= 120) {
-			this.getWorld().sendEntityStatus(this, (byte)3);
+            this.getWorld().sendEntityStatus(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         }
 		if (!this.getWorld().isClient && this.age > 50 && target != null) {
@@ -142,15 +136,6 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 				this.setPosition(target.getPos().getX(), this.getY() - 0.0005, target.getZ());
 			}
 		}
-
-		double d = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);
-		double e = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
-		double f = (double) MathHelper.nextBetween(randomGenerator, -0.1F, 0.1F);;
-
-		for (int j = 0; j < 1; ++j) {
-			this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
-			this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e * -1, f);
-		}
     }
 
     @Override
@@ -162,7 +147,6 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 	@Override
 	public void hitEntities() {
 		super.hitEntities();
-		boolean hit = false;
 		Iterator var9 = hitEntities.iterator();
 		while (true) {
 			Entity entity;
@@ -185,10 +169,9 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 			}
 			if (!world.isClient && entity instanceof Monster monster &&
 					!(monster instanceof GeneralPvZombieEntity generalPvZombieEntity && (generalPvZombieEntity.getHypno())) &&
-					!(zombiePropEntity2 instanceof ZombiePropEntity && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
+					!(zombiePropEntity2 != null && !(zombiePropEntity2 instanceof ZombieShieldEntity)) &&
 					!(zombiePropEntity3 != null && !(zombiePropEntity3 instanceof ZombieShieldEntity)) &&
-					!(entity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.hasVehicle()) &&
-					!(entity instanceof GeneralPvZombieEntity generalPvZombieEntity3 && generalPvZombieEntity3.isStealth()) && !hit) {
+					!(entity instanceof ZombieShieldEntity zombieShieldEntity && zombieShieldEntity.hasVehicle())) {
 					String zombieMaterial = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
 					SoundEvent sound;
 					sound = switch (zombieMaterial) {
@@ -197,14 +180,19 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 						case "stone", "crystal" -> PvZSounds.STONEHITEVENT;
 						default -> PvZSounds.PEAHITEVENT;
 					};
-					if (entity instanceof ZombieShieldEntity || (entity instanceof GeneralPvZombieEntity generalPvZombieEntity && generalPvZombieEntity.isCovered())) {
-						entity.playSound(sound, 0.2F, 1F);
-					}
-					entity.playSound(PvZSounds.SNOWPEAHITEVENT, 0.2F, 1F);
-					float damage = PVZCONFIG.nestedProjDMG.icebergDMGv2() * damageMultiplier;
-					if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
-						damage = damage / 2;
-					}
+					entity.playSound(sound, 0.2F, (float) (0.5F + Math.random()));
+					float damage = PVZCONFIG.nestedProjDMG.sliceDMG();
+				if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
+					damage = damage * 2;
+				}
+				if ("paper".equals(zombieMaterial) || "rubber".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
+				if ("paper".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+					damage = damage * 2;
+				} else if ("plant".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
 					if (damage > ((LivingEntity) entity).getHealth() &&
 							!(entity instanceof ZombieShieldEntity) &&
 							entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
@@ -214,110 +202,38 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 					} else {
 						entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 					}
-					if (!((LivingEntity) entity).hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-						((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-					}
-					hit = true;
-					Vec3d vec3d = this.getPos();
-					List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(5.0));
-					Iterator var10 = list.iterator();
-					while (true) {
-						LivingEntity livingEntity;
-						do {
-							do {
-								if (!var10.hasNext()) {
-									return;
-								}
-
-								livingEntity = (LivingEntity) var10.next();
-							} while (livingEntity == this.getOwner());
-						} while (entity.squaredDistanceTo(livingEntity) > 2.25);
-
-						if (livingEntity instanceof Monster &&
-								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
-										&& (generalPvZombieEntity.getHypno()))) {
-							if (livingEntity != entity) {
-								float damage3 = PVZCONFIG.nestedProjDMG.icebergSDMG() * damageMultiplier;
-								String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
-								if ("crystal".equals(zombieMaterial2) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
-									damage3 = damage3 / 2;
-								}
-								ZombiePropEntity zombiePropEntity4 = null;
-								for (Entity entity1 : livingEntity.getPassengerList()) {
-									if (entity1 instanceof ZombiePropEntity zpe && zombiePropEntity4 == null) {
-										zombiePropEntity4 = zpe;
-									}
-								}
-								ZombiePropEntity zombiePropEntity6 = null;
-								if (livingEntity.hasVehicle()) {
-									for (Entity entity1 : livingEntity.getVehicle().getPassengerList()) {
-										if (entity1 instanceof ZombieShieldEntity zpe && zpe != livingEntity) {
-											zombiePropEntity6 = zpe;
-										}
-									}
-								}
-								if (!(zombiePropEntity4 instanceof ZombieShieldEntity)) {
-									if (zombiePropEntity4 == null && zombiePropEntity6 == null) {
-										if (damage3 > livingEntity.getHealth() &&
-												!(livingEntity instanceof ZombieShieldEntity) &&
-												livingEntity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
-											float damage2 = damage3 - livingEntity.getHealth();
-											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
-											generalPvZombieEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage2);
-										} else {
-											livingEntity.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage3);
-										}
-										if (!livingEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
-											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
-										}
-									}
-								}
-							}
-							this.getWorld().sendEntityStatus(this, (byte) 3);
-							this.remove(RemovalReason.DISCARDED);
-						}
-					}
+					this.getWorld().sendEntityStatus(this, (byte) 3);
+					this.remove(RemovalReason.DISCARDED);
+					break;
 			}
 		}
-	}
+    }
 
-	@Environment(EnvType.CLIENT)
-	private ParticleEffect getParticleParameters() {
-		ItemStack itemStack = this.getItem();
-		return (ParticleEffect)(itemStack.isEmpty() ? ParticleTypes.SNOWFLAKE : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack));
-	}
+    @Environment(EnvType.CLIENT)
+    private ParticleEffect getParticleParameters() {
+        ItemStack itemStack = this.getItem();
+        return (ParticleEffect)(itemStack.isEmpty() ? ParticleTypes.ITEM_SLIME : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack));
+    }
 
 
-
-	@Environment(EnvType.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void handleStatus(byte status) {
 		if (status != 2 && status != 60){
 			super.handleStatus(status);
 		}
-		if (status == 3) {
-			ParticleEffect particleEffect = this.getParticleParameters();
+        if (status == 3) {
+            ParticleEffect particleEffect = this.getParticleParameters();
 
-			for(int i = 0; i < 6; ++i) {
-				double vx = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				double vy = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				double vz = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), vx, vy, vz);
-			}
-
-			for (int j = 0; j < 8; ++j) {
-
-				double d = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				double e = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				double f = this.random.nextDouble() / 2 * this.random.range(-1, 1);
-				this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), d, e, f);
-			}
-		}
+            for(int i = 0; i < 8; ++i) {
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+            }
+        }
 
     }
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
         if (!this.getWorld().isClient) {
-			this.getWorld().sendEntityStatus(this, (byte)3);
+            this.getWorld().sendEntityStatus(this, (byte)3);
 			this.remove(RemovalReason.DISCARDED);
         }
     }

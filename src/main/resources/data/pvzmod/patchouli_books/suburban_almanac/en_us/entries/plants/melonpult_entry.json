@@ -1,0 +1,41 @@
+{
+  "name": "Melon-pult",
+  "icon": "pvzmod:melonpult_seed_packet",
+  "category": "pvzmod:plant_category",
+  "sortnum": 32,
+  "advancement": "pvzmod:make_melonslice",
+  "pages": [
+    {
+      "type": "text",
+      "text": [
+        "$(#bd951a)Health: $()$(#ff0000)32",
+        "$(br)$(#bd951a)Damage: $()$(#ff0000)12 DMG/2.5s, 4 DMG (Splash)",
+        "$(br)$(#bd951a)Splash Radius: $()$(#ff0000)2 Blocks",
+        "$(br)$(#bd951a)Range: $()$(#ff0000)30 Blocks (Lobbed)",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)20s $(#bd951a)Stale: $()$(#ff0000)1.5%",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Heavy Damage. Wets Zombies.",
+        "$(br)$(#bd951a)There's no false modesty with Melon-pult. \"Sun-for-damage, I deliver the biggest punch on the lawn,\" he says. \"I'm not bragging. Run the numbers. You'll see.\""
+      ]
+    },
+    {
+      "type": "image",
+      "images": [
+        "pvzmod:textures/gui/entries/melonpult.png"
+      ],
+      "title": "\uD83C\uDFF9 Arma Family",
+      "border": "true",
+      "text": "$(#25228d)Melon-pults do a lot of damage to groups of zombies."
+    },
+    {
+      "type": "crafting",
+      "recipe": "pvzmod:plants/arma/melonpult"
+    },
+    {
+      "type": "text",
+      "title": "References",
+      "text": [
+        "$(br)$(#bd951a)Plants vs. Zombies: $()$(#ff0000)Melon-pult"
+      ]
+    }
+  ]
+}

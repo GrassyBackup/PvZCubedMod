@@ -2,7 +2,7 @@
   "name": "Coffee Bean",
   "icon": "pvzmod:coffeebean_seed_packet",
   "category": "pvzmod:plant_category",
-  "sortnum": 34,
+  "sortnum": 31,
   "advancement": "pvzmod:start_pvz",
   "pages": [
     {

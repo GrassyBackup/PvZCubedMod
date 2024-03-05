@@ -3,7 +3,7 @@
   "icon": "pvzmod:magnetoshroom_seed_packet",
   "category": "pvzmod:plant_category",
   "advancement": "pvzmod:make_magnetshroom",
-  "sortnum": 116,
+  "sortnum": 117,
   "pages": [
     {
       "type": "text",

@@ -14,7 +14,9 @@
     {
       "type": "relations",
       "entries": [
-        "pvzmod:plants/cabbagepult_entry"
+        "pvzmod:plants/cabbagepult_entry",
+        "pvzmod:plants/melonpult_entry",
+        "pvzmod:plants/melonslice_entry"
       ],
       "title": "\uD83C\uDFF9 Arma Plants:"
     }

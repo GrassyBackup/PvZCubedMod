@@ -1,0 +1,40 @@
+{
+  "name": "Melon-slice",
+  "icon": "pvzmod:melonslice_seed_packet",
+  "category": "pvzmod:plant_category",
+  "sortnum": 114,
+  "advancement": "pvzmod:make_cabbagepult",
+  "pages": [
+    {
+      "type": "text",
+      "text": [
+        "$(#bd951a)Health: $()$(#ff0000)24",
+        "$(br)$(#bd951a)Damage: $()$(#ff0000)7 DMG/2.5s",
+        "$(br)$(#bd951a)Range: $()$(#ff0000)30 Blocks (Lobbed)",
+        "$(br)$(#bd951a)Seed Recharge: $()$(#ff0000)15s $(#bd951a)Stale: $()$(#ff0000)1.5%",
+        "$(br)$(#bd951a)Special: $()$(#ff0000)Heavy Damage. Wets Zombies.",
+        "$(br2)$(#bd951a)Melon-slice follows on his dads' footsteps, Melon-pult and Winter Melon. He may not have mastered the art of splash, but he's getting there."
+      ]
+    },
+    {
+      "type": "image",
+      "images": [
+        "pvzmod:textures/gui/entries/melonslice.png"
+      ],
+      "title": "\uD83C\uDFF9 Arma Family",
+      "border": "true",
+      "text": "$(#25228d)Melon-slice hurls metal-killing slices."
+    },
+    {
+      "type": "crafting",
+      "recipe": "pvzmod:plants/arma/melonslice"
+    },
+    {
+      "type": "text",
+      "title": "References",
+      "text": [
+        "$(br)$(#bd951a)Plants vs. Zombies: All Stars: $()$(#ff0000)Melon Slice-pult"
+      ]
+    }
+  ]
+}

@@ -110,6 +110,9 @@
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.burstshroomS": "Burst-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.buttonshroomS": "Button-shroom Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cabbagepultS": "Cabbage-pult Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.melonpultS": "Melon-pult Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.melonsliceS": "Melon-slice Seed",
+  "text.config.pvz3-config.option.nestedSeeds.moreSeeds.wintermelonS": "Winter Melon Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.cattailS": "Cattail Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.coffeeBeanS": "Coffee Bean Seed",
   "text.config.pvz3-config.option.nestedSeeds.moreSeeds.charmshroomS": "Charm-shroom Seed",
@@ -562,6 +565,20 @@
   "item.pvzmod.cabbagepult_seed_packet": "\uD83C\uDFF9 Cabbage-pult Seed Packet",
   "item.pvzmod.cabbagepult_seed_packet.flavour": "\"Coleslaw from above!\"",
   "item.pvzmod.cabbage": "Cabbage",
+
+  "entity.pvzmod.melonpult": "Melon-pult",
+  "item.pvzmod.melonpult_seed_packet": "\uD83C\uDFF9 Melon-pult Seed Packet",
+  "item.pvzmod.melonpult_seed_packet.flavour": "People who live in grass houses",
+  "item.pvzmod.melonpult_seed_packet.flavour2": "shouldn't throw stones.",
+  "item.pvzmod.melonpult_seed_packet.flavour3": "But melons, sure, why not?",
+
+  "entity.pvzmod.wintermelon": "Winter Melon",
+  "item.pvzmod.wintermelon_seed_packet": "❄ Winter Melon Seed Packet",
+  "item.pvzmod.wintermelon_seed_packet.flavour": "Perfect for your winter picnics.",
+
+  "entity.pvzmod.melonslice": "Melon-slice",
+  "item.pvzmod.melonslice_seed_packet": "\uD83C\uDFF9 Melon-slice Seed Packet",
+  "item.pvzmod.melonslice_seed_packet.flavour": "Always takes a slice.",
 
   "entity.pvzmod.coffeebean": "Coffee Bean",
   "item.pvzmod.coffeebean_seed_packet": "⭐ Coffee Bean Seed Packet",

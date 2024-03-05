@@ -166,10 +166,12 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.MAGNETSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.CABBAGEPULT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.COFFEEBEAN_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.MELONPULT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.GATLINGPEA_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.TWINSUNFLOWER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.GLOOMSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.CATTAIL_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.WINTERMELON_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.SPIKEROCK_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.ICEBERGPULT_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BEET_SEED_PACKET));
@@ -214,6 +216,7 @@ public class PvZCubed implements ModInitializer {
 				stacks.add(new ItemStack(ModItems.METEORHAMMER_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.DROPEA_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.FRISBLOOM_SEED_PACKET));
+				stacks.add(new ItemStack(ModItems.MELONSLICE_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.BEAUTYSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.CHARMSHROOM_SEED_PACKET));
 				stacks.add(new ItemStack(ModItems.MAGNETOSHROOM_SEED_PACKET));

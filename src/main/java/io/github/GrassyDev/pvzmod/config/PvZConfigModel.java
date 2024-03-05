@@ -287,6 +287,10 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float magnetoshroomS = 10.0f;
 		@RestartRequired
+		public float melonsliceS = 15.0f;
+		@RestartRequired
+		public float melonpultS = 20.0f;
+		@RestartRequired
 		public float meteorhammerS = 15.0f;
 		@RestartRequired
 		public float missileToeS = 25.0f;
@@ -381,6 +385,8 @@ public class PvZConfigModel {
 		@RestartRequired
 		public float weeniebeanieS = 2.5f;
 		@RestartRequired
+		public float wintermelonS = 25.0f;
+		@RestartRequired
 		public float zapricotS = 7.5f;
 	}
 
@@ -429,9 +435,13 @@ public class PvZConfigModel {
 		public float hypnoprojDMGv2 = 8f;
 		public float icebergDMGv2 = 3f;
 		public float icebergSDMG = 1f;
+		public float icemelonDMG = 14f;
+		public float icemelonSDMG = 8f;
 		public float icespikeDMGv2 = 2f;
 		public float iceSpikeMultiplier = 2f;
 		public float jingleDMGv2 = 7f;
+		public float melonDMG = 12f;
+		public float melonSDMG = 4f;
 		public float missileToeDMGNear = 120f;
 		public float missileToeDMGFar = 60f;
 		public float missileToeDMGRangeNear = 1.5f;
@@ -443,6 +453,7 @@ public class PvZConfigModel {
 		public float piercesporeDMG = 6f;
 		public float plasmaPeaDMG = 12f;
 		public float rainbowBulletDMG = 4f;
+		public float sliceDMG = 7f;
 		public float snowPeaDMG = 4f;
 		public float snowQueenPeaDMGv2 = 9f;
 		public float snowQueenPeaSDMG = 3f;

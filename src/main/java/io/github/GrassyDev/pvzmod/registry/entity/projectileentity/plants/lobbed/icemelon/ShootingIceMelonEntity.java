@@ -1,4 +1,4 @@
-package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.iceberg;
+package io.github.GrassyDev.pvzmod.registry.entity.projectileentity.plants.lobbed.icemelon;
 
 import io.github.GrassyDev.pvzmod.PvZCubed;
 import io.github.GrassyDev.pvzmod.registry.PvZEntity;
@@ -49,7 +49,7 @@ import java.util.UUID;
 
 import static io.github.GrassyDev.pvzmod.PvZCubed.PVZCONFIG;
 
-public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnimatable {
+public class ShootingIceMelonEntity extends PvZProjectileEntity implements IAnimatable {
 
 	private String controllerName = "projectilecontroller";
 	private AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -73,17 +73,17 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 		return PlayState.CONTINUE;
 	}
 
-    public ShootingIcebergEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    public ShootingIceMelonEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
 		this.setNoGravity(false);
     }
 
-    public ShootingIcebergEntity(World world, LivingEntity owner) {
+    public ShootingIceMelonEntity(World world, LivingEntity owner) {
         super(EntityType.SNOWBALL, owner, world);
     }
 
     @Environment(EnvType.CLIENT)
-    public ShootingIcebergEntity(World world, double x, double y, double z, float yaw, float pitch, int interpolation, boolean interpolate, int id, UUID uuid) {
+    public ShootingIceMelonEntity(World world, double x, double y, double z, float yaw, float pitch, int interpolation, boolean interpolate, int id, UUID uuid) {
         super(PvZEntity.PEPPERPROJ, world);
         updatePosition(x, y, z);
         updateTrackedPositionAndAngles(x, y, z, yaw, pitch, interpolation, interpolate);
@@ -201,10 +201,21 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 						entity.playSound(sound, 0.2F, 1F);
 					}
 					entity.playSound(PvZSounds.SNOWPEAHITEVENT, 0.2F, 1F);
-					float damage = PVZCONFIG.nestedProjDMG.icebergDMGv2() * damageMultiplier;
-					if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
-						damage = damage / 2;
-					}
+					float damage = PVZCONFIG.nestedProjDMG.icemelonDMG() * damageMultiplier;
+				if ("paper".equals(zombieMaterial) || "stone".equals(zombieMaterial)) {
+					damage = damage * 2;
+				} else if ("plant".equals(zombieMaterial) || "crystal".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
+				if ("crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
+				if ("metallic".equals(zombieMaterial) || "stone".equals(zombieMaterial) || "electronic".equals(zombieMaterial) || "crystal".equals(zombieMaterial) || "gold".equals(zombieMaterial)) {
+					damage = damage * 2;
+				}
+				if ("paper".equals(zombieMaterial) || "rubber".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
+					damage = damage / 2;
+				}
 					if (damage > ((LivingEntity) entity).getHealth() &&
 							!(entity instanceof ZombieShieldEntity) &&
 							entity.getVehicle() instanceof GeneralPvZombieEntity generalPvZombieEntity && !(generalPvZombieEntity.getHypno())) {
@@ -231,14 +242,19 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 
 								livingEntity = (LivingEntity) var10.next();
 							} while (livingEntity == this.getOwner());
-						} while (entity.squaredDistanceTo(livingEntity) > 2.25);
+						} while (entity.squaredDistanceTo(livingEntity) > 4);
 
 						if (livingEntity instanceof Monster &&
 								!(livingEntity instanceof GeneralPvZombieEntity generalPvZombieEntity
 										&& (generalPvZombieEntity.getHypno()))) {
 							if (livingEntity != entity) {
-								float damage3 = PVZCONFIG.nestedProjDMG.icebergSDMG() * damageMultiplier;
+								float damage3 = PVZCONFIG.nestedProjDMG.icemelonSDMG() * damageMultiplier;
 								String zombieMaterial2 = PvZCubed.ZOMBIE_MATERIAL.get(entity.getType()).orElse("flesh");
+								if ("paper".equals(zombieMaterial2) || "stone".equals(zombieMaterial2)) {
+									damage3 = damage3 * 2;
+								} else if ("plant".equals(zombieMaterial2) || "crystal".equals(zombieMaterial2)) {
+									damage3 = damage3 / 2;
+								}
 								if ("crystal".equals(zombieMaterial2) || "gold".equals(zombieMaterial) || "cloth".equals(zombieMaterial)) {
 									damage3 = damage3 / 2;
 								}
@@ -270,6 +286,8 @@ public class ShootingIcebergEntity extends PvZProjectileEntity implements IAnima
 										if (!livingEntity.hasStatusEffect(PvZCubed.WARM) && !((LivingEntity) entity).hasStatusEffect(PvZCubed.FROZEN)) {
 											livingEntity.addStatusEffect((new StatusEffectInstance(PvZCubed.ICE, 120, 1)));
 										}
+										((LivingEntity) entity).addStatusEffect((new StatusEffectInstance(PvZCubed.WET, 100, 1)));
+										entity.extinguish();
 									}
 								}
 							}
